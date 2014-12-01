@@ -2,7 +2,7 @@
 ********* Header Template ***********
 *************************************}
 <!-- header.tpl -->
-<header role="banner" class="navbar navbar-inverse navbar-fixed-top custom_header">
+<header role="banner" class="navbar navbar-inverse navbar-fixed-top">
 	<div class="container">
 		<div class="navbar-header">
 			<button data-target=".bs-navbar-collapse" data-toggle="collapse" type="button" class="navbar-toggle">

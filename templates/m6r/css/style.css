@@ -3,8 +3,19 @@
 p {
 font-size: 0.85em;
 }
-a:hover {
-text-decoration:none;
+a {
+color: #FCB729;
+text-decoration: none;
+}
+a:hover,
+a:focus {
+color: #DCA719;
+text-decoration: underline;
+}
+a:focus {
+outline: thin dotted;
+outline: 5px auto -webkit-focus-ring-color;
+outline-offset: -2px;
 }
 h3{
 font-size:1.4em;
@@ -34,14 +45,14 @@ color: #C80700;
 }
 
 .btn-primary {
-	background-color: #2D6CE0;
-    border-color: #185ACC;
+	background-color: #FCB729;
+    border-color: #DAA517;
     color: #FFFFFF;
 	background-image: none;
 }
 .btn-primary:hover,.btn-primary:active {
-	background-color: #185ACC;
-    border-color: #2D6CE0;
+	background-color: #DCA719;
+    border-color: #CA9507;
     color: #FFFFFF;
 	background-image: none;
 }
@@ -135,41 +146,95 @@ filter:alpha(opacity=40);
 font-size:1.0em;
 }
 
-.dropdown-menu > li > a:hover, .dropdown-menu > li > a:focus {
-    background-color: #2D6CE0;
-}
-
 /********************* NAVIGATION MENU ********************/
-.custom_header {
-    background-color: #2D6CE0;
-    border-color: #185ACC;
-    box-shadow: 0 1px 0 rgba(255, 255, 255, 0.1);
-    text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.15);
-	background-image:none;
+
+.navbar-inverse {
+background-color: rgba(255, 255, 255, 0.85);
+border: 1px solid #dedede;
 }
-.custom_header .navbar-collapse {
-    border-color: #185ACC;
+.navbar-inverse .navbar-brand {
+color: #555;
 }
-.custom_header .navbar-brand {
-    color: #FFFFFF;
+.navbar-inverse .navbar-brand:hover,
+.navbar-inverse .navbar-brand:focus {
+color: #555;
+background-color: transparent;
 }
-.custom_header .navbar-nav > li > a {
-    color: #D4DFF5;
+.navbar-inverse .navbar-text {
+color: #555;
+font-weight: bolder;
 }
-.custom_header .navbar-nav > li > a:hover {
-    color: #FFFFFF;
+.navbar-inverse .navbar-nav > li > a {
+color: #555;
+font-weight: bolder;
 }
-.custom_header .navbar-nav > .active > a, .custom_header .navbar-nav > .active > a:hover {
-    background-color: #185ACC;
-    color: #FFFFFF;
-	background-image:none;
+.navbar-inverse .dropdown-menu {
+background-color: rgba(255, 255, 255, 0.85);
 }
-.custom_header .navbar-toggle {
-    border-color: #2D6CE0;
+.navbar-inverse .dropdown-menu > .active > a {
+background-color: transparent;
 }
-.custom_header .navbar-toggle:hover {
-    background-color: #185ACC;
-    border-color: #185ACC;
+.navbar-inverse .dropdown-menu > .active > a:hover,
+.navbar-inverse .dropdown-menu > .active > a:focus {
+color: #555;
+background-color: #F5F5F5;
+}
+.navbar-inverse .dropdown-menu > li > a {
+color: #555;
+font-weight: bolder;
+}
+.navbar-inverse .navbar-nav > li > a:hover,
+.navbar-inverse .navbar-nav > li > a:focus {
+color: #555;
+margin-bottom: -5px;
+border-bottom: 5px solid #FCB729;
+background-color: transparent;
+}
+.navbar-inverse .navbar-nav > .active > a,
+.navbar-inverse .navbar-nav > .active > a:hover,
+.navbar-inverse .navbar-nav > .active > a:focus {
+color: #555;
+background-color: transparent;
+}
+.navbar-inverse .navbar-nav > .jaune > a,
+.navbar-inverse .navbar-nav > .jaune > a:hover,
+.navbar-inverse .navbar-nav > .jaune > a:focus {
+color: #fff;
+background-color: rgba(255, 162, 0, 0.65);
+}
+.navbar-inverse .navbar-nav > .jaune > a {
+border-bottom: 1px solid rgba(255, 162, 0, 0.65);
+margin-bottom: -1px;
+border-top: 1px solid rgba(255, 162, 0, 0.65);
+margin-top: -1px;
+}
+.navbar-inverse .navbar-nav > .disabled > a,
+.navbar-inverse .navbar-nav > .disabled > a:hover,
+.navbar-inverse .navbar-nav > .disabled > a:focus {
+color: #444;
+background-color: transparent;
+}
+.navbar-inverse .navbar-toggle {
+border-color: rgba(255, 162, 0, 0.65);
+}
+.navbar-inverse .navbar-toggle:hover,
+.navbar-inverse .navbar-toggle:focus {
+background-color: rgba(255, 162, 0, 0.65);
+}
+.navbar-inverse .navbar-toggle .icon-bar {
+background-color: #fff;
+}
+.navbar-inverse .navbar-collapse,
+.navbar-inverse .navbar-form {
+border-color: #101010;
+}
+.navbar-inverse .navbar-nav > .open > a,
+.navbar-inverse .navbar-nav > .open > a:hover,
+.navbar-inverse .navbar-nav > .open > a:focus {
+color: #fff;
+background-color: rgba(255, 162, 0, 0.65);
+margin-bottom: 0px;
+border-bottom: 0;
 }
 .custom_nav_search {
 	margin: 8px 10px 0 10px !important;
@@ -177,7 +242,6 @@ font-size:1.0em;
 .custom_nav_search_button {
 	margin:0 !important;
 }
-
 .nav .dropdown-menu {
 	min-width: 215px;
 }
