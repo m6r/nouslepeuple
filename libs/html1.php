@@ -643,7 +643,7 @@ function generateHash($plainText, $salt = null){
     else {
         $salt = substr($salt, 0, SALT_LENGTH); 
 	}		
-    return $salt . sha1($salt . $plainText);
+    return $salt . hash('sha512', $salt . $plainText);
 }
 
 function getmyFullurl($x, $var1="", $var2="", $var3="") {

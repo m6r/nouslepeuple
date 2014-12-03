@@ -163,7 +163,7 @@ function pligg_createtables($conn) {
 	  `user_level` enum('normal','moderator','admin','Spammer') collate utf8_general_ci NOT NULL default 'normal',
 	  `user_modification` timestamp NOT NULL,
 	  `user_date` timestamp NOT NULL,
-	  `user_pass` varchar(64) collate utf8_general_ci NOT NULL default '',
+	  `user_pass` varchar(256) collate utf8_general_ci NOT NULL default '',
 	  `user_email` varchar(128) collate utf8_general_ci NOT NULL default '',
 	  `user_names` varchar(128) collate utf8_general_ci NOT NULL default '',
 	  `user_karma` decimal(10,2) default '0.00',
@@ -688,7 +688,7 @@ function pligg_createtables($conn) {
 
 		ALTER TABLE  `pligg_users` CHANGE  `user_login`  `user_login` VARCHAR( 32 ) CHARACTER SET utf8 COLLATE utf8_general_ci,
 		CHANGE  `user_level`  `user_level` ENUM(  'normal',  'moderator',  'admin', 'Spammer' ) DEFAULT  'normal',
-		CHANGE  `user_pass`  `user_pass` VARCHAR( 64 ) CHARACTER SET utf8 COLLATE utf8_general_ci,
+		CHANGE  `user_pass`  `user_pass` VARCHAR( 256 ) CHARACTER SET utf8 COLLATE utf8_general_ci,
 		CHANGE  `user_email`  `user_email` VARCHAR( 128 ) CHARACTER SET utf8 COLLATE utf8_general_ci,
 		CHANGE  `user_names`  `user_names` VARCHAR( 128 ) CHARACTER SET utf8 COLLATE utf8_general_ci,
 		CHANGE  `user_url`  `user_url` VARCHAR( 128 ) CHARACTER SET utf8 COLLATE utf8_general_ci,

@@ -135,7 +135,7 @@ function Create(){
 		$user_skype = $db->escape($this->skype);
 		$user_pinterest = $db->escape(htmlentities($this->pinterest));
 		$user_avatar_source = $db->escape($this->avatar_source);
-		if (strlen($user_pass) < 49){
+		if (strlen($user_pass) < 128 + SALT_LENGTH){
 			$saltedpass=generateHash($user_pass);}
 		else{
 			$saltedpass=$user_pass;}
