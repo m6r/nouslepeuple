@@ -26,14 +26,14 @@
 							<a class="btn btn-xs btn-danger" href="javascript:{$link_shakebox_javascript_unvoten}"><i class="fa fa-white fa fa-thumbs-down"></i></a>
 						{/if}
 					{/if}
-					
+
 				</div>
 			{/if}
 			{if $UseAvatars neq "0"}
 				<div class="comment_avatar">
 					<a href="{$user_view_url}"><img src="{$Avatar.small}" class="avatar" alt="{$user_username}" title="{$user_username}" /></a>
 				</div>
-			{/if}      
+			{/if}
 		</div>
 		<div class="media-body comment-content" id="wholecomment{$comment_id}">
 			{if $user_logged_in == $user_userlogin || $isadmin eq 1}
@@ -63,13 +63,13 @@
 					<!-- {if $user_rank neq ''} (#{$user_rank}){/if} -->
 				</span>
 				<span class="comment-date">
-					{$comment_age} {#PLIGG_Visual_Comment_Ago#} 
+					{#PLIGG_Visual_Comment_Ago#} {$comment_age}
 				</span>
                 <span class="comment-reply">
                 <a href="#" onclick="show_comments('{$comment_id}')" id="comment-{$comment_id}">Permalink</a>
                 </span>
 				<span class="comment-reply">
-					{if $current_userid neq 0} 
+					{if $current_userid neq 0}
 						<a href="#" onclick="show_replay_comment_form('{$comment_id}')" id="comment-reply-{$comment_id}" >{#PLIGG_Visual_Comment_Reply#}</a>
 					{/if}
 				</span>
@@ -79,8 +79,8 @@
 					</span>
 				{/if}
 			</p>
-			{if $comment_votes gte 0} 
-				<p class="comment-content" id="comment_content-{$comment_id}">{$comment_content}</p> 
+			{if $comment_votes gte 0}
+				<p class="comment-content" id="comment_content-{$comment_id}">{$comment_content}</p>
 			{else}
 				<p class="comment-content" id="comment_content-{$comment_id}" style="display:none">{$comment_content}</p>
 			{/if}
