@@ -114,7 +114,7 @@
 			$salt = substr($salt, 0, 9);
 		}
 	
-		return $salt . sha1($salt . $plainText);
+        return $salt . hash('sha512', $salt . $plainText);
 	} 
 
 	function is_valid_url ( $url )
