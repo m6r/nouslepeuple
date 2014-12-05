@@ -37,6 +37,7 @@ PLIGG_Visual_Search_Status_All = "Alla"
 PLIGG_Visual_Search_Status_Published = "Publicerade"
 PLIGG_Visual_Search_Status_New = "Kommande"
 PLIGG_Visual_Search_Go = "Gå"
+PLIGG_Visual_Search_Title = "Search"
 PLIGG_Visual_404_Title = "Sidan du söker existerar inte!"
 PLIGG_Visual_404_Description = "Den kan ha tagits bort eller så har du anlänt här via en felaktig URL"
 PLIGG_Visual_404_Options = "<li>Prova att söka efter artikeln som du letar efter.</li><li>Gå till Startsidan för att se de senaste artiklarna.</li><li>Gå igenom kategorierna och taggar för att hitta en relaterad artikel.</li>"
@@ -50,10 +51,10 @@ PLIGG_Visual_Top_Today = "Toppnyheter idag"
 PLIGG_Visual_Yesterday = "Igår"
 PLIGG_Visual_This_Week = "Vecka"
 PLIGG_Visual_This_Month = "Månad"
-PLIGG_Visual_This_Year = "År"	
+PLIGG_Visual_This_Year = "År"
 
 
-//<SECTION>QUEUED</SECTION><ADDED>1.00</ADDED> 	 
+//<SECTION>QUEUED</SECTION><ADDED>1.00</ADDED>
 PLIGG_Visual_Pligg_Queued_Sort = "Sortera"
 PLIGG_Visual_Pligg_Queued_Sort_By = "efter"
 PLIGG_Visual_Pligg_Queued = "Kommande"

@@ -37,6 +37,7 @@ PLIGG_Visual_Search_Status_All = "Hemmesi"
 PLIGG_Visual_Search_Status_Published = "Çap edilenler"
 PLIGG_Visual_Search_Status_New = "Ỳetip gelýänler"
 PLIGG_Visual_Search_Go = "Başla"
+PLIGG_Visual_Search_Title = "Search"
 PLIGG_Visual_404_Title = "Seniň gözleỳän sahypaňyz tapylmady!"
 PLIGG_Visual_404_Description = "Onuň pozulup aỳrylan bolmagy ỳa-da siziň erbet URL arkaly saỳtymyza giren bolmagyň mümkin!"
 PLIGG_Visual_404_Options = "<li>Öz gözleỳän ỳazgyňy tapmaga synanş.</li><li>Iň täze ỳazgylary görmek üçin biziň esasy sahypamyza gir.</li><li>Isleỳän ỳazgyňyzy tapmak üçin bölümleri we bellikleri ulanyň.</li>"
@@ -50,10 +51,10 @@ PLIGG_Visual_Top_Today = "Şu günün iň oňatlary"
 PLIGG_Visual_Yesterday = "Düỳn"
 PLIGG_Visual_This_Week = "Hepde"
 PLIGG_Visual_This_Month = "Aỳ"
-PLIGG_Visual_This_Year = "Ỳyl"	
+PLIGG_Visual_This_Year = "Ỳyl"
 
 
-//<SECTION>QUEUED</SECTION><ADDED>1.00</ADDED> 	 
+//<SECTION>QUEUED</SECTION><ADDED>1.00</ADDED>
 PLIGG_Visual_Pligg_Queued_Sort = "Saỳla"
 PLIGG_Visual_Pligg_Queued_Sort_By = "Şu görkezilenler arkaly:"
 PLIGG_Visual_Pligg_Queued = "Ỳetip gelỳän habarlar"
@@ -753,7 +754,7 @@ PLIGG_Visual_Group_Submit_DescriptionInstruction = "Gysgaça öz toparyňy surat
 PLIGG_Visual_Group_Submit_PrivacyInstruction = "<ul><li><strong>Public</strong>: Täze agzalary ỳörite tassyklamak hökman däl. Ỳazgylaryň we ulanyjylaryň sanawyny her kim görüp biler.</li><li><strong>Private</strong>: Täze ulanyjylar hökman tassyklanmaly. Agzalaryň sanawy we makalalar şahsy goragda saklanỳar.Diňe ỳazyjynyň ulanyjy adyny görüp bolar.</li><li><strong>Çäklendirilen</strong>: Täze ulanyjylar hökman tassyklanmaly. Ỳazgylaryň we agzalaryň sanawy hemmelere açyk.</li></ul>"
 PLIGG_Visual_Group_Submit_NoOfVoteInstruction = "Topara ỳazgylary çap etmek üçin azyndan näçe sany ses berilen bolmaly. Mysal üçin : 5"
 PLIGG_Visual_Group_Saved_Changes = "Üỳtgetmeler şowly ỳada alynyp galyndy!"
-PLIGG_Visual_Group_Email_Body = "Salam topar administratory<br />Täze agza seniň toparyňa goşulmak üçin haỳyştnama ugratdy.<br/><br/>Ulanyjyny güỳje girizmek üçin şu ỳere bas:<a href='%s'>Güỳje giriz</a><br /><br />Ulanyjyny güỳçsizlendirmek üçin şu ỳere bas: <a href='%s'>Güỳçsizlendir</a><br />" 
+PLIGG_Visual_Group_Email_Body = "Salam topar administratory<br />Täze agza seniň toparyňa goşulmak üçin haỳyştnama ugratdy.<br/><br/>Ulanyjyny güỳje girizmek üçin şu ỳere bas:<a href='%s'>Güỳje giriz</a><br /><br />Ulanyjyny güỳçsizlendirmek üçin şu ỳere bas: <a href='%s'>Güỳçsizlendir</a><br />"
 PLIGG_Visual_Group_Email_Subject = "Topara agza bolmak baradaky haỳyştnama"
 
 //<SECTION>IIS LOGIN</SECTION><ADDED>1.00</ADDED>
