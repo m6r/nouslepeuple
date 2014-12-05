@@ -37,6 +37,7 @@ PLIGG_Visual_Search_Status_All = "الكل"
 PLIGG_Visual_Search_Status_Published = "المنشور"
 PLIGG_Visual_Search_Status_New = "القادم"
 PLIGG_Visual_Search_Go = "بحث"
+PLIGG_Visual_Search_Title = "Search"
 PLIGG_Visual_404_Title = "صفحة غير موجودة!"
 PLIGG_Visual_404_Description = "ربما تم حذفها أو أنك قمت بإستخدام رابط خاطئ"
 PLIGG_Visual_404_Options = "<li>حاول البحث عن الصفحة التي تريدها.</li><li>قم بزيارة الصفحة الرئيسية لقراءة جديدنا.</li><li>تصفح الأقسام و العلامات لتجد ما يناسب إهتماماتك.</li>"
@@ -53,7 +54,7 @@ PLIGG_Visual_This_Month = "الشهر"
 PLIGG_Visual_This_Year = "السنة"
 
 
-//<SECTION>QUEUED</SECTION><ADDED>1.00</ADDED> 	 
+//<SECTION>QUEUED</SECTION><ADDED>1.00</ADDED>
 PLIGG_Visual_Pligg_Queued_Sort = "ترتيب"
 PLIGG_Visual_Pligg_Queued_Sort_By = "حسب"
 PLIGG_Visual_Pligg_Queued = "المشاركات القادمة"

@@ -37,6 +37,7 @@ PLIGG_Visual_Search_Status_All = "Todos"
 PLIGG_Visual_Search_Status_Published = "Publicadas"
 PLIGG_Visual_Search_Status_New = "Esperando"
 PLIGG_Visual_Search_Go = "Ir"
+PLIGG_Visual_Search_Title = "Search"
 PLIGG_Visual_404_Title = "La página que esta buscando no existe"
 PLIGG_Visual_404_Description = "Puede haber sido eliminada o ha llegado aquí a traves de una URL errónea."
 PLIGG_Visual_404_Options = "<li> Pruebe a buscarlo </ li > <li> Visite la página principal para ver artículos más recientes. </ li > <li> Explore las categorías y las etiquetas para encontrar un articulo relacionado. </ li >"
@@ -53,7 +54,7 @@ PLIGG_Visual_This_Month = "Este mes"
 PLIGG_Visual_This_Year = "Este año"
 
 
-//<SECTION>ESPERANDO</SECTION><ADDED>1.00</ADDED> 	 
+//<SECTION>ESPERANDO</SECTION><ADDED>1.00</ADDED>
 PLIGG_Visual_Pligg_Queued_Sort = "Ordenar"
 PLIGG_Visual_Pligg_Queued_Sort_By = "por"
 PLIGG_Visual_Pligg_Queued = "Pendientes"
