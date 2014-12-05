@@ -49,9 +49,9 @@
 								{*	{$user_joined}	*}
 								{php}
 									$pligg_date = $this->_vars['user_joined'];
-									echo date("F d, Y", strtotime($pligg_date));
+                                    echo strftime("%d %h %Y",strtotime($pligg_date))
 								{/php}
-							</td>	
+							</td>
 						</tr>
 						<tr>
 							<td><strong>{#PLIGG_Visual_User_Profile_Total_Links#}:</strong></td>
@@ -83,8 +83,8 @@
 					<table class="table table-bordered table-striped vertical-align">
 						<thead class="table_title">
 							<tr>
-								<th>Group Name</th>
-								<th style="width:60px;text-align:center;">Members</th>
+								<th>{#PLIGG_Groups_Name#}</th>
+								<th style="width:60px;text-align:center;">{#PLIGG_Groups_Members#}</th>
 							</tr>
 						<tbody>
 							{if $group_display eq ''}

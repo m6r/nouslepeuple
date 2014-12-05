@@ -84,6 +84,8 @@ PLIGG_Visual_RSS_Feeds = "Tous les flux RSS"
 PLIGG_Visual_RSS_Published = "Publié"
 PLIGG_Visual_RSS_Queued = "Nouveau"
 PLIGG_Visual_RSS_All = "Tous"
+PLIGG_Visual_RSS_URL = "Flux RSS"
+PLIGG_Visual_Cancel = "Annuler"
 
 
 //<SECTION>REGISTER</SECTION><ADDED>1.00</ADDED>
@@ -311,6 +313,7 @@ PLIGG_Visual_Submit3Errors_Long_Title = "Le titre est trop long"
 PLIGG_Visual_Submit3Errors_Long_Content = "Le contenu est trop long"
 PLIGG_Visual_Submit3Errors_Long_Tags = "Il y a trop de tags"
 PLIGG_Visual_Submit3Errors_Long_Summary = "Le résumé est trop long"
+PLIGG_Visual_Submit3_No_Submit = "Vous n'avez pas cliqué sur le bouton envoyer avant de transmettre votre article."
 PLIGG_Visual_Total_Chars = "Nombre total de caractères"
 
 //<SECTION>TAGS</SECTION><ADDED>1.00</ADDED>
@@ -436,6 +439,8 @@ PLIGG_Visual_Profile_BadOldPass = "L'ancien mot de passe que vous avez fourni es
 PLIGG_Visual_Profile_PassUpdated = "Votre mot de passe a été mis à jour"
 PLIGG_Visual_Profile_DataUpdated = "Profil mis à jour"
 PLIGG_Visual_User_Profile_Friends = "Les gens que je suis"
+PLIGG_Visual_User_Send_Message = "Envoyer un message"
+PLIGG_Visual_User_Add_Remove = "Ajouter/Effacer"
 
 
 //<SECTION>PROFILE</SECTION><ADDED>1.00</ADDED>
@@ -461,6 +466,9 @@ PLIGG_Visual_Profile_UploadAvatar2 = "Télécharger une photo de profil"
 PLIGG_Visual_Profile_AvatarResize = "Si l'image fait plus de 30x30, elle sera redimensionnée."
 PLIGG_Visual_Profile_AvatarUpload = "Envoyer une image"
 PLIGG_Visual_User_Profile_User_Groups = "Membres du groupe"
+PLIGG_Visual_Profile_Edit_Avatar = "Modifier l'avatar"
+PLIGG_Visual_Profile_Browse = "Parcourir"
+PLIGG_Visual_Profile_Remove = "Enlever"
 
 
 //<SECTION>RSS</SECTION><ADDED>1.00</ADDED>
@@ -682,6 +690,7 @@ PLIGG_Visual_EditStory_Email_PreviousText = "Précédent"
 PLIGG_Visual_EditStory_Email_NewText = "Nouveau"
 PLIGG_Visual_EditLink_NotYours = "Ce n'est pas votre lien."
 PLIGG_Visual_EditLink_Timeout = "Vous ne pouvez pas éditer lien après %s minutes."
+PLIGG_Visual_EditStory_Empty = "Nouveau commentaire"
 
 
 //<SECTION>MISC</SECTION><ADDED>1.00</ADDED>
@@ -739,7 +748,11 @@ PLIGG_Visual_Group_Role_Admin = "Administrateur"
 PLIGG_Visual_Group_Role_Moderator = "Modérateur"
 PLIGG_Visual_Group_Role_Flagged = "Signalé"
 PLIGG_Visual_Group_Role_Banned = "Banni"
+PLIGG_Visual_Group_Avatar = "Avatar"
 PLIGG_Visual_Group_Avatar_Upload = "Changer la photo"
+PLIGG_Visual_Group_Avatar_Image_Upload = "Chosissez une image représentant votre groupe. Elle sera redimensionnée aux dimensions requisent, nous vous conseillons un format carré avant de la transmettre"
+PLIGG_Visual_Group_Avatar_Close="Fermer"
+PLIGG_Visual_Group_Approve="Approuver"
 PLIGG_Visual_Submit_Add_To_Group = "Ajouter à un groupe"
 PLIGG_Visual_Group_Story_Status = "Statut des articles du Groupe"
 PLIGG_Visual_Group_Sort = "Trier le groupe par"
@@ -913,6 +926,8 @@ PLIGG_Sidebar_Number_of_Comments_Desc = "Combien de commentaires doivent être a
 PLIGG_Email_Time_Limit_Title = "Délai d'envoi d'email."
 PLIGG_Email_Time_Limit_Desc = "Combien de secondes un utilisateur doit-il attendre avant d'envoyer un autre email « Dites-le à un ami » ?"
 PLIGG_Groups_Title = "Groupes"
+PLIGG_Groups_Name = "Nom du groupe"
+PLIGG_Groups_Members = "Membres"
 PLIGG_Groups_Desc = "Activer la fonction « Groupes »?"
 PLIGG_Max_Groups_User_Create_Title = "Nombre maximum de groupes créés"
 PLIGG_Max_Groups_User_Create_Desc = "Nombre maximum de groupes qu'un utilisateur unique est autorisé à créer"
@@ -1051,6 +1066,7 @@ PLIGG_Visual_Comment_Current_User_Username = "vous"
 PLIGG_Visual_Comment_Manage_User = "Gérer"
 PLIGG_Visual_Comment_Manage_Unregistered = "Non enregistré"
 PLIGG_Visual_Email_Tell_A_Friend = "Lien vers l'article : "
+PLIGG_Visual_Comment_Permalink = "Permalien"
 
 // Start 1.2.1 Language File
 PLIGG_Visual_AdminPanel_Subcategory_Move = "Passer les sous-catégories au niveau supérieur"
@@ -1090,5 +1106,10 @@ PLIGG_Visual_UpVoted = "Voté positivement"
 PLIGG_Visual_DownVoted = "Voté négativement"
 PLIGG_User_Profile_No_Content = "Cette page n'a pas de contenu à afficher pour le moment."
 
+PLIGG_Visual_Maintenance_Msg = " est en cours de maintenance. De retour rapidemment.Merci de votre compréhension"
+PLIGG_Visual_Maintenance = "Maintenance"
+PLIGG_Visual_GoBack = "Retour"
+PLIGG_Visual_Refresh_Page = "Actualiser"
+PLIGG_Visual_Sort = "Tri"
 // Start 2.0.1 Language File
 // End 2.0.1 Language File

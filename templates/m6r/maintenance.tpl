@@ -15,11 +15,11 @@
 	<body dir="{#PLIGG_Visual_Language_Direction#}" {$body_args}>
 		<div class="container" style="margin-top:30px;">
 			<div class="jumbotron">
-				<h1 style="font-size:3.4em;">Maintenance</h1>
-				<p>{#PLIGG_Visual_Name#} Is currently in maintenance mode. We should be back online shortly. Thank you for your patience.</p>
+				<h1 style="font-size:3.4em;">{#PLIGG_Visual_Maintenance#}</h1>
+				<p>{#PLIGG_Visual_Name#} {#PLIGG_Visual_Maintenance_Msg#}</p>
 				<p>
-					<a href="javascript: history.go(-1)" class="btn btn-lg">&laquo; Go Back</a> or 
-					<a href="javascript:location.reload(true)" class="btn btn-primary btn-lg">Refresh Page</a>
+					<a href="javascript: history.go(-1)" class="btn btn-lg">&laquo; {#PLIGG_Visual_GoBack#}</a> or 
+					<a href="javascript:location.reload(true)" class="btn btn-primary btn-lg">{#PLIGG_Visual_Refresh_Page#}</a>
 				</p>
 			</div>
 			<hr>

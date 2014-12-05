@@ -66,7 +66,7 @@
 					{#PLIGG_Visual_Comment_Ago#} {$comment_age}
 				</span>
                 <span class="comment-reply">
-                <a href="#" onclick="show_comments('{$comment_id}')" id="comment-{$comment_id}">Permalink</a>
+                <a href="#" onclick="show_comments('{$comment_id}')" id="comment-{$comment_id}">{#PLIGG_Visual_Comment_Permalink#}</a>
                 </span>
 				<span class="comment-reply">
 					{if $current_userid neq 0}

@@ -34,7 +34,7 @@
 			</div>
 			<div>
 				<br />
-				<input type="submit" value="Submit" class="btn btn-primary" tabindex="15" />
+				<input type="submit" value="{#PLIGG_Visual_Submit#}" class="btn btn-primary" tabindex="15" />
 			</div>
 			<input type="hidden" name="processrecover" value="1"/>
 			<input type="hidden" name="id" value="{$id}"/>

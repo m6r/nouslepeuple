@@ -57,7 +57,7 @@
 		<div class="btn-group pull-right breadcrumb-right">
 			<ul class="nav nav-pills">
 				<li class="dropdown pull-right">
-					<a href="#" data-toggle="dropdown" class="dropdown-toggle">Sort <span class="caret"></span></a>
+					<a href="#" data-toggle="dropdown" class="dropdown-toggle">{#PLIGG_Visual_Sort#} <span class="caret"></span></a>
 					<ul class="dropdown-menu" id="menu1">
 						{if $pagename eq "published" || $pagename eq "index" || $pagename eq "new" || $pagename eq "search"}
 						

@@ -35,7 +35,7 @@
 								{*	{$user_joined}	*}
 								{php}
 									$pligg_date = $this->_vars['user_joined'];
-									echo date("F d, Y", strtotime($pligg_date));
+                                    echo strftime("%d %h %Y",strtotime($pligg_date));
 								{/php}
 							</td>	
 						</tr>

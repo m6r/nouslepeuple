@@ -12,7 +12,7 @@
 				<span class="input-group-btn">
 					<input type="hidden" name="view" value="search">
 					<input type="text" name="keyword" class="form-control" placeholder="{#PLIGG_Visual_User_Search_Users#}">
-					<button class="btn btn-primary" type="button">Search Accounts</button>
+					<button class="btn btn-primary" type="button">{#PLIGG_Visual_User_Search_Users#}</button>
 				</span>
 			</form>	
 		</div><!-- /input-group -->
@@ -31,7 +31,7 @@
 					<th>{#PLIGG_Visual_Login_Username#}</th>
 					<th>{#PLIGG_Visual_User_Profile_Joined#}</th>
 					<th>{#PLIGG_User_Profile_Social#}</th>
-					{if $Allow_Friends}<th>Add/Remove</th>{/if}
+					{if $Allow_Friends}<th>{#PLIGG_Visual_User_Add_Remove#}</th>{/if}
 				</tr>
 			</thead>
 			<tbody id="user_search_body">

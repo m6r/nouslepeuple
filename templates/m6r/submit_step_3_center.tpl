@@ -34,7 +34,7 @@
 			if (!event && window.event) 
 					event = window.event;
 			
-			event.returnValue = "You have not hit the Submit Button to submit your story yet.";
+			event.returnValue = document.getElementById("smart_msg").innerHTML;
 		}
 	</SCRIPT>
 	{/literal}
@@ -60,6 +60,7 @@
 		$main_smarty->assign('submit_content', $link_content);
 		$main_smarty->assign('submit_trackback', $trackback);
 	{/php}
+        <div id="smart_msg" style="display:none">{#PLIGG_Visual_Submit3_No_Submit#}</div>
 	<form action="{$URL_submit}" method="post" id="thisform" name="ATISUBMIT" >
 		<input type="hidden" name="phase" value="3" />
 		<input type="hidden" name="randkey" value="{$templatelite.post.randkey}" />

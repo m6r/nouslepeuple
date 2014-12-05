@@ -27,7 +27,7 @@
 							}
 						{/php}
 						<img class="profile_avatar" src="{$Avatar.large}" alt="Avatar" />
-						<a href="#profileavatar" data-toggle="modal" class="btn btn-default btn-xs edit-avatar">Edit Avatar</a>
+						<a href="#profileavatar" data-toggle="modal" class="btn btn-default btn-xs edit-avatar">{#PLIGG_Visual_Profile_Edit_Avatar#}</a>
 					</div>
 				</a>
 				{* Avatar upload modal *}
@@ -50,11 +50,11 @@
 										<div class="fileupload-preview fileupload-exists img-thumbnail" style="max-width:{$Avatar_Large}px;max-height:{$Avatar_Large}px;"></div>
 										<div>
 											<span class="btn btn-default btn-file">
-												<span class="fileupload-new"><i class="fa fa-picture"></i> Browse</span>
-												<span class="fileupload-exists"><i class="fa fa-picture"></i> Browse</span>
+												<span class="fileupload-new"><i class="fa fa-picture"></i> {#PLIGG_Visual_Profile_Browse#}</span>
+												<span class="fileupload-exists"><i class="fa fa-picture"></i> {#PLIGG_Visual_Profile_Browse#}</span>
 												<input type="file" class="fileupload" name="image_file"/>
 											</span>
-											<a href="#" class="btn btn-danger fileupload-exists" data-dismiss="fileupload">Remove</a>
+											<a href="#" class="btn btn-danger fileupload-exists" data-dismiss="fileupload">{#PLIGG_Visual_Profile_Remove#}</a>
 										</div>
 									</div>
 								</div>
@@ -99,7 +99,7 @@
 					var string2 = "@";
 					var string3 = "{$email_domain}";
 				//  document.write(string4);
-					document.write("<a href=" + "mail" + "to:" + string1 + string2 + string3 + " id='user_email'>Email</a> | ");
+					document.write("<a href=" + "mail" + "to:" + string1 + string2 + string3 + " id='user_email'>{#PLIGG_Visual_View_User_Email#}</a> | ");
 				//-->
 				</script>
 			{/if}
@@ -158,7 +158,7 @@
 				<a class="btn btn-default btn-sm" href="{$user_url_friends}"><i class="fa fa-user"></i> {$user_following} {#PLIGG_Visual_User_Profile_View_Friends#}</a>
 				<a class="btn btn-default btn-sm" href="{$user_url_friends2}"><i class="fa fa-user"></i> {$user_followers} {#PLIGG_Visual_User_Profile_Your_Friends#}</a>
 				{if check_for_enabled_module('simple_messaging',2.0) && $is_friend && $user_login neq $user_logged_in}
-					<a class="btn btn-default btn-sm" href="{$my_base_url}{$my_pligg_base}/module.php?module=simple_messaging&view=compose&to={$username}&return={$my_pligg_base}%2Fuser.php%3Flogin%3D{$user_logged_in}%26view%3Dfollowers"><i class="fa fa-envelope"></i> Send Message</a>
+					<a class="btn btn-default btn-sm" href="{$my_base_url}{$my_pligg_base}/module.php?module=simple_messaging&view=compose&to={$username}&return={$my_pligg_base}%2Fuser.php%3Flogin%3D{$user_logged_in}%26view%3Dfollowers"><i class="fa fa-envelope"></i> {#PLIGG_Visual_User_Send_Message#}</a>
 				{/if}
 				{if $is_friend && $user_login neq $user_logged_in || $is_mutual}
 					<a href="{$user_url_remove}" class="btn btn-sm btn-danger">{#PLIGG_Unfollow#} {$user_login|capitalize} </a>

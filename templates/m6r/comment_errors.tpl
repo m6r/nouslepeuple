@@ -8,5 +8,5 @@
 		<input type="button" onclick="gPageIsOkToExit=true; history.go(-1);" value="{#PLIGG_Visual_Submit3Errors_Back#}" class="btn btn-primary" />
 	</form>
 </div>
-<br/ >
+<br/>
 <!--/comment_errors.tpl -->

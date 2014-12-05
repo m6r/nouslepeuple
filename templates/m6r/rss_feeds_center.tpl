@@ -5,8 +5,8 @@
 <table class="table table-bordered table-striped">
 	<thead>
 		<tr>
-			<th>Category</th>
-			<th>RSS URL</th>
+			<th>{#PLIGG_Visual_Category_Title#}</th>
+			<th>{#PLIGG_Visual_RSS_URL#}</th>
 		</tr>
 	</thead>
 	<tbody>

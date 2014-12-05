@@ -4,7 +4,7 @@
 <!-- group_summary.tpl -->
 <div class="group_container">
 	<div style="float:left;width:100px;margin:0 0 10px 0;">
-		<a href="{$group_story_url}"><img src="{$imgsrc}" alt="{$group_name} Avatar" class="img-thumbnail" /></a>
+		<a href="{$group_story_url}"><img src="{$imgsrc}" alt="{$group_name} {#PLIGG_Visual_Group_Avatar#}" class="img-thumbnail" /></a>
 	</div>
 	<div style="float:left;margin:0 0 10px 10px;" class="col-md-7">
 		<span class="group_title">
@@ -71,12 +71,12 @@
 									<h4 class="modal-title">{#PLIGG_Visual_Group_Avatar_Upload#}</h4>
 								</div>
 								<div class="modal-body">
-									<p>Please choose a image file to represent your group. Our site will resize your image to fit our standards, but we encourage you to crop your image to square dimensions prior to uploading.</p>
+									<p>{#PLIGG_Visual_Group_Avatar_Image_Upload#}</p>
 									{$hidden_token_edit_group}
 									<input type="file" name="image_file">
 								</div>
 								<div class="modal-footer">
-									<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+									<button type="button" class="btn btn-default" data-dismiss="modal">{#PLIGG_Visual_Group_Avatar_Close#}</button>
 									<button type="submit" name="action" class="btn btn-primary"><span class="fa fa-white fa fa-picture"></span> {#PLIGG_Visual_Group_Avatar_Upload#}</button>
 									<input type="hidden" name="idname" value="{$group_id}"/>
 									<input type="hidden" name="avatar" value="uploaded"/>
@@ -89,7 +89,7 @@
 			{/if}
 		{elseif $group_status eq 'disable'}
 			<div class='group_approve'>
-				<button onclick='document.location="?approve={$group_id}"'class='btn btn-primary group_approve_button'>Approve</button>
+				<button onclick='document.location="?approve={$group_id}"'class='btn btn-primary group_approve_button'>{#PLIGG_Visual_Group_Approve#}</button>
 			</div>
 		{/if}
 	</div>
