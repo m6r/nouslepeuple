@@ -467,6 +467,7 @@ color: #aaa;
 .news-body-text {
 font-size:1.125em;
 padding:2px 10px 0 10px;
+text-align: justify;
 }
 .storyfooter {
 padding: 0 10px;
