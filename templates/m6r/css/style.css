@@ -460,8 +460,7 @@ margin-bottom: 2px;
 }
 .subtext {
 display: block;
-font-size: 10px;
-line-height:10px;
+font-size: 1em;
 color: #aaa;
 }
 .news-body-text {
