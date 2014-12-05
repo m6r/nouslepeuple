@@ -9,7 +9,7 @@
 	<!-- END SEARCH BOX -->
 	{checkActionsTpl location="tpl_pligg_sidebar_middle"}
 	<!-- START ABOUT BOX -->
-		{include file=$the_template."/about_box.tpl"}
+{*		{include file=$the_template."/about_box.tpl"}*}
 	<!-- END ABOUT BOX -->
 	{checkActionsTpl location="tpl_pligg_sidebar_end"}
 {/if}
