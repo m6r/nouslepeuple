@@ -92,7 +92,7 @@
 			{if $pagename eq "submit" || $pagename eq "user" || $pagename eq "profile" || $pagename eq "user_edit" || $pagename eq "register" || $pagename eq "login"}
 				<div class="col-md-12">
 			{else}
-				<div class="col-md-9">
+				<div class="col-md-8">
 			{/if}
 					<!-- START BREADCRUMB -->
 						{include file=$the_template"/breadcrumb.tpl"}
@@ -124,7 +124,7 @@
 				
 				{if $pagename neq "submit" && $pagename neq "user" && $pagename neq "profile" && $pagename neq "user_edit" && $pagename neq "register" && $pagename neq "login"}
 					<!-- START RIGHT COLUMN -->
-					<div class="col-md-3">
+					<div class="col-md-4">
 						<div class="panel panel-default">
 							<div id="rightcol" class="panel-body">
 								<!-- START FIRST SIDEBAR -->
