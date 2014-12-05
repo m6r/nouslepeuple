@@ -178,7 +178,7 @@
 							
 							{if $UseAvatars neq "0"}<span id="ls_avatar-{$link_shakebox_index}"><img src="{$Avatar_ImgSrc}" width="16px" height="16px" alt="" title="Avatar" /></span>{else}<i class="fa fa-user"></i>{/if}
 							<a href="{$submitter_profile_url}">{$link_submitter}</a> 
-							<i class="fa fa-time"></i>
+							<i class="fa fa-clock-o"></i>
 							Being Submitted Now
 							{if $url_short neq "http://" && $url_short neq "://"}
 								<i class="fa fa-globe"></i>

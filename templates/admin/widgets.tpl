@@ -93,7 +93,7 @@
 										if(check_for_enabled_widget($requirement[0], $requirement[1])){
 											echo '<i class="fa fa-check" alt="Pass"></i> ';
 										} else {
-											echo '<i class="fa fa-times" alt="Fail"></i> ';
+											echo '<i class="fa fa-clock-os" alt="Fail"></i> ';
 										}
 										echo '' . $requirement[0] . ' Version ' . $requirement[1] .' &nbsp;&nbsp; ';
 									}
@@ -176,7 +176,7 @@
 									if(check_for_enabled_widget($requirement[0], $requirement[1])){
 										echo '<i class="fa fa-check" alt="Pass"></i> ';
 									} else {
-										echo '<i class="fa fa-times" alt="Fail"></i> ';
+										echo '<i class="fa fa-clock-os" alt="Fail"></i> ';
 									}
 									echo '' . $requirement[0] . ' Version ' . $requirement[1] .' &nbsp;&nbsp; ';
 								}
