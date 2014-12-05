@@ -457,7 +457,7 @@ border-bottom-color: #b3b3b3;
 .title h2 {
 font-size: 1.5em;
 margin-bottom: 2px;
-} 
+}
 .subtext {
 display: block;
 font-size: 10px;
@@ -465,7 +465,7 @@ line-height:10px;
 color: #aaa;
 }
 .news-body-text {
-font-size:0.85em;
+font-size:1.125em;
 padding:2px 10px 0 10px;
 }
 .storyfooter {
@@ -800,30 +800,30 @@ width:23%;
 vertical-align:middle;
 }
 
-@media screen and (min-width: 992px) and (max-width: 1199px) { 
+@media screen and (min-width: 992px) and (max-width: 1199px) {
 
 }
-@media screen and (min-width: 768px) and (max-width: 992px) { 
+@media screen and (min-width: 768px) and (max-width: 992px) {
 
 }
 
-@media screen and (min-width: 992px) { 
+@media screen and (min-width: 992px) {
 	#profiletabs {
-	
+
 	}
 }
-@media screen and (max-width: 720px) { 
+@media screen and (max-width: 720px) {
 	.nav>li>a {
 		padding:10px 13px;
 	}
 }
-@media screen and (min-width: 768px) and (max-width: 992px) { 
+@media screen and (min-width: 768px) and (max-width: 992px) {
 	#profiletabs {
-	
+
 	}
 
 }
-@media screen and (max-width: 768px) { 
+@media screen and (max-width: 768px) {
 	#profiletabs {
 		font-size:0.75em;
 	}
@@ -1170,7 +1170,7 @@ font-size:1.4em;
 
 /************* RECAPTCHA **************/
 /* Apply the iframe class to any iframes that need to display */
-iframe.iframe {display:block} 
+iframe.iframe {display:block}
 
 /************* ADVANCED SEARCH **************/
 .form-group div div label.active {
