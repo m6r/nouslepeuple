@@ -42,10 +42,10 @@
 						{/if}
 					{else}
 						{if $is_member_active eq 'active'}
-							<a class="btn btn-default" href="{$unjoin_group_url}" ><i class="fa fa-times"></i> {#PLIGG_Visual_Group_Unjoin#}</a>
+							<a class="btn btn-default" href="{$unjoin_group_url}" ><i class="fa fa-clock-os"></i> {#PLIGG_Visual_Group_Unjoin#}</a>
 						{/if}
 						{if $is_member_active eq 'inactive'}
-							<a class="btn btn-default" href="{$join_group_withdraw}" ><i class="fa fa-times"></i> {#PLIGG_Visual_Group_Withdraw_Request#}</a>
+							<a class="btn btn-default" href="{$join_group_withdraw}" ><i class="fa fa-clock-os"></i> {#PLIGG_Visual_Group_Withdraw_Request#}</a>
 						{/if}	
 					{/if}
 				{/if}

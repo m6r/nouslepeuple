@@ -23,8 +23,8 @@
 					<li><a href="{$my_pligg_base}/delete.php?link_id={$link_id}"><i class="fa fa-trash-o"></i> {#PLIGG_Visual_AdminPanel_Discard#}</a></li>
 				{/if}
 			</ul>
-			
-		</div>		
+
+		</div>
 	{/if}
 	{checkActionsTpl location="tpl_pligg_story_start"}
 	<div class="story_data">
@@ -53,7 +53,7 @@
 			<div class="votebox votebox-published">
 		  {else}
 			<div class="votebox votebox-new">
-		  {/if}			
+		  {/if}
 				<div class="vote">
 					{checkActionsTpl location="tpl_pligg_story_votebox_start"}
 					<div class="votenumber">
@@ -63,7 +63,7 @@
 						{if $anonymous_vote eq "false" and $user_logged_in eq ""}
 							<a data-toggle="modal" href="#loginModal" class="btn {if $link_shakebox_currentuser_votes eq 1}btn-success{else}btn-default{/if}"><i class="fa {if $link_shakebox_currentuser_votes eq 1}fa-white {/if}fa-thumbs-up"></i></a>
 							<a data-toggle="modal" href="#loginModal" class="btn {if $link_shakebox_currentuser_reports eq 1}btn-danger{else}btn-default{/if}"><i class="fa {if $link_shakebox_currentuser_reports eq 1}fa-white {/if}fa-thumbs-down"></i></a>
-                        
+
                         {else}
 							{if $link_shakebox_currentuser_votes eq 0}
 								<!-- Vote For It -->
@@ -98,7 +98,7 @@
 				 {else}
 					{if $pagename eq "story" && $url_short neq "http://" && $url_short neq "://"}
 						<a href="{$url}" {if $open_in_new_window eq true} target="_blank"{/if} {if $story_status neq "published"}rel="nofollow"{/if}>{$title_short}</a>
-					{else} 
+					{else}
 					  <a href="{$story_url}">{$title_short}</a>
 					{/if}
 				{/if}
@@ -106,18 +106,18 @@
 			</h2>
 			<span class="subtext">
 				{if $UseAvatars neq "0"}<span id="ls_avatar-{$link_shakebox_index}"><img src="{$Avatar_ImgSrcs}" width="16px" height="16px" alt="" title="Avatar" /></span>{else}<i class="fa fa-user"></i>{/if}
-				<a href="{$submitter_profile_url}">{$link_submitter}{if $submitter_rank neq ''} (#{$submitter_rank}){/if}</a> 
-				<i class="fa fa-time"></i>
-				{$link_submit_timeago} {#PLIGG_Visual_Comment_Ago#}
-				
-				<i class="fa fa-folder"></i> 
+				<a href="{$submitter_profile_url}">{$link_submitter}{if $submitter_rank neq ''} (#{$submitter_rank}){/if}</a>
+				<i class="fa fa-clock-o"></i>
+				{#PLIGG_Visual_Comment_Ago#} {$link_submit_timeago}
+
+				<i class="fa fa-folder"></i>
 				<a href="{$category_url}">{$link_category}</a>
 				{if $link_additional_cats}
 					{foreach from=$link_additional_cats item=catname key=caturl}
 						<a href="{$caturl}">{$catname}</a>
 					{/foreach}
 				{/if}
-				
+
 				{if $enable_tags}
 					{if $tags}
 						<i class="fa fa-tag"></i>
@@ -128,7 +128,7 @@
 						{/section}
 					{/if}
 				{/if}
-				
+
 				{if $url_short neq "http://" && $url_short neq "://"}
 					<i class="fa fa-globe"></i>
 					<a href="{$url}" {if $open_in_new_window eq true} target="_blank"{/if}  {if $story_status neq "published"}rel="nofollow"{/if}>{$url_short}</a>
@@ -145,8 +145,8 @@
 					{if $story_comment_count gt 1}
 						<i class="fa fa-comment"></i> <span id="linksummaryHasComment"><a href="{$story_url}#comments" class="comments2">{$story_comment_count} {#PLIGG_MiscWords_Comments#}</a>&nbsp;</span>
 					{/if}
-				</span> 
-				{if $user_logged_in}  
+				</span>
+				{if $user_logged_in}
 					<iframe height="0px;" width="0px;" frameborder="0" name="add_stories"></iframe>
 					{if $link_mine eq 0}
 						<i class="fa fa-star"></i> <span id="linksummarySaveLink">
@@ -159,12 +159,12 @@
 					<span id="stories-{$link_shakebox_index}" class="label label-success" style="display:none;line-height:1em;">{#PLIGG_MiscWords_Save_Links_Success#}</span>
 				{/if}
 				{if $link_shakebox_currentuser_votes eq 1 && $link_shakebox_currentuser_reports eq 1}
-					<i class="fa fa-minus-sign"></i> 
-					<span id="linksummaryUnvote"><a href="javascript:{$link_shakebox_javascript_unvote}">{#PLIGG_Visual_Unvote_For_It#}</a></span>&nbsp; 
+					<i class="fa fa-minus-sign"></i>
+					<span id="linksummaryUnvote"><a href="javascript:{$link_shakebox_javascript_unvote}">{#PLIGG_Visual_Unvote_For_It#}</a></span>&nbsp;
 				{/if}
 				{if $enable_group eq "true" && $user_logged_in}
 					<span class="group-tool-wrapper">
-						<i class="fa fa-group"></i> 
+						<i class="fa fa-group"></i>
 						<span class="group_sharing"><a href="javascript://" onclick="{if $get_group_membered}var replydisplay=document.getElementById('group_share-{$link_shakebox_index}').style.display ? '' : 'none';document.getElementById('group_share-{$link_shakebox_index}').style.display = replydisplay;{else}alert('{#PLIGG_Visual_No_Groups#}');{/if}">{#PLIGG_Visual_Group_Share#}</a></span>
 						<span id = "group_share-{$link_shakebox_index}" style="display:none;">
 							<div class="group-share-popup">{$get_group_membered}</div>
@@ -198,7 +198,7 @@
 						{$story_content|nl2br}
 					{/if}
 				{/if}
-				{* 
+				{*
 				{if $Enable_Extra_Field_1 eq 1}{if $link_field1 neq ""}<br/><b>{$Field_1_Title}:</b> {$link_field1}{/if}{/if}
 				{if $Enable_Extra_Field_2 eq 1}{if $link_field2 neq ""}<br/><b>{$Field_2_Title}:</b> {$link_field2}{/if}{/if}
 				{if $Enable_Extra_Field_3 eq 1}{if $link_field3 neq ""}<br/><b>{$Field_3_Title}:</b> {$link_field3}{/if}{/if}
@@ -215,10 +215,10 @@
 				{if $Enable_Extra_Field_14 eq 1}{if $link_field14 neq ""}<br/><b>{$Field_14_Title}:</b> {$link_field14}{/if}{/if}
 				{if $Enable_Extra_Field_15 eq 1}{if $link_field15 neq ""}<br/><b>{$Field_15_Title}:</b> {$link_field15}{/if}{/if}
 				*}
-				{* 
+				{*
 				  {if $pagename neq "story" && $pagename neq "submit"} <div class="floatright"><a class="btn btn-default" href="{$story_url}">{#PLIGG_Visual_Read_More#}</a></div>{/if}
 				*}
-				<div class="clearboth"></div> 
+				<div class="clearboth"></div>
 			</div>
 			{if $pagename eq "story"}{checkActionsTpl location="tpl_pligg_story_body_end_full"}{else}{checkActionsTpl location="tpl_pligg_story_body_end"}{/if}
 		{/if}
