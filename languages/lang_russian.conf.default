@@ -37,6 +37,7 @@ PLIGG_Visual_Search_Status_All = "Все"
 PLIGG_Visual_Search_Status_Published = "Опубликованные"
 PLIGG_Visual_Search_Status_New = "Добавленыые"
 PLIGG_Visual_Search_Go = "Искать"
+PLIGG_Visual_Search_Title = "Search"
 PLIGG_Visual_404_Title = "Страница, которую вы ищите не существует!"
 PLIGG_Visual_404_Description = "Возможно, она была удалена или вы перешли сюда с помощью правильного URL"
 PLIGG_Visual_404_Options = "<li>Воспользуйтесь поиском, чтобы найти статью, которая Вас интересует.</li><li>Посетите главную страницу, чтобы увидеть самые последние статьи.</li><li>Воспользуйтесь категориями и метками, для поиска соответствующуей статьи.</li>"
@@ -53,7 +54,7 @@ PLIGG_Visual_This_Month = "Лучшие за месяц"
 PLIGG_Visual_This_Year = "Лучшие за год"
 
 
-//<SECTION>QUEUED</SECTION><ADDED>1.00</ADDED> 	 
+//<SECTION>QUEUED</SECTION><ADDED>1.00</ADDED>
 PLIGG_Visual_Pligg_Queued_Sort = "Сортировать"
 PLIGG_Visual_Pligg_Queued_Sort_By = "по"
 PLIGG_Visual_Pligg_Queued = "Добавленные"

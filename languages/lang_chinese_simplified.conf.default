@@ -37,6 +37,7 @@ PLIGG_Visual_Search_Status_All = "全部"
 PLIGG_Visual_Search_Status_Published = "热门"
 PLIGG_Visual_Search_Status_New = "最新"
 PLIGG_Visual_Search_Go = "开始"
+PLIGG_Visual_Search_Title = "Search"
 PLIGG_Visual_404_Title = "你想查看的页面不存在!"
 PLIGG_Visual_404_Description = "它可能已被删除，或者你使用的链接有误。"
 PLIGG_Visual_404_Options = "<li>试试看搜索一下你想找的内容.</li><li>访问首页查看热门的内容.</li><li>浏览分类或标签以找到相关内容.</li>"
@@ -50,10 +51,10 @@ PLIGG_Visual_Top_Today = "今日排行"
 PLIGG_Visual_Yesterday = "昨日排行"
 PLIGG_Visual_This_Week = "周排行"
 PLIGG_Visual_This_Month = "月排行"
-PLIGG_Visual_This_Year = "年排行"	
+PLIGG_Visual_This_Year = "年排行"
 
 
-//<SECTION>QUEUED</SECTION><ADDED>1.00</ADDED> 	 
+//<SECTION>QUEUED</SECTION><ADDED>1.00</ADDED>
 PLIGG_Visual_Pligg_Queued_Sort = "排序"
 PLIGG_Visual_Pligg_Queued_Sort_By = "按"
 PLIGG_Visual_Pligg_Queued = "最近发表"

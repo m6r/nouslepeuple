@@ -37,6 +37,7 @@ PLIGG_Visual_Search_Status_All = "All"
 PLIGG_Visual_Search_Status_Published = "Published"
 PLIGG_Visual_Search_Status_New = "New"
 PLIGG_Visual_Search_Go = "Go"
+PLIGG_Visual_Search_Title = "Search"
 PLIGG_Visual_404_Title = "The page you were looking for doesn't exist!"
 PLIGG_Visual_404_Description = "It may have been removed or you may have arrived here by using a bad URL"
 PLIGG_Visual_404_Options = "<li>Try searching for the article you are looking for.</li><li>Visit the Homepage to see the most recent stories.</li><li>Browse categories and tags to find a related story.</li>"
@@ -50,10 +51,10 @@ PLIGG_Visual_Top_Today = "Top Today"
 PLIGG_Visual_Yesterday = "Yesterday"
 PLIGG_Visual_This_Week = "Week"
 PLIGG_Visual_This_Month = "Month"
-PLIGG_Visual_This_Year = "Year"	
+PLIGG_Visual_This_Year = "Year"
 
 
-//<SECTION>QUEUED</SECTION><ADDED>1.00</ADDED> 	 
+//<SECTION>QUEUED</SECTION><ADDED>1.00</ADDED>
 PLIGG_Visual_Pligg_Queued_Sort = "Sort"
 PLIGG_Visual_Pligg_Queued_Sort_By = "by"
 PLIGG_Visual_Pligg_Queued = "New"
