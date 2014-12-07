@@ -23,6 +23,16 @@ Si votre IDE crée les fichiers de configuration dans le répertoire de votre
 projet, vous pouvez utiliser le fichier global ``.gitignore`` (pour tout les
 projets) ou le fichier ``.git/info/exclude`` (par projet) pour les ignorer.
 
+Pour les utilisateurs Windows : en installant Git, l'installeur vous demandera quoi faire avec les fins de lignes, et vous suggérera de remplacer tout les saut de lignes (LF pour Line Feed) par des fins de lignes (CRLF pour Carriage Return Line Feed). Ce n'est pas la bonne configuration ! Conserver la configuration par défaut est le meilleur choix à faire, puisque Git convertira vos sauts de ligne (Line Feed) conformément à ceux du dépôt. Si vous avez déjà installé Git, vous pouvez vérifier la valeur en tapant :
+
+    $ git config core.autocrlf
+
+Cela retournera soit « false », « input » ou « true », « true » et « false » étant les mauvaises valeurs. Changez la en tapant :
+
+    $ git config --global core.autocrlf input
+
+Remplacez --global par --local si vous ne voulez le changer que pour le dépôt actif.
+
 ### Récupérez le code source
 
 
