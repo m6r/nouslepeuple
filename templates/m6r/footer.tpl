@@ -14,10 +14,9 @@
 			| <a href="{$URL_tagcloud}">{#PLIGG_Visual_Tags#}</a>
 		{/if}
 		| <a href="{$URL_topusers}">{#PLIGG_Visual_Top_Users#}</a>
-		| Made wtih <a href="http://pligg.com/" target="_blank">Pligg CMS</a> 
-		| <a href="http://pligg.com/hosting/" target="_blank">Web Host Promotions</a> 
+		| Made with <a href="http://pligg.com/" target="_blank">Pligg CMS</a>
 		{if $URL_rss_page}
-			| <a href="{$URL_rss_page}" target="_blank">{$pagename|capitalize} RSS Feed</a>
+			| <a href="{$URL_rss_page}" target="_blank">{$pagename|capitalize} RSS</a>
 		{/if}
 		| <a href="{$my_base_url}{$my_pligg_base}/rssfeeds.php">{#PLIGG_Visual_RSS_Feeds#}</a> 
 	</span>
