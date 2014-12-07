@@ -153,6 +153,7 @@ border: 1px solid #dedede;
 }
 .navbar-inverse .navbar-brand {
 padding-left: 60px;
+margin-right: 20px;
 background: transparent url("../img/logos/m6r_small.png") no-repeat 10px center;
 color: #fcb729;
 }
@@ -184,12 +185,19 @@ background-color: #F5F5F5;
 color: #555;
 font-weight: bolder;
 }
+.navbar-inverse .navbar-nav > li > a{
+border-bottom: 5px solid #FFF;
+padding-bottom: 10px;
+-webkit-transition: border-bottom 0.3s;
+transition: border-bottom 0.3s;
+}
 .navbar-inverse .navbar-nav > li > a:hover,
 .navbar-inverse .navbar-nav > li > a:focus {
-color: #555;
-margin-bottom: -5px;
-border-bottom: 5px solid #FCB729;
+color: #000;
+border-color: #FCB729;
 background-color: transparent;
+-webkit-transition: border-bottom 0.4s;
+transition: border-bottom 0.4s;
 }
 .navbar-inverse .navbar-nav > .active > a,
 .navbar-inverse .navbar-nav > .active > a:hover,
