@@ -126,7 +126,7 @@ Vous pouvez maintenant faire une pull request sur le dépôt ``m6r/pligg-cms``.
 
 Dans la description de la Pull Request, donnez autant de détails que possible sur
 les changements (n'hésitez pas à donner des exemples de code pour illustrer vos
-propos). 
+propos).
 
 ### Retravaillez votre patch
 
