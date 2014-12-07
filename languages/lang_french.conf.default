@@ -118,7 +118,18 @@ PLIGG_Visual_CheckField_EmailExists = "Cette adresse mail est déjà utilisée p
 PLIGG_Visual_Register_Description_Title = "Rejoignez-nous !"
 PLIGG_Visual_Register_Description_Paragraph = "Ne vous contentez pas simplement de lire le contenu, proposez vos propres commentaitres et participez en devenant membre gratuitement. En vous inscrivant, vous déverrouiller les fonctionnalités réservés aux membres tels que :"
 PLIGG_Visual_Register_Description_Points = "<li>proposer du contenu et permettre aux autres utilisateurs de voter dessus</li><li>voter sur les articles qui vous intéressent</li><li>sauvegardez vos articles favoris sur votre profil</li><li>voir vos votes et vos commentaires depuis votre profil</li>"
-
+PLIGG_Visual_Register_Nom = "Nom"
+PLIGG_Visual_Register_Prenom = "Prénom"
+PLIGG_Visual_Register_Date_Naissance = "Date de naissance"
+PLIGG_Visual_Register_Genre_Homme = "Homme"
+PLIGG_Visual_Register_Genre_Femme = "Femme"
+PLIGG_Visual_Register_Genre_Label = "Genre"
+PLIGG_Visual_Register_Numero_Secu = "Numéro de sécurité sociale"
+PLIGG_Visual_Register_Quinze_Caracteres = "Doit contenir 15 chiffres"
+PLIGG_Visual_Register_Code_Postal = "Code Postal"
+PLIGG_Visual_Register_Ville = "Ville"
+PLIGG_Visual_Register_Pays = "Pays"
+PLIGG_Visual_Register_Format_Date = "Au format jj/mm/aaaa"
 
 //<SECTION>LOGIN</SECTION><ADDED>1.00</ADDED>
 PLIGG_Visual_Login_Login = "Indentifiant"
