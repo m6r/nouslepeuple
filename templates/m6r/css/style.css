@@ -12,10 +12,8 @@ a:focus {
 color: #DCA719;
 text-decoration: underline;
 }
-a:focus {
-outline: thin dotted;
-outline: 5px auto -webkit-focus-ring-color;
-outline-offset: -2px;
+a:hover, a:focus, a:focus {
+   outline: 0;
 }
 h3{
 font-size:1.4em;
@@ -147,17 +145,19 @@ font-size:1.0em;
 }
 
 /********************* NAVIGATION MENU ********************/
-
 .navbar-inverse {
 background-color: rgba(255, 255, 255, 0.85);
 border: 1px solid #dedede;
 }
 .navbar-inverse .navbar-brand {
-color: #555;
+padding-left: 60px;
+margin-right: 20px;
+background: transparent url("../img/logos/m6r_small.png") no-repeat 10px center;
+color: #fcb729;
 }
 .navbar-inverse .navbar-brand:hover,
 .navbar-inverse .navbar-brand:focus {
-color: #555;
+color: #fcb729;
 background-color: transparent;
 }
 .navbar-inverse .navbar-text {
@@ -183,12 +183,19 @@ background-color: #F5F5F5;
 color: #555;
 font-weight: bolder;
 }
+.navbar-inverse .navbar-nav > li > a{
+border-bottom: 5px solid #FFF;
+padding-bottom: 10px;
+-webkit-transition: border-bottom 0.3s;
+transition: border-bottom 0.3s;
+}
 .navbar-inverse .navbar-nav > li > a:hover,
 .navbar-inverse .navbar-nav > li > a:focus {
-color: #555;
-margin-bottom: -5px;
-border-bottom: 5px solid #FCB729;
+color: #000;
+border-color: #FCB729;
 background-color: transparent;
+-webkit-transition: border-bottom 0.4s;
+transition: border-bottom 0.4s;
 }
 .navbar-inverse .navbar-nav > .active > a,
 .navbar-inverse .navbar-nav > .active > a:hover,
