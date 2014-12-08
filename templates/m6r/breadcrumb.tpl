@@ -81,9 +81,9 @@
 								{/if}
 								
 								{if $setmeka eq "commented"}
-									<li id="active" href="{$index_url_commented}"><a href="{$index_url_commented}" id="current"><span class="active">Most {#PLIGG_Visual_User_NewsCommented#}</span></a></li>
+									<li id="active" href="{$index_url_commented}"><a href="{$index_url_commented}" id="current"><span class="active">{#PLIGG_Visual_MostCommented#}</span></a></li>
 								{else}
-									<li><a href="{$index_url_commented}">Most {#PLIGG_Visual_User_NewsCommented#}</a></li>
+									<li><a href="{$index_url_commented}">{#PLIGG_Visual_MostCommented#}</a></li>
 								{/if}
 							{*/if*}
 						{/if}

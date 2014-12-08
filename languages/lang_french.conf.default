@@ -52,9 +52,7 @@ PLIGG_Visual_Yesterday = "Hier"
 PLIGG_Visual_This_Week = "Semaine"
 PLIGG_Visual_This_Month = "Mois"
 PLIGG_Visual_This_Year = "Année"
-
-
-//<SECTION>QUEUED</SECTION><ADDED>1.00</ADDED>          
+PLIGG_Visual_MostCommented = "Le plus commenté"
 PLIGG_Visual_Pligg_Queued_Sort = "Trier"
 PLIGG_Visual_Pligg_Queued_Sort_By = "par"
 PLIGG_Visual_Pligg_Queued = "Nouveau"
