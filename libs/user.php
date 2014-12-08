@@ -26,6 +26,19 @@ class User {
 	var $skype = '';
 	var $pinterest = '';
 	var $avatar_source = '';
+        
+        //Nouveaux champs
+        var $nom = '';
+        var $prenom = '';
+        var $code_postal = '';
+        var $ville = '';
+        var $pays = '';
+        var $numero_secu = '';
+        var $date_naissance = '';
+        var $genre = '';
+        var $signature = 0;
+        var $biographie = '';
+        
 	// For stats
 	var $total_votes = 0;
 	var $published_votes = 0;
@@ -47,6 +60,10 @@ function Create(){
 		if($this->username == ''){return false;}
 		if($this->pass == ''){return false;}
 		if($this->email == ''){return false;}
+		if($this->nom == ''){return false;}
+		if($this->prenom == ''){return false;}
+		if($this->code_postal == ''){return false;}
+		if($this->numero_secu == ''){return false;}
 		
 
 		if (!user_exists($this->username)) {
@@ -54,10 +71,28 @@ function Create(){
 			require_once(mnminclude.'check_behind_proxy.php');
 			$userip=check_ip_behind_proxy();
 			$saltedpass=generateHash($this->pass);
-			
+			$saltednumerosecu=generateHash($this->numero_secu);
+                        
 			if(pligg_validate()){
-				if ($db->query("INSERT IGNORE INTO " . table_users . " (user_login, user_email, user_pass, user_date, user_ip,user_categories) VALUES ('".$this->username."', '".$this->email."', '".$saltedpass."', now(), '".$userip."', '')")) {
-				
+				if ($db->query("INSERT IGNORE INTO " . table_users . " (user_login, user_email, user_pass, user_date, user_ip, user_categories, user_numero_secu, user_nom, user_prenom, user_genre, user_date_naissance, user_code_postal, user_ville, user_pays, user_signature, user_biographie) VALUES ('"
+                                        .$this->username
+                                        ."', '".$this->email
+                                        ."', '".$saltedpass."',"
+                                        . " now(), '"
+                                        .$userip
+                                        ."', '',"
+                                        ."', '".$saltednumerosecu."',"
+                                        ."', '".$this->nom."',"
+                                        ."', '".$this->prenom."',"
+                                        ."', '".$this->genre."',"
+                                        ."', '".$this->date_naissance."',"
+                                        ."', '".$this->code_postal."',"
+                                        ."', '".$this->ville."',"
+                                        ."', '".$this->pays."',"
+                                        ."', '".$this->signature."',"                                        
+                                        ."', '".$this->biographie."',"                                        
+                                        .")")) {
+                                        
 					$result = $db->get_row("SELECT user_email, user_pass, user_karma, user_lastlogin FROM " . table_users . " WHERE user_login = '".$this->username."'");
 					$encode = md5($this->email . $result->user_karma .  $this->username. pligg_hash().$main_smarty->get_config_vars('PLIGG_Visual_Name'));
 
@@ -100,7 +135,19 @@ function Create(){
 				}
 			} else{
 			
-					if ($db->query("INSERT IGNORE INTO " . table_users . " (user_login, user_email, user_pass, user_date, user_ip, user_lastlogin,user_categories) VALUES ('".$this->username."', '".$this->email."', '".$saltedpass."', now(), '".$userip."', now(),'')")) {
+					if ($db->query("INSERT IGNORE INTO " . table_users . " (user_login, user_email, user_pass, user_date, user_ip, user_lastlogin,user_categories  user_numero_secu, user_nom, user_prenom, user_genre, user_date_naissance, user_code_postal, user_ville, user_pays, user_signature, user_biographie) "
+                                                . "VALUES ('".$this->username."', '".$this->email."', '".$saltedpass."', now(), '".$userip."', now(), '',"
+                                                ."', '".$saltednumerosecu."',"
+                                                ."', '".$this->nom."',"
+                                                ."', '".$this->prenom."',"
+                                                ."', '".$this->genre."',"
+                                                ."', '".$this->date_naissance."',"
+                                                ."', '".$this->code_postal."',"
+                                                ."', '".$this->ville."',"
+                                                ."', '".$this->pays."',"
+                                                ."', '".$this->signature."',"                                        
+                                                ."', '".$this->biographie."',"      
+                                                . " )")) {
 						return true;
 					} else {
 						return false;
@@ -111,8 +158,13 @@ function Create(){
 			die('User already exists');
 		}
 	}
-
+        
+        /**
+         *  Modifier / Sauvegarder un utilisateur depuis l'administration ?
+         *
+         */
 	function store() {
+                
 		global $db, $current_user, $cached_users;
 
 		if(!$this->date) $this->date=time();
@@ -135,10 +187,12 @@ function Create(){
 		$user_skype = $db->escape($this->skype);
 		$user_pinterest = $db->escape(htmlentities($this->pinterest));
 		$user_avatar_source = $db->escape($this->avatar_source);
+                $user_biographie = $db->escape(sanitize($this->biographie, 3));
+                
 		if (strlen($user_pass) < 128 + SALT_LENGTH){
 			$saltedpass=generateHash($user_pass);}
 		else{
-			$saltedpass=$user_pass;}
+			$saltedpass=$user_pass;}                        
 			
 		if($this->id===0) {
 			$this->id = $db->insert_id;
@@ -151,8 +205,9 @@ function Create(){
 					$sql .= ", " . $varname . " = '" . $varvalue . "' ";
 				}
 			}
-			$sql .= " , user_login='$user_login', user_occupation='$user_occupation', user_language='$user_language', user_location='$user_location', public_email='$user_public_email', user_level='$user_level', user_karma=$user_karma, user_date=FROM_UNIXTIME($user_date), user_pass='$saltedpass', user_email='$user_email', user_names='$user_names', user_url='$user_url', user_facebook='$user_facebook', user_twitter='$user_twitter', user_linkedin='$user_linkedin', user_googleplus='$user_googleplus', user_skype='$user_skype', user_pinterest='$user_pinterest' WHERE user_id=$this->id";
+			$sql .= " , user_login='$user_login', user_occupation='$user_occupation', user_language='$user_language', user_location='$user_location', public_email='$user_public_email', user_level='$user_level', user_karma=$user_karma, user_date=FROM_UNIXTIME($user_date), user_pass='$saltedpass', user_email='$user_email', user_names='$user_names', user_url='$user_url', user_facebook='$user_facebook', user_twitter='$user_twitter', user_linkedin='$user_linkedin', user_googleplus='$user_googleplus', user_skype='$user_skype', user_pinterest='$user_pinterest', user_biographie='$user_biographie' WHERE user_id=$this->id";
 			//die($sql);
+                        echo $sql;
 			$db->query($sql);
 			//lets remove the old cached data
 			if(array_key_exists($this->id, $cached_users))
@@ -162,9 +217,15 @@ function Create(){
 		}
 	}
 	
+        /**
+         * Récupèrer les détails de l'utilisateur
+         *          
+         * @param String $data 
+         * @return boolean
+         */
 	function read($data = "long") {
 		// $data = long -- return all user data
-		// $data = short -- return just basic info
+		// $data = short -- return just basic info                
 		global $db, $current_user, $cached_users;
 
 		if($this->id > 0)
@@ -207,6 +268,7 @@ function Create(){
 			$this->email = $user->user_email;
 			$this->avatar_source = $user->user_avatar_source;
 			$this->karma = $user->user_karma;
+                        $this->biographie = $user->user_biographie;  
 			// if short, then stop here
 			if($data == 'short'){return true;}
 			$this->names = $user->user_names;
@@ -226,6 +288,19 @@ function Create(){
 			$this->googleplus = $user->user_googleplus;
 			$this->skype = $user->user_skype;
 			$this->pinterest = $user->user_pinterest;
+                        //Nouveaux champs
+                        $this->numero_secu = $user->user_numero_secu;
+                        $this->nom = $user->user_nom;
+                        $this->prenom = $user->user_prenom;
+                        $this->genre = $user->genre;
+                        $date = $user->user_date;
+			$this->date_naissance = unixtimestamp($date);
+                        $this->code_postal = $user->user_code_postal;
+                        $this->ville = $user->user_ville;
+                        $this->pays = $user->user_pays;
+                        $this->signature = $user->user_signature;                                  
+                        $this->biographie = $user->user_biographie;  
+                        
 			$this->read = true;
 
 			$this->extra_field = object_2_array($user, 0, 0);

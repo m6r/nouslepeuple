@@ -6,10 +6,11 @@ var ACPuzzleOptions = {
 {literal}};
 </script>
 {/literal}
-
+<br/>
 <div class="control-group{if isset($register_captcha_error)} error{/if}">
-	<label for="input01" class="control-label">CAPTCHA</label>
+	<label for="input01" class="control-label">Captcha <i class="fa fa-asterisk text-danger"></i></label>
 	<div class="controls">
+                <p class="help-inline">{#PLIGG_Visual_Captcha_Explication#}</p>
 		{if isset($register_captcha_error)}
 			<div class="alert alert-error">
 				<button class="close" data-dismiss="alert">&times;</button>

@@ -22,7 +22,7 @@
                     <input autofocus="autofocus" type="text" class="form-control reg_nom" id="reg_nom" name="reg_nom" value="{if isset($reg_nom)}{$reg_nom}{/if}" size="25" tabindex="10" maxlength="32"/>
                     <br/><span class="reg_nomcheckitvalue"></span>
                 </div>
-            </div>			
+            </div>
             <div class="control-group">
                 <label class="control-label">{#PLIGG_Visual_Register_Prenom#}
                     <i class="fa fa-asterisk text-danger"></i></label>
@@ -72,7 +72,7 @@
                             {$error}
                         </div>
                         { /foreach }
-                    {/if}                    
+                    {/if}
                 </div>
                 <div class="radio">
                     <label class="control-label">
@@ -86,10 +86,11 @@
                         {#PLIGG_Visual_Register_Genre_Femme#}
                     </label>
                 </div>
-                <br/>  
+                <br/>
             </div>
             <div class="control-group">
-                <label class="control-label">{#PLIGG_Visual_Register_Numero_Secu#}</label>
+                <label class="control-label">{#PLIGG_Visual_Register_Numero_Secu#}
+                <i class="fa fa-asterisk text-danger"></i></label>
                 <div class="controls">
                     {if isset($form_numerosecu_error)}
                         { foreach value=error from=$form_numerosecu_error }
@@ -147,7 +148,7 @@
                         { /foreach }
                     {/if}
                     <select autofocus="autofocus" type="text" class="form-control reg_pays" id="reg_pays" name="reg_pays" value="{if isset($reg_pays)}{$reg_pays}{/if}">
-                        <option value="France" selected="selected" {if isset($reg_pays)}{if $reg_pays=="Afghanistan"}{/if}selected="selected"{/if}>France </option>
+                        <option value="France" {if isset($reg_pays)}{if $reg_pays=="France"}{/if}selected="selected"{/if}>France </option>
                         <option value="Afghanistan" {if isset($reg_pays)}{if $reg_pays=="Afghanistan"}{/if}selected="selected"{/if}>Afghanistan </option>
                         <option value="Afrique_Centrale" {if isset($reg_pays)}{if $reg_pays=="Afrique_Centrale"}{/if}selected="selected"{/if}>Afrique Centrale </option>
                         <option value="Afrique_du_sud" {if isset($reg_pays)}{if $reg_pays=="Afrique_du_sud"}{/if}selected="selected"{/if}>Afrique du Sud </option>
@@ -216,7 +217,6 @@
                         <option value="Feroe" {if isset($reg_pays)}{if $reg_pays=="Feroe"}{/if}selected="selected"{/if}>Feroe </option>
                         <option value="Fidji" {if isset($reg_pays)}{if $reg_pays=="Fidji"}{/if}selected="selected"{/if}>Fidji </option>
                         <option value="Finlande" {if isset($reg_pays)}{if $reg_pays=="Finlande"}{/if}selected="selected"{/if}>Finlande </option>
-                        <option value="France" {if isset($reg_pays)}{if $reg_pays=="France"}{/if}selected="selected"{/if}>France </option>
                         <option value="Gabon" {if isset($reg_pays)}{if $reg_pays=="Gabon"}{/if}selected="selected"{/if}>Gabon </option>
                         <option value="Gambie" {if isset($reg_pays)}{if $reg_pays=="Gambie"}{/if}selected="selected"{/if}>Gambie </option>
                         <option value="Georgie" {if isset($reg_pays)}{if $reg_pays=="Georgie"}{/if}selected="selected"{/if}>Georgie </option>

@@ -214,6 +214,7 @@ function show_profile() {
 	$main_smarty->assign('user_total_comments', $user->total_comments);
 	$main_smarty->assign('user_total_votes', $user->total_votes);
 	$main_smarty->assign('user_published_votes', $user->published_votes);
+	$main_smarty->assign('user_biographie', $user->biographie);        
 	
 	// If the user language setting is NULL, present the site's default language file
 	$main_smarty->assign('user_language', !empty($user->language) ? $user->language : pligg_language);
@@ -446,8 +447,10 @@ function save_profile() {
 				$savemsg = $main_smarty->get_config_vars("PLIGG_Visual_Profile_BadOldPass");
 				return $savemsg;
 			}
-		}
-		
+		}                
+                
+                $user->biographie = sanitize($_POST['newbiographie'], 3);                
+                
 		$user->store();
 		$user->read();
 		if($saved['pass']==1 || $saved['username']==1)

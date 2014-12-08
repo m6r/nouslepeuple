@@ -22,7 +22,7 @@
 						$hashkey);
 		if (!$resp->is_valid) {
 
-			$main_smarty->assign('register_captcha_error', "The Solve Media puzzle answer provided is not correct. Please try again.");
+			$main_smarty->assign('register_captcha_error', "Votre saisie comporte une erreur. Veullez réessayer.");
 
 			return false;
 

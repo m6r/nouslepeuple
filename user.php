@@ -161,7 +161,10 @@ if ($user->url != "") {
 	}
 } else {
 	$main_smarty->assign('user_url', '');
-}		
+}
+
+//Assigne la biographie
+$main_smarty->assign('user_biographie', $user->biographie);
 
 // setup the links
 $main_smarty->assign('user_url_personal_data2', getmyurl('user2', $login));
