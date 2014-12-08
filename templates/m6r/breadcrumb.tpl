@@ -69,15 +69,15 @@
 							
 							{*if $user_logged_in*}
 								{if $setmeka eq "upvoted"}
-									<li id="active" href="{$index_url_upvoted}"><a href="{$index_url_upvoted}" id="current"><span class="active">Most {#PLIGG_Visual_UpVoted#}</span></a></li>
+									<li id="active" href="{$index_url_upvoted}"><a href="{$index_url_upvoted}" id="current"><span class="active">{#PLIGG_Visual_MostUpVoted#}</span></a></li>
 								{else}
-									<li><a href="{$index_url_upvoted}">Most {#PLIGG_Visual_UpVoted#}</a></li>
+									<li><a href="{$index_url_upvoted}">{#PLIGG_Visual_MostUpVoted#}</a></li>
 								{/if}
 								
 								{if $setmeka eq "downvoted"}
-									<li id="active" href="{$index_url_downvoted}"><a href="{$index_url_downvoted}" id="current"><span class="active">Most {#PLIGG_Visual_DownVoted#}</span></a></li>
+									<li id="active" href="{$index_url_downvoted}"><a href="{$index_url_downvoted}" id="current"><span class="active">{#PLIGG_Visual_MostDownVoted#}</span></a></li>
 								{else}
-									<li><a href="{$index_url_downvoted}">Most {#PLIGG_Visual_DownVoted#}</a></li>
+									<li><a href="{$index_url_downvoted}">{#PLIGG_Visual_MostDownVoted#}</a></li>
 								{/if}
 								
 								{if $setmeka eq "commented"}
