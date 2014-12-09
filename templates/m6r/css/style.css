@@ -9,7 +9,7 @@ text-decoration: none;
 }
 a:hover,
 a:focus {
-color: #DCA719;
+color: #FCB729;
 text-decoration: underline;
 }
 a:hover, a:focus, a:focus {
@@ -402,8 +402,17 @@ padding:7px 14px;
 /****************** PAGINATION ******************/
 
 .pagination > .active > a, .pagination > .active > span, .pagination > .active > a:hover, .pagination > .active > span:hover, .pagination > .active > a:focus, .pagination > .active > span:focus {
-    background-color: #2D6CE0;
-    border-color: #2D6CE0;
+    background-color: #fcb729;
+    border-color: #ffad1f;
+}
+
+.pagination > li > a,
+.pagination > li > span,
+.pagination > li > a:hover,
+.pagination > li > span:hover,
+.pagination > li > a:focus,
+.pagination > li > span:focus {
+  color: #fcb729;
 }
 
 /********************* STORY ********************/

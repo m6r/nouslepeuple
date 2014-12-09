@@ -13,7 +13,7 @@
 	<div class="col-md-4 login-left">
 		<form id="thisform" method="post">
 			<h2>{#PLIGG_Visual_Login_Login#}</h2>
-			<p>{#PLIGG_Visual_Login_Have_Account#}</p>
+			<p>{#PLIGG_Visual_Login_Have_Account#}<br /><br /></p>
 			<form action="{$URL_login}" method="post">	
 				<strong>{#PLIGG_Visual_Login_Username#}/{#PLIGG_Visual_Register_Email#}:</strong><br />
 				<input autofocus="autofocus" type="text" name="username" class="form-control" value="{if isset($login_username)}{$login_username}{/if}" tabindex="1" /><br />
