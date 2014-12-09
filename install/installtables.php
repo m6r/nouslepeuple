@@ -186,9 +186,19 @@ function pligg_createtables($conn) {
 	  `user_categories` VARCHAR(255) collate utf8_general_ci NOT NULL default '',
 	  `user_enabled` tinyint(1) NOT NULL default '1',
 	  `user_language` varchar(32) collate utf8_general_ci default NULL,
+      `user_numero_tel` VARCHAR(16) NULL DEFAULT NULL,
+      `user_nom` VARCHAR(32) NOT NULL ,
+      `user_prenom` VARCHAR(32) NOT NULL,
+      `user_genre` VARCHAR(1) NULL DEFAULT NULL,
+      `user_date_naissance` DATE NULL,
+      `user_code_postal` VARCHAR(8) NOT NULL,
+      `user_ville` VARCHAR(32) NULL DEFAULT NULL,
+      `user_pays` VARCHAR(32) NULL DEFAULT NULL,
+      `user_signature` TINYINT(1) NULL DEFAULT NULL,
+      `user_biographie` TEXT NULL,
 	  PRIMARY KEY  (`user_id`),
 	  UNIQUE KEY `user_login` (`user_login`),
-	  KEY `user_email` (`user_email`)
+	  KEY `user_email` (`user_email`),
 	) ENGINE = MyISAM;";
 //	echo 'Creating table: \'users\'...<br />';
 	mysql_query( $sql, $conn );

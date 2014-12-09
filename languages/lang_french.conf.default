@@ -107,8 +107,18 @@ PLIGG_Visual_Register_Error_NoPassMatch = "Les mots de passe fournis ne correspo
 PLIGG_Visual_Register_Error_FiveCharPass = "Votre mot de passe doit comporter au moins 5 caractères"
 PLIGG_Visual_Register_Error_EmailExists = "Cette adresse mail est déjà utilisée pour un autre compte"
 PLIGG_Visual_Register_Error_BadEmail = "L'adresse électronique fournie n'est pas correcte"
-PLIGG_Visual_Register_Error_UserInvalid = "Votre nom d'utilisateur utilise des caractères invalides."
-PLIGG_Visual_Register_Error_UserTooShort = "Le nom d'utilisateur doit faire au moins trois caractères"
+PLIGG_Visual_Register_Error_UserInvalid = "Votre pseudo utilise des caractères invalides."
+PLIGG_Visual_Register_Error_UserTooShort = "Le pseudo doit faire au moins trois caractères"
+
+PLIGG_Visual_Register_Error_NomTooShort = "Le nom d'utilisateur doit faire au moins trois caractères"
+PLIGG_Visual_Register_Error_NomomInvalid = "Votre nom d'utilisateur utilise des caractères invalides."
+PLIGG_Visual_Register_Error_PrenomTooShort = "Le prenom d'utilisateur doit faire au moins trois caractères"
+
+PLIGG_Visual_Register_Error_PrenomInvalid = "Votre prenom d'utilisateur utilise des caractères invalides."
+PLIGG_Visual_Register_Error_DateInvalid = "Date de naissance invalide"
+PLIGG_Visual_Register_Error_NumTelInvalid = "Numero invalide"
+PLIGG_Visual_Register_Error_CPInvalid = "Le code postal n'est pas valide"
+
 PLIGG_Visual_Register_Error_Return = "Revenir en arrière et essayer à nouveau."
 PLIGG_Visual_CheckField_UserShort = "Le nom d'utilisateur est trop court."
 PLIGG_Visual_CheckField_InvalidChars = "Des caractères non valides ont été utilisés"
@@ -118,7 +128,19 @@ PLIGG_Visual_CheckField_EmailExists = "Cette adresse mail est déjà utilisée p
 PLIGG_Visual_Register_Description_Title = "Rejoignez-nous !"
 PLIGG_Visual_Register_Description_Paragraph = "Ne vous contentez pas simplement de lire le contenu, proposez vos propres commentaitres et participez en devenant membre gratuitement. En vous inscrivant, vous déverrouiller les fonctionnalités réservés aux membres tels que :"
 PLIGG_Visual_Register_Description_Points = "<li>proposer du contenu et permettre aux autres utilisateurs de voter dessus</li><li>voter sur les articles qui vous intéressent</li><li>sauvegardez vos articles favoris sur votre profil</li><li>voir vos votes et vos commentaires depuis votre profil</li>"
-
+PLIGG_Visual_Register_Nom = "Nom"
+PLIGG_Visual_Register_Prenom = "Prénom"
+PLIGG_Visual_Register_Date_Naissance = "Date de naissance"
+PLIGG_Visual_Register_Genre_Homme = "Homme"
+PLIGG_Visual_Register_Genre_Femme = "Femme"
+PLIGG_Visual_Register_Genre_NSPR = "Ne souhaite pas répondre"
+PLIGG_Visual_Register_Genre_Label = "Genre"
+PLIGG_Visual_Register_Numero_Tel = "Numéro de téléphone portable"
+PLIGG_Visual_Register_Numero_Tel_Instructions = "Exemple : 06xxxxxxxx ou +49xxxxxxxxxxxx pour l'étranger"
+PLIGG_Visual_Register_Code_Postal = "Code Postal"
+PLIGG_Visual_Register_Ville = "Ville"
+PLIGG_Visual_Register_Pays = "Pays"
+PLIGG_Visual_Register_Format_Date = "Au format jj/mm/aaaa"
 
 //<SECTION>LOGIN</SECTION><ADDED>1.00</ADDED>
 PLIGG_Visual_Login_Login = "Indentifiant"
@@ -467,6 +489,8 @@ PLIGG_Visual_User_Profile_User_Groups = "Membres du groupe"
 PLIGG_Visual_Profile_Edit_Avatar = "Modifier l'avatar"
 PLIGG_Visual_Profile_Browse = "Parcourir"
 PLIGG_Visual_Profile_Remove = "Enlever"
+PLIGG_Visual_Profile_Biographie = "Présentez-vous"
+PLIGG_Visual_Profile_Biographie_Public = "Présentation"
 
 
 //<SECTION>RSS</SECTION><ADDED>1.00</ADDED>
@@ -1106,10 +1130,14 @@ PLIGG_Visual_UpVoted = "Voté positivement"
 PLIGG_Visual_DownVoted = "Voté négativement"
 PLIGG_User_Profile_No_Content = "Cette page n'a pas de contenu à afficher pour le moment."
 
+
 PLIGG_Visual_Maintenance_Msg = " est en cours de maintenance. De retour rapidemment.Merci de votre compréhension"
 PLIGG_Visual_Maintenance = "Maintenance"
 PLIGG_Visual_GoBack = "Retour"
 PLIGG_Visual_Refresh_Page = "Actualiser"
 PLIGG_Visual_Sort = "Tri"
+
+
+
 // Start 2.0.1 Language File
 // End 2.0.1 Language File
