@@ -1031,14 +1031,14 @@ padding-top:0;
 
 .create_group {
 float:left;
-width:48%;
+width:30%;
 margin:15px 0 0 0;
 border-right:1px solid #ddd;
 }
 .search_groups {
 float:left;
 text-align:right;
-width:48%;
+width:70%;
 margin:15px 0 0 0;
 }
 .group_title {
