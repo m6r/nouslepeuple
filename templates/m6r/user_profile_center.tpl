@@ -63,21 +63,21 @@
 						*}
 					</tbody>
 				</table>
-                                {*Biographie*}                
+                                {*Biographie*}
                                 <table class="table table-bordered table-striped">
                                     <thead class="table_title">
                                         <tr>
                                             <th colspan="2">{#PLIGG_Visual_Profile_Biographie_Public#}</th>
                                         </tr>
                                     </thead>
-                                    <tbody>                                        
+                                    <tbody>
                                         <tr>
-                                            <td>                                                
-						{$user_biographie}                                               
-                                            </td>                                            
-                                        </tr>					
+                                            <td>
+						{$user_biographie}
+                                            </td>
+                                        </tr>
                                     </tbody>
-                                </table>        
+                                </table>
 			</div>
 			{if $enable_group eq "true"}
 				<div id="groups" class="col-md-6">

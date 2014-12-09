@@ -86,23 +86,29 @@
                         {#PLIGG_Visual_Register_Genre_Femme#}
                     </label>
                 </div>
+                <div class="radio">
+                    <label class="control-label">
+                        <input type="radio" name="reg_genre" id="reg_genre2" value="N">
+                        {#PLIGG_Visual_Register_Genre_NSPR#}
+                    </label>
+                </div>
                 <br/>
             </div>
             <div class="control-group">
-                <label class="control-label">{#PLIGG_Visual_Register_Numero_Secu#}
+                <label class="control-label">{#PLIGG_Visual_Register_Numero_Tel#}
                 <i class="fa fa-asterisk text-danger"></i></label>
                 <div class="controls">
-                    {if isset($form_numerosecu_error)}
-                        { foreach value=error from=$form_numerosecu_error }
+                    {if isset($form_numerotel_error)}
+                        { foreach value=error from=$form_numerotel_error }
                         <div style="margin:10px 0 0 0;" class="alert alert-danger">
                             <button class="close" data-dismiss="alert">&times;</button>
                             {$error}
                         </div>
                         { /foreach }
                     {/if}
-                    <input autofocus="autofocus" type="text" class="form-control reg_numerosecu" id="reg_numerosecu" name="reg_numerosecu" value="{if isset($reg_numerosecu)}{$reg_numerosecu}{/if}" size="25" tabindex="10" maxlength="32"/>
-                    <p class="help-inline">{#PLIGG_Visual_Register_Quinze_Caracteres#}</p>
-                    <br/><span class="reg_numerosecucheckitvalue"></span>
+                    <input autofocus="autofocus" type="text" class="form-control reg_numerotel" id="reg_numerotel" name="reg_numerotel" value="{if isset($reg_numerotel)}{$reg_numerotel}{/if}" size="25" tabindex="10" maxlength="32"/>
+                    <p class="help-inline">{#PLIGG_Visual_Register_Numero_Tel_Instructions#}</p>
+                    <br/><span class="reg_numerotelcheckitvalue"></span>
                 </div>
             </div>
             <div class="control-group">

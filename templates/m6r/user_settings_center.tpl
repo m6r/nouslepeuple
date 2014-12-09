@@ -165,22 +165,20 @@
 				</tbody>
 			</table>
 		</div>
-                
-                {*Biographie*}                
-                <table class="table table-bordered table-striped">                   
+                {*Biographie*}
+                <table class="table table-bordered table-striped">
                     <tbody>
                         <tr>
                             <td><label>Présentez vous aux autres citoyens</label></td>
                         </tr>
                         <tr>
-                            <td>    
+                            <td>
                                 <textarea class="form-control" id="" name="newbiographie">{$user_biographie}</textarea>
                             </td>
-                        </tr>					
+                        </tr>
                     </tbody>
                 </table>
 
-                                                
 	</div>
 	<div style="clear:both;"></div>
 	<div class="form-actions">
