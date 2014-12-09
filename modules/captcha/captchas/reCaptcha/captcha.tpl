@@ -20,9 +20,9 @@ var RecaptchaOptions = {
 {/literal}
 <div class="control-group{if isset($register_captcha_error)} error{/if}">
 	<label for="input01" class="control-label">
-		CAPTCHA 
+		Vérification de sécurité (captcha)
 		| <a href="javascript:Recaptcha.reload()"><i style="font-size:16px;" class="fa fa-refresh"></i></a>
-		| <a href="javascript:Recaptcha.showhelp()"><i style="font-size:16px;" class="fa fa-info"></i></a></a>
+		| <a href="javascript:Recaptcha.showhelp()"><i style="font-size:16px;" class="fa fa-info"></i></a>
 	</label>
 	<div class="controls">
 		{if isset($register_captcha_error)}
@@ -40,6 +40,7 @@ var RecaptchaOptions = {
 			<br /><br />
 		</div>
 	</div>
+	<p class="help-inline" align="justify">Entrez ici ce que vous voyez sur l'image. Cela permet de vérifier que vous êtes bien un être humain et non pas un robot. Si vous ne parvenez pas à lire, actualisez l'image en cliquant ici : <a href="javascript:Recaptcha.reload()"><i style="font-size:16px;" class="fa fa-refresh"></i></a></p>
 </div>
 {php}
 	require_once(captcha_captchas_path . '/reCaptcha/libs/recaptchalib.php');
