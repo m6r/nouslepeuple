@@ -107,8 +107,18 @@ PLIGG_Visual_Register_Error_NoPassMatch = "Les mots de passe fournis ne correspo
 PLIGG_Visual_Register_Error_FiveCharPass = "Votre mot de passe doit comporter au moins 5 caractères"
 PLIGG_Visual_Register_Error_EmailExists = "Cette adresse mail est déjà utilisée pour un autre compte"
 PLIGG_Visual_Register_Error_BadEmail = "L'adresse électronique fournie n'est pas correcte"
-PLIGG_Visual_Register_Error_UserInvalid = "Votre nom d'utilisateur utilise des caractères invalides."
-PLIGG_Visual_Register_Error_UserTooShort = "Le nom d'utilisateur doit faire au moins trois caractères"
+PLIGG_Visual_Register_Error_UserInvalid = "Votre pseudo utilise des caractères invalides."
+PLIGG_Visual_Register_Error_UserTooShort = "Le pseudo doit faire au moins trois caractères"
+
+PLIGG_Visual_Register_Error_NomTooShort = "Le nom d'utilisateur doit faire au moins trois caractères"
+PLIGG_Visual_Register_Error_NomomInvalid = "Votre nom d'utilisateur utilise des caractères invalides."
+PLIGG_Visual_Register_Error_PrenomTooShort = "Le prenom d'utilisateur doit faire au moins trois caractères"
+
+PLIGG_Visual_Register_Error_PrenomInvalid = "Votre prenom d'utilisateur utilise des caractères invalides."
+PLIGG_Visual_Register_Error_DateInvalid = "Date de naissance invalide"
+PLIGG_Visual_Register_Error_NumSecuInvalid = "Numero sécurité sociale invalide"
+PLIGG_Visual_Register_Error_CPInvalid = "Le code postal n'est pas valide"
+
 PLIGG_Visual_Register_Error_Return = "Revenir en arrière et essayer à nouveau."
 PLIGG_Visual_CheckField_UserShort = "Le nom d'utilisateur est trop court."
 PLIGG_Visual_CheckField_InvalidChars = "Des caractères non valides ont été utilisés"
@@ -1118,6 +1128,7 @@ PLIGG_Visual_MostDownVoted = "Voté négativement"
 PLIGG_Visual_UpVoted = "Voté positivement"
 PLIGG_Visual_DownVoted = "Voté négativement"
 PLIGG_User_Profile_No_Content = "Cette page n'a pas de contenu à afficher pour le moment."
+
 
 PLIGG_Visual_Maintenance_Msg = " est en cours de maintenance. De retour rapidemment.Merci de votre compréhension"
 PLIGG_Visual_Maintenance = "Maintenance"

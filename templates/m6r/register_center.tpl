@@ -148,234 +148,234 @@
                         { /foreach }
                     {/if}
                     <select autofocus="autofocus" type="text" class="form-control reg_pays" id="reg_pays" name="reg_pays" value="{if isset($reg_pays)}{$reg_pays}{/if}">
-                        <option value="France" {if isset($reg_pays)}{if $reg_pays=="France"}{/if}selected="selected"{/if}>France </option>
-                        <option value="Afghanistan" {if isset($reg_pays)}{if $reg_pays=="Afghanistan"}{/if}selected="selected"{/if}>Afghanistan </option>
-                        <option value="Afrique_Centrale" {if isset($reg_pays)}{if $reg_pays=="Afrique_Centrale"}{/if}selected="selected"{/if}>Afrique Centrale </option>
-                        <option value="Afrique_du_sud" {if isset($reg_pays)}{if $reg_pays=="Afrique_du_sud"}{/if}selected="selected"{/if}>Afrique du Sud </option>
-                        <option value="Albanie" {if isset($reg_pays)}{if $reg_pays=="Albanie"}{/if}selected="selected"{/if}>Albanie </option>
-                        <option value="Algerie" {if isset($reg_pays)}{if $reg_pays=="Algerie"}{/if}selected="selected"{/if}>Algerie </option>
-                        <option value="Allemagne" {if isset($reg_pays)}{if $reg_pays=="Allemagne"}{/if}selected="selected"{/if}>Allemagne </option>
-                        <option value="Andorre" {if isset($reg_pays)}{if $reg_pays=="Andorre"}{/if}selected="selected"{/if}>Andorre </option>
-                        <option value="Angola" {if isset($reg_pays)}{if $reg_pays=="Angola"}{/if}selected="selected"{/if}>Angola </option>
-                        <option value="Anguilla" {if isset($reg_pays)}{if $reg_pays=="Anguilla"}{/if}selected="selected"{/if}>Anguilla </option>
-                        <option value="Arabie_Saoudite" {if isset($reg_pays)}{if $reg_pays=="Arabie_Saoudite"}{/if}selected="selected"{/if}>Arabie Saoudite </option>
-                        <option value="Argentine" {if isset($reg_pays)}{if $reg_pays=="Argentine"}{/if}selected="selected"{/if}>Argentine </option>
-                        <option value="Armenie" {if isset($reg_pays)}{if $reg_pays=="Armenie"}{/if}selected="selected"{/if}>Armenie </option>
-                        <option value="Australie" {if isset($reg_pays)}{if $reg_pays=="Australie"}{/if}selected="selected"{/if}>Australie </option>
-                        <option value="Autriche" {if isset($reg_pays)}{if $reg_pays=="Autriche"}{/if}selected="selected"{/if}>Autriche </option>
-                        <option value="Azerbaidjan" {if isset($reg_pays)}{if $reg_pays=="Azerbaidjan"}{/if}selected="selected"{/if}>Azerbaidjan </option>
-                        <option value="Bahamas" {if isset($reg_pays)}{if $reg_pays=="Bahamas"}{/if}selected="selected"{/if}>Bahamas </option>
-                        <option value="Bangladesh" {if isset($reg_pays)}{if $reg_pays=="Bangladesh"}{/if}selected="selected"{/if}>Bangladesh </option>
-                        <option value="Barbade" {if isset($reg_pays)}{if $reg_pays=="Barbade"}{/if}selected="selected"{/if}>Barbade </option>
-                        <option value="Bahrein" {if isset($reg_pays)}{if $reg_pays=="Bahrein"}{/if}selected="selected"{/if}>Bahrein </option>
-                        <option value="Belgique" {if isset($reg_pays)}{if $reg_pays=="Belgique"}{/if}selected="selected"{/if}>Belgique </option>
-                        <option value="Belize" {if isset($reg_pays)}{if $reg_pays=="Belize"}{/if}selected="selected"{/if}>Belize </option>
-                        <option value="Benin" {if isset($reg_pays)}{if $reg_pays=="Benin"}{/if}selected="selected"{/if}>Benin </option>
-                        <option value="Bermudes" {if isset($reg_pays)}{if $reg_pays=="Bermudes"}{/if}selected="selected"{/if}>Bermudes </option>
-                        <option value="Bielorussie" {if isset($reg_pays)}{if $reg_pays=="Bielorussie"}{/if}selected="selected"{/if}>Bielorussie </option>
-                        <option value="Bolivie" {if isset($reg_pays)}{if $reg_pays=="Bolivie"}{/if}selected="selected"{/if}>Bolivie </option>
-                        <option value="Botswana" {if isset($reg_pays)}{if $reg_pays=="Botswana"}{/if}selected="selected"{/if}>Botswana </option>
-                        <option value="Bhoutan" {if isset($reg_pays)}{if $reg_pays=="Bhoutan"}{/if}selected="selected"{/if}>Bhoutan </option>
-                        <option value="Boznie_Herzegovine" {if isset($reg_pays)}{if $reg_pays=="Boznie_Herzegovine"}{/if}selected="selected"{/if}>Boznie Herzegovine </option>
-                        <option value="Bresil" {if isset($reg_pays)}{if $reg_pays=="Bresil"}{/if}selected="selected"{/if}>Bresil </option>
-                        <option value="Brunei" {if isset($reg_pays)}{if $reg_pays=="Brunei"}{/if}selected="selected"{/if}>Brunei </option>
-                        <option value="Bulgarie" {if isset($reg_pays)}{if $reg_pays=="Bulgarie"}{/if}selected="selected"{/if}>Bulgarie </option>
-                        <option value="Burkina_Faso" {if isset($reg_pays)}{if $reg_pays=="Burkina_Faso"}{/if}selected="selected"{/if}>Burkina Faso </option>
-                        <option value="Burundi" {if isset($reg_pays)}{if $reg_pays=="Burundi"}{/if}selected="selected"{/if}>Burundi </option>
-                        <option value="Caiman" {if isset($reg_pays)}{if $reg_pays=="Caiman"}{/if}selected="selected"{/if}>Caiman </option>
-                        <option value="Cambodge" {if isset($reg_pays)}{if $reg_pays=="Cambodge"}{/if}selected="selected"{/if}>Cambodge </option>
-                        <option value="Cameroun" {if isset($reg_pays)}{if $reg_pays=="Cameroun"}{/if}selected="selected"{/if}>Cameroun </option>
-                        <option value="Canada" {if isset($reg_pays)}{if $reg_pays=="Canada"}{/if}selected="selected"{/if}>Canada </option>
-                        <option value="Canaries" {if isset($reg_pays)}{if $reg_pays=="Canaries"}{/if}selected="selected"{/if}>Canaries </option>
-                        <option value="Cap_vert" {if isset($reg_pays)}{if $reg_pays=="Cap_vert"}{/if}selected="selected"{/if}>Cap_Vert </option>
-                        <option value="Chili" {if isset($reg_pays)}{if $reg_pays=="Chili"}{/if}selected="selected"{/if}>Chili </option>
-                        <option value="Chine" {if isset($reg_pays)}{if $reg_pays=="Chine"}{/if}selected="selected"{/if}>Chine </option>
-                        <option value="Chypre" {if isset($reg_pays)}{if $reg_pays=="Chypre"}{/if}selected="selected"{/if}>Chypre </option>
-                        <option value="Colombie" {if isset($reg_pays)}{if $reg_pays=="Colombie"}{/if}selected="selected"{/if}>Colombie </option>
-                        <option value="Comores" {if isset($reg_pays)}{if $reg_pays=="Comores"}{/if}selected="selected"{/if}>Colombie </option>
-                        <option value="Congo" {if isset($reg_pays)}{if $reg_pays=="Congo"}{/if}selected="selected"{/if}>Congo </option>
-                        <option value="Congo_democratique" {if isset($reg_pays)}{if $reg_pays=="Congo_democratique"}{/if}selected="selected"{/if}>Congo democratique </option>
-                        <option value="Cook" {if isset($reg_pays)}{if $reg_pays=="Cook"}{/if}selected="selected"{/if}>Cook </option>
-                        <option value="Coree_du_Nord" {if isset($reg_pays)}{if $reg_pays=="Coree_du_Nord"}{/if}selected="selected"{/if}>Coree du Nord </option>
-                        <option value="Coree_du_Sud" {if isset($reg_pays)}{if $reg_pays=="Coree_du_Sud"}{/if}selected="selected"{/if}>Coree du Sud </option>
-                        <option value="Costa_Rica" {if isset($reg_pays)}{if $reg_pays=="Costa_Rica"}{/if}selected="selected"{/if}>Costa Rica </option>
-                        <option value="Cote_d_Ivoire" {if isset($reg_pays)}{if $reg_pays=="Cote_d_Ivoire"}{/if}selected="selected"{/if}>Côte d'Ivoire </option>
-                        <option value="Croatie" {if isset($reg_pays)}{if $reg_pays=="Croatie"}{/if}selected="selected"{/if}>Croatie </option>
-                        <option value="Cuba" {if isset($reg_pays)}{if $reg_pays=="Cuba"}{/if}selected="selected"{/if}>Cuba </option>
-                        <option value="Danemark" {if isset($reg_pays)}{if $reg_pays=="Danemark"}{/if}selected="selected"{/if}>Danemark </option>
-                        <option value="Djibouti" {if isset($reg_pays)}{if $reg_pays=="Djibouti"}{/if}selected="selected"{/if}>Djibouti </option>
-                        <option value="Dominique" {if isset($reg_pays)}{if $reg_pays=="Dominique"}{/if}selected="selected"{/if}>Dominique </option>
-                        <option value="Egypte" {if isset($reg_pays)}{if $reg_pays=="Egypte"}{/if}selected="selected"{/if}>Egypte </option>
-                        <option value="Emirats_Arabes_Unis" {if isset($reg_pays)}{if $reg_pays=="Emirats_Arabes_Unis"}{/if}selected="selected"{/if}>Emirats Arabes Unis </option>
-                        <option value="Equateur" {if isset($reg_pays)}{if $reg_pays=="Equateur"}{/if}selected="selected"{/if}>Equateur </option>
-                        <option value="Erythree" {if isset($reg_pays)}{if $reg_pays=="Erythree"}{/if}selected="selected"{/if}>Erythree </option>
-                        <option value="Espagne" {if isset($reg_pays)}{if $reg_pays=="Espagne"}{/if}selected="selected"{/if}>Espagne </option>
-                        <option value="Estonie" {if isset($reg_pays)}{if $reg_pays=="Estonie"}{/if}selected="selected"{/if}>Estonie </option>
-                        <option value="Etats_Unis" {if isset($reg_pays)}{if $reg_pays=="Etats_Unis"}{/if}selected="selected"{/if}>Etats Unis </option>
-                        <option value="Ethiopie" {if isset($reg_pays)}{if $reg_pays=="Ethiopie"}{/if}selected="selected"{/if}>Ethiopie </option>
-                        <option value="Falkland" {if isset($reg_pays)}{if $reg_pays=="Falkland"}{/if}selected="selected"{/if}>Falkland </option>
-                        <option value="Feroe" {if isset($reg_pays)}{if $reg_pays=="Feroe"}{/if}selected="selected"{/if}>Feroe </option>
-                        <option value="Fidji" {if isset($reg_pays)}{if $reg_pays=="Fidji"}{/if}selected="selected"{/if}>Fidji </option>
-                        <option value="Finlande" {if isset($reg_pays)}{if $reg_pays=="Finlande"}{/if}selected="selected"{/if}>Finlande </option>
-                        <option value="Gabon" {if isset($reg_pays)}{if $reg_pays=="Gabon"}{/if}selected="selected"{/if}>Gabon </option>
-                        <option value="Gambie" {if isset($reg_pays)}{if $reg_pays=="Gambie"}{/if}selected="selected"{/if}>Gambie </option>
-                        <option value="Georgie" {if isset($reg_pays)}{if $reg_pays=="Georgie"}{/if}selected="selected"{/if}>Georgie </option>
-                        <option value="Ghana" {if isset($reg_pays)}{if $reg_pays=="Ghana"}{/if}selected="selected"{/if}>Ghana </option>
-                        <option value="Gibraltar" {if isset($reg_pays)}{if $reg_pays=="Gibraltar"}{/if}selected="selected"{/if}>Gibraltar </option>
-                        <option value="Grece" {if isset($reg_pays)}{if $reg_pays=="Grece"}{/if}selected="selected"{/if}>Grece </option>
-                        <option value="Grenade" {if isset($reg_pays)}{if $reg_pays=="Grenade"}{/if}selected="selected"{/if}>Grenade </option>
-                        <option value="Groenland" {if isset($reg_pays)}{if $reg_pays=="Groenland"}{/if}selected="selected"{/if}>Groenland </option>
-                        <option value="Guadeloupe" {if isset($reg_pays)}{if $reg_pays=="Guadeloupe"}{/if}selected="selected"{/if}>Guadeloupe </option>
-                        <option value="Guam" {if isset($reg_pays)}{if $reg_pays=="Guam"}{/if}selected="selected"{/if}>Guam </option>
-                        <option value="Guatemala" {if isset($reg_pays)}{if $reg_pays=="Guatemala"}{/if}selected="selected"{/if}>Guatemala</option>
-                        <option value="Guernesey" {if isset($reg_pays)}{if $reg_pays=="Guernesey"}{/if}selected="selected"{/if}>Guernesey </option>
-                        <option value="Guinee" {if isset($reg_pays)}{if $reg_pays=="Guinee"}{/if}selected="selected"{/if}>Guinee </option>
-                        <option value="Guinee_Bissau" {if isset($reg_pays)}{if $reg_pays=="Guinee_Bissau"}{/if}selected="selected"{/if}>Guinee_Bissau </option>
-                        <option value="Guinee equatoriale" {if isset($reg_pays)}{if $reg_pays=="Guinee equatoriale"}{/if}selected="selected"{/if}>Guinee Equatoriale </option>
-                        <option value="Guyana" {if isset($reg_pays)}{if $reg_pays=="Guyana"}{/if}selected="selected"{/if}>Guyana </option>
-                        <option value="Guyane_Francaise" {if isset($reg_pays)}{if $reg_pays=="Guyane_Francaise"}{/if}selected="selected"{/if}>Guyane Francaise </option>
-                        <option value="Haiti" {if isset($reg_pays)}{if $reg_pays=="Haiti"}{/if}selected="selected"{/if}>Haiti </option>
-                        <option value="Hawaii" {if isset($reg_pays)}{if $reg_pays=="Hawaii"}{/if}selected="selected"{/if}>Hawaii </option>
-                        <option value="Honduras" {if isset($reg_pays)}{if $reg_pays=="Honduras"}{/if}selected="selected"{/if}>Honduras </option>
-                        <option value="Hong_Kong" {if isset($reg_pays)}{if $reg_pays=="Hong_Kong"}{/if}selected="selected"{/if}>Hong Kong </option>
-                        <option value="Hongrie" {if isset($reg_pays)}{if $reg_pays=="Hongrie"}{/if}selected="selected"{/if}>Hongrie </option>
-                        <option value="Inde" {if isset($reg_pays)}{if $reg_pays=="Inde"}{/if}selected="selected"{/if}>Inde </option>
-                        <option value="Indonesie" {if isset($reg_pays)}{if $reg_pays=="Indonesie"}{/if}selected="selected"{/if}>Indonesie </option>
-                        <option value="Iran" {if isset($reg_pays)}{if $reg_pays=="Iran"}{/if}selected="selected"{/if}>Iran </option>
-                        <option value="Iraq" {if isset($reg_pays)}{if $reg_pays=="Iraq"}{/if}selected="selected"{/if}>Iraq </option>
-                        <option value="Irlande" {if isset($reg_pays)}{if $reg_pays=="Irlande"}{/if}selected="selected"{/if}>Irlande </option>
-                        <option value="Islande" {if isset($reg_pays)}{if $reg_pays=="Islande"}{/if}selected="selected"{/if}>Islande </option>
-                        <option value="Israel" {if isset($reg_pays)}{if $reg_pays=="Israel"}{/if}selected="selected"{/if}>Israel </option>
-                        <option value="Italie" {if isset($reg_pays)}{if $reg_pays=="Italie"}{/if}selected="selected"{/if}>italie </option>
-                        <option value="Jamaique" {if isset($reg_pays)}{if $reg_pays=="Jamaique"}{/if}selected="selected"{/if}>Jamaique </option>
-                        <option value="Jan Mayen" {if isset($reg_pays)}{if $reg_pays=="Jan Mayen"}{/if}selected="selected"{/if}>Jan Mayen </option>
-                        <option value="Japon" {if isset($reg_pays)}{if $reg_pays=="Japon"}{/if}selected="selected"{/if}>Japon </option>
-                        <option value="Jersey" {if isset($reg_pays)}{if $reg_pays=="Jersey"}{/if}selected="selected"{/if}>Jersey </option>
-                        <option value="Jordanie" {if isset($reg_pays)}{if $reg_pays=="Jordanie"}{/if}selected="selected"{/if}>Jordanie </option>
-                        <option value="Kazakhstan" {if isset($reg_pays)}{if $reg_pays=="Kazakhstan"}{/if}selected="selected"{/if}>Kazakhstan </option>
-                        <option value="Kenya" {if isset($reg_pays)}{if $reg_pays=="Kenya"}{/if}selected="selected"{/if}>Kenya </option>
-                        <option value="Kirghizstan" {if isset($reg_pays)}{if $reg_pays=="Kirghizstan"}{/if}selected="selected"{/if}>Kirghizistan </option>
-                        <option value="Kiribati" {if isset($reg_pays)}{if $reg_pays=="Kiribati"}{/if}selected="selected"{/if}>Kiribati </option>
-                        <option value="Koweit" {if isset($reg_pays)}{if $reg_pays=="Koweit"}{/if}selected="selected"{/if}>Koweit </option>
-                        <option value="Laos" {if isset($reg_pays)}{if $reg_pays=="Laos"}{/if}selected="selected"{/if}>Laos </option>
-                        <option value="Lesotho" {if isset($reg_pays)}{if $reg_pays=="Lesotho"}{/if}selected="selected"{/if}>Lesotho </option>
-                        <option value="Lettonie" {if isset($reg_pays)}{if $reg_pays=="Lettonie"}{/if}selected="selected"{/if}>Lettonie </option>
-                        <option value="Liban" {if isset($reg_pays)}{if $reg_pays=="Liban"}{/if}selected="selected"{/if}>Liban </option>
-                        <option value="Liberia" {if isset($reg_pays)}{if $reg_pays=="Liberia"}{/if}selected="selected"{/if}>Liberia </option>
-                        <option value="Liechtenstein" {if isset($reg_pays)}{if $reg_pays=="Liechtenstein"}{/if}selected="selected"{/if}>Liechtenstein </option>
-                        <option value="Lituanie" {if isset($reg_pays)}{if $reg_pays=="Lituanie"}{/if}selected="selected"{/if}>Lituanie </option>
-                        <option value="Luxembourg" {if isset($reg_pays)}{if $reg_pays=="Luxembourg"}{/if}selected="selected"{/if}>Luxembourg </option>
-                        <option value="Lybie" {if isset($reg_pays)}{if $reg_pays=="Lybie"}{/if}selected="selected"{/if}>Lybie </option>
-                        <option value="Macao" {if isset($reg_pays)}{if $reg_pays=="Macao"}{/if}selected="selected"{/if}>Macao </option>
-                        <option value="Macedoine" {if isset($reg_pays)}{if $reg_pays=="Macedoine"}{/if}selected="selected"{/if}>Macedoine </option>
-                        <option value="Madagascar" {if isset($reg_pays)}{if $reg_pays=="Madagascar"}{/if}selected="selected"{/if}>Madagascar </option>
-                        <option value="MadÃ¨re" {if isset($reg_pays)}{if $reg_pays=="MadÃ¨re"}{/if}selected="selected"{/if}>MadÃ¨re </option>
-                        <option value="Malaisie" {if isset($reg_pays)}{if $reg_pays=="Malaisie"}{/if}selected="selected"{/if}>Malaisie </option>
-                        <option value="Malawi" {if isset($reg_pays)}{if $reg_pays=="Malawi"}{/if}selected="selected"{/if}>Malawi </option>
-                        <option value="Maldives" {if isset($reg_pays)}{if $reg_pays=="Maldives"}{/if}selected="selected"{/if}>Maldives </option>
-                        <option value="Mali" {if isset($reg_pays)}{if $reg_pays=="Mali"}{/if}selected="selected"{/if}>Mali </option>
-                        <option value="Malte" {if isset($reg_pays)}{if $reg_pays=="Malte"}{/if}selected="selected"{/if}>Malte </option>
-                        <option value="Man" {if isset($reg_pays)}{if $reg_pays=="Man"}{/if}selected="selected"{/if}>Man </option>
-                        <option value="Mariannes du Nord" {if isset($reg_pays)}{if $reg_pays=="Mariannes du Nord"}{/if}selected="selected"{/if}>Mariannes du Nord </option>
-                        <option value="Maroc" {if isset($reg_pays)}{if $reg_pays=="Maroc"}{/if}selected="selected"{/if}>Maroc </option>
-                        <option value="Marshall" {if isset($reg_pays)}{if $reg_pays=="Marshall"}{/if}selected="selected"{/if}>Marshall </option>
-                        <option value="Martinique" {if isset($reg_pays)}{if $reg_pays=="Martinique"}{/if}selected="selected"{/if}>Martinique </option>
-                        <option value="Maurice" {if isset($reg_pays)}{if $reg_pays=="Maurice"}{/if}selected="selected"{/if}>Maurice </option>
-                        <option value="Mauritanie" {if isset($reg_pays)}{if $reg_pays=="Mauritanie"}{/if}selected="selected"{/if}>Mauritanie </option>
-                        <option value="Mayotte" {if isset($reg_pays)}{if $reg_pays=="Mayotte"}{/if}selected="selected"{/if}>Mayotte </option>
-                        <option value="Mexique" {if isset($reg_pays)}{if $reg_pays=="Mexique"}{/if}selected="selected"{/if}>Mexique </option>
-                        <option value="Micronesie" {if isset($reg_pays)}{if $reg_pays=="Micronesie"}{/if}selected="selected"{/if}>Micronesie </option>
-                        <option value="Midway" {if isset($reg_pays)}{if $reg_pays=="Midway"}{/if}selected="selected"{/if}>Midway </option>
-                        <option value="Moldavie" {if isset($reg_pays)}{if $reg_pays=="Moldavie"}{/if}selected="selected"{/if}>Moldavie </option>
-                        <option value="Monaco" {if isset($reg_pays)}{if $reg_pays=="Monaco"}{/if}selected="selected"{/if}>Monaco </option>
-                        <option value="Mongolie" {if isset($reg_pays)}{if $reg_pays=="Mongolie"}{/if}selected="selected"{/if}>Mongolie </option>
-                        <option value="Montserrat" {if isset($reg_pays)}{if $reg_pays=="Montserrat"}{/if}selected="selected"{/if}>Montserrat </option>
-                        <option value="Mozambique" {if isset($reg_pays)}{if $reg_pays=="Mozambique"}{/if}selected="selected"{/if}>Mozambique </option>
-                        <option value="Namibie" {if isset($reg_pays)}{if $reg_pays=="Namibie"}{/if}selected="selected"{/if}>Namibie </option>
-                        <option value="Nauru" {if isset($reg_pays)}{if $reg_pays=="Nauru"}{/if}selected="selected"{/if}>Nauru </option>
-                        <option value="Nepal" {if isset($reg_pays)}{if $reg_pays=="Nepal"}{/if}selected="selected"{/if}>Nepal </option>
-                        <option value="Nicaragua" {if isset($reg_pays)}{if $reg_pays=="Nicaragua"}{/if}selected="selected"{/if}>Nicaragua </option>
-                        <option value="Niger" {if isset($reg_pays)}{if $reg_pays=="Niger"}{/if}selected="selected"{/if}>Niger </option>
-                        <option value="Nigeria" {if isset($reg_pays)}{if $reg_pays=="Nigeria"}{/if}selected="selected"{/if}>Nigeria </option>
-                        <option value="Niue" {if isset($reg_pays)}{if $reg_pays=="Niue"}{/if}selected="selected"{/if}>Niue </option>
-                        <option value="Norfolk" {if isset($reg_pays)}{if $reg_pays=="Norfolk"}{/if}selected="selected"{/if}>Norfolk </option>
-                        <option value="Norvege" {if isset($reg_pays)}{if $reg_pays=="Norvege"}{/if}selected="selected"{/if}>Norvege </option>
-                        <option value="Nouvelle_Caledonie" {if isset($reg_pays)}{if $reg_pays=="Nouvelle_Caledonie"}{/if}selected="selected"{/if}>Nouvelle Caledonie </option>
-                        <option value="Nouvelle_Zelande" {if isset($reg_pays)}{if $reg_pays=="Nouvelle_Zelande"}{/if}selected="selected"{/if}>Nouvelle Zelande </option>
-                        <option value="Oman" {if isset($reg_pays)}{if $reg_pays=="Oman"}{/if}selected="selected"{/if}>Oman </option>
-                        <option value="Ouganda" {if isset($reg_pays)}{if $reg_pays=="Ouganda"}{/if}selected="selected"{/if}>Ouganda </option>
-                        <option value="Ouzbekistan" {if isset($reg_pays)}{if $reg_pays=="Ouzbekistan"}{/if}selected="selected"{/if}>Ouzbekistan </option>
-                        <option value="Pakistan" {if isset($reg_pays)}{if $reg_pays=="Pakistan"}{/if}selected="selected"{/if}>Pakistan </option>
-                        <option value="Palau" {if isset($reg_pays)}{if $reg_pays=="Palau"}{/if}selected="selected"{/if}>Palau </option>
-                        <option value="Palestine" {if isset($reg_pays)}{if $reg_pays=="Palestine"}{/if}selected="selected"{/if}>Palestine </option>
-                        <option value="Panama" {if isset($reg_pays)}{if $reg_pays=="Panama"}{/if}selected="selected"{/if}>Panama </option>
-                        <option value="Papouasie_Nouvelle_Guinee" {if isset($reg_pays)}{if $reg_pays=="Papouasie_Nouvelle_Guinee"}{/if}selected="selected"{/if}>Papouasie Nouvelle Guinee </option>
-                        <option value="Paraguay" {if isset($reg_pays)}{if $reg_pays=="Paraguay"}{/if}selected="selected"{/if}>Paraguay </option>
-                        <option value="Pays_Bas" {if isset($reg_pays)}{if $reg_pays=="Pays_Bas"}{/if}selected="selected"{/if}>Pays Bas </option>
-                        <option value="Perou" {if isset($reg_pays)}{if $reg_pays=="Perou"}{/if}selected="selected"{/if}>Perou </option>
-                        <option value="Philippines" {if isset($reg_pays)}{if $reg_pays=="Philippines"}{/if}selected="selected"{/if}>Philippines </option>
-                        <option value="Pologne" {if isset($reg_pays)}{if $reg_pays=="Pologne"}{/if}selected="selected"{/if}>Pologne </option>
-                        <option value="Polynesie" {if isset($reg_pays)}{if $reg_pays=="Polynesie"}{/if}selected="selected"{/if}>Polynesie </option>
-                        <option value="Porto_Rico" {if isset($reg_pays)}{if $reg_pays=="Porto_Rico"}{/if}selected="selected"{/if}>Porto_Rico </option>
-                        <option value="Portugal" {if isset($reg_pays)}{if $reg_pays=="Portugal"}{/if}selected="selected"{/if}>Portugal </option>
-                        <option value="Qatar" {if isset($reg_pays)}{if $reg_pays=="Qatar"}{/if}selected="selected"{/if}>Qatar </option>
-                        <option value="Republique_Dominicaine" {if isset($reg_pays)}{if $reg_pays=="Republique_Dominicaine"}{/if}selected="selected"{/if}>Republique Dominicaine </option>
-                        <option value="Republique_Tcheque" {if isset($reg_pays)}{if $reg_pays=="Republique_Tcheque"}{/if}selected="selected"{/if}>Republique Tcheque </option>
-                        <option value="Reunion" {if isset($reg_pays)}{if $reg_pays=="Reunion"}{/if}selected="selected"{/if}>Reunion </option>
-                        <option value="Roumanie" {if isset($reg_pays)}{if $reg_pays=="Roumanie"}{/if}selected="selected"{/if}>Roumanie </option>
-                        <option value="Royaume_Uni" {if isset($reg_pays)}{if $reg_pays=="Royaume_Uni"}{/if}selected="selected"{/if}>Royaume Uni </option>
-                        <option value="Russie" {if isset($reg_pays)}{if $reg_pays=="Russie"}{/if}selected="selected"{/if}>Russie </option>
-                        <option value="Rwanda" {if isset($reg_pays)}{if $reg_pays=="Rwanda"}{/if}selected="selected"{/if}>Rwanda </option>
-                        <option value="Sahara Occidental" {if isset($reg_pays)}{if $reg_pays=="Sahara Occidental"}{/if}selected="selected"{/if}>Sahara Occidental </option>
-                        <option value="Sainte_Lucie" {if isset($reg_pays)}{if $reg_pays=="Sainte_Lucie"}{/if}selected="selected"{/if}>Sainte Lucie </option>
-                        <option value="Saint_Marin" {if isset($reg_pays)}{if $reg_pays=="Saint_Marin"}{/if}selected="selected"{/if}>Saint Marin </option>
-                        <option value="Salomon" {if isset($reg_pays)}{if $reg_pays=="Salomon"}{/if}selected="selected"{/if}>Salomon </option>
-                        <option value="Salvador" {if isset($reg_pays)}{if $reg_pays=="Salvador"}{/if}selected="selected"{/if}>Salvador </option>
-                        <option value="Samoa_Occidentales" {if isset($reg_pays)}{if $reg_pays=="Samoa_Occidentales"}{/if}selected="selected"{/if}>Samoa Occidentales</option>
-                        <option value="Samoa_Americaine" {if isset($reg_pays)}{if $reg_pays=="Samoa_Americaine"}{/if}selected="selected"{/if}>Samoa Americaine </option>
-                        <option value="Sao_Tome_et_Principe" {if isset($reg_pays)}{if $reg_pays=="Sao_Tome_et_Principe"}{/if}selected="selected"{/if}>Sao Tome et Principe </option>
-                        <option value="Senegal" {if isset($reg_pays)}{if $reg_pays=="Senegal"}{/if}selected="selected"{/if}>Senegal </option>
-                        <option value="Seychelles" {if isset($reg_pays)}{if $reg_pays=="Seychelles"}{/if}selected="selected"{/if}>Seychelles </option>
-                        <option value="Sierra Leone" {if isset($reg_pays)}{if $reg_pays=="Sierra Leone"}{/if}selected="selected"{/if}>Sierra Leone </option>
-                        <option value="Singapour" {if isset($reg_pays)}{if $reg_pays=="Singapour"}{/if}selected="selected"{/if}>Singapour </option>
-                        <option value="Slovaquie" {if isset($reg_pays)}{if $reg_pays=="Slovaquie"}{/if}selected="selected"{/if}>Slovaquie </option>
-                        <option value="Slovenie" {if isset($reg_pays)}{if $reg_pays=="Slovenie"}{/if}selected="selected"{/if}>Slovenie</option>
-                        <option value="Somalie" {if isset($reg_pays)}{if $reg_pays=="Somalie"}{/if}selected="selected"{/if}>Somalie </option>
-                        <option value="Soudan" {if isset($reg_pays)}{if $reg_pays=="Soudan"}{/if}selected="selected"{/if}>Soudan </option>
-                        <option value="Sri_Lanka" {if isset($reg_pays)}{if $reg_pays=="Sri_Lanka"}{/if}selected="selected"{/if}>Sri_Lanka </option>
-                        <option value="Suede" {if isset($reg_pays)}{if $reg_pays=="Suede"}{/if}selected="selected"{/if}>Suede </option>
-                        <option value="Suisse" {if isset($reg_pays)}{if $reg_pays=="Suisse"}{/if}selected="selected"{/if}>Suisse </option>
-                        <option value="Surinam" {if isset($reg_pays)}{if $reg_pays=="Surinam"}{/if}selected="selected"{/if}>Surinam </option>
-                        <option value="Swaziland" {if isset($reg_pays)}{if $reg_pays=="Swaziland"}{/if}selected="selected"{/if}>Swaziland </option>
-                        <option value="Syrie" {if isset($reg_pays)}{if $reg_pays=="Syrie"}{/if}selected="selected"{/if}>Syrie </option>
-                        <option value="Tadjikistan" {if isset($reg_pays)}{if $reg_pays=="Tadjikistan"}{/if}selected="selected"{/if}>Tadjikistan </option>
-                        <option value="Taiwan" {if isset($reg_pays)}{if $reg_pays=="Taiwan"}{/if}selected="selected"{/if}>Taiwan </option>
-                        <option value="Tonga" {if isset($reg_pays)}{if $reg_pays=="Tonga"}{/if}selected="selected"{/if}>Tonga </option>
-                        <option value="Tanzanie" {if isset($reg_pays)}{if $reg_pays=="Afghanistan"}{/if}selected="selected"{/if}>Tanzanie </option>
-                        <option value="Tchad" {if isset($reg_pays)}{if $reg_pays=="Tanzanie"}{/if}selected="selected"{/if}>Tchad </option>
-                        <option value="Thailande" {if isset($reg_pays)}{if $reg_pays=="Afghanistan"}{/if}selected="selected"{/if}>Thailande </option>
-                        <option value="Tibet" {if isset($reg_pays)}{if $reg_pays=="Thailande"}{/if}selected="selected"{/if}>Tibet </option>
-                        <option value="Timor_Oriental" {if isset($reg_pays)}{if $reg_pays=="Timor_Oriental"}{/if}selected="selected"{/if}>Timor Oriental </option>
-                        <option value="Togo" {if isset($reg_pays)}{if $reg_pays=="Togo"}{/if}selected="selected"{/if}>Togo </option>
-                        <option value="Trinite_et_Tobago" {if isset($reg_pays)}{if $reg_pays=="Trinite_et_Tobago"}{/if}selected="selected"{/if}>Trinite et Tobago </option>
-                        <option value="Tristan da cunha" {if isset($reg_pays)}{if $reg_pays=="Tristan da cunha"}{/if}selected="selected"{/if}>Tristan de cuncha </option>
-                        <option value="Tunisie" {if isset($reg_pays)}{if $reg_pays=="Tunisie"}{/if}selected="selected"{/if}>Tunisie </option>
-                        <option value="Turkmenistan" {if isset($reg_pays)}{if $reg_pays=="Turkmenistan"}{/if}selected="selected"{/if}>Turmenistan </option>
-                        <option value="Turquie" {if isset($reg_pays)}{if $reg_pays=="Turquie"}{/if}selected="selected"{/if}>Turquie </option>
-                        <option value="Ukraine" {if isset($reg_pays)}{if $reg_pays=="Ukraine"}{/if}selected="selected"{/if}>Ukraine </option>
-                        <option value="Uruguay" {if isset($reg_pays)}{if $reg_pays=="Uruguay"}{/if}selected="selected"{/if}>Uruguay </option>
-                        <option value="Vanuatu" {if isset($reg_pays)}{if $reg_pays=="Vanuatu"}{/if}selected="selected"{/if}>Vanuatu </option>
-                        <option value="Vatican" {if isset($reg_pays)}{if $reg_pays=="Vatican"}{/if}selected="selected"{/if}>Vatican </option>
-                        <option value="Venezuela" {if isset($reg_pays)}{if $reg_pays=="Venezuela"}{/if}selected="selected"{/if}>Venezuela </option>
-                        <option value="Vierges_Americaines" {if isset($reg_pays)}{if $reg_pays=="Vierges_Americaines"}{/if}selected="selected"{/if}>Vierges Americaines </option>
-                        <option value="Vierges_Britanniques" {if isset($reg_pays)}{if $reg_pays=="Vierges_Britanniques"}{/if}selected="selected"{/if}>Vierges Britanniques </option>
-                        <option value="Vietnam" {if isset($reg_pays)}{if $reg_pays=="Vietnam"}{/if}selected="selected"{/if}>Vietnam </option>
-                        <option value="Wake" {if isset($reg_pays)}{if $reg_pays=="Wake"}{/if}selected="selected"{/if}>Wake </option>
-                        <option value="Wallis et Futuma" {if isset($reg_pays)}{if $reg_pays=="Wallis et Futuma"}{/if}selected="selected"{/if}>Wallis et Futuma </option>
-                        <option value="Yemen" {if isset($reg_pays)}{if $reg_pays=="Yemen"}{/if}selected="selected"{/if}>Yemen </option>
-                        <option value="Yougoslavie" {if isset($reg_pays)}{if $reg_pays=="Yougoslavie"}{/if}selected="selected"{/if}>Yougoslavie </option>
-                        <option value="Zambie" {if isset($reg_pays)}{if $reg_pays=="Zambie"}{/if}selected="selected"{/if}>Zambie </option>
-                        <option value="Zimbabwe" {if isset($reg_pays)}{if $reg_pays=="Zimbabwe"}{/if}selected="selected"{/if}>Zimbabwe </option>
+                        <option value="France" {if isset($reg_pays)}{if $reg_pays=="France"} selected="selected"{/if}{/if}>France </option>
+                        <option value="Afghanistan" {if isset($reg_pays)}{if $reg_pays=="Afghanistan"}selected="selected"{/if}{/if}>Afghanistan </option>
+                        <option value="Afrique_Centrale" {if isset($reg_pays)}{if $reg_pays=="Afrique_Centrale"}selected="selected"{/if}{/if}>Afrique Centrale </option>
+                        <option value="Afrique_du_sud" {if isset($reg_pays)}{if $reg_pays=="Afrique_du_sud"}selected="selected"{/if}{/if}>Afrique du Sud </option>
+                        <option value="Albanie" {if isset($reg_pays)}{if $reg_pays=="Albanie"}selected="selected"{/if}{/if}>Albanie </option>
+                        <option value="Algerie" {if isset($reg_pays)}{if $reg_pays=="Algerie"}selected="selected"{/if}{/if}>Algerie </option>
+                        <option value="Allemagne" {if isset($reg_pays)}{if $reg_pays=="Allemagne"}selected="selected"{/if}{/if}>Allemagne </option>
+                        <option value="Andorre" {if isset($reg_pays)}{if $reg_pays=="Andorre"}selected="selected"{/if}{/if}>Andorre </option>
+                        <option value="Angola" {if isset($reg_pays)}{if $reg_pays=="Angola"}selected="selected"{/if}{/if}>Angola </option>
+                        <option value="Anguilla" {if isset($reg_pays)}{if $reg_pays=="Anguilla"}selected="selected"{/if}{/if}>Anguilla </option>
+                        <option value="Arabie_Saoudite" {if isset($reg_pays)}{if $reg_pays=="Arabie_Saoudite"}selected="selected"{/if}{/if}>Arabie Saoudite </option>
+                        <option value="Argentine" {if isset($reg_pays)}{if $reg_pays=="Argentine"}selected="selected"{/if}{/if}>Argentine </option>
+                        <option value="Armenie" {if isset($reg_pays)}{if $reg_pays=="Armenie"}selected="selected"{/if}{/if}>Armenie </option>
+                        <option value="Australie" {if isset($reg_pays)}{if $reg_pays=="Australie"}selected="selected"{/if}{/if}>Australie </option>
+                        <option value="Autriche" {if isset($reg_pays)}{if $reg_pays=="Autriche"}selected="selected"{/if}{/if}>Autriche </option>
+                        <option value="Azerbaidjan" {if isset($reg_pays)}{if $reg_pays=="Azerbaidjan"}selected="selected"{/if}{/if}>Azerbaidjan </option>
+                        <option value="Bahamas" {if isset($reg_pays)}{if $reg_pays=="Bahamas"}selected="selected"{/if}{/if}>Bahamas </option>
+                        <option value="Bangladesh" {if isset($reg_pays)}{if $reg_pays=="Bangladesh"}selected="selected"{/if}{/if}>Bangladesh </option>
+                        <option value="Barbade" {if isset($reg_pays)}{if $reg_pays=="Barbade"}selected="selected"{/if}{/if}>Barbade </option>
+                        <option value="Bahrein" {if isset($reg_pays)}{if $reg_pays=="Bahrein"}selected="selected"{/if}{/if}>Bahrein </option>
+                        <option value="Belgique" {if isset($reg_pays)}{if $reg_pays=="Belgique"}selected="selected"{/if}{/if}>Belgique </option>
+                        <option value="Belize" {if isset($reg_pays)}{if $reg_pays=="Belize"}selected="selected"{/if}{/if}>Belize </option>
+                        <option value="Benin" {if isset($reg_pays)}{if $reg_pays=="Benin"}selected="selected"{/if}{/if}>Benin </option>
+                        <option value="Bermudes" {if isset($reg_pays)}{if $reg_pays=="Bermudes"}selected="selected"{/if}{/if}>Bermudes </option>
+                        <option value="Bielorussie" {if isset($reg_pays)}{if $reg_pays=="Bielorussie"}selected="selected"{/if}{/if}>Bielorussie </option>
+                        <option value="Bolivie" {if isset($reg_pays)}{if $reg_pays=="Bolivie"}selected="selected"{/if}{/if}>Bolivie </option>
+                        <option value="Botswana" {if isset($reg_pays)}{if $reg_pays=="Botswana"}selected="selected"{/if}{/if}>Botswana </option>
+                        <option value="Bhoutan" {if isset($reg_pays)}{if $reg_pays=="Bhoutan"}selected="selected"{/if}{/if}>Bhoutan </option>
+                        <option value="Boznie_Herzegovine" {if isset($reg_pays)}{if $reg_pays=="Boznie_Herzegovine"}selected="selected"{/if}{/if}>Boznie Herzegovine </option>
+                        <option value="Bresil" {if isset($reg_pays)}{if $reg_pays=="Bresil"}selected="selected"{/if}{/if}>Bresil </option>
+                        <option value="Brunei" {if isset($reg_pays)}{if $reg_pays=="Brunei"}selected="selected"{/if}{/if}>Brunei </option>
+                        <option value="Bulgarie" {if isset($reg_pays)}{if $reg_pays=="Bulgarie"}selected="selected"{/if}{/if}>Bulgarie </option>
+                        <option value="Burkina_Faso" {if isset($reg_pays)}{if $reg_pays=="Burkina_Faso"}selected="selected"{/if}{/if}>Burkina Faso </option>
+                        <option value="Burundi" {if isset($reg_pays)}{if $reg_pays=="Burundi"}selected="selected"{/if}{/if}>Burundi </option>
+                        <option value="Caiman" {if isset($reg_pays)}{if $reg_pays=="Caiman"}selected="selected"{/if}{/if}>Caiman </option>
+                        <option value="Cambodge" {if isset($reg_pays)}{if $reg_pays=="Cambodge"}selected="selected"{/if}{/if}>Cambodge </option>
+                        <option value="Cameroun" {if isset($reg_pays)}{if $reg_pays=="Cameroun"}selected="selected"{/if}{/if}>Cameroun </option>
+                        <option value="Canada" {if isset($reg_pays)}{if $reg_pays=="Canada"}selected="selected"{/if}{/if}>Canada </option>
+                        <option value="Canaries" {if isset($reg_pays)}{if $reg_pays=="Canaries"}selected="selected"{/if}{/if}>Canaries </option>
+                        <option value="Cap_vert" {if isset($reg_pays)}{if $reg_pays=="Cap_vert"}selected="selected"{/if}{/if}>Cap_Vert </option>
+                        <option value="Chili" {if isset($reg_pays)}{if $reg_pays=="Chili"}selected="selected"{/if}{/if}>Chili </option>
+                        <option value="Chine" {if isset($reg_pays)}{if $reg_pays=="Chine"}selected="selected"{/if}{/if}>Chine </option>
+                        <option value="Chypre" {if isset($reg_pays)}{if $reg_pays=="Chypre"}selected="selected"{/if}{/if}>Chypre </option>
+                        <option value="Colombie" {if isset($reg_pays)}{if $reg_pays=="Colombie"}selected="selected"{/if}{/if}>Colombie </option>
+                        <option value="Comores" {if isset($reg_pays)}{if $reg_pays=="Comores"}selected="selected"{/if}{/if}>Colombie </option>
+                        <option value="Congo" {if isset($reg_pays)}{if $reg_pays=="Congo"}selected="selected"{/if}{/if}>Congo </option>
+                        <option value="Congo_democratique" {if isset($reg_pays)}{if $reg_pays=="Congo_democratique"}selected="selected"{/if}{/if}>Congo democratique </option>
+                        <option value="Cook" {if isset($reg_pays)}{if $reg_pays=="Cook"}selected="selected"{/if}{/if}>Cook </option>
+                        <option value="Coree_du_Nord" {if isset($reg_pays)}{if $reg_pays=="Coree_du_Nord"}selected="selected"{/if}{/if}>Coree du Nord </option>
+                        <option value="Coree_du_Sud" {if isset($reg_pays)}{if $reg_pays=="Coree_du_Sud"}selected="selected"{/if}{/if}>Coree du Sud </option>
+                        <option value="Costa_Rica" {if isset($reg_pays)}{if $reg_pays=="Costa_Rica"}selected="selected"{/if}{/if}>Costa Rica </option>
+                        <option value="Cote_d_Ivoire" {if isset($reg_pays)}{if $reg_pays=="Cote_d_Ivoire"}selected="selected"{/if}{/if}>Côte d'Ivoire </option>
+                        <option value="Croatie" {if isset($reg_pays)}{if $reg_pays=="Croatie"}selected="selected"{/if}{/if}>Croatie </option>
+                        <option value="Cuba" {if isset($reg_pays)}{if $reg_pays=="Cuba"}selected="selected"{/if}{/if}>Cuba </option>
+                        <option value="Danemark" {if isset($reg_pays)}{if $reg_pays=="Danemark"}selected="selected"{/if}{/if}>Danemark </option>
+                        <option value="Djibouti" {if isset($reg_pays)}{if $reg_pays=="Djibouti"}selected="selected"{/if}{/if}>Djibouti </option>
+                        <option value="Dominique" {if isset($reg_pays)}{if $reg_pays=="Dominique"}selected="selected"{/if}{/if}>Dominique </option>
+                        <option value="Egypte" {if isset($reg_pays)}{if $reg_pays=="Egypte"}selected="selected"{/if}{/if}>Egypte </option>
+                        <option value="Emirats_Arabes_Unis" {if isset($reg_pays)}{if $reg_pays=="Emirats_Arabes_Unis"}selected="selected"{/if}{/if}>Emirats Arabes Unis </option>
+                        <option value="Equateur" {if isset($reg_pays)}{if $reg_pays=="Equateur"}selected="selected"{/if}{/if}>Equateur </option>
+                        <option value="Erythree" {if isset($reg_pays)}{if $reg_pays=="Erythree"}selected="selected"{/if}{/if}>Erythree </option>
+                        <option value="Espagne" {if isset($reg_pays)}{if $reg_pays=="Espagne"}selected="selected"{/if}{/if}>Espagne </option>
+                        <option value="Estonie" {if isset($reg_pays)}{if $reg_pays=="Estonie"}selected="selected"{/if}{/if}>Estonie </option>
+                        <option value="Etats_Unis" {if isset($reg_pays)}{if $reg_pays=="Etats_Unis"}selected="selected"{/if}{/if}>Etats Unis </option>
+                        <option value="Ethiopie" {if isset($reg_pays)}{if $reg_pays=="Ethiopie"}selected="selected"{/if}{/if}>Ethiopie </option>
+                        <option value="Falkland" {if isset($reg_pays)}{if $reg_pays=="Falkland"}selected="selected"{/if}{/if}>Falkland </option>
+                        <option value="Feroe" {if isset($reg_pays)}{if $reg_pays=="Feroe"}selected="selected"{/if}{/if}>Feroe </option>
+                        <option value="Fidji" {if isset($reg_pays)}{if $reg_pays=="Fidji"}selected="selected"{/if}{/if}>Fidji </option>
+                        <option value="Finlande" {if isset($reg_pays)}{if $reg_pays=="Finlande"}selected="selected"{/if}{/if}>Finlande </option>
+                        <option value="Gabon" {if isset($reg_pays)}{if $reg_pays=="Gabon"}selected="selected"{/if}{/if}>Gabon </option>
+                        <option value="Gambie" {if isset($reg_pays)}{if $reg_pays=="Gambie"}selected="selected"{/if}{/if}>Gambie </option>
+                        <option value="Georgie" {if isset($reg_pays)}{if $reg_pays=="Georgie"}selected="selected"{/if}{/if}>Georgie </option>
+                        <option value="Ghana" {if isset($reg_pays)}{if $reg_pays=="Ghana"}selected="selected"{/if}{/if}>Ghana </option>
+                        <option value="Gibraltar" {if isset($reg_pays)}{if $reg_pays=="Gibraltar"}selected="selected"{/if}{/if}>Gibraltar </option>
+                        <option value="Grece" {if isset($reg_pays)}{if $reg_pays=="Grece"}selected="selected"{/if}{/if}>Grece </option>
+                        <option value="Grenade" {if isset($reg_pays)}{if $reg_pays=="Grenade"}selected="selected"{/if}{/if}>Grenade </option>
+                        <option value="Groenland" {if isset($reg_pays)}{if $reg_pays=="Groenland"}selected="selected"{/if}{/if}>Groenland </option>
+                        <option value="Guadeloupe" {if isset($reg_pays)}{if $reg_pays=="Guadeloupe"}selected="selected"{/if}{/if}>Guadeloupe </option>
+                        <option value="Guam" {if isset($reg_pays)}{if $reg_pays=="Guam"}selected="selected"{/if}{/if}>Guam </option>
+                        <option value="Guatemala" {if isset($reg_pays)}{if $reg_pays=="Guatemala"}selected="selected"{/if}{/if}>Guatemala</option>
+                        <option value="Guernesey" {if isset($reg_pays)}{if $reg_pays=="Guernesey"}selected="selected"{/if}{/if}>Guernesey </option>
+                        <option value="Guinee" {if isset($reg_pays)}{if $reg_pays=="Guinee"}selected="selected"{/if}{/if}>Guinee </option>
+                        <option value="Guinee_Bissau" {if isset($reg_pays)}{if $reg_pays=="Guinee_Bissau"}selected="selected"{/if}{/if}>Guinee_Bissau </option>
+                        <option value="Guinee equatoriale" {if isset($reg_pays)}{if $reg_pays=="Guinee equatoriale"}selected="selected"{/if}{/if}>Guinee Equatoriale </option>
+                        <option value="Guyana" {if isset($reg_pays)}{if $reg_pays=="Guyana"}selected="selected"{/if}{/if}>Guyana </option>
+                        <option value="Guyane_Francaise" {if isset($reg_pays)}{if $reg_pays=="Guyane_Francaise"}selected="selected"{/if}{/if}>Guyane Francaise </option>
+                        <option value="Haiti" {if isset($reg_pays)}{if $reg_pays=="Haiti"}selected="selected"{/if}{/if}>Haiti </option>
+                        <option value="Hawaii" {if isset($reg_pays)}{if $reg_pays=="Hawaii"}selected="selected"{/if}{/if}>Hawaii </option>
+                        <option value="Honduras" {if isset($reg_pays)}{if $reg_pays=="Honduras"}selected="selected"{/if}{/if}>Honduras </option>
+                        <option value="Hong_Kong" {if isset($reg_pays)}{if $reg_pays=="Hong_Kong"}selected="selected"{/if}{/if}>Hong Kong </option>
+                        <option value="Hongrie" {if isset($reg_pays)}{if $reg_pays=="Hongrie"}selected="selected"{/if}{/if}>Hongrie </option>
+                        <option value="Inde" {if isset($reg_pays)}{if $reg_pays=="Inde"}selected="selected"{/if}{/if}>Inde </option>
+                        <option value="Indonesie" {if isset($reg_pays)}{if $reg_pays=="Indonesie"}selected="selected"{/if}{/if}>Indonesie </option>
+                        <option value="Iran" {if isset($reg_pays)}{if $reg_pays=="Iran"}selected="selected"{/if}{/if}>Iran </option>
+                        <option value="Iraq" {if isset($reg_pays)}{if $reg_pays=="Iraq"}selected="selected"{/if}{/if}>Iraq </option>
+                        <option value="Irlande" {if isset($reg_pays)}{if $reg_pays=="Irlande"}selected="selected"{/if}{/if}>Irlande </option>
+                        <option value="Islande" {if isset($reg_pays)}{if $reg_pays=="Islande"}selected="selected"{/if}{/if}>Islande </option>
+                        <option value="Israel" {if isset($reg_pays)}{if $reg_pays=="Israel"}selected="selected"{/if}{/if}>Israel </option>
+                        <option value="Italie" {if isset($reg_pays)}{if $reg_pays=="Italie"}selected="selected"{/if}{/if}>italie </option>
+                        <option value="Jamaique" {if isset($reg_pays)}{if $reg_pays=="Jamaique"}selected="selected"{/if}{/if}>Jamaique </option>
+                        <option value="Jan Mayen" {if isset($reg_pays)}{if $reg_pays=="Jan Mayen"}selected="selected"{/if}{/if}>Jan Mayen </option>
+                        <option value="Japon" {if isset($reg_pays)}{if $reg_pays=="Japon"}selected="selected"{/if}{/if}>Japon </option>
+                        <option value="Jersey" {if isset($reg_pays)}{if $reg_pays=="Jersey"}selected="selected"{/if}{/if}>Jersey </option>
+                        <option value="Jordanie" {if isset($reg_pays)}{if $reg_pays=="Jordanie"}selected="selected"{/if}{/if}>Jordanie </option>
+                        <option value="Kazakhstan" {if isset($reg_pays)}{if $reg_pays=="Kazakhstan"}selected="selected"{/if}{/if}>Kazakhstan </option>
+                        <option value="Kenya" {if isset($reg_pays)}{if $reg_pays=="Kenya"}selected="selected"{/if}{/if}>Kenya </option>
+                        <option value="Kirghizstan" {if isset($reg_pays)}{if $reg_pays=="Kirghizstan"}selected="selected"{/if}{/if}>Kirghizistan </option>
+                        <option value="Kiribati" {if isset($reg_pays)}{if $reg_pays=="Kiribati"}selected="selected"{/if}{/if}>Kiribati </option>
+                        <option value="Koweit" {if isset($reg_pays)}{if $reg_pays=="Koweit"}selected="selected"{/if}{/if}>Koweit </option>
+                        <option value="Laos" {if isset($reg_pays)}{if $reg_pays=="Laos"}selected="selected"{/if}{/if}>Laos </option>
+                        <option value="Lesotho" {if isset($reg_pays)}{if $reg_pays=="Lesotho"}selected="selected"{/if}{/if}>Lesotho </option>
+                        <option value="Lettonie" {if isset($reg_pays)}{if $reg_pays=="Lettonie"}selected="selected"{/if}{/if}>Lettonie </option>
+                        <option value="Liban" {if isset($reg_pays)}{if $reg_pays=="Liban"}selected="selected"{/if}{/if}>Liban </option>
+                        <option value="Liberia" {if isset($reg_pays)}{if $reg_pays=="Liberia"}selected="selected"{/if}{/if}>Liberia </option>
+                        <option value="Liechtenstein" {if isset($reg_pays)}{if $reg_pays=="Liechtenstein"}selected="selected"{/if}{/if}>Liechtenstein </option>
+                        <option value="Lituanie" {if isset($reg_pays)}{if $reg_pays=="Lituanie"}selected="selected"{/if}{/if}>Lituanie </option>
+                        <option value="Luxembourg" {if isset($reg_pays)}{if $reg_pays=="Luxembourg"}selected="selected"{/if}{/if}>Luxembourg </option>
+                        <option value="Lybie" {if isset($reg_pays)}{if $reg_pays=="Lybie"}selected="selected"{/if}{/if}>Lybie </option>
+                        <option value="Macao" {if isset($reg_pays)}{if $reg_pays=="Macao"}selected="selected"{/if}{/if}>Macao </option>
+                        <option value="Macedoine" {if isset($reg_pays)}{if $reg_pays=="Macedoine"}selected="selected"{/if}{/if}>Macedoine </option>
+                        <option value="Madagascar" {if isset($reg_pays)}{if $reg_pays=="Madagascar"}selected="selected"{/if}{/if}>Madagascar </option>
+                        <option value="MadÃ¨re" {if isset($reg_pays)}{if $reg_pays=="MadÃ¨re"}selected="selected"{/if}{/if}>MadÃ¨re </option>
+                        <option value="Malaisie" {if isset($reg_pays)}{if $reg_pays=="Malaisie"}selected="selected"{/if}{/if}>Malaisie </option>
+                        <option value="Malawi" {if isset($reg_pays)}{if $reg_pays=="Malawi"}selected="selected"{/if}{/if}>Malawi </option>
+                        <option value="Maldives" {if isset($reg_pays)}{if $reg_pays=="Maldives"}selected="selected"{/if}{/if}>Maldives </option>
+                        <option value="Mali" {if isset($reg_pays)}{if $reg_pays=="Mali"}selected="selected"{/if}{/if}>Mali </option>
+                        <option value="Malte" {if isset($reg_pays)}{if $reg_pays=="Malte"}selected="selected"{/if}{/if}>Malte </option>
+                        <option value="Man" {if isset($reg_pays)}{if $reg_pays=="Man"}selected="selected"{/if}{/if}>Man </option>
+                        <option value="Mariannes du Nord" {if isset($reg_pays)}{if $reg_pays=="Mariannes du Nord"}selected="selected"{/if}{/if}>Mariannes du Nord </option>
+                        <option value="Maroc" {if isset($reg_pays)}{if $reg_pays=="Maroc"}selected="selected"{/if}{/if}>Maroc </option>
+                        <option value="Marshall" {if isset($reg_pays)}{if $reg_pays=="Marshall"}selected="selected"{/if}{/if}>Marshall </option>
+                        <option value="Martinique" {if isset($reg_pays)}{if $reg_pays=="Martinique"}selected="selected"{/if}{/if}>Martinique </option>
+                        <option value="Maurice" {if isset($reg_pays)}{if $reg_pays=="Maurice"}selected="selected"{/if}{/if}>Maurice </option>
+                        <option value="Mauritanie" {if isset($reg_pays)}{if $reg_pays=="Mauritanie"}selected="selected"{/if}{/if}>Mauritanie </option>
+                        <option value="Mayotte" {if isset($reg_pays)}{if $reg_pays=="Mayotte"}selected="selected"{/if}{/if}>Mayotte </option>
+                        <option value="Mexique" {if isset($reg_pays)}{if $reg_pays=="Mexique"}selected="selected"{/if}{/if}>Mexique </option>
+                        <option value="Micronesie" {if isset($reg_pays)}{if $reg_pays=="Micronesie"}selected="selected"{/if}{/if}>Micronesie </option>
+                        <option value="Midway" {if isset($reg_pays)}{if $reg_pays=="Midway"}selected="selected"{/if}{/if}>Midway </option>
+                        <option value="Moldavie" {if isset($reg_pays)}{if $reg_pays=="Moldavie"}selected="selected"{/if}{/if}>Moldavie </option>
+                        <option value="Monaco" {if isset($reg_pays)}{if $reg_pays=="Monaco"}selected="selected"{/if}{/if}>Monaco </option>
+                        <option value="Mongolie" {if isset($reg_pays)}{if $reg_pays=="Mongolie"}selected="selected"{/if}{/if}>Mongolie </option>
+                        <option value="Montserrat" {if isset($reg_pays)}{if $reg_pays=="Montserrat"}selected="selected"{/if}{/if}>Montserrat </option>
+                        <option value="Mozambique" {if isset($reg_pays)}{if $reg_pays=="Mozambique"}selected="selected"{/if}{/if}>Mozambique </option>
+                        <option value="Namibie" {if isset($reg_pays)}{if $reg_pays=="Namibie"}selected="selected"{/if}{/if}>Namibie </option>
+                        <option value="Nauru" {if isset($reg_pays)}{if $reg_pays=="Nauru"}selected="selected"{/if}{/if}>Nauru </option>
+                        <option value="Nepal" {if isset($reg_pays)}{if $reg_pays=="Nepal"}selected="selected"{/if}{/if}>Nepal </option>
+                        <option value="Nicaragua" {if isset($reg_pays)}{if $reg_pays=="Nicaragua"}selected="selected"{/if}{/if}>Nicaragua </option>
+                        <option value="Niger" {if isset($reg_pays)}{if $reg_pays=="Niger"}selected="selected"{/if}{/if}>Niger </option>
+                        <option value="Nigeria" {if isset($reg_pays)}{if $reg_pays=="Nigeria"}selected="selected"{/if}{/if}>Nigeria </option>
+                        <option value="Niue" {if isset($reg_pays)}{if $reg_pays=="Niue"}selected="selected"{/if}{/if}>Niue </option>
+                        <option value="Norfolk" {if isset($reg_pays)}{if $reg_pays=="Norfolk"}selected="selected"{/if}{/if}>Norfolk </option>
+                        <option value="Norvege" {if isset($reg_pays)}{if $reg_pays=="Norvege"}selected="selected"{/if}{/if}>Norvege </option>
+                        <option value="Nouvelle_Caledonie" {if isset($reg_pays)}{if $reg_pays=="Nouvelle_Caledonie"}selected="selected"{/if}{/if}>Nouvelle Caledonie </option>
+                        <option value="Nouvelle_Zelande" {if isset($reg_pays)}{if $reg_pays=="Nouvelle_Zelande"}selected="selected"{/if}{/if}>Nouvelle Zelande </option>
+                        <option value="Oman" {if isset($reg_pays)}{if $reg_pays=="Oman"}selected="selected"{/if}{/if}>Oman </option>
+                        <option value="Ouganda" {if isset($reg_pays)}{if $reg_pays=="Ouganda"}selected="selected"{/if}{/if}>Ouganda </option>
+                        <option value="Ouzbekistan" {if isset($reg_pays)}{if $reg_pays=="Ouzbekistan"}selected="selected"{/if}{/if}>Ouzbekistan </option>
+                        <option value="Pakistan" {if isset($reg_pays)}{if $reg_pays=="Pakistan"}selected="selected"{/if}{/if}>Pakistan </option>
+                        <option value="Palau" {if isset($reg_pays)}{if $reg_pays=="Palau"}selected="selected"{/if}{/if}>Palau </option>
+                        <option value="Palestine" {if isset($reg_pays)}{if $reg_pays=="Palestine"}selected="selected"{/if}{/if}>Palestine </option>
+                        <option value="Panama" {if isset($reg_pays)}{if $reg_pays=="Panama"}selected="selected"{/if}{/if}>Panama </option>
+                        <option value="Papouasie_Nouvelle_Guinee" {if isset($reg_pays)}{if $reg_pays=="Papouasie_Nouvelle_Guinee"}selected="selected"{/if}{/if}>Papouasie Nouvelle Guinee </option>
+                        <option value="Paraguay" {if isset($reg_pays)}{if $reg_pays=="Paraguay"}selected="selected"{/if}{/if}>Paraguay </option>
+                        <option value="Pays_Bas" {if isset($reg_pays)}{if $reg_pays=="Pays_Bas"}selected="selected"{/if}{/if}>Pays Bas </option>
+                        <option value="Perou" {if isset($reg_pays)}{if $reg_pays=="Perou"}selected="selected"{/if}{/if}>Perou </option>
+                        <option value="Philippines" {if isset($reg_pays)}{if $reg_pays=="Philippines"}selected="selected"{/if}{/if}>Philippines </option>
+                        <option value="Pologne" {if isset($reg_pays)}{if $reg_pays=="Pologne"}selected="selected"{/if}{/if}>Pologne </option>
+                        <option value="Polynesie" {if isset($reg_pays)}{if $reg_pays=="Polynesie"}selected="selected"{/if}{/if}>Polynesie </option>
+                        <option value="Porto_Rico" {if isset($reg_pays)}{if $reg_pays=="Porto_Rico"}selected="selected"{/if}{/if}>Porto_Rico </option>
+                        <option value="Portugal" {if isset($reg_pays)}{if $reg_pays=="Portugal"}xselected="selected"{/if}{/if}>Portugal </option>
+                        <option value="Qatar" {if isset($reg_pays)}{if $reg_pays=="Qatar"}selected="selected"{/if}{/if}>Qatar </option>
+                        <option value="Republique_Dominicaine" {if isset($reg_pays)}{if $reg_pays=="Republique_Dominicaine"}selected="selected"{/if}{/if}>Republique Dominicaine </option>
+                        <option value="Republique_Tcheque" {if isset($reg_pays)}{if $reg_pays=="Republique_Tcheque"}selected="selected"{/if}{/if}>Republique Tcheque </option>
+                        <option value="Reunion" {if isset($reg_pays)}{if $reg_pays=="Reunion"}selected="selected"{/if}{/if}>Reunion </option>
+                        <option value="Roumanie" {if isset($reg_pays)}{if $reg_pays=="Roumanie"}selected="selected"{/if}{/if}>Roumanie </option>
+                        <option value="Royaume_Uni" {if isset($reg_pays)}{if $reg_pays=="Royaume_Uni"}selected="selected"{/if}{/if}>Royaume Uni </option>
+                        <option value="Russie" {if isset($reg_pays)}{if $reg_pays=="Russie"}selected="selected"{/if}{/if}>Russie </option>
+                        <option value="Rwanda" {if isset($reg_pays)}{if $reg_pays=="Rwanda"}selected="selected"{/if}{/if}>Rwanda </option>
+                        <option value="Sahara Occidental" {if isset($reg_pays)}{if $reg_pays=="Sahara Occidental"}selected="selected"{/if}{/if}>Sahara Occidental </option>
+                        <option value="Sainte_Lucie" {if isset($reg_pays)}{if $reg_pays=="Sainte_Lucie"}selected="selected"{/if}{/if}>Sainte Lucie </option>
+                        <option value="Saint_Marin" {if isset($reg_pays)}{if $reg_pays=="Saint_Marin"}selected="selected"{/if}{/if}>Saint Marin </option>
+                        <option value="Salomon" {if isset($reg_pays)}{if $reg_pays=="Salomon"}selected="selected"{/if}{/if}>Salomon </option>
+                        <option value="Salvador" {if isset($reg_pays)}{if $reg_pays=="Salvador"}selected="selected"{/if}{/if}>Salvador </option>
+                        <option value="Samoa_Occidentales" {if isset($reg_pays)}{if $reg_pays=="Samoa_Occidentales"}selected="selected"{/if}{/if}>Samoa Occidentales</option>
+                        <option value="Samoa_Americaine" {if isset($reg_pays)}{if $reg_pays=="Samoa_Americaine"}selected="selected"{/if}{/if}>Samoa Americaine </option>
+                        <option value="Sao_Tome_et_Principe" {if isset($reg_pays)}{if $reg_pays=="Sao_Tome_et_Principe"}selected="selected"{/if}{/if}>Sao Tome et Principe </option>
+                        <option value="Senegal" {if isset($reg_pays)}{if $reg_pays=="Senegal"}selected="selected"{/if}{/if}>Senegal </option>
+                        <option value="Seychelles" {if isset($reg_pays)}{if $reg_pays=="Seychelles"}selected="selected"{/if}{/if}>Seychelles </option>
+                        <option value="Sierra Leone" {if isset($reg_pays)}{if $reg_pays=="Sierra Leone"}selected="selected"{/if}{/if}>Sierra Leone </option>
+                        <option value="Singapour" {if isset($reg_pays)}{if $reg_pays=="Singapour"}selected="selected"{/if}{/if}>Singapour </option>
+                        <option value="Slovaquie" {if isset($reg_pays)}{if $reg_pays=="Slovaquie"}selected="selected"{/if}{/if}>Slovaquie </option>
+                        <option value="Slovenie" {if isset($reg_pays)}{if $reg_pays=="Slovenie"}selected="selected"{/if}{/if}>Slovenie</option>
+                        <option value="Somalie" {if isset($reg_pays)}{if $reg_pays=="Somalie"}selected="selected"{/if}{/if}>Somalie </option>
+                        <option value="Soudan" {if isset($reg_pays)}{if $reg_pays=="Soudan"}selected="selected"{/if}{/if}>Soudan </option>
+                        <option value="Sri_Lanka" {if isset($reg_pays)}{if $reg_pays=="Sri_Lanka"}selected="selected"{/if}{/if}>Sri_Lanka </option>
+                        <option value="Suede" {if isset($reg_pays)}{if $reg_pays=="Suede"}selected="selected"{/if}{/if}>Suede </option>
+                        <option value="Suisse" {if isset($reg_pays)}{if $reg_pays=="Suisse"}selected="selected"{/if}{/if}>Suisse </option>
+                        <option value="Surinam" {if isset($reg_pays)}{if $reg_pays=="Surinam"}selected="selected"{/if}{/if}>Surinam </option>
+                        <option value="Swaziland" {if isset($reg_pays)}{if $reg_pays=="Swaziland"}selected="selected"{/if}{/if}>Swaziland </option>
+                        <option value="Syrie" {if isset($reg_pays)}{if $reg_pays=="Syrie"}selected="selected"{/if}{/if}>Syrie </option>
+                        <option value="Tadjikistan" {if isset($reg_pays)}{if $reg_pays=="Tadjikistan"}selected="selected"{/if}{/if}>Tadjikistan </option>
+                        <option value="Taiwan" {if isset($reg_pays)}{if $reg_pays=="Taiwan"}selected="selected"{/if}{/if}>Taiwan </option>
+                        <option value="Tonga" {if isset($reg_pays)}{if $reg_pays=="Tonga"}selected="selected"{/if}{/if}>Tonga </option>
+                        <option value="Tanzanie" {if isset($reg_pays)}{if $reg_pays=="Afghanistan"}selected="selected"{/if}{/if}>Tanzanie </option>
+                        <option value="Tchad" {if isset($reg_pays)}{if $reg_pays=="Tanzanie"}selected="selected"{/if}{/if}>Tchad </option>
+                        <option value="Thailande" {if isset($reg_pays)}{if $reg_pays=="Afghanistan"}selected="selected"{/if}{/if}>Thailande </option>
+                        <option value="Tibet" {if isset($reg_pays)}{if $reg_pays=="Thailande"}selected="selected"{/if}{/if}>Tibet </option>
+                        <option value="Timor_Oriental" {if isset($reg_pays)}{if $reg_pays=="Timor_Oriental"}selected="selected"{/if}{/if}>Timor Oriental </option>
+                        <option value="Togo" {if isset($reg_pays)}{if $reg_pays=="Togo"}selected="selected"{/if}{/if}>Togo </option>
+                        <option value="Trinite_et_Tobago" {if isset($reg_pays)}{if $reg_pays=="Trinite_et_Tobago"}selected="selected"{/if}{/if}>Trinite et Tobago </option>
+                        <option value="Tristan da cunha" {if isset($reg_pays)}{if $reg_pays=="Tristan da cunha"}selected="selected"{/if}{/if}>Tristan de cuncha </option>
+                        <option value="Tunisie" {if isset($reg_pays)}{if $reg_pays=="Tunisie"}selected="selected"{/if}{/if}>Tunisie </option>
+                        <option value="Turkmenistan" {if isset($reg_pays)}{if $reg_pays=="Turkmenistan"}selected="selected"{/if}{/if}>Turmenistan </option>
+                        <option value="Turquie" {if isset($reg_pays)}{if $reg_pays=="Turquie"}selected="selected"{/if}{/if}>Turquie </option>
+                        <option value="Ukraine" {if isset($reg_pays)}{if $reg_pays=="Ukraine"}selected="selected"{/if}{/if}>Ukraine </option>
+                        <option value="Uruguay" {if isset($reg_pays)}{if $reg_pays=="Uruguay"}selected="selected"{/if}{/if}>Uruguay </option>
+                        <option value="Vanuatu" {if isset($reg_pays)}{if $reg_pays=="Vanuatu"}selected="selected"{/if}{/if}>Vanuatu </option>
+                        <option value="Vatican" {if isset($reg_pays)}{if $reg_pays=="Vatican"}selected="selected"{/if}{/if}>Vatican </option>
+                        <option value="Venezuela" {if isset($reg_pays)}{if $reg_pays=="Venezuela"}selected="selected"{/if}{/if}>Venezuela </option>
+                        <option value="Vierges_Americaines" {if isset($reg_pays)}{if $reg_pays=="Vierges_Americaines"}selected="selected"{/if}{/if}>Vierges Americaines </option>
+                        <option value="Vierges_Britanniques" {if isset($reg_pays)}{if $reg_pays=="Vierges_Britanniques"}selected="selected"{/if}{/if}>Vierges Britanniques </option>
+                        <option value="Vietnam" {if isset($reg_pays)}{if $reg_pays=="Vietnam"}selected="selected"{/if}{/if}>Vietnam </option>
+                        <option value="Wake" {if isset($reg_pays)}{if $reg_pays=="Wake"}selected="selected"{/if}{/if}>Wake </option>
+                        <option value="Wallis et Futuma" {if isset($reg_pays)}{if $reg_pays=="Wallis et Futuma"}selected="selected"{/if}{/if}>Wallis et Futuma </option>
+                        <option value="Yemen" {if isset($reg_pays)}{if $reg_pays=="Yemen"}selected="selected"{/if}{/if}>Yemen </option>
+                        <option value="Yougoslavie" {if isset($reg_pays)}{if $reg_pays=="Yougoslavie"}selected="selected"{/if}{/if}>Yougoslavie </option>
+                        <option value="Zambie" {if isset($reg_pays)}{if $reg_pays=="Zambie"}selected="selected"{/if}{/if}>Zambie </option>
+                        <option value="Zimbabwe" {if isset($reg_pays)}{if $reg_pays=="Zimbabwe"}selected="selected"{/if}{/if}>Zimbabwe </option>
                     </select>
                     <br/><span class="reg_payscheckitvalue"></span>
                 </div>

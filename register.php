@@ -37,6 +37,14 @@ if($pligg_regfrom != ''){
 			$password = sanitize($_POST["reg_password"], 3);
 			$password2 = sanitize($_POST["reg_password2"], 3);
 			$user_language = sanitize($_POST["user_language"], 3);
+			$user_nom = sanitize($_POST["reg_nom"], 3);
+			$user_prenom = sanitize($_POST["reg_prenom"], 3);
+			$user_datenaissance = sanitize($_POST["reg_datenaissance"], 3);
+			$user_genre = sanitize($_POST["reg_genre"], 3);
+			$user_numerosecu = sanitize($_POST["reg_numerosecu"], 3);
+			$user_codepostal = sanitize($_POST["reg_codepostal"], 3);
+			$user_ville = sanitize($_POST["reg_ville"], 3);
+			$user_pays = sanitize($_POST["reg_pays"], 3);
 			break;
 
 		case 'sidebar':
@@ -52,11 +60,19 @@ if($pligg_regfrom != ''){
 	if(isset($password)){$main_smarty->assign('reg_password', htmlspecialchars($password,ENT_QUOTES));}
 	if(isset($password2)){$main_smarty->assign('reg_password2', htmlspecialchars($password2,ENT_QUOTES));}
 	if(isset($user_language)){$main_smarty->assign('user_language', htmlspecialchars($user_language,ENT_QUOTES));}
+	if(isset($user_nom)){$main_smarty->assign('reg_nom', htmlspecialchars($user_nom,ENT_QUOTES));}
+	if(isset($user_prenom)){$main_smarty->assign('reg_prenom', htmlspecialchars($user_prenom,ENT_QUOTES));}
+	if(isset($user_datenaissance)){$main_smarty->assign('reg_datenaissance', htmlspecialchars($user_datenaissance,ENT_QUOTES));}
+	if(isset($user_genre)){$main_smarty->assign('reg_genre', htmlspecialchars($user_genre,ENT_QUOTES));}
+	if(isset($user_numerosecu)){$main_smarty->assign('reg_numerosecu', htmlspecialchars($user_numerosecu,ENT_QUOTES));}
+	if(isset($user_codepostal)){$main_smarty->assign('reg_codepostal', htmlspecialchars($user_codepostal,ENT_QUOTES));}
+	if(isset($user_ville)){$main_smarty->assign('reg_ville', htmlspecialchars($user_ville,ENT_QUOTES));}
+	if(isset($user_pays)){$main_smarty->assign('reg_pays', htmlspecialchars($user_pays,ENT_QUOTES));}
 	
-	$error = register_check_errors($username, $email, $password, $password2, $user_language);
+	$error = register_check_errors($username, $email, $password, $password2, $user_nom, $user_prenom, $user_datenaissance, $user_genre, $user_numerosecu, $user_codepostal);
 
 	if($error == false){
-		register_add_user($username, $email, $password, $password2, $user_language);
+		register_add_user($username, $email, $password, $password2, $user_language, $user_nom, $user_prenom, $user_datenaissance, $user_genre, $user_numerosecu, $user_codepostal, $user_ville);
 	} else {
 //		print "Error";
 		print_r($form_email_error);
@@ -82,7 +98,7 @@ $main_smarty->display($the_template . '/pligg.tpl');
 
 die();
 
-function register_check_errors($username, $email, $password, $password2){
+function register_check_errors($username, $email, $password, $password2, $user_nom, $user_prenom, $user_datenaissance, $user_genre, $user_numerosecu, $user_codepostal){
 
 	global $main_smarty;
 
@@ -127,8 +143,67 @@ function register_check_errors($username, $email, $password, $password2){
 	if($password !== $password2) { // if both passwords do not match
 		$form_password_error[] = $main_smarty->get_config_vars('PLIGG_Visual_Register_Error_NoPassMatch');
 		$error = true;
+	}
+        
+        // nouveau champs m6r :
+        
+        // nom
+	if(!isset($user_nom) || strlen($user_nom) < 3) { // if no user_nom was given or username is less than 3 characters
+		$form_nom_error[] = $main_smarty->get_config_vars('PLIGG_Visual_Register_Error_NomTooShort');
+		$error = true;
 	}	
-
+	if (preg_match('/\pL/u', 'a')) {	// Check if PCRE was compiled with UTF-8 support
+	    if (!preg_match('/^[_\-\d\p{L}\p{M}]+$/iu', $user_nom)) { // if user_nom contains invalid characters
+		$form_nom_error[] = $main_smarty->get_config_vars('PLIGG_Visual_Register_Error_NomInvalid');
+		$error = true;
+	    }
+	} else {
+	    if (!preg_match('/^[^~`@%&=\\/;:\\.,<>!"\\\'\\^\\.\\[\\]\\$\\(\\)\\|\\*\\+\\-\\?\\{\\}\\\\]+$/', $user_nom)) {
+		$form_nom_error[] = $main_smarty->get_config_vars('PLIGG_Visual_Register_Error_NomInvalid');
+		$error = true;
+	    }
+	}
+        // prenom
+	if(!isset($user_prenom) || strlen($user_prenom) < 3) { // if no user_prenom was given or user_prenom is less than 3 characters
+		$form_prenom_error[] = $main_smarty->get_config_vars('PLIGG_Visual_Register_Error_PrenomTooShort');
+		$error = true;
+	}	
+	if (preg_match('/\pL/u', 'a')) {	// Check if PCRE was compiled with UTF-8 support
+	    if (!preg_match('/^[_\-\d\p{L}\p{M}]+$/iu', $user_prenom)) { // if user_prenom contains invalid characters
+		$form_prenom_error[] = $main_smarty->get_config_vars('PLIGG_Visual_Register_Error_PrenomInvalid');
+		$error = true;
+	    }
+	} else {
+	    if (!preg_match('/^[^~`@%&=\\/;:\\.,<>!"\\\'\\^\\.\\[\\]\\$\\(\\)\\|\\*\\+\\-\\?\\{\\}\\\\]+$/', $user_prenom)) {
+		$form_prenom_error[] = $main_smarty->get_config_vars('PLIGG_Visual_Register_Error_NomInvalid') ;
+		$error = true;
+	    }
+	}
+        $mois = "";
+       //date de naissance
+ 	if(preg_match( '^\d{1,2}/\d{1,2}/\d{4}$' , $user_datenaissance )) { // if user _datenaissance pas au bon format
+		$form_datenaissance_error[] = $main_smarty->get_config_vars('PLIGG_Visual_Register_Error_DateInvalid');
+		$error = true;
+	}
+        else
+        {
+                $d = explode("/",$user_datenaissance);              
+                $mois = $d[1];                                  //  recup mois pour controle numero de secu
+       
+        }
+         //numero sécu
+ 	if(!isset($user_numerosecu) || strlen($user_numerosecu) != 15 || substr($user_numerosecu, 3,2)!= $mois) { // if no secu mois differant mois de naissance 
+		$form_numerosecu_error[] = $main_smarty->get_config_vars('PLIGG_Visual_Register_Error_NumSecuInvalid');
+		$error = true;
+	}
+        
+        //code postal
+ 	if(!preg_match('#^[0-9]{5}$#',$user_codepostal)){ // if no user_code postal 5 chiffres
+		$form_codepostal_error[] = $main_smarty->get_config_vars('PLIGG_Visual_Register_Error_CPInvalid');
+		$error = true;
+	}
+        
+        
 	$vars = array('username' => $username, 'email' => $email, 'password' => $password);
 	check_actions('register_check_errors', $vars);
 
@@ -145,11 +220,16 @@ function register_check_errors($username, $email, $password, $password2){
 	$main_smarty->assign('form_username_error', $form_username_error);
 	$main_smarty->assign('form_email_error', $form_email_error);
 	$main_smarty->assign('form_password_error', $form_password_error);
+	$main_smarty->assign('form_nom_error', $form_nom_error);
+	$main_smarty->assign('form_prenom_error', $form_prenom_error);
+	$main_smarty->assign('form_datenaissance_error', $form_datenaissance_error);
+	$main_smarty->assign('form_numerosecu_error', $form_numerosecu_error);
+	$main_smarty->assign('form_codepostal_error', $form_codepostal_error);
 
 	return $error;
 }
 
-function register_add_user($username, $email, $password, $password2, $user_language){
+function register_add_user($username, $email, $password, $password2, $user_language, $user_nom, $user_prenom, $user_datenaissance, $user_genre, $user_numerosecu, $user_codepostal, $user_ville, $user_pays){
 
 	global $current_user;
 
@@ -159,6 +239,14 @@ function register_add_user($username, $email, $password, $password2, $user_langu
 	$user->username = $username;
 	$user->pass = $password;
 	$user->email = $email;
+	$user->nom = $user_nom;
+	$user->prenom = $user_prenom;
+	$user->date_naissance = $user_datenaissance;
+	$user->genre = $user_genre;
+	$user->numero_secu = $user_numerosecu;
+	$user->code_postal = $user_codepostal;
+	$user->ville = $user_ville;
+	$user->pays = $user_pays;
 	
 	
 	if($user->Create()){
