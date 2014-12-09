@@ -45,6 +45,7 @@ if($pligg_regfrom != ''){
 			$user_codepostal = sanitize($_POST["reg_codepostal"], 3);
 			$user_ville = sanitize($_POST["reg_ville"], 3);
 			$user_pays = sanitize($_POST["reg_pays"], 3);
+			$user_signature = sanitize($_POST["reg_signe"], 3);
 			break;
 
 		case 'sidebar':
@@ -69,7 +70,7 @@ if($pligg_regfrom != ''){
 	if(isset($user_ville)){$main_smarty->assign('reg_ville', htmlspecialchars($user_ville,ENT_QUOTES));}
 	if(isset($user_pays)){$main_smarty->assign('reg_pays', htmlspecialchars($user_pays,ENT_QUOTES));}
 	
-	$error = register_check_errors($username, $email, $password, $password2, $user_nom, $user_prenom, $user_datenaissance, $user_genre, $user_numerotel, $user_codepostal);
+	$error = register_check_errors($username, $email, $password, $password2, $user_nom, $user_prenom, $user_datenaissance, $user_genre, $user_numerotel, $user_codepostal, $user_signature);
 
 	if($error == false){
 		register_add_user($username, $email, $password, $password2, $user_language, $user_nom, $user_prenom, $user_datenaissance, $user_genre, $user_numerotel, $user_codepostal, $user_ville);
@@ -98,7 +99,7 @@ $main_smarty->display($the_template . '/pligg.tpl');
 
 die();
 
-function register_check_errors($username, $email, $password, $password2, $user_nom, $user_prenom, $user_datenaissance, $user_genre, $user_numerotel, $user_codepostal){
+function register_check_errors($username, $email, $password, $password2, $user_nom, $user_prenom, $user_datenaissance, $user_genre, $user_numerotel, $user_codepostal, $user_signature){
 
 	global $main_smarty;
 
@@ -107,7 +108,7 @@ function register_check_errors($username, $email, $password, $password2, $user_n
 	if(is_ip_banned($userip)) { 
 		$form_username_error[] = $main_smarty->get_config_vars('PLIGG_Visual_Register_Error_YourIpIsBanned');
 		$error = true;
-	}	
+	}
 
 	if(!isset($username) || strlen($username) < 3) { // if no username was given or username is less than 3 characters
 		$form_username_error[] = $main_smarty->get_config_vars('PLIGG_Visual_Register_Error_UserTooShort');
@@ -148,7 +149,7 @@ function register_check_errors($username, $email, $password, $password2, $user_n
 	// nouveau champs m6r :
 
 	// nom
-	if(!isset($user_nom) || strlen($user_nom) < 2) { // if no user_nom was given or username is less than 3 characters
+	if(!isset($user_nom) || strlen($user_nom) < 2) { // if no user_nom was given or username is less than 2 characters
 		$form_nom_error[] = $main_smarty->get_config_vars('PLIGG_Visual_Register_Error_NomTooShort');
 		$error = true;
 	}	
@@ -165,7 +166,7 @@ function register_check_errors($username, $email, $password, $password2, $user_n
 	}
 
     // prenom
-	if(!isset($user_prenom) || strlen($user_prenom) < 3) { // if no user_prenom was given or user_prenom is less than 3 characters
+	if(!isset($user_prenom) || strlen($user_prenom) < 2) { // if no user_prenom was given or user_prenom is less than 2 char
 		$form_prenom_error[] = $main_smarty->get_config_vars('PLIGG_Visual_Register_Error_PrenomTooShort');
 		$error = true;
 	}	
@@ -204,6 +205,11 @@ function register_check_errors($username, $email, $password, $password2, $user_n
 		$form_codepostal_error[] = $main_smarty->get_config_vars('PLIGG_Visual_Register_Error_CPInvalid');
 		$error = true;
 	}
+	//signature
+	if(!$user_signature){
+		$form_signature_error[] = $main_smarty->get_config_vars('PLIGG_Visual_Register_Error_Signature');
+		$error = true;
+	}
 
 
 	$vars = array('username' => $username, 'email' => $email, 'password' => $password);
@@ -227,6 +233,7 @@ function register_check_errors($username, $email, $password, $password2, $user_n
 	$main_smarty->assign('form_datenaissance_error', $form_datenaissance_error);
 	$main_smarty->assign('form_numerotel_error', $form_numerotel_error);
 	$main_smarty->assign('form_codepostal_error', $form_codepostal_error);
+	$main_smarty->assign('form_signature_error', $form_signature_error);
 
 	return $error;
 }

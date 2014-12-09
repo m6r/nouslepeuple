@@ -6,7 +6,7 @@
     <div class="col-md-4 register-left">
         {checkActionsTpl location="tpl_pligg_register_start"}
         <i class="fa fa-asterisk text-danger"></i> Champs obligatoire
-        <form action="{$URL_register}" class="form-horizontal" method="post" id="thisform">
+        <form action="{$URL_register}" method="post" id="thisform">
             <div class="control-group">
                 <label class="control-label">{#PLIGG_Visual_Register_Nom#}
                     <i class="fa fa-asterisk text-danger"></i></label>
@@ -445,10 +445,23 @@
             {if isset($register_step_1_extra)}
                 {$register_step_1_extra}
             {/if}
-            <div class="form-actions">
-                <input type="submit" name="submit" value="{#PLIGG_Visual_Register_Create_User#}" class="btn btn-primary reg_submit" tabindex="16" />
-                <input type="hidden" name="regfrom" value="full" />
+            <div class="checkbox">
+                {if isset($form_signature_error)}
+                    { foreach value=error from=$form_signature_error }
+                    <div style="margin:10px 0 0 0;" class="alert alert-danger">
+                        <button class="close" data-dismiss="alert">&times;</button>
+                        {$error}
+                    </div>
+                    { /foreach }
+                {/if}
+                <label>
+                    <input type="checkbox" name="reg_signe"> Je signe pour la 6e République et m’engage à respecter <a href="//www.m6r.fr/charte-commentaires-m6r-fr/">la charte d’expression</a>.
+                </label>
             </div>
+            <button type="submit" class="btn btn-primary" tabindex="16" />
+                {#PLIGG_Visual_Register_Create_User#}
+            </button>
+            <input type="hidden" name="regfrom" value="full" />
         </form>
     </div><!--/.register-left -->
     <div class="col-md-8 register-right">

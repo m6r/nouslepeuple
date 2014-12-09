@@ -111,14 +111,14 @@ PLIGG_Visual_Register_Error_UserInvalid = "Votre pseudo utilise des caractères 
 PLIGG_Visual_Register_Error_UserTooShort = "Le pseudo doit faire au moins trois caractères"
 
 PLIGG_Visual_Register_Error_NomTooShort = "Le nom d'utilisateur doit faire au moins trois caractères"
-PLIGG_Visual_Register_Error_NomomInvalid = "Votre nom d'utilisateur utilise des caractères invalides."
+PLIGG_Visual_Register_Error_NomInvalid = "Votre nom d'utilisateur utilise des caractères invalides."
 PLIGG_Visual_Register_Error_PrenomTooShort = "Le prenom d'utilisateur doit faire au moins trois caractères"
 
 PLIGG_Visual_Register_Error_PrenomInvalid = "Votre prenom d'utilisateur utilise des caractères invalides."
 PLIGG_Visual_Register_Error_DateInvalid = "Date de naissance invalide"
 PLIGG_Visual_Register_Error_NumTelInvalid = "Numero invalide"
 PLIGG_Visual_Register_Error_CPInvalid = "Le code postal n'est pas valide"
-
+PLIGG_Visual_Register_Error_Signature = "Vous devez signer cette case"
 PLIGG_Visual_Register_Error_Return = "Revenir en arrière et essayer à nouveau."
 PLIGG_Visual_CheckField_UserShort = "Le nom d'utilisateur est trop court."
 PLIGG_Visual_CheckField_InvalidChars = "Des caractères non valides ont été utilisés"
