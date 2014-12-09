@@ -80,7 +80,6 @@ class User {
 										."', now()"
 										.", '" .$db->escape($userip)
 										."', '"
-										."', '"
 										."', '".$db->escape($this->numero_tel)
 										."', '".$db->escape($this->nom)
 										."', '".$db->escape($this->prenom)
