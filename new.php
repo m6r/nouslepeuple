@@ -43,8 +43,8 @@ $search->offset = (get_current_page()-1)*$page_size;
 // pagesize set in the admin panel
 $search->pagesize = $page_size;
 
-// since this is new, we only want to view "new" stories
-$search->filterToStatus = "new";
+// on veut voir tous les posts
+$search->filterToStatus = "all";
 
 // this is for the tabs on the top that filter
 if(isset($_GET['part'])){$search->setmek = $db->escape($_GET['part']);}

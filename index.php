@@ -71,8 +71,10 @@ $search->offset = (get_current_page()-1)*$page_size;
 // pagesize set in the admin panel
 $search->pagesize = $page_size;
 
-// since this is index, we only want to view "published" stories
-$search->filterToStatus = "published";
+// on veut voir tous les posts les mieux classés de la semaine
+$search->filterToStatus = "all";
+$search->filterToTimeFrame = "week";
+$search->orderBy = "link_votes DESC";
 
 // this is for the tabs on the top that filter
 if(isset($_GET['part'])){$search->setmek = $db->escape($_GET['part']);}
@@ -112,6 +114,32 @@ if(isset($_REQUEST['category'])) {
 	// pagename	
 	define('pagename', 'index'); 
 	$main_smarty->assign('pagename', pagename);
+}
+
+// On veut switcher sur la page new.php si le classement est changé.
+if(isset($_GET['category'])){
+	$main_smarty->assign('index_url_recent', getmyurl('newcategory', sanitize($_GET['category'],2)));
+	$main_smarty->assign('index_url_today', getmyurl('new_sort', 'today', sanitize($_GET['category'],2)));
+	$main_smarty->assign('index_url_yesterday', getmyurl('new_sort', 'yesterday', sanitize($_GET['category'],2)));
+	$main_smarty->assign('index_url_week', getmyurl('new_sort', 'week', sanitize($_GET['category'],2)));
+	$main_smarty->assign('index_url_month', getmyurl('new_sort', 'month', sanitize($_GET['category'],2)));
+	$main_smarty->assign('index_url_year', getmyurl('new_sort', 'year', sanitize($_GET['category'],2)));
+	$main_smarty->assign('index_url_alltime', getmyurl('new_sort', 'alltime', sanitize($_GET['category'],2)));
+	$main_smarty->assign('index_url_upvoted', getmyurl('new_sort', 'upvoted', sanitize($_GET['category'],2)));
+	$main_smarty->assign('index_url_downvoted', getmyurl('new_sort', 'downvoted', sanitize($_GET['category'],2)));
+	$main_smarty->assign('index_url_commented', getmyurl('new_sort', 'commented', sanitize($_GET['category'],2)));	
+	$main_smarty->assign('cat_url', getmyurl("newcategory"));
+} else {
+	$main_smarty->assign('index_url_recent', getmyurl('new'));
+	$main_smarty->assign('index_url_today', getmyurl('new_sort', 'today'));
+	$main_smarty->assign('index_url_yesterday', getmyurl('new_sort', 'yesterday'));
+	$main_smarty->assign('index_url_week', getmyurl('new_sort', 'week'));
+	$main_smarty->assign('index_url_month', getmyurl('new_sort', 'month'));
+	$main_smarty->assign('index_url_year', getmyurl('new_sort', 'year'));
+	$main_smarty->assign('index_url_alltime', getmyurl('new_sort', 'alltime'));
+	$main_smarty->assign('index_url_upvoted', getmyurl('new_sort', 'upvoted'));
+	$main_smarty->assign('index_url_downvoted', getmyurl('new_sort', 'downvoted'));
+	$main_smarty->assign('index_url_commented', getmyurl('new_sort', 'commented'));
 }
 
 //  make sure my_base_url is set
