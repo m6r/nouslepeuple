@@ -8,22 +8,6 @@
         <i class="fa fa-asterisk text-danger"></i> Champs obligatoire
         <form action="{$URL_register}" method="post" id="thisform">
             <div class="control-group">
-                <label class="control-label">{#PLIGG_Visual_Register_Nom#}
-                    <i class="fa fa-asterisk text-danger"></i></label>
-                <div class="controls">
-                    {if isset($form_nom_error)}
-                        { foreach value=error from=$form_nom_error }
-                        <div style="margin:10px 0 0 0;" class="alert alert-danger">
-                            <button class="close" data-dismiss="alert">&times;</button>
-                            {$error}
-                        </div>
-                        { /foreach }
-                    {/if}
-                    <input autofocus="autofocus" type="text" class="form-control reg_nom" id="reg_nom" name="reg_nom" value="{if isset($reg_nom)}{$reg_nom}{/if}" size="25" tabindex="10" maxlength="32"/>
-                    <br/><span class="reg_nomcheckitvalue"></span>
-                </div>
-            </div>
-            <div class="control-group">
                 <label class="control-label">{#PLIGG_Visual_Register_Prenom#}
                     <i class="fa fa-asterisk text-danger"></i></label>
                 <div class="controls">
@@ -40,26 +24,52 @@
                 </div>
             </div>
             <div class="control-group">
-                <label class="control-label">{#PLIGG_Visual_Register_Date_Naissance#}</label>
+                <label class="control-label">{#PLIGG_Visual_Register_Nom#}
+                    <i class="fa fa-asterisk text-danger"></i></label>
                 <div class="controls">
-                    {if isset($form_datenaissance_error)}
-                        { foreach value=error from=$form_datenaissance_error }
+                    {if isset($form_nom_error)}
+                        { foreach value=error from=$form_nom_error }
                         <div style="margin:10px 0 0 0;" class="alert alert-danger">
                             <button class="close" data-dismiss="alert">&times;</button>
                             {$error}
                         </div>
                         { /foreach }
                     {/if}
-                    <input autofocus="autofocus" type="text" class="form-control reg_datenaissance" id="reg_datenaissance" name="reg_datenaissance" value="{if isset($reg_datenaissance)}{$reg_datenaissance}{/if}" size="25" tabindex="10" maxlength="32"/>
-                    <p class="help-inline">{#PLIGG_Visual_Register_Format_Date#}</p>
-                    <br/><span class="reg_datenaissancecheckitvalue"></span>
-                    <script>
-                        {literal}
-                            $(function () {
-                                $("#reg_datenaissance").datepicker();
-                            });
-                        {/literal}
-                    </script>
+                    <input autofocus="autofocus" type="text" class="form-control reg_nom" id="reg_nom" name="reg_nom" value="{if isset($reg_nom)}{$reg_nom}{/if}" size="25" tabindex="10" maxlength="32"/>
+                    <br/><span class="reg_nomcheckitvalue"></span>
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label">{#PLIGG_Visual_Register_Username#}
+                    <i class="fa fa-asterisk text-danger"></i></label>
+                <div class="controls">
+                    {if isset($form_username_error)}
+                        { foreach value=error from=$form_username_error }
+                        <div style="margin:10px 0 0 0;" class="alert alert-danger">
+                            <button class="close" data-dismiss="alert">&times;</button>
+                            {$error}
+                        </div>
+                        { /foreach }
+                    {/if}
+                    <input autofocus="autofocus" type="text" class="form-control reg_username" id="reg_username" name="reg_username" value="{if isset($reg_username)}{$reg_username}{/if}" size="25" tabindex="10" maxlength="32"/>
+                    <br/><span class="reg_usernamecheckitvalue"></span>
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label">{#PLIGG_Visual_Register_Email#}
+                    <i class="fa fa-asterisk text-danger"></i></label>
+                <div class="controls">
+                    {if isset($form_email_error)}
+                        { foreach value=error from=$form_email_error }
+                        <div style="margin:10px 0 0 0;" class="alert alert-danger">
+                            <button class="close" data-dismiss="alert">&times;</button>
+                            {$error}
+                        </div>
+                        { /foreach }
+                    {/if}
+                    <input type="text" class="form-control reg_email" id="reg_email" name="reg_email" value="{if isset($reg_email)}{$reg_email}{/if}" tabindex="12" maxlength="128"/>
+                    <br/><span class="reg_emailcheckitvalue"></span>
+                    {* <p class="help-inline">{#PLIGG_Visual_Register_Lowercase#}</p> *}
                 </div>
             </div>
             <div class="control-group">
@@ -355,36 +365,26 @@
                 </div>
             </div>
             <div class="control-group">
-                <label class="control-label">{#PLIGG_Visual_Register_Username#}
-                    <i class="fa fa-asterisk text-danger"></i></label>
+                <label class="control-label">{#PLIGG_Visual_Register_Date_Naissance#}</label>
                 <div class="controls">
-                    {if isset($form_username_error)}
-                        { foreach value=error from=$form_username_error }
+                    {if isset($form_datenaissance_error)}
+                        { foreach value=error from=$form_datenaissance_error }
                         <div style="margin:10px 0 0 0;" class="alert alert-danger">
                             <button class="close" data-dismiss="alert">&times;</button>
                             {$error}
                         </div>
                         { /foreach }
                     {/if}
-                    <input autofocus="autofocus" type="text" class="form-control reg_username" id="reg_username" name="reg_username" value="{if isset($reg_username)}{$reg_username}{/if}" size="25" tabindex="10" maxlength="32"/>
-                    <br/><span class="reg_usernamecheckitvalue"></span>
-                </div>
-            </div>
-            <div class="control-group">
-                <label class="control-label">{#PLIGG_Visual_Register_Email#}
-                    <i class="fa fa-asterisk text-danger"></i></label>
-                <div class="controls">
-                    {if isset($form_email_error)}
-                        { foreach value=error from=$form_email_error }
-                        <div style="margin:10px 0 0 0;" class="alert alert-danger">
-                            <button class="close" data-dismiss="alert">&times;</button>
-                            {$error}
-                        </div>
-                        { /foreach }
-                    {/if}
-                    <input type="text" class="form-control reg_email" id="reg_email" name="reg_email" value="{if isset($reg_email)}{$reg_email}{/if}" tabindex="12" maxlength="128"/>
-                    <br/><span class="reg_emailcheckitvalue"></span>
-                    {* <p class="help-inline">{#PLIGG_Visual_Register_Lowercase#}</p> *}
+                    <input autofocus="autofocus" type="text" class="form-control reg_datenaissance" id="reg_datenaissance" name="reg_datenaissance" value="{if isset($reg_datenaissance)}{$reg_datenaissance}{/if}" size="25" tabindex="10" maxlength="32"/>
+                    <p class="help-inline">{#PLIGG_Visual_Register_Format_Date#}</p>
+                    <br/><span class="reg_datenaissancecheckitvalue"></span>
+                    <script>
+                        {literal}
+                            $(function () {
+                                $("#reg_datenaissance").datepicker();
+                            });
+                        {/literal}
+                    </script>
                 </div>
             </div>
             <div class="control-group">
