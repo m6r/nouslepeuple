@@ -182,17 +182,15 @@ function register_check_errors($username, $email, $password, $password2, $user_n
 
 	$mois = "";
     //date de naissance
- 	if(!preg_match('/^\d{1,2}\/\d{1,2}\/\d{4}$/' , trim($user_datenaissance))) { // if user _datenaissance pas au bon format
-		$form_datenaissance_error[] = $main_smarty->get_config_vars('PLIGG_Visual_Register_Error_DateInvalid');
-		$error = true;
-	} else if (!date_create_from_format('j/m/Y', $user_datenaissance)) {
-		$form_datenaissance_error[] = $main_smarty->get_config_vars('PLIGG_Visual_Register_Error_DateInvalid');
-		$error = true;
+    if ($user_datenaissance) {
+	 	if(!preg_match('/^\d{1,2}\/\d{1,2}\/\d{4}$/' , trim($user_datenaissance))) { // if user _datenaissance pas au bon format
+			$form_datenaissance_error[] = $main_smarty->get_config_vars('PLIGG_Visual_Register_Error_DateInvalid');
+			$error = true;
+		} else if (!date_create_from_format('j/m/Y', $user_datenaissance)) {
+			$form_datenaissance_error[] = $main_smarty->get_config_vars('PLIGG_Visual_Register_Error_DateInvalid');
+			$error = true;
+		}
 	}
-	else {
-        $d = explode("/",$user_datenaissance);
-        $mois = $d[1];//  recup mois pour controle numero de tel
-    }
     //numero de portable
  	if(!preg_match('/^(0[1-9][0-9]{8})|(\+(?!33)[0-9]{5,15})$/', $user_numerotel)) {
 		$form_numerotel_error[] = $main_smarty->get_config_vars('PLIGG_Visual_Register_Error_NumTelInvalid');
@@ -248,7 +246,7 @@ function register_add_user($username, $email, $password, $password2, $user_langu
 	$user->email = $email;
 	$user->nom = $user_nom;
 	$user->prenom = $user_prenom;
-	$user->date_naissance = date_create_from_format('j/m/Y', $user_datenaissance);
+	$user->date_naissance = $user_datenaissance ? date_create_from_format('j/m/Y', $user_datenaissance) : null;
 	$user->numero_tel = $user_numerotel;
 	$user->code_postal = $user_codepostal;
 	$user->ville = $user_ville;

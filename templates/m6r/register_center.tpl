@@ -381,7 +381,7 @@
                     <script>
                         {literal}
                             $(function () {
-                                $("#reg_datenaissance").datepicker();
+                                $("#reg_datenaissance").datepicker({ dateFormat:  "dd/mm/yy"});
                             });
                         {/literal}
                     </script>

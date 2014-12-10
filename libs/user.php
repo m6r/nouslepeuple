@@ -34,7 +34,7 @@ class User {
 	var $ville = '';
 	var $pays = '';
 	var $numero_tel = '';
-	var $date_naissance = '';
+	var $date_naissance = null;
 	var $genre = '';
 	var $signature = 0;
 	var $biographie = '';
@@ -84,7 +84,7 @@ class User {
 										."', '".$db->escape($this->nom)
 										."', '".$db->escape($this->prenom)
 										."', '".$db->escape($this->genre)
-										."', '".$this->date_naissance->format('Y-m-d')
+										."', '".($this->date_naissance ? $this->date_naissance->format('Y-m-d') : '')
 										."', '".$db->escape($this->code_postal)
 										."', '".$db->escape($this->ville)
 										."', '".$db->escape($this->pays)
@@ -146,7 +146,7 @@ class User {
 										."', '".$db->escape($this->nom)
 										."', '".$db->escape($this->prenom)
 										."', '".$db->escape($this->genre)
-										."', '".$this->date_naissance->format('Y-m-d')
+										."', '". ($this->date_naissance ? $this->date_naissance->format('Y-m-d') : '')
 										."', '".$db->escape($this->code_postal)
 										."', '".$db->escape($this->ville)
 										."', '".$db->escape($this->pays)
