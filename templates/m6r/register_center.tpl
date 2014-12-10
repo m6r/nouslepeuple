@@ -63,38 +63,6 @@
                 </div>
             </div>
             <div class="control-group">
-                <label class="control-label">{#PLIGG_Visual_Register_Genre_Label#}</label>
-                <div class="controls">
-                    {if isset($form_genre_error)}
-                        { foreach value=error from=$form_genre_error }
-                        <div style="margin:10px 0 0 0;" class="alert alert-danger">
-                            <button class="close" data-dismiss="alert">&times;</button>
-                            {$error}
-                        </div>
-                        { /foreach }
-                    {/if}
-                </div>
-                <div class="radio">
-                    <label class="control-label">
-                        <input type="radio" name="reg_genre" id="reg_genre" value="H">
-                        {#PLIGG_Visual_Register_Genre_Homme#}
-                    </label>
-                </div>
-                <div class="radio">
-                    <label class="control-label">
-                        <input type="radio" name="reg_genre" id="reg_genre2" value="F">
-                        {#PLIGG_Visual_Register_Genre_Femme#}
-                    </label>
-                </div>
-                <div class="radio">
-                    <label class="control-label">
-                        <input type="radio" name="reg_genre" id="reg_genre2" value="N">
-                        {#PLIGG_Visual_Register_Genre_NSPR#}
-                    </label>
-                </div>
-                <br/>
-            </div>
-            <div class="control-group">
                 <label class="control-label">{#PLIGG_Visual_Register_Numero_Tel#}
                 <i class="fa fa-asterisk text-danger"></i></label>
                 <div class="controls">

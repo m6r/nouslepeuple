@@ -40,7 +40,6 @@ if($pligg_regfrom != ''){
 			$user_nom = sanitize($_POST["reg_nom"], 3);
 			$user_prenom = sanitize($_POST["reg_prenom"], 3);
 			$user_datenaissance = sanitize($_POST["reg_datenaissance"], 3);
-			$user_genre = sanitize($_POST["reg_genre"], 3);
 			$user_numerotel = sanitize($_POST["reg_numerotel"], 3);
 			$user_codepostal = sanitize($_POST["reg_codepostal"], 3);
 			$user_ville = sanitize($_POST["reg_ville"], 3);
@@ -64,16 +63,15 @@ if($pligg_regfrom != ''){
 	if(isset($user_nom)){$main_smarty->assign('reg_nom', htmlspecialchars($user_nom,ENT_QUOTES));}
 	if(isset($user_prenom)){$main_smarty->assign('reg_prenom', htmlspecialchars($user_prenom,ENT_QUOTES));}
 	if(isset($user_datenaissance)){$main_smarty->assign('reg_datenaissance', htmlspecialchars($user_datenaissance,ENT_QUOTES));}
-	if(isset($user_genre)){$main_smarty->assign('reg_genre', htmlspecialchars($user_genre,ENT_QUOTES));}
 	if(isset($user_numerotel)){$main_smarty->assign('reg_numerotel', htmlspecialchars($user_numerotel,ENT_QUOTES));}
 	if(isset($user_codepostal)){$main_smarty->assign('reg_codepostal', htmlspecialchars($user_codepostal,ENT_QUOTES));}
 	if(isset($user_ville)){$main_smarty->assign('reg_ville', htmlspecialchars($user_ville,ENT_QUOTES));}
 	if(isset($user_pays)){$main_smarty->assign('reg_pays', htmlspecialchars($user_pays,ENT_QUOTES));}
 	
-	$error = register_check_errors($username, $email, $password, $password2, $user_nom, $user_prenom, $user_datenaissance, $user_genre, $user_numerotel, $user_codepostal, $user_signature);
+	$error = register_check_errors($username, $email, $password, $password2, $user_nom, $user_prenom, $user_datenaissance, $user_numerotel, $user_codepostal, $user_signature);
 
 	if($error == false){
-		register_add_user($username, $email, $password, $password2, $user_language, $user_nom, $user_prenom, $user_datenaissance, $user_genre, $user_numerotel, $user_codepostal, $user_ville);
+		register_add_user($username, $email, $password, $password2, $user_language, $user_nom, $user_prenom, $user_datenaissance, $user_numerotel, $user_codepostal, $user_ville);
 	} else {
 //		print "Error";
 		print_r($form_email_error);
@@ -99,7 +97,7 @@ $main_smarty->display($the_template . '/pligg.tpl');
 
 die();
 
-function register_check_errors($username, $email, $password, $password2, $user_nom, $user_prenom, $user_datenaissance, $user_genre, $user_numerotel, $user_codepostal, $user_signature){
+function register_check_errors($username, $email, $password, $password2, $user_nom, $user_prenom, $user_datenaissance, $user_numerotel, $user_codepostal, $user_signature){
 
 	global $main_smarty;
 
@@ -238,7 +236,7 @@ function register_check_errors($username, $email, $password, $password2, $user_n
 	return $error;
 }
 
-function register_add_user($username, $email, $password, $password2, $user_language, $user_nom, $user_prenom, $user_datenaissance, $user_genre, $user_numerotel, $user_codepostal, $user_ville, $user_pays){
+function register_add_user($username, $email, $password, $password2, $user_language, $user_nom, $user_prenom, $user_datenaissance, $user_numerotel, $user_codepostal, $user_ville, $user_pays){
 
 	global $current_user;
 
@@ -251,7 +249,6 @@ function register_add_user($username, $email, $password, $password2, $user_langu
 	$user->nom = $user_nom;
 	$user->prenom = $user_prenom;
 	$user->date_naissance = date_create_from_format('j/m/Y', $user_datenaissance);
-	$user->genre = $user_genre;
 	$user->numero_tel = $user_numerotel;
 	$user->code_postal = $user_codepostal;
 	$user->ville = $user_ville;
