@@ -38,6 +38,8 @@ if(enable_group == "true" && (group_submit_level == $current_user_level || group
 	}
 	if(isset($_POST['group_vote_to_publish'])){
 		$group_vote_to_publish = mysql_real_escape_string(stripslashes(strip_tags(trim($_POST['group_vote_to_publish']))));
+	} else {
+		$group_vote_to_publish = 1;
 	}
 	if($_POST['group_notify_email']>0) $group_notify_email = 1;
 	else $group_notify_email = 0;
@@ -52,8 +54,9 @@ if(enable_group == "true" && (group_submit_level == $current_user_level || group
 //	$group_safename = str_replace(' ', '-', $group_title);
 	$group_safename = makeUrlFriendly($group_title, true);
 	
-	if(isset($_POST['group_privacy']))
-		$group_privacy = $db->escape(sanitize($_POST['group_privacy'],3));
+	/*if(isset($_POST['group_privacy']))
+		$group_privacy = $db->escape(sanitize($_POST['group_privacy'],3));*/
+	$group_privacy = 'public';
 	
 	if(auto_approve_group == 'true')
 		$group_status = 'enable';
