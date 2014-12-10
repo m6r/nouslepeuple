@@ -378,14 +378,6 @@
                     <input autofocus="autofocus" type="text" class="form-control reg_datenaissance" id="reg_datenaissance" name="reg_datenaissance" value="{if isset($reg_datenaissance)}{$reg_datenaissance}{/if}" size="25" tabindex="10" maxlength="32"/>
                     <p class="help-inline">{#PLIGG_Visual_Register_Format_Date#}</p>
                     <br/><span class="reg_datenaissancecheckitvalue"></span>
-                    <script>
-                        {literal}
-                            $(function () {
-                                $("#reg_datenaissance").datepicker({ dateFormat:  "dd/mm/yy"});
-                            });
-                        {/literal}
-                    </script>
-                </div>
             </div>
             <div class="control-group">
                 <label class="control-label">{#PLIGG_Visual_Register_Password#}
