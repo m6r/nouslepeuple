@@ -71,8 +71,9 @@ $search->offset = (get_current_page()-1)*$page_size;
 // pagesize set in the admin panel
 $search->pagesize = $page_size;
 
-// on veut voir tous les posts les mieux classés de la semaine
+// on veut voir tous les posts les mieux classés de la semaine avec les sticky	
 $search->filterToStatus = "all";
+$search->sticky = true;
 $search->filterToTimeFrame = "week";
 $search->orderBy = "link_votes DESC";
 

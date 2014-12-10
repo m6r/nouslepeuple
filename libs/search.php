@@ -16,6 +16,7 @@ class Search {
 //	var $search_subcats = true; // search it's subcategories? 
 	var $search_extra_fields = true; // search the extra_fields (if enabled)
 	var $url = '';
+	var $sticky = false;
 	
 	//extra params for advance search
 	var $adv = false;
@@ -44,11 +45,11 @@ class Search {
 	
 		$from_where = "FROM " . $this->searchTable . " WHERE ";
 
-		if ($this->filterToStatus == 'all') {$from_where .= " link_status IN ('published','new') ";}
+		if ($this->filterToStatus == 'all') {$from_where .= " link_status IN ('published','new','sticky','supersticky') ";}
 		if ($this->filterToStatus == 'new') {$from_where .= " link_status='new' ";}
-		if ($this->filterToStatus == 'discard') {$from_where .= " link_status='discard' ";}		
-		if ($this->filterToStatus == 'published') {$from_where .= " link_status='published' ";}		
-		if ($this->filterToStatus == 'popular') {$from_where .= " link_status='published' ";}
+		if ($this->filterToStatus == 'discard') {$from_where .= " link_status='discard' ";}
+		if ($this->filterToStatus == 'published') {$from_where .= " link_status IN ('published','sticky','supersticky') ";}
+		if ($this->filterToStatus == 'popular') {$from_where .= " link_status IN ('published','sticky','supersticky') ";}
 
 		if ($this->url != '') {
 			if($this->filterToStatus != ''){$from_where .= ' AND ';}
@@ -56,19 +57,28 @@ class Search {
 		}
 
 		// Sort filters for published and new pages
+		if ($this->sticky) {
+			if (isset($this->category) && $this->category) {
+				$orSticky = "OR link_status IN ('sticky', 'supersticky')";
+			} else {
+				$orSticky = "OR link_status IN ('supersticky')";
+			}
+		} else {
+			$orSticky = '';
+		}
 		if ($this->filterToStatus == 'published') {
 		
 			
 			if ($this->filterToTimeFrame == 'today') 
-				$from_where .= " AND link_published_date > DATE_SUB(NOW(),INTERVAL 1 DAY) "; 
+				$from_where .= " AND (link_published_date > DATE_SUB(NOW(),INTERVAL 1 DAY) $orSticky )"; 
 			elseif ($this->filterToTimeFrame == 'yesterday') 
-				$from_where .= " AND link_published_date BETWEEN DATE_SUB(NOW(),INTERVAL 2 DAY) AND DATE_SUB(NOW(),INTERVAL 1 DAY) "; 
+				$from_where .= " AND (link_published_date BETWEEN DATE_SUB(NOW(),INTERVAL 2 DAY) AND DATE_SUB(NOW(),INTERVAL 1 DAY) $orSticky )"; 
 			elseif ($this->filterToTimeFrame == 'week') 
-				$from_where .= " AND link_published_date > DATE_SUB(NOW(),INTERVAL 7 DAY) "; 
+				$from_where .= " AND (link_published_date > DATE_SUB(NOW(),INTERVAL 7 DAY) $orSticky )"; 
 			elseif ($this->filterToTimeFrame == 'month') 
-				$from_where .= " AND link_published_date > DATE_SUB(NOW(),INTERVAL 1 MONTH) "; 
+				$from_where .= " AND (link_published_date > DATE_SUB(NOW(),INTERVAL 1 MONTH) $orSticky )"; 
 			elseif ($this->filterToTimeFrame == 'year') 
-				$from_where .= " AND link_published_date > DATE_SUB(NOW(),INTERVAL 1 YEAR) "; 
+				$from_where .= " AND (link_published_date > DATE_SUB(NOW(),INTERVAL 1 YEAR) $orSticky )"; 
 			else if($this->filterToTimeFrame == 'upvoted'){
 				
 				$this->searchTerm = "upvoted";
@@ -85,15 +95,15 @@ class Search {
 		} else {
 			
 			if ($this->filterToTimeFrame == 'today') 
-				$from_where .= " AND link_date > DATE_SUB(NOW(),INTERVAL 1 DAY) "; 
+				$from_where .= " AND (link_date > DATE_SUB(NOW(),INTERVAL 1 DAY) $orSticky )"; 
 			elseif ($this->filterToTimeFrame == 'yesterday') 
-				$from_where .= " AND link_date BETWEEN DATE_SUB(NOW(),INTERVAL 2 DAY) AND DATE_SUB(NOW(),INTERVAL 1 DAY) "; 
+				$from_where .= " AND (link_date BETWEEN DATE_SUB(NOW(),INTERVAL 2 DAY) AND DATE_SUB(NOW(),INTERVAL 1 DAY) $orSticky )"; 
 			elseif ($this->filterToTimeFrame == 'week') 
-				$from_where .= " AND link_date > DATE_SUB(NOW(),INTERVAL 7 DAY) "; 
+				$from_where .= " AND (link_date > DATE_SUB(NOW(),INTERVAL 7 DAY) $orSticky )"; 
 			elseif ($this->filterToTimeFrame == 'month') 
-				$from_where .= " AND link_date > DATE_SUB(NOW(),INTERVAL 1 MONTH) "; 
+				$from_where .= " AND (link_date > DATE_SUB(NOW(),INTERVAL 1 MONTH) $orSticky )"; 
 			elseif ($this->filterToTimeFrame == 'year') 
-				$from_where .= " AND link_date > DATE_SUB(NOW(),INTERVAL 1 YEAR) "; 
+				$from_where .= " AND (link_date > DATE_SUB(NOW(),INTERVAL 1 YEAR) $orSticky )"; 
 			else if($this->filterToTimeFrame == 'upvoted'){
 				
 				$this->searchTerm = "upvoted";
@@ -107,7 +117,7 @@ class Search {
 				$this->searchTerm = "commented";
 			}
 		}
-		
+
 		/////sorojit: for user selected category display
 		if($_COOKIE['mnm_user'])
 		{
@@ -150,6 +160,21 @@ class Search {
 		}
 		
 		if(isset($this->orderBy)){
+			$this->orderBy = str_replace('ORDER BY', '', $this->orderBy);
+			if($this->sticky) {
+				if ($catId) {
+					$this->orderBy = "CASE link_status
+						WHEN 'supersticky' THEN 2
+						WHEN 'sticky' THEN 1
+						ELSE 0
+					END DESC," . $this->orderBy;
+				} else {
+					$this->orderBy = "CASE link_status
+						WHEN 'supersticky' THEN 1
+						ELSE 0
+					END DESC," . $this->orderBy;
+				}
+			}
 			if(strpos($this->orderBy, "ORDER BY") != 1){
 				$this->orderBy = " ORDER BY " . $this->orderBy;
 			}

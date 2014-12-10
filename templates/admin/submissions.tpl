@@ -157,6 +157,10 @@ function validate_all_user_action(){
 					{#PLIGG_Visual_AdminPanel_New#}
 				{elseif $template_stories[id].link_status=='published'}
 					{#PLIGG_Visual_AdminPanel_Published#}
+				{elseif $template_stories[id].link_status=='sticky'}
+					{#PLIGG_Visual_AdminPanel_Sticky#}
+				{elseif $template_stories[id].link_status=='supersticky'}
+					{#PLIGG_Visual_AdminPanel_Supersticky#}
 				{elseif $template_stories[id].link_status=='discard'}
 					{#PLIGG_Visual_AdminPanel_Discarded#}
 				{elseif $template_stories[id].link_status=='spam'} 

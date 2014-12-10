@@ -37,6 +37,8 @@ if($canIhaveAccess == 1)
 				$main_smarty->assign('link_status',$link->link_status);
 				$main_smarty->assign('user_login',$author->user_login);
 				$main_smarty->assign('banned_domain_url',get_base_url($link->link_url));
+				$main_smarty->assign('admin_sticky_url',getmyurl('admin_sticky', $link->link_id));
+				$main_smarty->assign('admin_supersticky_url',getmyurl('admin_supersticky', $link->link_id));
 				$main_smarty->assign('admin_discard_url',getmyurl('admin_discard', $link->link_id));
 				$main_smarty->assign('admin_new_url',getmyurl('admin_new', $link->link_id));
 				$main_smarty->assign('admin_published_url',getmyurl('admin_published', $link->link_id));
@@ -56,7 +58,7 @@ if($canIhaveAccess == 1)
 			}
 		}
 		
-		if ($action == "published" or $action == "new" or $action == "discard"){
+		if ($action == "published" or $action == "new" or $action == "discard" or $action == "sticky" or $action == "supersticky"){
 			if(($link = $db->get_row("SELECT * FROM " . table_links . " WHERE link_id = $id"))) {
 				$author = $db->get_row("Select * from " . table_users . " where user_id = $link->link_author");
 				
@@ -87,7 +89,7 @@ if($canIhaveAccess == 1)
 			}
 		}
 	
-		if ($action == "dodiscard" or $action == "dopublished" or $action == "donew"){
+		if ($action == "dodiscard" or $action == "dopublished" or $action == "donew" or $action == "dosticky" or $action == "dosupersticky"){
 			if(($link = $db->get_row("SELECT * FROM " . table_links . " WHERE link_id = $id"))) {
 			$xaction = substr($action, 2, 100);
 			$link = new Link;

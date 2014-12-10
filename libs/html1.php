@@ -731,6 +731,8 @@ function getmyurl($x, $var1="", $var2="", $var3="") {
 		elseif ($x == "admin_modify") $ret = "/admin/linkadmin.php?id=" . $var1 . "&amp;action=main";
 		elseif ($x == "admin_modify_do") $ret = "/admin/linkadmin.php?id=" . $var1 . "&amp;action=do" . $var2;
 		elseif ($x == "admin_modify_edo") $ret = "/admin/linkadmin.php?id=" . $var1 . "&amp;action=edo" . $var2;
+		elseif ($x == "admin_sticky") $ret = "/admin/linkadmin.php?id=" . $var1 . "&amp;action=sticky";
+		elseif ($x == "admin_supersticky") $ret = "/admin/linkadmin.php?id=" . $var1 . "&amp;action=supersticky";
 		elseif ($x == "admin_discard") $ret = "/admin/linkadmin.php?id=" . $var1 . "&amp;action=discard";
 		elseif ($x == "admin_new") $ret = "/admin/linkadmin.php?id=" . $var1 . "&amp;action=new";
 		elseif ($x == "admin_published") $ret = "/admin/linkadmin.php?id=" . $var1 . "&amp;action=published";
@@ -844,6 +846,8 @@ function getmyurl($x, $var1="", $var2="", $var3="") {
 		elseif ($x == "admin_modify") $ret = "/story/" . $var1 . "/modify/main/";
 		elseif ($x == "admin_modify_do") $ret = "/story/" . $var1 . "/modify/do" . $var2 . "/";
 		elseif ($x == "admin_modify_edo") $ret = "/story/" . $var1 . "/modify/edo" . $var2 . "/";
+		elseif ($x == "admin_sticky") $ret = "/story/" . $var1 . "/modify/sticky/";
+		elseif ($x == "admin_supersticky") $ret = "/story/" . $var1 . "/modify/supersticky/";
 		elseif ($x == "admin_discard") $ret = "/story/" . $var1 . "/modify/discard/";
 		elseif ($x == "admin_new") $ret = "/story/" . $var1 . "/modify/new/";
 		elseif ($x == "admin_published") $ret = "/story/" . $var1 . "/modify/published/";

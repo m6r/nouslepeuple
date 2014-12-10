@@ -1,6 +1,8 @@
 <!-- submission_view.tpl -->
 <div style="margin:8px 10px;">
 	<legend>{#PLIGG_Visual_Change_Link_Status#}</legend>
+	<p><a class="btn btn-success" href="{$admin_sticky_url}">Set as Sticky</a> &ndash; {#PLIGG_Visual_Change_Link_Sticky#}</p>
+	<p><a class="btn btn-success" href="{$admin_supersticky_url}">Set as Supersticky</a> &ndash; {#PLIGG_Visual_Change_Link_Supersticky#}</p>
 	<p><a class="btn btn-default" href="{$admin_new_url}">Set as New</a> &ndash; {#PLIGG_Visual_Change_Link_Queued#}</p>
 	<p><a class="btn btn-primary" href="{$admin_published_url}">Set as Published</a> &ndash; {#PLIGG_Visual_Change_Link_Published#}</p>
 	<p><a class="btn btn-danger" href="{$admin_discard_url}">Discard the Story</a> &ndash; {#PLIGG_Visual_Change_Link_Discard#}</p>

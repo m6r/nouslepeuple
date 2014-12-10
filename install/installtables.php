@@ -80,7 +80,7 @@ function pligg_createtables($conn) {
 	$sql = "CREATE TABLE `" . table_links . "` (
 	  `link_id` int(20) NOT NULL auto_increment,
 	  `link_author` int(20) NOT NULL default '0',
-	  `link_status` enum('discard','new','published','abuse','duplicate','page','spam') collate utf8_general_ci NOT NULL default 'discard',
+	  `link_status` enum('discard','new','published','abuse','duplicate','page','spam','sticky','supersticky') collate utf8_general_ci NOT NULL default 'discard',
 	  `link_randkey` int(20) NOT NULL default '0',
 	  `link_votes` int(20) NOT NULL default '0',
 	  `link_reports` int(20) NOT NULL default '0',
