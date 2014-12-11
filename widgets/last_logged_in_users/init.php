@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 ////////////////////////////////////////////////////////////////////
 $widget['widget_title'] = "Last Logged in Users";
 $widget['widget_has_settings'] = 1;

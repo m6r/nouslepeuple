@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 function joinGroup($group_id,$privacy)
 {
 	global $db, $current_user,$main_smarty,$the_template,$my_base_url,$my_pligg_base;
