@@ -38,4 +38,3 @@ function sendannouncement_showpage(){
 }
 
 ?>
-

@@ -7,4 +7,3 @@
 	$module_info['update_url'] = 'http://pligg.com/downloads/module/captcha/version/';
 
 ?>
-

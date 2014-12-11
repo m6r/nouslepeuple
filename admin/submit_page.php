@@ -74,4 +74,3 @@ $main_smarty->assign('tpl_center', $template_dir . '/admin/page_submit');
 $main_smarty->display($template_dir . '/admin/admin.tpl');
 
 ?>
-
