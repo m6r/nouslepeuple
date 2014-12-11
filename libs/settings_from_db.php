@@ -4,46 +4,46 @@ if(!defined('mnminclude')){header('Location: ../error_404.php');die();}
 
 // this file pulls settings directly from the DB
 
-	include_once mnminclude.'db.php';
+    include_once mnminclude.'db.php';
 
-	if(caching == 1){
-		$db->cache_dir = mnmpath.'cache';
-		$db->use_disk_cache = true;
-		$db->cache_queries = true;
-	}
+    if(caching == 1){
+        $db->cache_dir = mnmpath.'cache';
+        $db->use_disk_cache = true;
+        $db->cache_queries = true;
+    }
 
-	// if this query changes, update the 'cache clear' query in /libs/admin_config.php
-	$usersql = $db->get_results('SELECT var_name, var_value, var_method, var_enclosein FROM ' . table_prefix . 'config');
+    // if this query changes, update the 'cache clear' query in /libs/admin_config.php
+    $usersql = $db->get_results('SELECT var_name, var_value, var_method, var_enclosein FROM ' . table_prefix . 'config');
 
-	if(!$usersql){die('Error. The ' . table_prefix . 'config table is empty or does not exist');}
-	
-	foreach($usersql as $row) {
-		$value = $row->var_value;
-		if ($row->var_method == "normal"){
-			$pligg_vars[$row->var_name] = $value;
-			if ($main_smarty) $main_smarty->assign(str_replace("$","",$row->var_name), $value);
-		}elseif ($row->var_method == "define"){
-			if($row->var_name != 'table_prefix'){
-				$thenewval = $value;
-				if($row->var_enclosein == ""){
-					if($value == "true"){
-						$thenewval = true;
-					} elseif($value == "false"){
-						$thenewval = false;
-					} else {
-						$thenewval = $value;
-					}
-				} else {
-					$thenewval = $value;
-				}
-				define($row->var_name, $thenewval);
-				if ($main_smarty) $main_smarty->assign($row->var_name, $thenewval);
-			}
-		}else{
-			if ($main_smarty) $main_smarty->assign($row->var_name, $value);
-		}
-	}
-	$db->cache_queries = false;
+    if(!$usersql){die('Error. The ' . table_prefix . 'config table is empty or does not exist');}
+    
+    foreach($usersql as $row) {
+        $value = $row->var_value;
+        if ($row->var_method == "normal"){
+            $pligg_vars[$row->var_name] = $value;
+            if ($main_smarty) $main_smarty->assign(str_replace("$","",$row->var_name), $value);
+        }elseif ($row->var_method == "define"){
+            if($row->var_name != 'table_prefix'){
+                $thenewval = $value;
+                if($row->var_enclosein == ""){
+                    if($value == "true"){
+                        $thenewval = true;
+                    } elseif($value == "false"){
+                        $thenewval = false;
+                    } else {
+                        $thenewval = $value;
+                    }
+                } else {
+                    $thenewval = $value;
+                }
+                define($row->var_name, $thenewval);
+                if ($main_smarty) $main_smarty->assign($row->var_name, $thenewval);
+            }
+        }else{
+            if ($main_smarty) $main_smarty->assign($row->var_name, $value);
+        }
+    }
+    $db->cache_queries = false;
 
 // if you have a better way of doing this, please let us know
 // other than converting these to a "define" which we will eventually do

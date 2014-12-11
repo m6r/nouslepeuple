@@ -115,23 +115,23 @@ function _adcopy_http_post($host, $path, $data, $port = 80) {
  */
 function solvemedia_get_html ($pubkey, $error = null, $use_ssl = false)
 {
-	
-	if ($pubkey == 'KLoj-jfX2UP0GEYOmYX.NOWL0ReUhErZ' || $pubkey == '' || $pubkey == null ){
-		
-		$pubkey = 'KLoj-jfX2UP0GEYOmYX.NOWL0ReUhErZ'; // Redeclare default key in case of null value
-	
-		$page_file = basename($_SERVER['PHP_SELF']); // Get the file generating the page to figure out what key to assign it
-		
-		if ($page_file == "register.php"){ // Register CAPTCHA
-			$pubkey = 'Ql92.ORmU5DjtPyAdAW4i6OghCHVPtsq';
-		} elseif ($page_file == "story.php"){ // Comment CAPTCHA
-			$pubkey = 'AufuaJDa73CtTXf2VZ7NY8MQewLMWcEX';
-		} elseif ($page_file == "submit.php"){ // Story Submission CAPTCHA
-			$pubkey = 'h5HLnVA0W5kRZWIlPf7mEixB5A6koX4p';
-		}
-	}
-	
-	if ($use_ssl) {
+    
+    if ($pubkey == 'KLoj-jfX2UP0GEYOmYX.NOWL0ReUhErZ' || $pubkey == '' || $pubkey == null ){
+        
+        $pubkey = 'KLoj-jfX2UP0GEYOmYX.NOWL0ReUhErZ'; // Redeclare default key in case of null value
+    
+        $page_file = basename($_SERVER['PHP_SELF']); // Get the file generating the page to figure out what key to assign it
+        
+        if ($page_file == "register.php"){ // Register CAPTCHA
+            $pubkey = 'Ql92.ORmU5DjtPyAdAW4i6OghCHVPtsq';
+        } elseif ($page_file == "story.php"){ // Comment CAPTCHA
+            $pubkey = 'AufuaJDa73CtTXf2VZ7NY8MQewLMWcEX';
+        } elseif ($page_file == "submit.php"){ // Story Submission CAPTCHA
+            $pubkey = 'h5HLnVA0W5kRZWIlPf7mEixB5A6koX4p';
+        }
+    }
+    
+    if ($use_ssl) {
                 $server = ADCOPY_API_SECURE_SERVER;
         } else {
                 $server = ADCOPY_API_SERVER;
@@ -174,28 +174,28 @@ class SolveMediaResponse {
 function solvemedia_check_answer ($privkey, $remoteip, $challenge, $response, $hashkey = '' )
 {
 
-	if ($privkey == 'Dm.c-mjmNP7Fhz-hKOpNz8l.NAMGp0wO' || $privkey == '' || $privkey == null ){
-		
-		// Re-declare the default private key and hash in case of null value
-		$privkey = 'Dm.c-mjmNP7Fhz-hKOpNz8l.NAMGp0wO';
-		$hashkey = 'nePptHN4rt.-UVLPFScpSuddqdtFdu2N';
-		
-		$page_file = basename($_SERVER['PHP_SELF']); // Get the file generating the page to figure out what key to assign it
-		if ($page_file == "register.php"){
-			$privkey = 'RfinGw00jddSv9eqIEo.LDUcZSbSEU6S';
-			$hashkey = 'SoR.tNYZtGpSkFrMBrLP2kPrpyiYyQpM';
-		} elseif ($page_file == "story.php"){
-			$privkey = 'MdwcHqbrYQPcJt0JjXSMrgFwROeLY5Ce';
-			$hashkey = 'xRJmWazYhZm6zSrrgdZHHctXUTYK6fZa';
-		} elseif ($page_file == "submit.php"){
-			$privkey = 'gAilaBopkMs8Bk9R9wx6mhRdl1ljt9Ig';
-			$hashkey = 'VH9T8Zr8EeUqUiGWfjZpbkS9u.sGf1cp';
-		}
-	}
+    if ($privkey == 'Dm.c-mjmNP7Fhz-hKOpNz8l.NAMGp0wO' || $privkey == '' || $privkey == null ){
+        
+        // Re-declare the default private key and hash in case of null value
+        $privkey = 'Dm.c-mjmNP7Fhz-hKOpNz8l.NAMGp0wO';
+        $hashkey = 'nePptHN4rt.-UVLPFScpSuddqdtFdu2N';
+        
+        $page_file = basename($_SERVER['PHP_SELF']); // Get the file generating the page to figure out what key to assign it
+        if ($page_file == "register.php"){
+            $privkey = 'RfinGw00jddSv9eqIEo.LDUcZSbSEU6S';
+            $hashkey = 'SoR.tNYZtGpSkFrMBrLP2kPrpyiYyQpM';
+        } elseif ($page_file == "story.php"){
+            $privkey = 'MdwcHqbrYQPcJt0JjXSMrgFwROeLY5Ce';
+            $hashkey = 'xRJmWazYhZm6zSrrgdZHHctXUTYK6fZa';
+        } elseif ($page_file == "submit.php"){
+            $privkey = 'gAilaBopkMs8Bk9R9wx6mhRdl1ljt9Ig';
+            $hashkey = 'VH9T8Zr8EeUqUiGWfjZpbkS9u.sGf1cp';
+        }
+    }
 
-	if ($remoteip == null || $remoteip == '') {
-		die ("For security reasons, you must pass the remote ip to solvemedia");
-	}
+    if ($remoteip == null || $remoteip == '') {
+        die ("For security reasons, you must pass the remote ip to solvemedia");
+    }
 
         //discard spam submissions
         if ($challenge == null || strlen($challenge) == 0 || $response == null || strlen($response) == 0) {
@@ -218,22 +218,22 @@ function solvemedia_check_answer ($privkey, $remoteip, $challenge, $response, $h
         $adcopy_response = new SolveMediaResponse();
 
         if( strlen($hashkey) ){
-			# validate message authenticator
-			$hash = sha1( $answers[0] . $challenge . $hashkey );
+            # validate message authenticator
+            $hash = sha1( $answers[0] . $challenge . $hashkey );
 
-			if( $hash != $answers[2] ){
-					$adcopy_response->is_valid = false;
-					$adcopy_response->error = 'hash-fail';
-					return $adcopy_response;
-			}
+            if( $hash != $answers[2] ){
+                    $adcopy_response->is_valid = false;
+                    $adcopy_response->error = 'hash-fail';
+                    return $adcopy_response;
+            }
         }
 
         if (trim ($answers [0]) == 'true') {
             $adcopy_response->is_valid = true;
         }
         else {
-			$adcopy_response->is_valid = false;
-			$adcopy_response->error = $answers [1];
+            $adcopy_response->is_valid = false;
+            $adcopy_response->error = $answers [1];
         }
         return $adcopy_response;
 
@@ -247,7 +247,7 @@ function solvemedia_check_answer ($privkey, $remoteip, $challenge, $response, $h
  * @param string $appname The name of your application
  */
 function solvemedia_get_signup_url ($domain = null, $appname = null) {
-	return ADCOPY_SIGNUP . "?" .  _adcopy_qsencode (array ('domain' => $domain, 'app' => $appname));
+    return ADCOPY_SIGNUP . "?" .  _adcopy_qsencode (array ('domain' => $domain, 'app' => $appname));
 }
 
 

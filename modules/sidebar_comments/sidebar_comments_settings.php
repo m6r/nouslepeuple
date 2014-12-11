@@ -10,8 +10,8 @@ define('sidebar_comments_plugins_path', 'modules/sidebar_comments/plugins');
 // don't touch anything past this line.
 
 if(is_object($main_smarty)){
-	$main_smarty->assign('sidebar_comments_path', sidebar_comments_path);
-	$main_smarty->assign('sidebar_comments_tpl_path', sidebar_comments_tpl_path);
+    $main_smarty->assign('sidebar_comments_path', sidebar_comments_path);
+    $main_smarty->assign('sidebar_comments_tpl_path', sidebar_comments_tpl_path);
 }
 
 ?>

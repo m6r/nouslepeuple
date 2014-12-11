@@ -12,7 +12,7 @@ if ($news_count <= 0) $news_count='3';
 
 if ($_REQUEST['widget']=='pligg_news'){
     if(isset($_REQUEST['stories']))
-		$news_count = sanitize($_REQUEST['stories'], 3);
+        $news_count = sanitize($_REQUEST['stories'], 3);
     misc_data_update('news_count', $news_count);
 }
 

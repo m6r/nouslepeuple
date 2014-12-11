@@ -25,11 +25,11 @@ $query = "SELECT *
 $result = mysql_query( $query );
 
 while( $row = mysql_fetch_array( $result ) ){
-	$category_option .= '<option value="'.$row['category_id'].'">'.ucfirst( $row['category_name'] ).'</option>'."\n";
+    $category_option .= '<option value="'.$row['category_id'].'">'.ucfirst( $row['category_name'] ).'</option>'."\n";
 }
 
 $main_smarty->assign('category_option', $category_option );
-		  
+          
 
 // pagename
 define('pagename', 'advancedsearch');

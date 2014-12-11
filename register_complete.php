@@ -14,7 +14,7 @@ $user=$_GET['user'];
 $usr = new User();
 $usr->username = $user;
 if ($usr->read()){
-	$email = $usr->email;
+    $email = $usr->email;
 }
 
 // pagename

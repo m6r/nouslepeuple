@@ -19,8 +19,8 @@ $canIhaveAccess = 0;
 $canIhaveAccess = $canIhaveAccess + checklevel('admin');
 
 if($canIhaveAccess == 0){
-	header("Location: " . getmyurl('admin_login', $_SERVER['REQUEST_URI']));
-	die();
+    header("Location: " . getmyurl('admin_login', $_SERVER['REQUEST_URI']));
+    die();
 }
 
 recursive_remove_directory('../cache',TRUE);

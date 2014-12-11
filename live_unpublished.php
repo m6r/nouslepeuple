@@ -11,8 +11,8 @@ include(mnminclude.'user.php');
 include(mnminclude.'smartyvariables.php');
 
 if(!Enable_Live) {
-	header("Location: $my_pligg_base/error_404.php");
-	die();
+    header("Location: $my_pligg_base/error_404.php");
+    die();
 }
 
 // breadcrumbs and page title
@@ -33,7 +33,7 @@ if($groups)
 {
     $group_ids = array();
     foreach($groups as $group)
-	$group_ids[] = $group->member_group_id;
+    $group_ids[] = $group->member_group_id;
     $group_list = join(",",$group_ids);
     $where = " AND (".table_groups.".group_privacy!='private' OR ISNULL(".table_groups.".group_privacy) OR ".table_groups.".group_id IN($group_list)) ";
 }
@@ -61,25 +61,25 @@ $stories = $db->get_results("$select $from_where $order_by LIMIT $offset,$top_us
 $link = new Link;
 //$user = new User;
 if($stories) {
-	foreach($stories as $dblink) {
-		$link->id = $dblink->link_id;
-		$cached_links[$dblink->link_id] = $dblink;
-		$link->read();
-		$live_item['link_date'] = txt_time_diff($link->date);
-		$live_item['link_title'] = $link->title;
-		if(Voting_Method == 2) {
-			$live_item['link_votes'] = $link->rating($link->id)/2;
-		} else {
-			$live_item['link_votes'] = $link->votes;
-		}
-		$live_item['link_username'] = $dblink->user_login;
-		$live_item['link_category'] = GetCatName($link->category);
-		$live_item['link_category_url'] = getmyurl("newcategory",$link->category_safe_name());
+    foreach($stories as $dblink) {
+        $link->id = $dblink->link_id;
+        $cached_links[$dblink->link_id] = $dblink;
+        $link->read();
+        $live_item['link_date'] = txt_time_diff($link->date);
+        $live_item['link_title'] = $link->title;
+        if(Voting_Method == 2) {
+            $live_item['link_votes'] = $link->rating($link->id)/2;
+        } else {
+            $live_item['link_votes'] = $link->votes;
+        }
+        $live_item['link_username'] = $dblink->user_login;
+        $live_item['link_category'] = GetCatName($link->category);
+        $live_item['link_category_url'] = getmyurl("newcategory",$link->category_safe_name());
 #		$live_item['link_category_url'] = $link->category_safe_name();
-		$live_item['link_url'] = $link->get_internal_url();
-		$live_items[] = $live_item;
-	}
-	$main_smarty->assign('live_items', $live_items);
+        $live_item['link_url'] = $link->get_internal_url();
+        $live_items[] = $live_item;
+    }
+    $main_smarty->assign('live_items', $live_items);
 }
 
 // pagination

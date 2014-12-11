@@ -12,21 +12,21 @@ include(mnminclude.'smartyvariables.php');
 // If called from a browser, required authentication. Cron version does not require.
 if ($_SERVER['SERVER_ADDR'])
 {
-	check_referrer();
+    check_referrer();
 
-	// require user to log in
-	force_authentication();
+    // require user to log in
+    force_authentication();
 
-	// restrict access to admins
-	$canIhaveAccess = 0;
-	$canIhaveAccess = $canIhaveAccess + checklevel('admin');
+    // restrict access to admins
+    $canIhaveAccess = 0;
+    $canIhaveAccess = $canIhaveAccess + checklevel('admin');
 
-	if($canIhaveAccess == 0){
+    if($canIhaveAccess == 0){
 //		$main_smarty->assign('tpl_center', '/admin/access_denied');
 //		$main_smarty->display($template_dir . '/admin/admin.tpl');
-		header("Location: " . getmyurl('admin_login', $_SERVER['REQUEST_URI']));
-		die();
-	}
+        header("Location: " . getmyurl('admin_login', $_SERVER['REQUEST_URI']));
+        die();
+    }
 }
 
 // $message = "";
@@ -46,16 +46,16 @@ if ($_SERVER['SERVER_ADDR'])
 		</div>
 		<div class="modal-body">
 			<?php
-				if (!empty($table_list)) {
-					$table_list = substr($table_list, 0, -2);
-					$query = "OPTIMIZE TABLE ".$table_list;
-					mysql_query($query);
-				if (mysql_error())
-					echo '<p>'.mysql_error().'</p>';
-				else
-					echo '<p>'.$main_smarty->get_config_vars("PLIGG_Visual_AdminPanel_Optimized_Message").'</p>';
-				}
-			?>
+                if (!empty($table_list)) {
+                    $table_list = substr($table_list, 0, -2);
+                    $query = "OPTIMIZE TABLE ".$table_list;
+                    mysql_query($query);
+                if (mysql_error())
+                    echo '<p>'.mysql_error().'</p>';
+                else
+                    echo '<p>'.$main_smarty->get_config_vars("PLIGG_Visual_AdminPanel_Optimized_Message").'</p>';
+                }
+            ?>
 		</div>
 		<div class="modal-footer">
 			<button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>

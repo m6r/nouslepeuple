@@ -4,18 +4,18 @@
 define('hc_path', my_pligg_base . '/modules/hc/');
 
 // the language path for the module
-	if(!defined('lang_loc')){
-		// determine if we're in root or another folder like admin
-			$pos = strrpos($_SERVER["SCRIPT_NAME"], "/");
-			$path = substr($_SERVER["SCRIPT_NAME"], 0, $pos);
-			if ($path == "/"){$path = "";}
-			
-			if($path != my_pligg_base){
-				define('lang_loc', '..');
-			} else {
-				define('lang_loc', '.');
-			}
-	}
+    if(!defined('lang_loc')){
+        // determine if we're in root or another folder like admin
+            $pos = strrpos($_SERVER["SCRIPT_NAME"], "/");
+            $path = substr($_SERVER["SCRIPT_NAME"], 0, $pos);
+            if ($path == "/"){$path = "";}
+            
+            if($path != my_pligg_base){
+                define('lang_loc', '..');
+            } else {
+                define('lang_loc', '.');
+            }
+    }
 
 define('hc_lang_conf', lang_loc . '/modules/hc/lang.conf');
 define('hc_pligg_lang_conf', lang_loc . "/languages/lang_" . pligg_language . ".conf");
@@ -54,19 +54,19 @@ $hc_checked = false;
 // don't touch anything past this line.
 
 if(isset($main_smarty) && is_object($main_smarty)){
-	$main_smarty->assign('hc_path', hc_path);
-	$main_smarty->assign('hc_pligg_lang_conf', hc_pligg_lang_conf);
-	$main_smarty->assign('hc_lang_conf', hc_lang_conf);
-	$main_smarty->assign('hc_tpl_path', hc_tpl_path);
-	$main_smarty->assign('hc_lib_path', hc_lib_path);
-	$main_smarty->assign('hc_img_path', hc_img_path);
-	$main_smarty->assign('hc_hcs_path', hc_hcs_path);
-	$main_smarty->assign('hc_single_step_reg', hc_single_step);
-	$main_smarty->assign('hc_reg_enabled', hc_reg_enabled);
-	$main_smarty->assign('hc_story_enabled', hc_story_enabled);
-	$main_smarty->assign('hc_comment_enabled', hc_comment_enabled);
+    $main_smarty->assign('hc_path', hc_path);
+    $main_smarty->assign('hc_pligg_lang_conf', hc_pligg_lang_conf);
+    $main_smarty->assign('hc_lang_conf', hc_lang_conf);
+    $main_smarty->assign('hc_tpl_path', hc_tpl_path);
+    $main_smarty->assign('hc_lib_path', hc_lib_path);
+    $main_smarty->assign('hc_img_path', hc_img_path);
+    $main_smarty->assign('hc_hcs_path', hc_hcs_path);
+    $main_smarty->assign('hc_single_step_reg', hc_single_step);
+    $main_smarty->assign('hc_reg_enabled', hc_reg_enabled);
+    $main_smarty->assign('hc_story_enabled', hc_story_enabled);
+    $main_smarty->assign('hc_comment_enabled', hc_comment_enabled);
 
-	$main_smarty->assign('URL_hc', URL_hc);
+    $main_smarty->assign('URL_hc', URL_hc);
 }
 
 ?>

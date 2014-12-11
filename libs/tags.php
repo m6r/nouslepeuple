@@ -3,34 +3,34 @@
 if(!defined('mnminclude')){header('Location: ../error_404.php');die();}
 
 function tags_normalize_string($string) {
-	$string = preg_replace('/[\.\,] *$/', "", $string);
-	$string = str_replace(array(chr(216).chr(140),'+'),array(',',','),$string);
-	return utf8_strtolower($string);
+    $string = preg_replace('/[\.\,] *$/', "", $string);
+    $string = str_replace(array(chr(216).chr(140),'+'),array(',',','),$string);
+    return utf8_strtolower($string);
 }
 
 
 function tags_insert_string($link, $lang, $string, $date = 0) {
-	global $db;
-	if (!is_numeric($link)) die();
+    global $db;
+    if (!is_numeric($link)) die();
 
-	$string = tags_normalize_string($string);
-	if ($date == 0) $date=time();
-	$words = preg_split('/[,;]+/', $string);
-	if ($words) {
-		$db->query("delete from " . table_tags . " where tag_link_id = $link");
-		foreach ($words as $word) {
-			$word=trim($word);
-			if (!$inserted[$word] && !empty($word)) {
-				$db->query("insert IGNORE into " . table_tags . " (tag_link_id, tag_lang, tag_words, tag_date) values ($link, '$lang', '$word', from_unixtime($date))");
-				$inserted[$word] = true;
-			}
-		}
-		$db->query("TRUNCATE TABLE ".table_tag_cache);
-		$db->query($sql="INSERT INTO ".table_tag_cache." select tag_words, count(DISTINCT link_id) as count FROM ".table_tags.", ".table_links." WHERE tag_lang='en' and link_id = tag_link_id and (link_status='published' OR link_status='new') GROUP BY tag_words order by count desc");
+    $string = tags_normalize_string($string);
+    if ($date == 0) $date=time();
+    $words = preg_split('/[,;]+/', $string);
+    if ($words) {
+        $db->query("delete from " . table_tags . " where tag_link_id = $link");
+        foreach ($words as $word) {
+            $word=trim($word);
+            if (!$inserted[$word] && !empty($word)) {
+                $db->query("insert IGNORE into " . table_tags . " (tag_link_id, tag_lang, tag_words, tag_date) values ($link, '$lang', '$word', from_unixtime($date))");
+                $inserted[$word] = true;
+            }
+        }
+        $db->query("TRUNCATE TABLE ".table_tag_cache);
+        $db->query($sql="INSERT INTO ".table_tag_cache." select tag_words, count(DISTINCT link_id) as count FROM ".table_tags.", ".table_links." WHERE tag_lang='en' and link_id = tag_link_id and (link_status='published' OR link_status='new') GROUP BY tag_words order by count desc");
 
-		return true;
-	}
-	return false;
+        return true;
+    }
+    return false;
 
 }
 
@@ -69,7 +69,7 @@ class TagCloud {
             $this->smarty_variable->assign('time_query', $time_query);
         } else {
             $from_where = "FROM " . table_tags . ", " . table_links . " WHERE tag_lang='$dblang' and link_id = tag_link_id and ";
-	    $cache_possible=1;
+        $cache_possible=1;
         }
 
         if ($this->filterTo == 'all') {$from_where .= " (link_status='published' OR link_status='new') "; $cache_possible++;}
@@ -77,42 +77,42 @@ class TagCloud {
         if ($this->filterTo == 'published') {$from_where .= " link_status='published' ";}
 
         if(is_numeric($this->filterCategory) && $this->filterCategory > 0){
-		$catId = $this->filterCategory;
-		$child_cats = '';
-		// do we also search the subcategories?
-		if( Independent_Subcategories == true){
-			$child_array = '';
+        $catId = $this->filterCategory;
+        $child_cats = '';
+        // do we also search the subcategories?
+        if( Independent_Subcategories == true){
+            $child_array = '';
 
-			// get a list of all children and put them in $child_array.
-			children_id_to_array($child_array, table_categories, $catId);
-			if ($child_array != '') {
-				// build the sql
-				foreach($child_array as $child_cat_id) {
-					$child_cat_sql .= ' OR `link_category` = ' . $child_cat_id . ' ';
-					if (Multiple_Categories)
-						$child_cat_sql .= ' OR ac_cat_id = ' . $child_cat_id . ' ';
-				}
-			}
-		}
-		if (Multiple_Categories)
-			$child_cat_sql .= " OR ac_cat_id = $catId ";
-		$from_where .= " AND (link_category=$catId " . $child_cat_sql . ")";
+            // get a list of all children and put them in $child_array.
+            children_id_to_array($child_array, table_categories, $catId);
+            if ($child_array != '') {
+                // build the sql
+                foreach($child_array as $child_cat_id) {
+                    $child_cat_sql .= ' OR `link_category` = ' . $child_cat_id . ' ';
+                    if (Multiple_Categories)
+                        $child_cat_sql .= ' OR ac_cat_id = ' . $child_cat_id . ' ';
+                }
+            }
+        }
+        if (Multiple_Categories)
+            $child_cat_sql .= " OR ac_cat_id = $catId ";
+        $from_where .= " AND (link_category=$catId " . $child_cat_sql . ")";
 
-		$cache_possible=0;
-	}
+        $cache_possible=0;
+    }
         
         //CDPDF
         if(isset($_REQUEST['category'])){
             $catId = $db->get_var("SELECT category_id from " . table_categories . " where category_safe_name = '".$db->escape($_REQUEST['category'])."';");
-			$category_name = $db->get_var("SELECT category_name from " . table_categories . " where category_safe_name = '".$db->escape($_REQUEST['category'])."';");
-			
-			$this->smarty_variable->assign('category_name', $category_name);
+            $category_name = $db->get_var("SELECT category_name from " . table_categories . " where category_safe_name = '".$db->escape($_REQUEST['category'])."';");
+            
+            $this->smarty_variable->assign('category_name', $category_name);
 
             //$catId = get_category_id($this->category);
             if(isset($catId)){
                 $child_cats = '';
                 // do we also search the subcategories?
-		if (! Independent_Subcategories){
+        if (! Independent_Subcategories){
                     $child_array = '';
                     // get a list of all children and put them in $child_array.
                     children_id_to_array($child_array, table_categories, $catId);
@@ -120,19 +120,19 @@ class TagCloud {
                         // build the sql
                         foreach($child_array as $child_cat_id) {
                             $child_cat_sql .= ' OR `link_category` = ' . $child_cat_id . ' ';
-			    if (Multiple_Categories)
-				$child_cat_sql .= ' OR ac_cat_id = ' . $child_cat_id . ' ';
+                if (Multiple_Categories)
+                $child_cat_sql .= ' OR ac_cat_id = ' . $child_cat_id . ' ';
                         }
                     }
                 }
-		if (Multiple_Categories)
-			$child_cat_sql .= " OR ac_cat_id = $catId ";
-		$cache_possible=0;
+        if (Multiple_Categories)
+            $child_cat_sql .= " OR ac_cat_id = $catId ";
+        $cache_possible=0;
                 $from_where .= " AND (link_category=$catId " . $child_cat_sql . ")";
 
-		// Search on additional categories
-		if (Multiple_Categories)
-		    $from_where = str_replace("WHERE", " LEFT JOIN ".table_additional_categories. " ON ac_link_id=link_id WHERE", $from_where);
+        // Search on additional categories
+        if (Multiple_Categories)
+            $from_where = str_replace("WHERE", " LEFT JOIN ".table_additional_categories. " ON ac_link_id=link_id WHERE", $from_where);
             }
         }
         //CDPDF
@@ -144,17 +144,17 @@ class TagCloud {
         $coef = ($this->max_points - $this->min_points)/($max-1);
         CDPDF */
         
-	if ($cache_possible==2)
-	{
+    if ($cache_possible==2)
+    {
             $sql = "select * FROM ".table_tag_cache." limit $this->word_limit";
             $res = $db->get_results($sql);
-	}
-	else
-	{
+    }
+    else
+    {
             $sql = "select tag_words, count(DISTINCT link_id) as count $from_where order by count desc limit $this->word_limit";
             //echo $sql;
             $res = $db->get_results($sql);
-	}
+    }
         
         if ($res) {
             foreach ($res as $item) {
@@ -164,12 +164,12 @@ class TagCloud {
             }
             //CDPDF modification
             $max = max($tagcount);
-	    // DB 12/10/08
-	    if ($max != 1)
-            	$coef = ($this->max_points - $this->min_points)/($max-1);
-	    else
-	    	$coef = 0;
-	    /////
+        // DB 12/10/08
+        if ($max != 1)
+                $coef = ($this->max_points - $this->min_points)/($max-1);
+        else
+            $coef = 0;
+        /////
             //cdpdf mofiification
             ksort($words);
 

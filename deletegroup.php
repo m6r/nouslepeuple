@@ -22,20 +22,20 @@ $canIhaveAccess = $canIhaveAccess + checklevel('admin');
 if($current_user->user_id != get_group_creator($_REQUEST['id']) && $canIhaveAccess == 0) {
 //	$main_smarty->assign('tpl_center', '/templates/admin/admin_access_denied');
 //	$main_smarty->display($template_dir . '/admin/admin.tpl');
-	header("Location: " . getmyurl('login', $_SERVER['REQUEST_URI']));
-	die();
+    header("Location: " . getmyurl('login', $_SERVER['REQUEST_URI']));
+    die();
 }
 
 // pagename
 define('pagename', 'delete');
 $main_smarty->assign('pagename', pagename);
 if(isset($_REQUEST['id'])){
-	global $db;
-	$group_id = $_REQUEST['id'];
-	if(!is_numeric($group_id)){die();}
-	$group_delete = $db->query(" Delete from ".table_groups." where group_id =".$group_id);
-	$member_delete = $db->query(" Delete from ".table_group_member." where member_group_id =".$group_id);
-	$db->query(" Delete from ".table_group_shared." where share_group_id =".$group_id);
-	header('Location: '.$my_base_url.$my_pligg_base);
+    global $db;
+    $group_id = $_REQUEST['id'];
+    if(!is_numeric($group_id)){die();}
+    $group_delete = $db->query(" Delete from ".table_groups." where group_id =".$group_id);
+    $member_delete = $db->query(" Delete from ".table_group_member." where member_group_id =".$group_id);
+    $db->query(" Delete from ".table_group_shared." where share_group_id =".$group_id);
+    header('Location: '.$my_base_url.$my_pligg_base);
 }
 ?>

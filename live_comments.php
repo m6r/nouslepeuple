@@ -12,8 +12,8 @@ include(mnminclude.'comment.php');
 include(mnminclude.'smartyvariables.php');
 
 if(!Enable_Live) {
-	header("Location: $my_pligg_base/error_404.php");
-	die();
+    header("Location: $my_pligg_base/error_404.php");
+    die();
 }
 
 // breadcrumbs and page title
@@ -45,22 +45,22 @@ $comments = $db->get_results("$select $from_where $order_by LIMIT $offset,$top_u
 //$user = new User;
 $link = new Link;
 if($comments) {
-	foreach($comments as $dbcomment) {
+    foreach($comments as $dbcomment) {
 //		$comment->id = $dbcomment->comment_id;
 //		$comment->read();
-		$live_item['comment_content'] = $dbcomment->comment_content;
+        $live_item['comment_content'] = $dbcomment->comment_content;
 //		$user->id = $comment->author;
 //		$user->read();
-		$live_item['comment_author'] = $dbcomment->user_login;
-		$live_item['comment_date'] = txt_time_diff(strtotime($dbcomment->comment_date));
-		$link->id = $dbcomment->link_id;
-		$cached_links[$dbcomment->link_id] = $dbcomment;
-		$link->read();
-		$live_item['comment_link_title'] = $link->title;
-		$live_item['comment_link_url'] = $link->get_internal_url();
-		$live_items[] = $live_item;
-	}
-	$main_smarty->assign('live_items', $live_items);
+        $live_item['comment_author'] = $dbcomment->user_login;
+        $live_item['comment_date'] = txt_time_diff(strtotime($dbcomment->comment_date));
+        $link->id = $dbcomment->link_id;
+        $cached_links[$dbcomment->link_id] = $dbcomment;
+        $link->read();
+        $live_item['comment_link_title'] = $link->title;
+        $live_item['comment_link_url'] = $link->get_internal_url();
+        $live_items[] = $live_item;
+    }
+    $main_smarty->assign('live_items', $live_items);
 }
 
 // pagination

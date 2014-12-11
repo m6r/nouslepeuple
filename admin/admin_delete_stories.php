@@ -19,8 +19,8 @@ $canIhaveAccess = 0;
 $canIhaveAccess = $canIhaveAccess + checklevel('admin');
 
 if($canIhaveAccess == 0){
-	header("Location: " . getmyurl('admin_login', $_SERVER['REQUEST_URI']));
-	die();
+    header("Location: " . getmyurl('admin_login', $_SERVER['REQUEST_URI']));
+    die();
 }
 
 
@@ -97,23 +97,23 @@ if (!mysql_query($sql)) {error_page(mysql_error());}
 		</div>
 		<div class="modal-body">
 			<?php
-				$query = "SHOW TABLE STATUS";
-				$result=mysql_query($query);
-				$table_list = "";
-				while ($cur_table = mysql_fetch_object($result)) {
-					$table_list .= $cur_table->Name.", ";
-				}
+                $query = "SHOW TABLE STATUS";
+                $result=mysql_query($query);
+                $table_list = "";
+                while ($cur_table = mysql_fetch_object($result)) {
+                    $table_list .= $cur_table->Name.", ";
+                }
 
-				if (!empty($table_list)) {
-					$table_list = substr($table_list, 0, -2);
-					$query = "OPTIMIZE TABLE ".$table_list;
-					mysql_query($query);
-				if (mysql_error())
-					echo '<p>'.mysql_error().'</p>';
-				else
-					echo '<p><strong>'.$num_rows.'</strong> '.$main_smarty->get_config_vars("PLIGG_Visual_AdminPanel_Discarded_Stories_Removed_Message").'</p>';
-				}
-			?>
+                if (!empty($table_list)) {
+                    $table_list = substr($table_list, 0, -2);
+                    $query = "OPTIMIZE TABLE ".$table_list;
+                    mysql_query($query);
+                if (mysql_error())
+                    echo '<p>'.mysql_error().'</p>';
+                else
+                    echo '<p><strong>'.$num_rows.'</strong> '.$main_smarty->get_config_vars("PLIGG_Visual_AdminPanel_Discarded_Stories_Removed_Message").'</p>';
+                }
+            ?>
 		</div>
 		<div class="modal-footer">
 			<button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>

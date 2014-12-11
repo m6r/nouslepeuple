@@ -35,40 +35,40 @@ if ($sw_dbsize == '') $sw_dbsize='1';
 
 if ($_REQUEST['widget']=='statistics'){
     if(isset($_REQUEST['version']))
-		$sw_version = sanitize($_REQUEST['version'], 3);
+        $sw_version = sanitize($_REQUEST['version'], 3);
     misc_data_update('sw_version', $sw_version);
     if(isset($_REQUEST['members']))
-		$sw_members = sanitize($_REQUEST['members'], 3);
+        $sw_members = sanitize($_REQUEST['members'], 3);
     misc_data_update('sw_members', $sw_members);
     if(isset($_REQUEST['groups']))
-		$sw_groups = sanitize($_REQUEST['groups'], 3);
+        $sw_groups = sanitize($_REQUEST['groups'], 3);
     misc_data_update('sw_groups', $sw_groups);
     if(isset($_REQUEST['links']))
-		$sw_links = sanitize($_REQUEST['links'], 3);
+        $sw_links = sanitize($_REQUEST['links'], 3);
     misc_data_update('sw_links', $sw_links);
     if(isset($_REQUEST['published']))
-		$sw_published = sanitize($_REQUEST['published'], 3);
+        $sw_published = sanitize($_REQUEST['published'], 3);
     misc_data_update('sw_published', $sw_published);
     if(isset($_REQUEST['new']))
-		$sw_new = sanitize($_REQUEST['new'], 3);
+        $sw_new = sanitize($_REQUEST['new'], 3);
     misc_data_update('sw_new', $sw_new);
     if(isset($_REQUEST['votes']))
-		$sw_votes = sanitize($_REQUEST['votes'], 3);
+        $sw_votes = sanitize($_REQUEST['votes'], 3);
     misc_data_update('sw_votes', $sw_votes);
     if(isset($_REQUEST['comments']))
-		$sw_comments = sanitize($_REQUEST['comments'], 3);
+        $sw_comments = sanitize($_REQUEST['comments'], 3);
     misc_data_update('sw_comments', $sw_comments);
     if(isset($_REQUEST['latestuser']))
-		$sw_newuser = sanitize($_REQUEST['latestuser'], 3);
+        $sw_newuser = sanitize($_REQUEST['latestuser'], 3);
     misc_data_update('sw_newuser', $sw_newuser);
-	if(isset($_REQUEST['phpver']))
-		$phpver = sanitize($_REQUEST['phpver'], 3);
+    if(isset($_REQUEST['phpver']))
+        $phpver = sanitize($_REQUEST['phpver'], 3);
     misc_data_update('phpver', $phpver);
-	if(isset($_REQUEST['mysqlver']))
-		$mysqlver = sanitize($_REQUEST['mysqlver'], 3);
+    if(isset($_REQUEST['mysqlver']))
+        $mysqlver = sanitize($_REQUEST['mysqlver'], 3);
     misc_data_update('mysqlver', $mysqlver);
     if(isset($_REQUEST['dbsize']))
-		$sw_dbsize = sanitize($_REQUEST['dbsize'], 3);
+        $sw_dbsize = sanitize($_REQUEST['dbsize'], 3);
     misc_data_update('sw_dbsize', $sw_dbsize);
 }
 
@@ -83,7 +83,7 @@ function CalcFullDatabaseSize($database, $db) {
     $size = 0;
 
     while ($row = mysql_fetch_row($result)) {
-	$tname = $row[0];
+    $tname = $row[0];
         $r = mysql_query("SHOW TABLE STATUS FROM ".$database." LIKE '".$tname."'");
         $data = mysql_fetch_array($r);
         $size += ($data['Index_length'] + $data['Data_length']);
@@ -108,17 +108,17 @@ mysql_close($handle);
 // Smarty Assign
 if ($main_smarty){
     $main_smarty->assign('sw_version', $sw_version);
-	$main_smarty->assign('sw_members', $sw_members);
-	$main_smarty->assign('sw_groups', $sw_groups);
-	$main_smarty->assign('sw_links', $sw_links);
-	$main_smarty->assign('sw_published', $sw_published);
-	$main_smarty->assign('sw_new', $sw_new);
-	$main_smarty->assign('sw_votes', $sw_votes);
-	$main_smarty->assign('sw_comments', $sw_comments);
-	$main_smarty->assign('sw_newuser', $sw_newuser);
-	$main_smarty->assign('sw_dbsize', $sw_dbsize);
-	$main_smarty->assign('phpver', $phpver);
-	$main_smarty->assign('mysqlver', $mysqlver);
-	$main_smarty->assign('dbsize', $dbsize);
+    $main_smarty->assign('sw_members', $sw_members);
+    $main_smarty->assign('sw_groups', $sw_groups);
+    $main_smarty->assign('sw_links', $sw_links);
+    $main_smarty->assign('sw_published', $sw_published);
+    $main_smarty->assign('sw_new', $sw_new);
+    $main_smarty->assign('sw_votes', $sw_votes);
+    $main_smarty->assign('sw_comments', $sw_comments);
+    $main_smarty->assign('sw_newuser', $sw_newuser);
+    $main_smarty->assign('sw_dbsize', $sw_dbsize);
+    $main_smarty->assign('phpver', $phpver);
+    $main_smarty->assign('mysqlver', $mysqlver);
+    $main_smarty->assign('dbsize', $dbsize);
 }
 ?>

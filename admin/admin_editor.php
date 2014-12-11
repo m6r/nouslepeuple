@@ -21,8 +21,8 @@ $canIhaveAccess = $canIhaveAccess + checklevel('admin');
 if($canIhaveAccess == 0){
 //	$main_smarty->assign('tpl_center', '/admin/access_denied');
 //	$main_smarty->display($template_dir . '/admin/admin.tpl');
-	header("Location: " . getmyurl('admin_login', $_SERVER['REQUEST_URI']));
-	die();
+    header("Location: " . getmyurl('admin_login', $_SERVER['REQUEST_URI']));
+    die();
 }
 
 // breadcrumbs and page title
@@ -51,13 +51,13 @@ if ($_SERVER['REQUEST_METHOD'] != 'POST')
 {
     $files = array();
     if (is_readable($filedir)) {
-	$filelist = directoryToArray($filedir, true);
-	foreach ($filelist as $file) {
-	    $ext = substr(strrchr($file, '.'), 1);
-		if (in_array($ext,$valid_ext) && is_writable($file)) {
-			$files[] = $file;
-		}
-	}
+    $filelist = directoryToArray($filedir, true);
+    foreach ($filelist as $file) {
+        $ext = substr(strrchr($file, '.'), 1);
+        if (in_array($ext,$valid_ext) && is_writable($file)) {
+            $files[] = $file;
+        }
+    }
     }
     $main_smarty->assign('files', $files);
 }
@@ -65,60 +65,60 @@ elseif ($_POST["the_file"])
 {
     $file2open = fopen($_POST["the_file"], "r");
     if ($file2open) {
-	    $current_data = @fread($file2open, filesize($_POST["the_file"]));
-	    $current_data = str_ireplace("</textarea>", "<END-TA-DO-NOT-EDIT>", $current_data);
-	    $main_smarty->assign('filedata', htmlspecialchars($current_data));
-	    fclose($file2open);
+        $current_data = @fread($file2open, filesize($_POST["the_file"]));
+        $current_data = str_ireplace("</textarea>", "<END-TA-DO-NOT-EDIT>", $current_data);
+        $main_smarty->assign('filedata', htmlspecialchars($current_data));
+        fclose($file2open);
     } else
-	    $main_smarty->assign('error', 1);
+        $main_smarty->assign('error', 1);
     $main_smarty->assign('the_file', sanitize($_POST['the_file'],3));
 }
 elseif ($_POST["save"])
 {
-	if (!$_POST["updatedfile"] && !$_POST['isempty'])
-		$error = "<h3>ERROR!</h3><p>File NOT saved! <br /> You can't save blank file without confirmation. <br />  <a href=\"\">Click here to go back to the editor.</a></p>";
-	elseif ($file2ed = fopen($_POST["the_file2"], "w+")) {
-		$data_to_save = $_POST["updatedfile"];
-		$data_to_save = str_ireplace("<END-TA-DO-NOT-EDIT>", "</textarea>", $data_to_save);
-		$data_to_save = stripslashes($data_to_save);
-		if (fwrite($file2ed,$data_to_save)!==FALSE) {
-			$error = "<h3>File Saved</h3><p><a href=\"\">Click here to go back to the editor.</a></p>";
-			fclose($file2ed);
-		}
-		else {
-			$error = "<h3>ERROR!</h3><p>cant File NOT saved! <br /> Check your CHMOD settings in case it is a file/folder permissions problem. <br />  <a href=\"\">Click here to go back to the editor.</a></p>";
-			fclose($file2ed);
-		}
-	}
-	else
-		$error = "<h3>ERROR!</h3><p>writable File NOT saved! <br />Check your CHMOD settings in case it is a file/folder permissions problem.</p>";
-     	$main_smarty->assign('error', $error);
+    if (!$_POST["updatedfile"] && !$_POST['isempty'])
+        $error = "<h3>ERROR!</h3><p>File NOT saved! <br /> You can't save blank file without confirmation. <br />  <a href=\"\">Click here to go back to the editor.</a></p>";
+    elseif ($file2ed = fopen($_POST["the_file2"], "w+")) {
+        $data_to_save = $_POST["updatedfile"];
+        $data_to_save = str_ireplace("<END-TA-DO-NOT-EDIT>", "</textarea>", $data_to_save);
+        $data_to_save = stripslashes($data_to_save);
+        if (fwrite($file2ed,$data_to_save)!==FALSE) {
+            $error = "<h3>File Saved</h3><p><a href=\"\">Click here to go back to the editor.</a></p>";
+            fclose($file2ed);
+        }
+        else {
+            $error = "<h3>ERROR!</h3><p>cant File NOT saved! <br /> Check your CHMOD settings in case it is a file/folder permissions problem. <br />  <a href=\"\">Click here to go back to the editor.</a></p>";
+            fclose($file2ed);
+        }
+    }
+    else
+        $error = "<h3>ERROR!</h3><p>writable File NOT saved! <br />Check your CHMOD settings in case it is a file/folder permissions problem.</p>";
+         $main_smarty->assign('error', $error);
 }
 
 // show the template
 $main_smarty->assign('tpl_center', '/admin/template_editor');
 $main_smarty->display($template_dir . '/admin/admin.tpl');
 
-	
+    
 function directoryToArray($directory, $recursive) {
 $me = basename($_SERVER['PHP_SELF']);
 $array_items = array();
-	if ($handle = opendir($directory)) {
-  	while (false !== ($file = readdir($handle))) {
-			if ($file != "." && $file != ".." && $file != $me && substr($file,0,1) != '.') {
+    if ($handle = opendir($directory)) {
+    while (false !== ($file = readdir($handle))) {
+            if ($file != "." && $file != ".." && $file != $me && substr($file,0,1) != '.') {
         if (is_dir($directory. "/" . $file)) {
-					if($recursive) {
-						$array_items = array_merge($array_items, directoryToArray($directory. "/" . $file, $recursive));
+                    if($recursive) {
+                        $array_items = array_merge($array_items, directoryToArray($directory. "/" . $file, $recursive));
           }
-				}
-				else {
+                }
+                else {
             $file = $directory . "/" . $file;
             $array_items[] = preg_replace("/\/\//si", "/", $file);
-				}
+                }
       }
     }
     closedir($handle);
-		asort($array_items);
+        asort($array_items);
   }
   return $array_items;
 }

@@ -13,7 +13,7 @@ global $db;
 $links = $db->get_var("SELECT COUNT(*) FROM ".table_links." WHERE link_status='moderated'");
 $comments = $db->get_var("SELECT COUNT(*) FROM ".table_comments." WHERE comment_status='moderated'");
 if ($links==0 || $comments==0){
-	$widget['column'] = '';
+    $widget['column'] = '';
 }
 }
 

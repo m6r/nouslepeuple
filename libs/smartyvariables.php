@@ -10,23 +10,23 @@ $main_smarty->cache_dir = mnmpath."cache/";
 
 // determine if we're in root or another folder like admin
 if(!defined('lang_loc')){
-	$pos = strrpos($_SERVER["SCRIPT_NAME"], "/");
-	$path = substr($_SERVER["SCRIPT_NAME"], 0, $pos);
-	if ($path == "/"){$path = "";}
-	
-	if($path != my_pligg_base){
-		define('lang_loc', '..');
-	} else {
-		define('lang_loc', '.');
-	}
+    $pos = strrpos($_SERVER["SCRIPT_NAME"], "/");
+    $path = substr($_SERVER["SCRIPT_NAME"], 0, $pos);
+    if ($path == "/"){$path = "";}
+    
+    if($path != my_pligg_base){
+        define('lang_loc', '..');
+    } else {
+        define('lang_loc', '.');
+    }
 }
 
 // Check if a .maintenance file exists in the Pligg root directory
 $maintenance_file = "./.maintenance";
 if(file_exists($maintenance_file)){
-	$main_smarty->assign('maintenance_mode', 'true');
+    $main_smarty->assign('maintenance_mode', 'true');
 } else {
-	$main_smarty->assign('maintenance_mode', 'false');
+    $main_smarty->assign('maintenance_mode', 'false');
 }
 
 $main_smarty->config_dir = "";
@@ -57,8 +57,8 @@ $main_smarty->assign('Allow_Friends', Allow_Friends);
 $main_smarty->assign('Pager_setting', Auto_scroll);
 
 if($current_user->user_login){
-	$main_smarty->assign('Current_User_Avatar', $avatars = get_avatar('all', "", "", "", $current_user->user_id));
-	$main_smarty->assign('Current_User_Avatar_ImgSrc', $avatars['small']);
+    $main_smarty->assign('Current_User_Avatar', $avatars = get_avatar('all', "", "", "", $current_user->user_id));
+    $main_smarty->assign('Current_User_Avatar_ImgSrc', $avatars['small']);
 }
 
 //groups
@@ -67,7 +67,7 @@ $main_smarty->assign('group_submit_level', group_submit_level);
 $group_submit_level = group_submit_level;
 $current_user_level = $current_user->user_level;
 if(group_submit_level == $current_user_level || group_submit_level == 'normal' || $current_user_level == 'admin')
-	$main_smarty->assign('group_allow', 1);
+    $main_smarty->assign('group_allow', 1);
 
 $main_smarty->assign('SearchMethod', SearchMethod);
 $main_smarty = SetSmartyURLs($main_smarty);
@@ -129,14 +129,14 @@ $main_smarty->assign('error_count', $error_count);
 // Count number of file backups
 $admin_backup_dir = "../admin/backup/";
 if (glob($admin_backup_dir . "*.sql") != false) {
-	$sqlcount = count(glob($admin_backup_dir . "*.sql"));
+    $sqlcount = count(glob($admin_backup_dir . "*.sql"));
 } else {
-	$sqlcount = 0;
+    $sqlcount = 0;
 }
 if (glob($admin_backup_dir . "*.zip") != false) {
-	$zipcount = count(glob($admin_backup_dir . "*.zip"));
+    $zipcount = count(glob($admin_backup_dir . "*.zip"));
 } else {
-	$zipcount = 0;
+    $zipcount = 0;
 }
 $main_smarty->assign('backup_count', $sqlcount+$zipcount);
 $backup_count = $sqlcount+$zipcount;
@@ -150,8 +150,8 @@ $res_update_mod=mysql_query('SELECT folder from ' . table_modules . ' where late
 $num_update_mod=0;
 if(mysql_num_rows($res_update_mod)>0){
 while($modules_folders=mysql_fetch_array($res_update_mod)){
-	if (file_exists(mnmmodules . $modules_folders['folder']))
-			$num_update_mod++;
+    if (file_exists(mnmmodules . $modules_folders['folder']))
+            $num_update_mod++;
  }
 }
 $main_smarty->assign('in_no_module_update_require', $num_update_mod);
@@ -172,32 +172,32 @@ check_actions('all_pages_top', $vars);
 // setup the sorting links on the index page in smarty
 $pligg_category = isset($_GET['category']) ? sanitize($_GET['category'], 3) : '';
 if($pligg_category != ''){
-	$main_smarty->assign('index_url_recent', getmyurl('maincategory', $pligg_category));
-	$main_smarty->assign('index_url_today', getmyurl('index_sort', 'today', $pligg_category));
-	$main_smarty->assign('index_url_yesterday', getmyurl('index_sort', 'yesterday', $pligg_category));
-	$main_smarty->assign('index_url_week', getmyurl('index_sort', 'week', $pligg_category));
-	$main_smarty->assign('index_url_month', getmyurl('index_sort', 'month', $pligg_category));
-	$main_smarty->assign('index_url_year', getmyurl('index_sort', 'year', $pligg_category));
-	$main_smarty->assign('index_url_alltime', getmyurl('index_sort', 'alltime', $pligg_category));
-	
-	$main_smarty->assign('index_url_upvoted', getmyurl('index_sort', 'upvoted', $pligg_category));
-	$main_smarty->assign('index_url_downvoted', getmyurl('index_sort', 'downvoted', $pligg_category));
-	$main_smarty->assign('index_url_commented', getmyurl('index_sort', 'commented', $pligg_category));
-	
-	$main_smarty->assign('cat_url', getmyurl("maincategory"));
+    $main_smarty->assign('index_url_recent', getmyurl('maincategory', $pligg_category));
+    $main_smarty->assign('index_url_today', getmyurl('index_sort', 'today', $pligg_category));
+    $main_smarty->assign('index_url_yesterday', getmyurl('index_sort', 'yesterday', $pligg_category));
+    $main_smarty->assign('index_url_week', getmyurl('index_sort', 'week', $pligg_category));
+    $main_smarty->assign('index_url_month', getmyurl('index_sort', 'month', $pligg_category));
+    $main_smarty->assign('index_url_year', getmyurl('index_sort', 'year', $pligg_category));
+    $main_smarty->assign('index_url_alltime', getmyurl('index_sort', 'alltime', $pligg_category));
+    
+    $main_smarty->assign('index_url_upvoted', getmyurl('index_sort', 'upvoted', $pligg_category));
+    $main_smarty->assign('index_url_downvoted', getmyurl('index_sort', 'downvoted', $pligg_category));
+    $main_smarty->assign('index_url_commented', getmyurl('index_sort', 'commented', $pligg_category));
+    
+    $main_smarty->assign('cat_url', getmyurl("maincategory"));
 }
 else {
-	$main_smarty->assign('index_url_recent', getmyurl('index'));
-	$main_smarty->assign('index_url_today', getmyurl('index_sort', 'today'));
-	$main_smarty->assign('index_url_yesterday', getmyurl('index_sort', 'yesterday'));
-	$main_smarty->assign('index_url_week', getmyurl('index_sort', 'week'));
-	$main_smarty->assign('index_url_month', getmyurl('index_sort', 'month'));
-	$main_smarty->assign('index_url_year', getmyurl('index_sort', 'year'));
-	$main_smarty->assign('index_url_alltime', getmyurl('index_sort', 'alltime'));
-	
-	$main_smarty->assign('index_url_upvoted', getmyurl('index_sort', 'upvoted'));
-	$main_smarty->assign('index_url_downvoted', getmyurl('index_sort', 'downvoted'));
-	$main_smarty->assign('index_url_commented', getmyurl('index_sort', 'commented'));
+    $main_smarty->assign('index_url_recent', getmyurl('index'));
+    $main_smarty->assign('index_url_today', getmyurl('index_sort', 'today'));
+    $main_smarty->assign('index_url_yesterday', getmyurl('index_sort', 'yesterday'));
+    $main_smarty->assign('index_url_week', getmyurl('index_sort', 'week'));
+    $main_smarty->assign('index_url_month', getmyurl('index_sort', 'month'));
+    $main_smarty->assign('index_url_year', getmyurl('index_sort', 'year'));
+    $main_smarty->assign('index_url_alltime', getmyurl('index_sort', 'alltime'));
+    
+    $main_smarty->assign('index_url_upvoted', getmyurl('index_sort', 'upvoted'));
+    $main_smarty->assign('index_url_downvoted', getmyurl('index_sort', 'downvoted'));
+    $main_smarty->assign('index_url_commented', getmyurl('index_sort', 'commented'));
 
 }
 //group sort smarty
@@ -209,25 +209,25 @@ $main_smarty->assign('group_url_name', getmyurl('group_sort', 'name'));
 // setup the links
 if ($current_user->user_id > 0 && $current_user->authenticated)
 {
-	$login=$current_user->user_login;
-	$main_smarty->assign('user_url_personal_data', getmyurl('user', $login));
-	$main_smarty->assign('user_url_news_sent', getmyurl('user2', $login, 'history'));
-	$main_smarty->assign('user_url_news_published', getmyurl('user2', $login, 'published'));
-	$main_smarty->assign('user_url_news_unpublished', getmyurl('user2', $login, 'new'));
-	$main_smarty->assign('user_url_news_voted', getmyurl('user2', $login, 'voted'));
-	$main_smarty->assign('user_url_news_upvoted', getmyurl('user2', $login, 'upvoted'));
-	$main_smarty->assign('user_url_news_downvoted', getmyurl('user2', $login, 'downvoted'));
-	$main_smarty->assign('user_url_commented', getmyurl('user2', $login, 'commented'));
-	$main_smarty->assign('user_url_saved', getmyurl('user2', $login, 'saved'));
-	$main_smarty->assign('user_url_setting', getmyurl('profile'));
-	$main_smarty->assign('user_url_friends', getmyurl('user_friends', $login, 'following'));
-	$main_smarty->assign('user_url_friends2', getmyurl('user_friends', $login, 'followers'));
-	$main_smarty->assign('user_url_add', getmyurl('user_friends', $login, 'addfriend'));
-	$main_smarty->assign('user_url_remove', getmyurl('user_friends', $login, 'removefriend'));
-	$main_smarty->assign('user_rss', getmyurl('rssuser', $login));
-	$main_smarty->assign('URL_Profile', getmyurl('user_edit', $login));
-	$main_smarty->assign('user_url_member_groups', getmyurl('user2', $login, 'member_groups	'));
-	$main_smarty->assign('isAdmin', checklevel('admin'));
-	$main_smarty->assign('isModerator', checklevel('moderator'));
+    $login=$current_user->user_login;
+    $main_smarty->assign('user_url_personal_data', getmyurl('user', $login));
+    $main_smarty->assign('user_url_news_sent', getmyurl('user2', $login, 'history'));
+    $main_smarty->assign('user_url_news_published', getmyurl('user2', $login, 'published'));
+    $main_smarty->assign('user_url_news_unpublished', getmyurl('user2', $login, 'new'));
+    $main_smarty->assign('user_url_news_voted', getmyurl('user2', $login, 'voted'));
+    $main_smarty->assign('user_url_news_upvoted', getmyurl('user2', $login, 'upvoted'));
+    $main_smarty->assign('user_url_news_downvoted', getmyurl('user2', $login, 'downvoted'));
+    $main_smarty->assign('user_url_commented', getmyurl('user2', $login, 'commented'));
+    $main_smarty->assign('user_url_saved', getmyurl('user2', $login, 'saved'));
+    $main_smarty->assign('user_url_setting', getmyurl('profile'));
+    $main_smarty->assign('user_url_friends', getmyurl('user_friends', $login, 'following'));
+    $main_smarty->assign('user_url_friends2', getmyurl('user_friends', $login, 'followers'));
+    $main_smarty->assign('user_url_add', getmyurl('user_friends', $login, 'addfriend'));
+    $main_smarty->assign('user_url_remove', getmyurl('user_friends', $login, 'removefriend'));
+    $main_smarty->assign('user_rss', getmyurl('rssuser', $login));
+    $main_smarty->assign('URL_Profile', getmyurl('user_edit', $login));
+    $main_smarty->assign('user_url_member_groups', getmyurl('user2', $login, 'member_groups	'));
+    $main_smarty->assign('isAdmin', checklevel('admin'));
+    $main_smarty->assign('isModerator', checklevel('moderator'));
 }
 ?>

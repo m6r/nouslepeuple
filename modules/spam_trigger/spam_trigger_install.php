@@ -1,21 +1,21 @@
 <?php
-	$module_info['name'] = 'Spam Trigger';
-	$module_info['desc'] = 'This module will check all submitted comments and stories for common spam words';
-	$module_info['version'] = 1.0;
-	$module_info['settings_url'] = '../module.php?module=spam_trigger';
-	$module_info['homepage_url'] = 'http://pligg.com/downloads/module/spam-trigger/';
-	$module_info['update_url'] = 'http://pligg.com/downloads/module/spam-trigger/version/';
+    $module_info['name'] = 'Spam Trigger';
+    $module_info['desc'] = 'This module will check all submitted comments and stories for common spam words';
+    $module_info['version'] = 1.0;
+    $module_info['settings_url'] = '../module.php?module=spam_trigger';
+    $module_info['homepage_url'] = 'http://pligg.com/downloads/module/spam-trigger/';
+    $module_info['update_url'] = 'http://pligg.com/downloads/module/spam-trigger/version/';
 
-	global $db;
-	$fields = $db->get_results("DESCRIBE ".table_links);
-	if ($fields)
-	    foreach ($fields as $field)
-		if ($field->Field == 'link_status' && !strstr($field->Type,"'moderated'"))
-		    $db->query("ALTER TABLE `".table_links."` CHANGE  `link_status`  `link_status` ".str_replace(')',",'moderated')",$field->Type)." DEFAULT  'discard'");
+    global $db;
+    $fields = $db->get_results("DESCRIBE ".table_links);
+    if ($fields)
+        foreach ($fields as $field)
+        if ($field->Field == 'link_status' && !strstr($field->Type,"'moderated'"))
+            $db->query("ALTER TABLE `".table_links."` CHANGE  `link_status`  `link_status` ".str_replace(')',",'moderated')",$field->Type)." DEFAULT  'discard'");
 
-	if (get_misc_data('spam_trigger_light')=='')
-	{
-		misc_data_update('spam_trigger_light', 'arsehole
+    if (get_misc_data('spam_trigger_light')=='')
+    {
+        misc_data_update('spam_trigger_light', 'arsehole
 ass-pirate
 ass pirate
 assbandit
@@ -265,5 +265,5 @@ video recorder
 virgin
 weight reduction
 work at home');
-	}
+    }
 ?>

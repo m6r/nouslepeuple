@@ -4,18 +4,18 @@
 define('admin_snippet_path', my_pligg_base . '/modules/admin_snippet/');
 
 // the language path for the module
-	if(!defined('lang_loc')){
-		// determine if we're in root or another folder like admin
-			$pos = strrpos($_SERVER["SCRIPT_NAME"], "/");
-			$path = substr($_SERVER["SCRIPT_NAME"], 0, $pos);
-			if ($path == "/"){$path = "";}
-			
-			if($path != my_pligg_base){
-				define('lang_loc', '..');
-			} else {
-				define('lang_loc', '.');
-			}
-	}
+    if(!defined('lang_loc')){
+        // determine if we're in root or another folder like admin
+            $pos = strrpos($_SERVER["SCRIPT_NAME"], "/");
+            $path = substr($_SERVER["SCRIPT_NAME"], 0, $pos);
+            if ($path == "/"){$path = "";}
+            
+            if($path != my_pligg_base){
+                define('lang_loc', '..');
+            } else {
+                define('lang_loc', '.');
+            }
+    }
 
 define('admin_snippet_lang_conf', lang_loc . '/modules/admin_snippet/lang.conf');
 define('admin_snippet_pligg_lang_conf', lang_loc . "/languages/lang_" . pligg_language . ".conf");
@@ -116,11 +116,11 @@ array("tpl_pligg_topusers_end","End of Top users")
 // don't touch anything past this line.
 
 if(isset($main_smarty) && is_object($main_smarty)){
-	$main_smarty->assign('admin_snippet_path', admin_snippet_path);
-	$main_smarty->assign('admin_snippet_pligg_lang_conf', admin_snippet_pligg_lang_conf);
-	$main_smarty->assign('admin_snippet_lang_conf', admin_snippet_lang_conf);
-	$main_smarty->assign('admin_snippet_tpl_path', admin_snippet_tpl_path);
-	$main_smarty->assign('admin_snippet_locations', $locations);
+    $main_smarty->assign('admin_snippet_path', admin_snippet_path);
+    $main_smarty->assign('admin_snippet_pligg_lang_conf', admin_snippet_pligg_lang_conf);
+    $main_smarty->assign('admin_snippet_lang_conf', admin_snippet_lang_conf);
+    $main_smarty->assign('admin_snippet_tpl_path', admin_snippet_tpl_path);
+    $main_smarty->assign('admin_snippet_locations', $locations);
 }
 
 ?>

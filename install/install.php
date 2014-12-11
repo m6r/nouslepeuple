@@ -11,7 +11,7 @@ if ((!isset($step)) || ($step == "")) { $step = 0; }
 
 
 if ($step == 0) {
-	include('install_language.php');
+    include('install_language.php');
 }
 
 $include='header.php';
@@ -25,29 +25,29 @@ echo '<div class="installercontent">';
 // intro
 
 if ($step == 1) {
-	include('install1.php');
-	$_SESSION['checked_step'] = 0;
+    include('install1.php');
+    $_SESSION['checked_step'] = 0;
 }
 
 //error checking and enter database settings
 if ($step == 2) {
-	$_SESSION['checked_step'] = 0;
-	include('install2.php');
+    $_SESSION['checked_step'] = 0;
+    include('install2.php');
 }
 
 //check database settings, store to file
 if ($step == 3) {
-	include('install3.php');
+    include('install3.php');
 }
 
 //update config settings file,
 if ($step == 4) {
-	include('install4.php');
+    include('install4.php');
 }
 
 //update config settings file,
 if ($step == 5) {
-	include('install5.php');
+    include('install5.php');
 }
 
 echo '</div>';

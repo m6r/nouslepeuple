@@ -12,7 +12,7 @@ if ($product_count<=0) $product_count='3';
 
 if ($_REQUEST['widget']=='pligg_products'){
     if(isset($_REQUEST['products']))
-		$product_count = sanitize($_REQUEST['products'], 3);
+        $product_count = sanitize($_REQUEST['products'], 3);
     misc_data_update('product_count', $product_count);
 }
 

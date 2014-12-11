@@ -15,16 +15,16 @@ $limit_size = get_misc_data('limit_size');
 
 if ($_REQUEST['widget']=='setting_limit'){
     if(isset($_REQUEST['limit_size'])){
-		$limit_size = sanitize($_REQUEST['limit_size'], 3);
-		// Shorten size to 5 digits
-		$limit_size = substr($limit_size,0,5);
-		// Making sure that the user is inserting a numerical value
-		if (!is_numeric($limit_size)){
-			die ("Please enter a correct amount of users to show.");
-		}
-	}
-	// Write the size to database
-	misc_data_update('limit_size', $limit_size);
+        $limit_size = sanitize($_REQUEST['limit_size'], 3);
+        // Shorten size to 5 digits
+        $limit_size = substr($limit_size,0,5);
+        // Making sure that the user is inserting a numerical value
+        if (!is_numeric($limit_size)){
+            die ("Please enter a correct amount of users to show.");
+        }
+    }
+    // Write the size to database
+    misc_data_update('limit_size', $limit_size);
 }
 
 // Assign smarty tags for limit, so that they can be used in tpl files

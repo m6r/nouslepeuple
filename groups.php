@@ -19,22 +19,22 @@ elseif ($_REQUEST["approve"] && is_numeric($_REQUEST["approve"]))
     $keyword = $db->escape(sanitize(trim($_REQUEST['keyword']), 3));
     if ($keyword)
     {
-		$from_where .= " AND (group_name LIKE '%$keyword%' OR group_description LIKE '%$keyword%')";
-		$main_smarty->assign('search', $keyword);
+        $from_where .= " AND (group_name LIKE '%$keyword%' OR group_description LIKE '%$keyword%')";
+        $main_smarty->assign('search', $keyword);
     }
 
 if($_REQUEST["sortby"])
 {
-	$sortby  = $_REQUEST["sortby"];
-	if($sortby == 'newest')
-		$order_by = "group_date DESC";
-	if($sortby == 'oldest')
-		$order_by = "group_date ASC";
-	if($sortby == 'members')
-		$order_by = "group_members DESC";
-	if($sortby == 'name')
-		$order_by = "group_name Asc";
-	$main_smarty->assign('sortby', $sortby);
+    $sortby  = $_REQUEST["sortby"];
+    if($sortby == 'newest')
+        $order_by = "group_date DESC";
+    if($sortby == 'oldest')
+        $order_by = "group_date ASC";
+    if($sortby == 'members')
+        $order_by = "group_members DESC";
+    if($sortby == 'name')
+        $order_by = "group_name Asc";
+    $main_smarty->assign('sortby', $sortby);
 }
 
 $rows = $db->get_var("SELECT count(*) FROM " . table_groups . " WHERE group_status='Enable'");
@@ -52,35 +52,35 @@ group_read($from_where, $order_by);
 
 function group_read($from_where,$order_by)
 {
-	Global $db, $main_smarty, $view, $user, $rows, $page_size, $offset;
-	// figure out what "page" of the results we're on
-	$offset=(get_current_page()-1)*$page_size;
+    Global $db, $main_smarty, $view, $user, $rows, $page_size, $offset;
+    // figure out what "page" of the results we're on
+    $offset=(get_current_page()-1)*$page_size;
 
-	// pagesize set in the admin panel
-	$search->pagesize = $page_size;
+    // pagesize set in the admin panel
+    $search->pagesize = $page_size;
 
-	if ($order_by == "")
-		$order_by = "group_date DESC";
-	include_once(mnminclude.'smartyvariables.php');
-	global $db,$main_smarty;
-	$rows = $db->get_var("SELECT count(*) FROM " . table_groups . " WHERE ".$from_where." ");
-	$group = $db->get_results("SELECT distinct(group_id) as group_id FROM " . table_groups . " WHERE ".$from_where." ORDER BY group_status DESC, ".$order_by." LIMIT $offset,$page_size ");
-	
-	if ($group)
-	{
-		foreach($group as $groupid)
-		{
-			$group_display .= group_print_summary($groupid->group_id);
-		}
-		$main_smarty->assign('group_display', $group_display);
-	}
+    if ($order_by == "")
+        $order_by = "group_date DESC";
+    include_once(mnminclude.'smartyvariables.php');
+    global $db,$main_smarty;
+    $rows = $db->get_var("SELECT count(*) FROM " . table_groups . " WHERE ".$from_where." ");
+    $group = $db->get_results("SELECT distinct(group_id) as group_id FROM " . table_groups . " WHERE ".$from_where." ORDER BY group_status DESC, ".$order_by." LIMIT $offset,$page_size ");
+    
+    if ($group)
+    {
+        foreach($group as $groupid)
+        {
+            $group_display .= group_print_summary($groupid->group_id);
+        }
+        $main_smarty->assign('group_display', $group_display);
+    }
 
-	if(Auto_scroll==2 || Auto_scroll==3){
-	   $main_smarty->assign("scrollpageSize", $page_size);
-	 
-	}else
-		$main_smarty->assign('group_pagination', do_pages($rows, $page_size, "groups", true));
-			return true;
+    if(Auto_scroll==2 || Auto_scroll==3){
+       $main_smarty->assign("scrollpageSize", $page_size);
+     
+    }else
+        $main_smarty->assign('group_pagination', do_pages($rows, $page_size, "groups", true));
+            return true;
 }
 
 
