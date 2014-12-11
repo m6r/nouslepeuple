@@ -14,7 +14,7 @@ if ($pligg_version == '2.0.0rc2') {
 	echo '<li>Performing one-time Pligg 2.0.0 Upgrade<ul>';
 
 	// 2.0.0 RC2 incorrectly defined the group member user levels
-    $sql = "ALTER TABLE ".table_group_member." 
+    $sql = "ALTER TABLE ".table_group_member."
 			CHANGE member_role member_role ENUM( 'admin', 'normal', 'moderator', 'flagged', 'banned') NOT NULL;";
     $db->query($sql);
 	echo '<li>Correcting group member user levels</li>';

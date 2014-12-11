@@ -18,7 +18,7 @@ function karma_showpage(){
 	$canIhaveAccess = $canIhaveAccess + checklevel('admin');
 	
 	if($canIhaveAccess == 1)
-	{	
+	{
 		// Save settings
 		if ($_POST['submit'])
 		{
@@ -49,10 +49,10 @@ function karma_showpage(){
 			$main_smarty->assign('navbar_where', $navwhere);
 			$main_smarty->assign('posttitle', " / " . $main_smarty->get_config_vars('PLIGG_Visual_Header_AdminPanel'));
 		// breadcrumbs
-		define('modulename', 'karma'); 
+		define('modulename', 'karma');
 		$main_smarty->assign('modulename', modulename);
 		
-		define('pagename', 'admin_modify_karma'); 
+		define('pagename', 'admin_modify_karma');
 		$main_smarty->assign('pagename', pagename);
 		$main_smarty->assign('settings', str_replace('"','&#034;',get_karma_settings()));
 		$main_smarty->assign('tpl_center', karma_tpl_path . 'karma_main');
@@ -62,7 +62,7 @@ function karma_showpage(){
 	{
 		header("Location: " . getmyurl('login', $_SERVER['REQUEST_URI']));
 	}
-}	
+}
 
 function karma_do_submit3(&$vars)
 {
@@ -180,13 +180,13 @@ function karma_comment_deleted(&$vars)
 }
 
 
-// 
+//
 // Read module settings
 //
 function get_karma_settings()
 {
     return array(
-		'submit_story' => get_misc_data('karma_submit_story'), 
+		'submit_story' => get_misc_data('karma_submit_story'),
 		'submit_comment' => get_misc_data('karma_submit_comment'),
 		'story_publish' => get_misc_data('karma_story_publish'),
 		'story_vote' => get_misc_data('karma_story_vote'),

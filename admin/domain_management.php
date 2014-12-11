@@ -38,7 +38,7 @@ $main_smarty->assign('navbar_where', $navwhere);
 $main_smarty->assign('posttitle', " / " . $main_smarty->get_config_vars('PLIGG_Visual_Ban_This_URL'));
 
 // pagename
-define('pagename', 'domain_management'); 
+define('pagename', 'domain_management');
 $main_smarty->assign('pagename', pagename);
 
 if(isset($_REQUEST["id"]) && is_numeric($_REQUEST["id"])){$id = $_REQUEST["id"];}
@@ -144,7 +144,7 @@ if($canIhaveAccess == 1){
 			$main_smarty->display($template_dir . '/admin/admin.tpl');
 		}
 	}
-	elseif(isset($_REQUEST['doblacklist'])){	
+	elseif(isset($_REQUEST['doblacklist'])){
 		$domain = strtoupper(sanitize($_REQUEST['doblacklist'], 3)) . "\n";
 		if (is_writable($blacklist)) {
 		

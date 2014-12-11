@@ -29,7 +29,7 @@ $offset = (get_current_page() - 1) * $top_users_size;
 
 $select = "SELECT * ";
 $from_where = " FROM " . table_comments . "
-		LEFT JOIN " . table_links . " ON comment_link_id=link_id 
+		LEFT JOIN " . table_links . " ON comment_link_id=link_id
 		LEFT JOIN " . table_users . " ON comment_user_id=user_id WHERE comment_status='published' AND link_status='published'";
 $order_by = " ORDER BY comment_id DESC";
 

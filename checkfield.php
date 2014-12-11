@@ -61,7 +61,7 @@ switch ($type) {
 		}else{
 		 echo "OK";
 		}
-	   break;	
+	   break;
 	   
 	default:
 		echo "KO";

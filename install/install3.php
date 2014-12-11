@@ -1,6 +1,6 @@
 <?php
 if (!$step) {
-	 header('Location: ./install.php'); die(); 
+	 header('Location: ./install.php'); die();
 }
 
 if ($_POST['language'])
@@ -56,25 +56,25 @@ if($conn = @mysql_connect($dbhost,$dbuser,$dbpass)) {
 			if(fwrite($handle, $str)) {
 				$output.= "<p>" . $lang['dbconnect'] . "</p>\n";
 				fclose($handle);
-			} 
+			}
 			else {
 				$_SESSION['checked_step'] = 0;
 				$errors[] = $lang['Error2-1'];
 			}
-		} 
-		else { 
+		}
+		else {
 			$_SESSION['checked_step'] = 0;
 			$errors[] = $lang['Error2-2'];
 		}
 	}
-	else {	
-		$_SESSION['checked_step'] = 0; 
-		$errors[] = $lang['Error2-3'];  
+	else {
+		$_SESSION['checked_step'] = 0;
+		$errors[] = $lang['Error2-3'];
 	}
 }
-else { 
+else {
 	$_SESSION['checked_step'] = 0;
-	$errors[] = $lang['Error2-4']; 
+	$errors[] = $lang['Error2-4'];
 }
 
 if($check_errors !== false){
@@ -99,6 +99,6 @@ if($check_errors !== false){
   }
   echo $output;
 } else {
-  header("Location: $url_install3"); 
+  header("Location: $url_install3");
 }
 ?>

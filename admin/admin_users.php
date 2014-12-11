@@ -40,9 +40,9 @@ $PliggDoc->add_js("$(function() {
 $PliggDoc->get_js();
 
 
-if($canIhaveAccess == 0){	
+if($canIhaveAccess == 0){
 //	$main_smarty->assign('tpl_center', '/admin/access_denied');
-//	$main_smarty->display($template_dir . '/admin/admin.tpl');		
+//	$main_smarty->display($template_dir . '/admin/admin.tpl');
 	header("Location: " . getmyurl('admin_login', $_SERVER['REQUEST_URI']));
 	die();
 }
@@ -50,7 +50,7 @@ if($canIhaveAccess == 0){
 // read the mysql database to get the pligg version
 $sql = "SELECT data FROM " . table_misc_data . " WHERE name = 'pligg_version'";
 $pligg_version = $db->get_var($sql);
-$main_smarty->assign('version_number', $pligg_version); 
+$main_smarty->assign('version_number', $pligg_version);
 
 // sidebar
 $main_smarty = do_sidebar($main_smarty);
@@ -71,7 +71,7 @@ if($canIhaveAccess == 1)
 	        
 				$value = $db->escape($_POST['admin_acction']);
 			
-				foreach($_POST["enabled"] as $id => $valuea) 
+				foreach($_POST["enabled"] as $id => $valuea)
 				{
 					$_GET['id'] = $id = $db->escape($id);
 					$user= $db->get_row('SELECT * FROM ' . table_users ." where user_id=$id");
@@ -79,7 +79,7 @@ if($canIhaveAccess == 1)
 					if($value==3)
 					{
 					
-						if($user->user_level!="Spammer")	
+						if($user->user_level!="Spammer")
 							killspam($id);
 						
 					} elseif($value==2) {
@@ -96,7 +96,7 @@ if($canIhaveAccess == 1)
 						{
 							canIChangeUser($user->user_level);
 							$db->query("UPDATE ".table_users." SET user_enabled='1', user_level=IF(user_level='Spammer','normal',user_level) WHERE user_id='".$db->escape($id)."'");
-						}	
+						}
 					}
 				}
 	    	} else {
@@ -138,7 +138,7 @@ if($canIhaveAccess == 1)
 			}
 			
 			if (!isset($username) || strlen($username) < 3) {
-				$main_smarty->assign(username_error, $main_smarty->get_config_vars('PLIGG_Visual_Register_Error_UserTooShort'));			
+				$main_smarty->assign(username_error, $main_smarty->get_config_vars('PLIGG_Visual_Register_Error_UserTooShort'));
 			}
 			elseif (!preg_match('/^[a-zA-Z0-9\-]+$/', $username)) {
 				$main_smarty->assign(username_error, $main_smarty->get_config_vars('PLIGG_Visual_Register_Error_UserInvalid'));
@@ -150,10 +150,10 @@ if($canIhaveAccess == 1)
 				$main_smarty->assign(email_error, $main_smarty->get_config_vars('PLIGG_Visual_Register_Error_BadEmail'));
 			}
 			elseif (email_exists(trim($email))) {
-				$main_smarty->assign(email_error, $main_smarty->get_config_vars('PLIGG_Visual_Register_Error_EmailExists'));			
+				$main_smarty->assign(email_error, $main_smarty->get_config_vars('PLIGG_Visual_Register_Error_EmailExists'));
 			}
 			elseif (strlen($password) < 5 ) {
-				$main_smarty->assign(password_error, $main_smarty->get_config_vars('PLIGG_Visual_Register_Error_FiveCharPass'));			
+				$main_smarty->assign(password_error, $main_smarty->get_config_vars('PLIGG_Visual_Register_Error_FiveCharPass'));
 			}
 			else {
 				$db->query("INSERT IGNORE INTO " . table_users . " (user_login, user_level, user_email, user_pass, user_date, user_modification, user_lastlogin) VALUES ('$username', '$level', '$email', '$saltedpass', NOW(), NOW(), NOW())");
@@ -184,7 +184,7 @@ if($canIhaveAccess == 1)
 			$main_smarty->assign('pagename', pagename);
 			
 			// pagename
-			define('pagename', 'admin_users'); 
+			define('pagename', 'admin_users');
 			$main_smarty->assign('pagename', pagename);
 
 			// show the template
@@ -199,7 +199,7 @@ if($canIhaveAccess == 1)
 			$CSRF->create('admin_users_resetpass', true, true);
 	
 			$usersql = mysql_query('SELECT * FROM ' . table_users . ' where user_id="'.sanitize($_GET["user"], 3).'" or user_login="'.sanitize($_GET["user"], 3).'"');
-			$userdata = array();				
+			$userdata = array();
 			while ($rows = mysql_fetch_array ($usersql, MYSQL_ASSOC)) array_push ($userdata, $rows);
 			
 		  
@@ -233,7 +233,7 @@ if($canIhaveAccess == 1)
 			$main_smarty->assign('posttitle', " / " . $main_smarty->get_config_vars('PLIGG_Visual_Header_AdminPanel'));
 			
 			// pagename
-			define('pagename', 'admin_users'); 
+			define('pagename', 'admin_users');
    			$main_smarty->assign('pagename', pagename);
 			
 			$user=new User();
@@ -293,15 +293,15 @@ if($canIhaveAccess == 1)
 					$user_old = $db->get_row('SELECT * FROM ' . table_users . ' where user_id="'.sanitize($_GET["user_id"], 3).'"');
 					
 					$username=trim(sanitize($_POST["login"], 3));
-					$email=trim(sanitize($_POST["email"], 3)); 
+					$email=trim(sanitize($_POST["email"], 3));
 					$password=$_POST['password'];
 						
 					$error=0;
 					
-					if($user_old->user_login!=$username){	
+					if($user_old->user_login!=$username){
 						if (!isset($username) || strlen($username) < 3) {
 							$main_smarty->assign(username_error, $main_smarty->get_config_vars('PLIGG_Visual_Register_Error_UserTooShort'));
-							$error=1;			
+							$error=1;
 						}
 						elseif (!preg_match('/^[a-zA-Z0-9\-]+$/', $username)) {
 							$main_smarty->assign(username_error, $main_smarty->get_config_vars('PLIGG_Visual_Register_Error_UserInvalid'));
@@ -320,7 +320,7 @@ if($canIhaveAccess == 1)
 						}
 						elseif (email_exists(trim($email))) {
 							$main_smarty->assign(email_error, $main_smarty->get_config_vars('PLIGG_Visual_Register_Error_EmailExists'));
-							$error=1;			
+							$error=1;
 						}
 					}
 					
@@ -336,14 +336,14 @@ if($canIhaveAccess == 1)
 					if ($_POST["password"] && $_POST["password"]==$_POST["password2"]){
 						if (strlen($password) < 5 ) {
 							$main_smarty->assign(password_error, $main_smarty->get_config_vars('PLIGG_Visual_Register_Error_FiveCharPass'));
-							$error=1;			
+							$error=1;
 						} else {
 							$user->pass = $_POST["password"];
 						}
 					}
 					
 					if($error==0){
-						$user->id=$_GET["user_id"];	
+						$user->id=$_GET["user_id"];
 						echo "save";
 						$user->store();
 						header("Location: ".my_pligg_base."/admin/admin_users.php?mode=view&user=".$_GET["user_id"]."");
@@ -360,8 +360,8 @@ if($canIhaveAccess == 1)
 				}
 				//user save end
 				
-			} 				
-			//update user data end	
+			}
+			//update user data end
 			
 			$CSRF->create('admin_users_edit', true, true);
 			
@@ -378,7 +378,7 @@ if($canIhaveAccess == 1)
 			$main_smarty->assign('posttitle', " / " . $main_smarty->get_config_vars('PLIGG_Visual_Header_AdminPanel'));
 			
 			// pagename
-			define('pagename', 'admin_users'); 
+			define('pagename', 'admin_users');
 			$main_smarty->assign('pagename', pagename);
 
 			
@@ -393,7 +393,7 @@ if($canIhaveAccess == 1)
 			} else {
 				$main_smarty->display($template_dir . '/admin/admin.tpl');
 			}
-		}	
+		}
 		
 		if (sanitize($_GET["mode"], 3) == "resetpass"){ // reset user password
 
@@ -438,7 +438,7 @@ if($canIhaveAccess == 1)
 					$main_smarty->assign('posttitle', " / " . $main_smarty->get_config_vars('PLIGG_Visual_Header_AdminPanel'));
 					
 					// pagename
-					define('pagename', 'admin_users'); 
+					define('pagename', 'admin_users');
 					$main_smarty->assign('pagename', pagename);
 	
 					// show the template
@@ -459,14 +459,14 @@ if($canIhaveAccess == 1)
 				// doesn't matter if a token exists. if we're viewing this page, just
 				// create a new one or replace the existing.
 				$CSRF->create('admin_users_disable', true, true);
-			// code to prevent CSRF		
+			// code to prevent CSRF
 		
 			if(sanitize($_GET["user"], 3) == "admin"){
 				echo "You can't disable this user";
 			} else {
 				$user= $db->get_row('SELECT * FROM ' . table_users . ' where user_login="'.sanitize($_GET["user"], 3).'"');
 
-				canIChangeUser($user->user_level); 
+				canIChangeUser($user->user_level);
 			
 				if ($user) {
 					
@@ -479,11 +479,11 @@ if($canIhaveAccess == 1)
 					$main_smarty->assign('navbar_where', $navwhere);
 					$main_smarty->assign('posttitle', " / " . $main_smarty->get_config_vars('PLIGG_Visual_Header_AdminPanel'));
 					
-					$main_smarty->assign('user', sanitize($_GET["user"], 3));	
+					$main_smarty->assign('user', sanitize($_GET["user"], 3));
 								
 					// pagename
-					define('pagename', 'admin_users'); 
-					$main_smarty->assign('pagename', pagename);					
+					define('pagename', 'admin_users');
+					$main_smarty->assign('pagename', pagename);
 				
 					// show the template
 					$main_smarty->assign('tpl_center', '/admin/user_disable');
@@ -507,14 +507,14 @@ if($canIhaveAccess == 1)
 			{
 				$user= $db->get_row('SELECT * FROM ' . table_users . ' where user_login="'.sanitize($_GET["user"], 3).'"');
 				
-				canIChangeUser($user->user_level); 
+				canIChangeUser($user->user_level);
 				
 /*				$randomstring = "abcdefghijklmnopqrstuvwxyz0123456789";
 				for($i=0;$i<49;$i++){
 					$pos = rand(0,36);
 					$str .= $randomstring{$pos};
 				}
-*/				
+*/
 				if ($user) {
 //					$db->query('UPDATE `' . table_users . '` SET `user_pass` = "'.$str.'" WHERE `user_login` = "'.sanitize($_GET["user"], 3).'"');
 //					$db->query('UPDATE `' . table_users . '` SET `user_email` = "'.$user->user_email.'-disable" WHERE `user_login` = "'.sanitize($_GET["user"], 3).'"');
@@ -530,7 +530,7 @@ if($canIhaveAccess == 1)
 					$main_smarty->assign('posttitle', " / " . $main_smarty->get_config_vars('PLIGG_Visual_Header_AdminPanel'));
 					
 					// pagename
-					define('pagename', 'admin_users'); 
+					define('pagename', 'admin_users');
 					$main_smarty->assign('pagename', pagename);
 	
 					header("Location: ".my_pligg_base."/admin/admin_users.php");
@@ -545,10 +545,10 @@ if($canIhaveAccess == 1)
 		}
 
 		if (sanitize($_GET["mode"], 3) == "enable")
-		{ 
+		{
 				$user= $db->get_row('SELECT * FROM ' . table_users . ' where user_login="'.sanitize($_GET["user"], 3).'"');
 				
-				canIChangeUser($user->user_level); 
+				canIChangeUser($user->user_level);
 				
 				if ($user) {
 					$db->query('UPDATE `' . table_users . '` SET `user_enabled` = 1 WHERE `user_login` = "'.sanitize($_GET["user"], 3).'"');
@@ -563,7 +563,7 @@ if($canIhaveAccess == 1)
 					$main_smarty->assign('posttitle', " / " . $main_smarty->get_config_vars('PLIGG_Visual_Header_AdminPanel'));
 					
 					// pagename
-					define('pagename', 'admin_users'); 
+					define('pagename', 'admin_users');
 					$main_smarty->assign('pagename', pagename);
 	
 					header("Location: ".my_pligg_base."/admin/admin_users.php");
@@ -578,7 +578,7 @@ if($canIhaveAccess == 1)
 				// doesn't matter if a token exists. if we're viewing this page, just
 				// create a new one or replace the existing.
 				$CSRF->create('admin_users_killspam', true, true);
-			// code to prevent CSRF		
+			// code to prevent CSRF
 
 			if(sanitize($_GET["user"], 3) == "admin"){
 		  		echo "You can't killspam this user";
@@ -604,7 +604,7 @@ if($canIhaveAccess == 1)
 					$main_smarty->assign('id', sanitize($_GET["id"], 3));
 					
 					// pagename
-					define('pagename', 'admin_users'); 
+					define('pagename', 'admin_users');
 					$main_smarty->assign('pagename', pagename);
 		
 					// show the template
@@ -637,7 +637,7 @@ if($canIhaveAccess == 1)
 			}
 		}
 
-		if (sanitize($_GET["mode"], 3) == "search"){	// search users	
+		if (sanitize($_GET["mode"], 3) == "search"){	// search users
 			$CSRF->create('admin_users_list', true, true);
 			global $offset, $page_size;
 			// Items per page drop-down
@@ -667,8 +667,8 @@ if($canIhaveAccess == 1)
 			while ($row = mysql_fetch_array ($searchsql, MYSQL_ASSOC)) array_push ($userlist, $row);
 				foreach($userlist as $key => $val){
 					$userlist[$key]['Avatar'] = get_avatar('large', "", $val['user_login'], $val['user_email']);
-				}					
-				$main_smarty->assign('userlist', $userlist);					
+				}
+				$main_smarty->assign('userlist', $userlist);
 				
 			// breadcrumbs and page title
 			$navwhere['text1'] = $main_smarty->get_config_vars('PLIGG_Visual_Header_AdminPanel');
@@ -679,8 +679,8 @@ if($canIhaveAccess == 1)
 			$main_smarty->assign('navbar_where', $navwhere);
 			$main_smarty->assign('posttitle', " / " . $main_smarty->get_config_vars('PLIGG_Visual_Header_AdminPanel'));
 			
-			// pagename	
-			define('pagename', 'admin_users'); 
+			// pagename
+			define('pagename', 'admin_users');
 			$main_smarty->assign('pagename', pagename);
 
 			// show the template
@@ -693,7 +693,7 @@ if($canIhaveAccess == 1)
 
 		}
 	
-	} else { // No options are selected, so show the list of users.			
+	} else { // No options are selected, so show the list of users.
 		$CSRF->create('admin_users_list', true, true);
 		global $offset, $top_users_size;
 		
@@ -754,7 +754,7 @@ if($canIhaveAccess == 1)
 		$main_smarty->assign('posttitle', " / " . $main_smarty->get_config_vars('PLIGG_Visual_Header_AdminPanel'));
 		
 		// pagename
-		define('pagename', 'admin_users'); 
+		define('pagename', 'admin_users');
 		$main_smarty->assign('pagename', pagename);
 
 		// show the template
@@ -767,7 +767,7 @@ if($canIhaveAccess == 1)
 	}
 } else {
 	echo 'You don\'t have permission to view this page.';
-}		
+}
 		
 function showmyerror()
 {
@@ -783,7 +783,7 @@ function showmyerror()
 	$main_smarty->assign('navbar_where', $navwhere);
 	$main_smarty->assign('posttitle', " / " . $main_smarty->get_config_vars('PLIGG_Visual_Header_AdminPanel'));
 	
-	// pagename	define('pagename', 'admin_users'); 
+	// pagename	define('pagename', 'admin_users');
 
 	$main_smarty->assign('pagename', pagename);
 

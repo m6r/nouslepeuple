@@ -18,7 +18,7 @@ $main_smarty->assign('navbar_where', $navwhere);
 $main_smarty->assign('posttitle', $main_smarty->get_config_vars('PLIGG_Visual_Breadcrumb_Register'));
 
 // pagename
-define('pagename', 'register'); 
+define('pagename', 'register');
 $main_smarty->assign('pagename', pagename);
 $main_smarty->assign('user_language', 'english');
 
@@ -51,7 +51,7 @@ if($pligg_regfrom != ''){
 			$username = sanitize($_POST["username"], 3);
 			$email = sanitize($_POST["email"], 3);
 			$password = sanitize($_POST["password"], 3);
-			$password2 = sanitize($_POST["password2"], 3);	
+			$password2 = sanitize($_POST["password2"], 3);
 			break;
 	}
 
@@ -103,7 +103,7 @@ function register_check_errors($username, $email, $password, $password2, $user_n
 
 	require_once(mnminclude.'check_behind_proxy.php');
 	$userip=check_ip_behind_proxy();
-	if(is_ip_banned($userip)) { 
+	if(is_ip_banned($userip)) {
 		$form_username_error[] = $main_smarty->get_config_vars('PLIGG_Visual_Register_Error_YourIpIsBanned');
 		$error = true;
 	}
@@ -111,7 +111,7 @@ function register_check_errors($username, $email, $password, $password2, $user_n
 	if(!isset($username) || strlen($username) < 3) { // if no username was given or username is less than 3 characters
 		$form_username_error[] = $main_smarty->get_config_vars('PLIGG_Visual_Register_Error_UserTooShort');
 		$error = true;
-	}	
+	}
 	if (preg_match('/\pL/u', 'a')) {	// Check if PCRE was compiled with UTF-8 support
 	    if (!preg_match('/^[_\-\d\p{L}\p{M}]+$/iu', $username)) { // if username contains invalid characters
 		$form_username_error[] = $main_smarty->get_config_vars('PLIGG_Visual_Register_Error_UserInvalid');
@@ -150,7 +150,7 @@ function register_check_errors($username, $email, $password, $password2, $user_n
 	if(!isset($user_nom) || strlen($user_nom) < 2) { // if no user_nom was given or username is less than 2 characters
 		$form_nom_error[] = $main_smarty->get_config_vars('PLIGG_Visual_Register_Error_NomTooShort');
 		$error = true;
-	}	
+	}
 	if (preg_match('/\pL/u', 'a')) {	// Check if PCRE was compiled with UTF-8 support
 	    if (!preg_match('/^[_\-\d\p{L}\p{M}]+$/iu', $user_nom)) { // if user_nom contains invalid characters
 		$form_nom_error[] = $main_smarty->get_config_vars('PLIGG_Visual_Register_Error_NomInvalid');
@@ -167,7 +167,7 @@ function register_check_errors($username, $email, $password, $password2, $user_n
 	if(!isset($user_prenom) || strlen($user_prenom) < 2) { // if no user_prenom was given or user_prenom is less than 2 char
 		$form_prenom_error[] = $main_smarty->get_config_vars('PLIGG_Visual_Register_Error_PrenomTooShort');
 		$error = true;
-	}	
+	}
 	if (preg_match('/\pL/u', 'a')) {	// Check if PCRE was compiled with UTF-8 support
 	    if (!preg_match('/^[_\-\d\p{L}\p{M}]+$/iu', $user_prenom)) { // if user_prenom contains invalid characters
 		$form_prenom_error[] = $main_smarty->get_config_vars('PLIGG_Visual_Register_Error_PrenomInvalid');

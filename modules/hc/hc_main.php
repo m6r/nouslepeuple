@@ -14,7 +14,7 @@ function hc_register(&$vars){
 	$q_2_high = (get_misc_data('hc_math_q2high') == '') ? 5 : get_misc_data('hc_math_q2high');
 
 	$number1 = md5(mt_rand($q_1_low, $q_1_high));
-	do {		
+	do {
 		$number2 = md5(mt_rand($q_2_low, $q_2_high));
 	} while ($number2==$number1);
 	$number3 = md5(mt_rand($q_2_low, $q_2_high));

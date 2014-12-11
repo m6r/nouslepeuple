@@ -14,7 +14,7 @@ if(!defined('tables_defined')){
 	define('table_users', table_prefix . "users" );
 	define('table_tags', table_prefix . "tags" );
 	define('table_votes', table_prefix . "votes" );
-	define('table_config', table_prefix . "config" ); 
+	define('table_config', table_prefix . "config" );
 	define('table_modules', table_prefix . "modules" );
 	define('table_messages', table_prefix . "messages" );
 	define('table_formulas', table_prefix . "formulas" );

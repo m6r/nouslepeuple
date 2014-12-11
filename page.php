@@ -14,8 +14,8 @@ include(mnminclude.'smartyvariables.php');
 // sidebar
 $main_smarty = do_sidebar($main_smarty);
 
-// pagename	
-define('pagename', 'page'); 
+// pagename
+define('pagename', 'page');
 $main_smarty->assign('pagename', pagename);
 
 if($_REQUEST['page']){
@@ -26,7 +26,7 @@ if($_REQUEST['page']){
 
 	// Search in old urls if not found
 	if (!$page_results->link_id) {
-		$page_results=$db->get_row($sql="SELECT * FROM " . table_old_urls . " 
+		$page_results=$db->get_row($sql="SELECT * FROM " . table_old_urls . "
 							LEFT JOIN ".table_links." ON old_link_id=link_id AND link_status='page'
 							WHERE `old_title_url` = '$page' AND !ISNULL(link_id)");
 	}

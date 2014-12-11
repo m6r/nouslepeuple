@@ -108,7 +108,7 @@ class pliggconfig {
 		elseif (preg_match('/^\s*(.+[^\/])\s*\/\s*([^\/].+)\s*$/',$this->var_optiontext,$m) ||
 		    preg_match('/^\s*(.+) or (.+)\s*$/',$this->var_optiontext,$m))
 		{
-		    if (preg_match('/^(\d+)\s*=\s*(.+)$/',$m[1],$m1) && 
+		    if (preg_match('/^(\d+)\s*=\s*(.+)$/',$m[1],$m1) &&
 			preg_match('/^(\d+)\s*=\s*(.+)$/',$m[2],$m2))
 		    	echo "<select name=\"var_value\" class=\"form-control\"><option value='{$m1[1]}' ".($m1[1]==$this->var_value ? "selected" : "").">{$m1[2]}</option><option value='{$m2[1]}' ".($m2[1]==$this->var_value ? "selected" : "").">{$m2[2]}</option></select><br />";
 		    else
@@ -136,7 +136,7 @@ class pliggconfig {
 		echo "<td>{$this->var_optiontext}</td>";
 		echo '<input type = "hidden" name = "var_id" value = "'.$this->var_id.'">';
 		echo "</td></tr></form></span>";
-//		$this->EditInPlaceCode = "EditInPlace.makeEditable( {type: 'text', action: 'save', id: 'editme" .$this->var_id. "',	save_url: 'admin_config.php'} );";		
+//		$this->EditInPlaceCode = "EditInPlace.makeEditable( {type: 'text', action: 'save', id: 'editme" .$this->var_id. "',	save_url: 'admin_config.php'} );";
 		
 	}
 
@@ -166,7 +166,7 @@ class pliggconfig {
 					} else {
 						echo "<strong>Could not write to '$filename' file</strong>";
 					}
-				}				
+				}
 			}
 			fwrite($handle, "include_once mnminclude.'settings_from_db.php';\n");
 			fwrite($handle, "?>");

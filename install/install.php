@@ -10,13 +10,13 @@ if (isset($_REQUEST['step'])) { $step=addslashes(strip_tags($_REQUEST['step']));
 if ((!isset($step)) || ($step == "")) { $step = 0; }
 
 
-if ($step == 0) { 
+if ($step == 0) {
 	include('install_language.php');
 }
 
-$include='header.php'; 
+$include='header.php';
 if (file_exists($include)) { include_once($include); }
-$include='functions.php'; 
+$include='functions.php';
 if (file_exists($include)) { require_once($include); }
 
 echo '<div class="steps"><legend>' . $lang['Step'] . ' '.$step.'</legend></div>';
@@ -24,7 +24,7 @@ echo '<div class="installercontent">';
 
 // intro
 
-if ($step == 1) { 
+if ($step == 1) {
 	include('install1.php');
 	$_SESSION['checked_step'] = 0;
 }
@@ -40,12 +40,12 @@ if ($step == 3) {
 	include('install3.php');
 }
 
-//update config settings file, 
+//update config settings file,
 if ($step == 4) {
-	include('install4.php'); 
+	include('install4.php');
 }
 
-//update config settings file, 
+//update config settings file,
 if ($step == 5) {
 	include('install5.php');
 }

@@ -31,7 +31,7 @@ class redirector {
 		if($redirs){
 			header( "HTTP/1.1 301 Moved Permanently" );
 			header('Location: ' . my_pligg_base . $redirs->redirect_new);
-		}	
+		}
 	
 	}
 

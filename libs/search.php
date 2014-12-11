@@ -13,7 +13,7 @@ class Search {
 	var $sql = '';
 	var $countsql = '';
 	var $category = ''; // search a specific category?
-//	var $search_subcats = true; // search it's subcategories? 
+//	var $search_subcats = true; // search it's subcategories?
 	var $search_extra_fields = true; // search the extra_fields (if enabled)
 	var $url = '';
 	var $sticky = false;
@@ -25,8 +25,8 @@ class Search {
 	var $s_tags = 0;
 	var $s_user = 0;
 	var $s_group = 0;
-	var $s_cat = 0;	
-	var $s_comments = 0;	
+	var $s_cat = 0;
+	var $s_comments = 0;
 	var $s_date = 0;
 	
   
@@ -69,16 +69,16 @@ class Search {
 		if ($this->filterToStatus == 'published') {
 		
 			
-			if ($this->filterToTimeFrame == 'today') 
-				$from_where .= " AND (link_published_date > DATE_SUB(NOW(),INTERVAL 1 DAY) $orSticky )"; 
-			elseif ($this->filterToTimeFrame == 'yesterday') 
-				$from_where .= " AND (link_published_date BETWEEN DATE_SUB(NOW(),INTERVAL 2 DAY) AND DATE_SUB(NOW(),INTERVAL 1 DAY) $orSticky )"; 
-			elseif ($this->filterToTimeFrame == 'week') 
-				$from_where .= " AND (link_published_date > DATE_SUB(NOW(),INTERVAL 7 DAY) $orSticky )"; 
-			elseif ($this->filterToTimeFrame == 'month') 
-				$from_where .= " AND (link_published_date > DATE_SUB(NOW(),INTERVAL 1 MONTH) $orSticky )"; 
-			elseif ($this->filterToTimeFrame == 'year') 
-				$from_where .= " AND (link_published_date > DATE_SUB(NOW(),INTERVAL 1 YEAR) $orSticky )"; 
+			if ($this->filterToTimeFrame == 'today')
+				$from_where .= " AND (link_published_date > DATE_SUB(NOW(),INTERVAL 1 DAY) $orSticky )";
+			elseif ($this->filterToTimeFrame == 'yesterday')
+				$from_where .= " AND (link_published_date BETWEEN DATE_SUB(NOW(),INTERVAL 2 DAY) AND DATE_SUB(NOW(),INTERVAL 1 DAY) $orSticky )";
+			elseif ($this->filterToTimeFrame == 'week')
+				$from_where .= " AND (link_published_date > DATE_SUB(NOW(),INTERVAL 7 DAY) $orSticky )";
+			elseif ($this->filterToTimeFrame == 'month')
+				$from_where .= " AND (link_published_date > DATE_SUB(NOW(),INTERVAL 1 MONTH) $orSticky )";
+			elseif ($this->filterToTimeFrame == 'year')
+				$from_where .= " AND (link_published_date > DATE_SUB(NOW(),INTERVAL 1 YEAR) $orSticky )";
 			else if($this->filterToTimeFrame == 'upvoted'){
 				
 				$this->searchTerm = "upvoted";
@@ -90,20 +90,20 @@ class Search {
 			else if($this->filterToTimeFrame == 'commented'){
 				
 				$this->searchTerm = "commented";
-			}	
+			}
 				
 		} else {
 			
-			if ($this->filterToTimeFrame == 'today') 
-				$from_where .= " AND (link_date > DATE_SUB(NOW(),INTERVAL 1 DAY) $orSticky )"; 
-			elseif ($this->filterToTimeFrame == 'yesterday') 
-				$from_where .= " AND (link_date BETWEEN DATE_SUB(NOW(),INTERVAL 2 DAY) AND DATE_SUB(NOW(),INTERVAL 1 DAY) $orSticky )"; 
-			elseif ($this->filterToTimeFrame == 'week') 
-				$from_where .= " AND (link_date > DATE_SUB(NOW(),INTERVAL 7 DAY) $orSticky )"; 
-			elseif ($this->filterToTimeFrame == 'month') 
-				$from_where .= " AND (link_date > DATE_SUB(NOW(),INTERVAL 1 MONTH) $orSticky )"; 
-			elseif ($this->filterToTimeFrame == 'year') 
-				$from_where .= " AND (link_date > DATE_SUB(NOW(),INTERVAL 1 YEAR) $orSticky )"; 
+			if ($this->filterToTimeFrame == 'today')
+				$from_where .= " AND (link_date > DATE_SUB(NOW(),INTERVAL 1 DAY) $orSticky )";
+			elseif ($this->filterToTimeFrame == 'yesterday')
+				$from_where .= " AND (link_date BETWEEN DATE_SUB(NOW(),INTERVAL 2 DAY) AND DATE_SUB(NOW(),INTERVAL 1 DAY) $orSticky )";
+			elseif ($this->filterToTimeFrame == 'week')
+				$from_where .= " AND (link_date > DATE_SUB(NOW(),INTERVAL 7 DAY) $orSticky )";
+			elseif ($this->filterToTimeFrame == 'month')
+				$from_where .= " AND (link_date > DATE_SUB(NOW(),INTERVAL 1 MONTH) $orSticky )";
+			elseif ($this->filterToTimeFrame == 'year')
+				$from_where .= " AND (link_date > DATE_SUB(NOW(),INTERVAL 1 YEAR) $orSticky )";
 			else if($this->filterToTimeFrame == 'upvoted'){
 				
 				$this->searchTerm = "upvoted";
@@ -125,9 +125,9 @@ class Search {
 			$sqlGeticategory = $db->get_var("SELECT user_categories from " . table_users . " where user_login = '$user_login';");
 			if ($sqlGeticategory)
 			{
-				$from_where .= " AND link_category NOT IN ($sqlGeticategory)"; 
+				$from_where .= " AND link_category NOT IN ($sqlGeticategory)";
 				if (Multiple_Categories)
-					$from_where .= " AND ac_cat_id NOT IN ($sqlGeticategory)"; 
+					$from_where .= " AND ac_cat_id NOT IN ($sqlGeticategory)";
 			}
 		}
 		//should we filter to just this category?
@@ -138,7 +138,7 @@ class Search {
 			$catId = $this->category;
 			if($catId){
 				$child_cats = '';
-				// do we also search the subcategories? 
+				// do we also search the subcategories?
 				if( Independent_Subcategories == true){
 					$child_array = '';
 
@@ -224,7 +224,7 @@ class Search {
 			if($catId) {
 				$this->sql = "SELECT DISTINCT * FROM " . table_links . ", " . table_votes . " WHERE ".$usrclause." vote_link_id=link_id AND vote_value < 0  AND (link_status='published' OR link_status='new') AND link_category=$catId ".$group." ORDER BY link_votes ASC LIMIT $this->offset, $limit"; //link_date
 			}else{
-				$this->sql = "SELECT DISTINCT * FROM " . table_links . ", " . table_votes . " WHERE ".$usrclause." vote_link_id=link_id AND vote_value < 0  AND (link_status='published' OR link_status='new') ".$group." ORDER BY link_votes ASC LIMIT $this->offset, $limit"; //link_date    
+				$this->sql = "SELECT DISTINCT * FROM " . table_links . ", " . table_votes . " WHERE ".$usrclause." vote_link_id=link_id AND vote_value < 0  AND (link_status='published' OR link_status='new') ".$group." ORDER BY link_votes ASC LIMIT $this->offset, $limit"; //link_date
 			}
 		} else if($this->searchTerm == "commented"){
 			$usrclause = "";
@@ -256,7 +256,7 @@ class Search {
 			
 			//check if it is a literal search
 			$buffKeyword = $this->searchTerm;
-			$keywords = array();			
+			$keywords = array();
 			if( substr( $this->searchTerm, 1, 1 ) == '"'  && substr( $this->searchTerm, strlen( $this->searchTerm )-1 , 1 ) == '"' ) {
 				$literal = true;
 				$addparam = ' COLLATE utf8_general_ci ';
@@ -273,7 +273,7 @@ class Search {
 				$catId = $this->s_cat;
 				if($catId){
 					$child_cats = '';
-					// do we also search the subcategories? 
+					// do we also search the subcategories?
 					if( Independent_Subcategories == true){
 						$child_array = '';
 						// get a list of all children and put them in $child_array.
@@ -297,10 +297,10 @@ class Search {
 			//search tags
 			if( $this->s_tags != 0 && $this->searchTerm){
 				foreach( $keywords as $key ){
-					$this->searchTerm = $key;			
+					$this->searchTerm = $key;
 					$search_params[] = " ".table_links.".link_tags $addparam LIKE '%".$this->searchTerm."%' ";
 				}
-				$this->searchTerm = $bufferOrig;					
+				$this->searchTerm = $bufferOrig;
 			}
 			
 			//search links
@@ -313,7 +313,7 @@ class Search {
 						$search_params[] = " ".table_links.".link_content $addparam LIKE '%".$this->searchTerm."%' ";
 					if( $this->s_story == 3 ){
 						$search_params[] = " ".table_links.".link_title $addparam LIKE '%".$this->searchTerm."%' ";
-						$search_params[] = " ".table_links.".link_content $addparam LIKE '%".$this->searchTerm."%' ";					
+						$search_params[] = " ".table_links.".link_content $addparam LIKE '%".$this->searchTerm."%' ";
 					}
 				}
 				$this->searchTerm = $bufferOrig;
@@ -321,47 +321,47 @@ class Search {
 			
 			//search author
 			if( $this->s_user != 0 && $this->searchTerm){
-					$from_where .= " INNER JOIN ".table_users." ON ".table_links.".link_author = ".table_users.".user_id ";			
+					$from_where .= " INNER JOIN ".table_users." ON ".table_links.".link_author = ".table_users.".user_id ";
 					foreach( $keywords as $key ){
 						$this->searchTerm = $key;
 						$search_params[] = " ".table_users.".user_login $addparam LIKE '%".$this->searchTerm."%' ";
 					}
-					$this->searchTerm = $bufferOrig;						
+					$this->searchTerm = $bufferOrig;
 			}
 			
 			//search group
 			if( $this->s_group != 0 && $this->searchTerm){
 				foreach( $keywords as $key ){
-					$this->searchTerm = $key;				
+					$this->searchTerm = $key;
 					if( $this->s_group == 1 )
 						$search_params[] = " ".table_groups.".group_name $addparam LIKE '%".$this->searchTerm."%' ";
 					if( $this->s_group == 2 )
 						$search_params[] = " ".table_groups.".group_description $addparam LIKE '%".$this->searchTerm."%' ";
 					if( $this->s_group == 3 ){
 						$search_params[] = " ".table_groups.".group_name $addparam LIKE '%".$this->searchTerm."%' ";
-						$search_params[] = " ".table_groups.".group_description $addparam LIKE '%".$this->searchTerm."%' ";					
+						$search_params[] = " ".table_groups.".group_description $addparam LIKE '%".$this->searchTerm."%' ";
 					}
 				}
-				$this->searchTerm = $bufferOrig;					
+				$this->searchTerm = $bufferOrig;
 			}
 			
 			//search comments
 			if( $this->s_comments != 0 && $this->searchTerm){
-				$from_where .= " LEFT JOIN ".table_comments." ON ".table_links.".link_id = ".table_comments.".comment_link_id ";			
+				$from_where .= " LEFT JOIN ".table_comments." ON ".table_links.".link_id = ".table_comments.".comment_link_id ";
 				foreach( $keywords as $key ){
-					$this->searchTerm = $key;					
+					$this->searchTerm = $key;
 					$search_params[] = " (".table_comments.".comment_content $addparam LIKE '%".$this->searchTerm."%' AND comment_status='published')";
 				}
-				$this->searchTerm = $bufferOrig;					
-			}	
+				$this->searchTerm = $bufferOrig;
+			}
 
 			//search by date
 			if( $this->s_date ){
 				$this->s_date = date('Y-m-d',strtotime($this->s_date));
 #				$from_where .= " WHERE DATE(link_date)='{$this->s_date}' ";
 				$search_AND_params[] = " DATE(".table_links.".link_date)='{$this->s_date}' ";
-#				$this->searchTerm = $bufferOrig;				
-			}		
+#				$this->searchTerm = $bufferOrig;
+			}
 
 			if(Voting_Method == 2)
 	 			$from_where .= " LEFT JOIN " . table_votes . " ON vote_type='links' AND vote_link_id=link_id AND vote_value>0";
@@ -411,9 +411,9 @@ class Search {
 		// search comments
 		if (Search_Comments) {
 			$where = $this->explode_search('comment_content', $this->searchTerm);
-			$this->sql = "SELECT link_id, link_votes, link_karma, link_comments 
-						FROM ".table_comments." 
-						LEFT JOIN ".table_links." ON link_id=comment_link_id 
+			$this->sql = "SELECT link_id, link_votes, link_karma, link_comments
+						FROM ".table_comments."
+						LEFT JOIN ".table_links." ON link_id=comment_link_id
 						WHERE $where AND comment_status='published' AND link_status IN ('published','new')";
 			$links = $db->get_results($this->sql);
 			if ($links) {
@@ -496,7 +496,7 @@ class Search {
 					$results[] = $theitemaa;
 				}
 				$x++;
-			}			
+			}
 		}
 		
 		$returnme['rows'] = $results;
@@ -614,11 +614,11 @@ class Search {
 		global $db;
 		$sq = '';
 		preg_match_all('/"([^"]+)"|([^\s]+)/',$words,$m);
-	        foreach ($m[1] as $v) 
-		    if (trim($v)) 
+	        foreach ($m[1] as $v)
+		    if (trim($v))
 			$sq .= $search_field . " LIKE '%".$db->escape(trim($v))."%' AND ";
-	        foreach ($m[2] as $v) 
-		    if (trim($v)) 
+	        foreach ($m[2] as $v)
+		    if (trim($v))
 			$sq .= $search_field . " LIKE '%".$db->escape(trim($v))."%' AND ";
 //		foreach(explode(' ',$words) as $v){
 
@@ -635,7 +635,7 @@ class Search {
 			if (strlen($piece) < 4) {$SearchMethod = 2;} // if the length of the searchterm is less that 4 characters.
 			if ($this->is_it_stopword($piece)) {$SearchMethod = 2;} // if its a stopword
 			if (strpos($piece, "*") > 0){
-				$SearchMethod = 2; 
+				$SearchMethod = 2;
 				$words = str_replace("*", "", $words); // strip the * out so we can do a like on the actual search term
 			}
 		}

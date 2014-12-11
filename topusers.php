@@ -26,8 +26,8 @@ $offset=(get_current_page()-1)* $page_size;
 $header_items = array($main_smarty->get_config_vars('PLIGG_Visual_TopUsers_TH_User'), $main_smarty->get_config_vars('PLIGG_Visual_TopUsers_TH_News'), $main_smarty->get_config_vars('PLIGG_Visual_TopUsers_TH_PublishedNews'), $main_smarty->get_config_vars('PLIGG_Visual_TopUsers_TH_Comments'), $main_smarty->get_config_vars('PLIGG_Visual_TopUsers_TH_TotalVotes'), $main_smarty->get_config_vars('PLIGG_Visual_TopUsers_TH_PublishedVotes'));
 
 // determine how to sort users
-// validate and make sure value is between 0 and 5	
-$sortby = isset($_GET['sortby']) && is_numeric($_GET['sortby']) && $_GET['sortby'] >= 0 && $_GET['sortby'] <= 5 ? $_GET['sortby'] : 0;	
+// validate and make sure value is between 0 and 5
+$sortby = isset($_GET['sortby']) && is_numeric($_GET['sortby']) && $_GET['sortby'] >= 0 && $_GET['sortby'] <= 5 ? $_GET['sortby'] : 0;
 
 if ($sortby == 0) { // sort users alphabetically
 	$select = 'SELECT user_id';
@@ -52,7 +52,7 @@ $from_where_clauses = array(
 	// sort users by number of published links:
 	2 => "$link_author_from_where $whether_to_show_link GROUP BY link_author",
 	// sort users by number of comments:
-	3 => (', ' . table_comments . " WHERE comment_status = 'published' AND comment_user_id = user_id $whether_to_show_user GROUP BY comment_user_id"), 
+	3 => (', ' . table_comments . " WHERE comment_status = 'published' AND comment_user_id = user_id $whether_to_show_user GROUP BY comment_user_id"),
 	// sort users by number of total votes:
 	4 => ("$vote_from_where GROUP BY vote_user_id"),
 	// sort users by number of published votes:
@@ -94,14 +94,14 @@ if ($users) {
 		$main_smarty->assign('user_username', $user->username);
 		$main_smarty->assign('user_total_links', $user->total_links);
 		$main_smarty->assign('user_published_links', $user->published_links);
-		if($user->total_links>0) 
+		if($user->total_links>0)
 			$main_smarty->assign('user_published_links_percent', intval($user->published_links/$user->total_links*100));
 		else
 			$main_smarty->assign('user_published_links_percent', '');
 		$main_smarty->assign('user_total_comments', $user->total_comments);
 		$main_smarty->assign('user_total_votes', $user->total_votes);
 		$main_smarty->assign('user_published_votes', $user->published_votes);
-		if($user->total_votes>0) 
+		if($user->total_votes>0)
 			$main_smarty->assign('user_published_votes_percent', intval($user->published_votes/$user->total_votes*100));
 		else
 			$main_smarty->assign('user_published_votes_percent', '');
@@ -117,7 +117,7 @@ if ($users) {
 $main_smarty->assign('users_table', $users_table);
 
 // pagename
-define('pagename', 'topusers'); 
+define('pagename', 'topusers');
 $main_smarty->assign('pagename', pagename);
 
 // sidebar
@@ -127,7 +127,7 @@ $main_smarty->assign('headers', $header_items);
 $main_smarty->assign('total_row_for_topusers', $rows);
 
 
-//For Infinit scrolling and continue reading option 
+//For Infinit scrolling and continue reading option
 if(Auto_scroll==2 || Auto_scroll==3){
    $main_smarty->assign("scrollpageSize", $page_size);
  

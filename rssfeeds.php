@@ -17,7 +17,7 @@ $navwhere['link1'] = getmyurl('about', $dblang);
 $main_smarty->assign('navbar_where', $navwhere);
 
 // pagename
-define('pagename', 'rssfeeds'); 
+define('pagename', 'rssfeeds');
 $main_smarty->assign('pagename', pagename);
 
 // show the template

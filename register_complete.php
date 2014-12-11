@@ -18,7 +18,7 @@ if ($usr->read()){
 }
 
 // pagename
-define('pagename', 'register_complete'); 
+define('pagename', 'register_complete');
 $main_smarty->assign('pagename', pagename);
 
 $main_smarty = do_sidebar($main_smarty, $navwhere);

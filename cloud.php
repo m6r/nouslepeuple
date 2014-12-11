@@ -44,7 +44,7 @@ $main_smarty->assign('range_values', $range_values);
 $main_smarty->assign('count_range_values', count($range_values));
 
 // pagename
-define('pagename', 'cloud'); 
+define('pagename', 'cloud');
 $main_smarty->assign('pagename', pagename);
 
 // show the template

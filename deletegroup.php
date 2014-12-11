@@ -27,7 +27,7 @@ if($current_user->user_id != get_group_creator($_REQUEST['id']) && $canIhaveAcce
 }
 
 // pagename
-define('pagename', 'delete'); 
+define('pagename', 'delete');
 $main_smarty->assign('pagename', pagename);
 if(isset($_REQUEST['id'])){
 	global $db;

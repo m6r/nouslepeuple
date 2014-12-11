@@ -19,8 +19,8 @@ include_once(mnmmodules . 'status/status_main.php');
 // sidebar
 $main_smarty = do_sidebar($main_smarty);
 
-// pagename	
-define('pagename', 'status'); 
+// pagename
+define('pagename', 'status');
 $main_smarty->assign('pagename', pagename);
 
 $isadmin = checklevel('admin');
@@ -54,13 +54,13 @@ elseif (is_numeric($_GET['id']))
 		$main_smarty->assign('current_user', get_object_vars($current_user));
 		$main_smarty->assign('current_username', '@'.$current_user->user_login);
 		$main_smarty->assign('tpl_center', '../modules/status/templates/status_permalink');
-		$main_smarty->display($the_template . '/pligg.tpl');		
+		$main_smarty->display($the_template . '/pligg.tpl');
 		exit;
 	}
-	else 
+	else
 	{
 		$main_smarty->assign('tpl_center', 'error_404_center');
-		$main_smarty->display($the_template . '/pligg.tpl');		
+		$main_smarty->display($the_template . '/pligg.tpl');
 		die();
 	}
 }
@@ -127,7 +127,7 @@ if ($_POST['status'])
     if (!$_SESSION['status_error'])
     {
     	unset($_SESSION['status_text']);
-	$db->query($sql="INSERT INTO ".table_prefix."updates SET update_time=UNIX_TIMESTAMP(), 
+	$db->query($sql="INSERT INTO ".table_prefix."updates SET update_time=UNIX_TIMESTAMP(),
 							    update_type='m',
 							    update_user_id='{$current_user->user_id}',
 							    update_link_id='$id',

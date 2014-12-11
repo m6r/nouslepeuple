@@ -36,10 +36,10 @@ if(count($start) < 2){
 	$again = explode("<tr><td class=\"e\">Client API version </td><td class=\"v\">",$start[1],1000);
 	$last_time = explode(" </td></tr>",$again[1],1000);
 	$mysqlversion = $last_time[0];
-} 
+}
 $pattern = '/[^0-9-.]/i';
 $replacement = '';
-$mysqlversion = preg_replace($pattern, $replacement, $mysqlversion); 
+$mysqlversion = preg_replace($pattern, $replacement, $mysqlversion);
 
 
 // Tally up how many items are fulfilled.
@@ -102,7 +102,7 @@ $rename = " must be renamed to ";
 
 $language_file_count = 0;
 foreach (glob("../languages/*.conf") as $filename) { $language_file_count = $language_file_count+1;}
-if (!glob("../languages/*.conf")) { 
+if (!glob("../languages/*.conf")) {
 	echo '<tr><td style="width:20px;" class="bad"><i class="fa fa-times"></i></td><td>No Language file has been detected! You will need to remove the .default extension from one of these language files:<ul style="margin:0px 0 5px 15px;padding:0;">';
 	getfiles("../languages"); // List language files
 	echo '</ul></td></tr>';
@@ -276,9 +276,9 @@ echo '<div class="jumbotron" style="padding:25px 10px;"><p style="text-align:cen
 
 <?php $include='footer.php'; if (file_exists($include)) { include_once($include); } ?>
 
-<script>  
-$(function ()  
-{ 
+<script>
+$(function ()
+{
 	$("#langfiles").popover();
 	$("#chmod").popover();
 	$("#phpversion").popover();
@@ -289,4 +289,4 @@ $(function ()
 	$("#fgetwarning").popover();
 	$("#gdwarning").popover();
 });
-</script> 
+</script>

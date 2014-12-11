@@ -1,5 +1,5 @@
 <?php
-// This file is used to regenerate karma scores manually. 
+// This file is used to regenerate karma scores manually.
 // It is designed to be run by a cronjob.
 
 /*
@@ -52,7 +52,7 @@ foreach($users as $dbuser) {
 
 		echo "Comments: " . $user->total_comments . "\n";
 
-		echo "TOTAL POINTS: (" . 
+		echo "TOTAL POINTS: (" .
 			(($user->total_votes - $user->published_votes) * $iPoints_VotesBeforeLinkWentPublished) . " + " .
 			($user->published_votes * $iPoints_VotesAfterLinkWentPublished) . " + " .
 			(($user->total_links - $user->published_links) * $iPoints_VotesBeforeLinkWentPublished) . " + " .
@@ -90,10 +90,10 @@ foreach($users as $dbuser) {
 $iHowManyContributorsInTheList = 10;
 
 
-// Pull the list of top contributors 
+// Pull the list of top contributors
 $users = $db->get_results("SELECT user_id from " . table_users . " where user_level <> 'admin' order by user_karma desc limit " . $iHowManyContributorsInTheList);
 
-// Cycle through the results, building the list 
+// Cycle through the results, building the list
 foreach($users as $dbuser) {
 	$user = new User;
 	$user->id=$dbuser->user_id;

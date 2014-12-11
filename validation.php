@@ -53,7 +53,7 @@ if($rcode==$decode)
 else
 	$main_smarty->assign('error', $main_smarty->get_config_vars('PLIGG_Validation_Invalid_Code'));
 
-define('pagename', 'validation'); 
+define('pagename', 'validation');
 $main_smarty->assign('pagename', pagename);
 
 do_sidebar($main_smarty);

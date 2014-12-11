@@ -9,7 +9,7 @@ include(mnminclude.'link.php');
 include(mnminclude.'smartyvariables.php');
 include_once(mnminclude.'user.php');
 
-$requestID = isset($_GET['id']) && is_numeric($_GET['id']) ? $_GET['id'] : 0; 
+$requestID = isset($_GET['id']) && is_numeric($_GET['id']) ? $_GET['id'] : 0;
 
 if(isset($_GET['title']) && sanitize($_GET['title'], 3) != ''){$requestTitle = sanitize($_GET['title'], 3);}
 // if we're using "Friendly URL's for categories"
@@ -24,7 +24,7 @@ if($requestID > 0 && enable_friendly_urls == true){
 	$link->id=$requestID;
 	if($link->read() == false){
 		$main_smarty->assign('tpl_center', 'error_404_center');
-		$main_smarty->display($the_template . '/pligg.tpl');		
+		$main_smarty->display($the_template . '/pligg.tpl');
 		die();
 	}
 
@@ -53,7 +53,7 @@ if(is_numeric($requestID)) {
 		$x = new redirector($_SERVER['REQUEST_URI']);
 
 		$main_smarty->assign('tpl_center', 'error_404_center');
-		$main_smarty->display($the_template . '/pligg.tpl');		
+		$main_smarty->display($the_template . '/pligg.tpl');
 		die();
 	}
 	if(isset($_POST['process']) && sanitize($_POST['process'], 3) != ''){
@@ -121,10 +121,10 @@ if(is_numeric($requestID)) {
 	$main_smarty->assign('meta_keywords', $link->tags);
 	
 	//sidebar
-	$main_smarty = do_sidebar($main_smarty);	
+	$main_smarty = do_sidebar($main_smarty);
 
 	// pagename
-	define('pagename', 'story'); 
+	define('pagename', 'story');
 	$main_smarty->assign('pagename', pagename);
 
 	$main_smarty->assign('the_story', $link->print_summary('full', true));
@@ -140,7 +140,7 @@ if(is_numeric($requestID)) {
 	$x = new redirector($_SERVER['REQUEST_URI']);
 	
 	$main_smarty->assign('tpl_center', 'error_404_center');
-	$main_smarty->display($the_template . '/pligg.tpl');		
+	$main_smarty->display($the_template . '/pligg.tpl');
 	die();
 }
 
@@ -164,7 +164,7 @@ function get_comments ($fetch = false){
 		foreach($comments as $comment_id) {
 			$comment->id=$comment_id;
 			$comment->read();
-			$output .= $comment->print_summary($link, true);			
+			$output .= $comment->print_summary($link, true);
 	
 			// get all child comments
 			$comments2 = $db->get_col("SELECT comment_id FROM " . table_comments . " WHERE comment_parent=$comment_id ORDER BY " . $CommentOrderBy);
@@ -180,7 +180,7 @@ function get_comments ($fetch = false){
 				$output .= "</div>\n";
 			}
 	
- 		} 
+ 		}
 		if($fetch == false){
 			echo $output;
 		} else {

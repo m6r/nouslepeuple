@@ -26,9 +26,9 @@ $canIhaveAccess = $canIhaveAccess + checklevel('moderator');
 
 $is_moderator = checklevel('moderator'); // Moderators have a value of '1' for the variable $is_moderator
 
-if($canIhaveAccess == 0){	
+if($canIhaveAccess == 0){
 //	$main_smarty->assign('tpl_center', '/admin/access_denied');
-//	$main_smarty->display($template_dir . '/admin/admin.tpl');		
+//	$main_smarty->display($template_dir . '/admin/admin.tpl');
 	header("Location: " . getmyurl('admin_login', $_SERVER['REQUEST_URI']));
 	die();
 }
@@ -99,14 +99,14 @@ if($canIhaveAccess == 1) {
 				$filter_sql = " link_status = '".$db->escape($_GET["filter"])."'";
 				break;
 
-	  	}	
+	  	}
 	} else {
 		$filter_sql = " link_status <> 'page' AND link_status <> 'discard' AND link_status <> 'spam' ";
 	}
 	$filtered = $db->get_results($sql="SELECT SQL_CALC_FOUND_ROWS * FROM " . table_links . " WHERE $filter_sql $search_sql $user_sql ORDER BY link_date DESC LIMIT $offset,$pagesize");
 	$rows = $db->get_var("SELECT FOUND_ROWS()");
 
-	// read links from database 
+	// read links from database
 	$user = new User;
 	$link = new Link;
 	if($filtered) {
@@ -205,7 +205,7 @@ if($canIhaveAccess == 1) {
 	}
 
 	// pagename
-	define('pagename', 'admin_links'); 
+	define('pagename', 'admin_links');
 	$main_smarty->assign('pagename', pagename);
 	
 	// read the mysql database to get the pligg version
@@ -223,6 +223,6 @@ if($canIhaveAccess == 1) {
 }
 else {
 	echo 'This page is restricted to site Admins!';
-}		
+}
 
 ?>

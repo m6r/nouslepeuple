@@ -15,7 +15,7 @@ function links_summary_fill_smarty(&$vars)
 	    $vars['smarty']->_vars['story_content'] = preg_replace('/<a ([^>]+)>/i','<a rel="nofollow" $1>',$vars['smarty']->_vars['story_content']);
 }
 
-// 
+//
 // Read module settings
 //
 function links_settings()
@@ -46,7 +46,7 @@ function links_showpage(){
 	$canIhaveAccess = $canIhaveAccess + checklevel('admin');
 	
 	if($canIhaveAccess == 1)
-	{	
+	{
 		if ($_POST['submit'])
 		{
 			misc_data_update('links_comments', sanitize($_REQUEST['links_comments'], 3));
@@ -60,10 +60,10 @@ function links_showpage(){
 		$main_smarty->assign('navbar_where', $navwhere);
 		$main_smarty->assign('posttitle', " / " . $main_smarty->get_config_vars('PLIGG_Visual_Header_AdminPanel'));
 		// breadcrumbs
-		define('modulename', 'links'); 
+		define('modulename', 'links');
 		$main_smarty->assign('modulename', modulename);
 		
-		define('pagename', 'admin_modifylinks'); 
+		define('pagename', 'admin_modifylinks');
 		$main_smarty->assign('pagename', pagename);
 
 		$main_smarty->assign('settings', links_settings());
@@ -74,6 +74,6 @@ function links_showpage(){
 	{
 		header("Location: " . getmyurl('login', $_SERVER['REQUEST_URI']));
 	}
-}	
+}
 
 ?>

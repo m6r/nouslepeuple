@@ -102,7 +102,7 @@ $output='
 
 
 }
-else { 
+else {
 	$output=DisplayErrors($errors);
 	$output.='<div class="alert">' . $lang['Errors'] . '</div>';
 }

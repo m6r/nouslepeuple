@@ -27,9 +27,9 @@ $canIhaveAccess = $canIhaveAccess + checklevel('moderator');
 
 $is_moderator = checklevel('moderator'); // Moderators have a value of '1' for the variable $is_moderator
 
-if($canIhaveAccess == 0){	
+if($canIhaveAccess == 0){
 //	$main_smarty->assign('tpl_center', '/admin/access_denied');
-//	$main_smarty->display($template_dir . '/admin/admin.tpl');		
+//	$main_smarty->display($template_dir . '/admin/admin.tpl');
 	header("Location: " . getmyurl('admin_login', $_SERVER['REQUEST_URI']));
 	die();
 }
@@ -77,22 +77,22 @@ if($canIhaveAccess == 1) {
 				break;
 			case 'week':
 			 	$filter_sql = " comment_date > DATE_SUB(NOW(),INTERVAL 7 DAY)";
-			 	break;					
+			 	break;
 		  	default:
 				$filter_sql = " comment_status = '".$db->escape($_GET["filter"])."' ";
 				break;
-	  	}	
-	}	
+	  	}
+	}
 	else
 		$filter_sql = " comment_status != 'spam' AND comment_status != 'discard'";
 	
-	$filtered = $db->get_results($sql="SELECT SQL_CALC_FOUND_ROWS * FROM " . table_comments . " 
+	$filtered = $db->get_results($sql="SELECT SQL_CALC_FOUND_ROWS * FROM " . table_comments . "
 							LEFT JOIN ".table_users." ON user_id=comment_user_id
-							WHERE $filter_sql $search_sql $user_sql 
+							WHERE $filter_sql $search_sql $user_sql
 							ORDER BY comment_date DESC LIMIT $offset,$pagesize");
 	$rows = $db->get_var("SELECT FOUND_ROWS()");
 
-	// read comments from database 
+	// read comments from database
 	$user = new User;
 	$comment = new Comment;
 	if($filtered) {
@@ -173,13 +173,13 @@ if($canIhaveAccess == 1) {
 	}
 	
 	// pagename
-	define('pagename', 'admin_comments'); 
+	define('pagename', 'admin_comments');
 	$main_smarty->assign('pagename', pagename);
 	
 	// read the mysql database to get the pligg version
 	$sql = "SELECT data FROM " . table_misc_data . " WHERE name = 'pligg_version'";
 	$pligg_version = $db->get_var($sql);
-	$main_smarty->assign('version_number', $pligg_version); 
+	$main_smarty->assign('version_number', $pligg_version);
 	
 	// show the template
 	$main_smarty->assign('tpl_center', '/admin/comments');

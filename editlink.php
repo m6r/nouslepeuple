@@ -76,7 +76,7 @@ if ($link) {
 					$body = $user->user_login . ", \r\n\r\n" . $main_smarty->get_config_vars('PLIGG_Visual_EditStory_Email_AdminMadeChange') . "\r\n";
 					$body = $body . strtolower(strtok($_SERVER['SERVER_PROTOCOL'], '/')).'://'.$_SERVER['HTTP_HOST'] . getmyurl('story', sanitize($_POST['id'], 3)) . "\r\n\r\n";
 					if ($linkres->category != sanitize($_POST["category"], 3)){$body = $body . $main_smarty->get_config_vars('PLIGG_Visual_Submit2_Category') . " change\r\n\r\n" . $main_smarty->get_config_vars('PLIGG_Visual_EditStory_Email_PreviousText') . ": " . GetCatName($linkres->category) . "\r\n\r\n" . $main_smarty->get_config_vars('PLIGG_Visual_EditStory_Email_NewText') . ": " . GetCatName(sanitize($_POST["category"], 3)) . "\r\n\r\n";}
-					if ($linkres->title != sanitize($_POST["title"], 4, $Story_Content_Tags_To_Allow)){$body = $body . $main_smarty->get_config_vars('PLIGG_Visual_Submit2_Title') . " change\r\n\r\n" . $main_smarty->get_config_vars('PLIGG_Visual_EditStory_Email_PreviousText') . ": " . $linkres->title . "\r\n\r\n" . $main_smarty->get_config_vars('PLIGG_Visual_EditStory_Email_NewText') . ": " . sanitize($_POST["title"], 3) . "\r\n\r\n";}      
+					if ($linkres->title != sanitize($_POST["title"], 4, $Story_Content_Tags_To_Allow)){$body = $body . $main_smarty->get_config_vars('PLIGG_Visual_Submit2_Title') . " change\r\n\r\n" . $main_smarty->get_config_vars('PLIGG_Visual_EditStory_Email_PreviousText') . ": " . $linkres->title . "\r\n\r\n" . $main_smarty->get_config_vars('PLIGG_Visual_EditStory_Email_NewText') . ": " . sanitize($_POST["title"], 3) . "\r\n\r\n";}
 					
 					
 					
@@ -105,7 +105,7 @@ if ($link) {
 			if($canIhaveAccess == 1)
 			{
 				$url = htmlspecialchars(sanitize($_POST['url'], 3));
-				$url= str_replace('&amp;', '&', $url);  
+				$url= str_replace('&amp;', '&', $url);
 
 				$linkres->url=$url;
 			}
@@ -130,7 +130,7 @@ if ($link) {
 			$linkres->tags = tags_normalize_string(stripslashes(sanitize($_POST['tags'], 3)));
 			if(sanitize($_POST['summarytext'], 3) == ""){
 				$linkres->link_summary = utf8_substr(sanitize($_POST['bodytext'], 4, $Story_Content_Tags_To_Allow), 0, StorySummary_ContentTruncate - 1);
-				//$linkres->link_summary = close_tags(str_replace("\n", "<br />", $linkres->link_summary));	
+				//$linkres->link_summary = close_tags(str_replace("\n", "<br />", $linkres->link_summary));
 			} else {
 				$linkres->link_summary = sanitize($_POST['summarytext'], 4, $Story_Content_Tags_To_Allow);
 				//$linkres->link_summary = close_tags(str_replace("\n", "<br />", $linkres->link_summary));
@@ -142,21 +142,21 @@ if ($link) {
 			}
 
 			// Steef 2k7-07 security fix start ----------------------------------------------------------
-			$linkres->link_field1 = sanitize($_POST['link_field1'], 4, $Story_Content_Tags_To_Allow); 
-			$linkres->link_field2 = sanitize($_POST['link_field2'], 4, $Story_Content_Tags_To_Allow); 
-			$linkres->link_field3 = sanitize($_POST['link_field3'], 4, $Story_Content_Tags_To_Allow); 
-			$linkres->link_field4 = sanitize($_POST['link_field4'], 4, $Story_Content_Tags_To_Allow); 
-			$linkres->link_field5 = sanitize($_POST['link_field5'], 4, $Story_Content_Tags_To_Allow);                   			
-			$linkres->link_field6 = sanitize($_POST['link_field6'], 4, $Story_Content_Tags_To_Allow); 
-			$linkres->link_field7 = sanitize($_POST['link_field7'], 4, $Story_Content_Tags_To_Allow); 
-			$linkres->link_field8 = sanitize($_POST['link_field8'], 4, $Story_Content_Tags_To_Allow); 
-			$linkres->link_field9 = sanitize($_POST['link_field9'], 4, $Story_Content_Tags_To_Allow); 
-			$linkres->link_field10 = sanitize($_POST['link_field10'], 4, $Story_Content_Tags_To_Allow); 
-			$linkres->link_field11 = sanitize($_POST['link_field11'], 4, $Story_Content_Tags_To_Allow); 
-			$linkres->link_field12 = sanitize($_POST['link_field12'], 4, $Story_Content_Tags_To_Allow); 
-			$linkres->link_field13 = sanitize($_POST['link_field13'], 4, $Story_Content_Tags_To_Allow); 
-			$linkres->link_field14 = sanitize($_POST['link_field14'], 4, $Story_Content_Tags_To_Allow); 
-			$linkres->link_field15 = sanitize($_POST['link_field15'], 4, $Story_Content_Tags_To_Allow); 
+			$linkres->link_field1 = sanitize($_POST['link_field1'], 4, $Story_Content_Tags_To_Allow);
+			$linkres->link_field2 = sanitize($_POST['link_field2'], 4, $Story_Content_Tags_To_Allow);
+			$linkres->link_field3 = sanitize($_POST['link_field3'], 4, $Story_Content_Tags_To_Allow);
+			$linkres->link_field4 = sanitize($_POST['link_field4'], 4, $Story_Content_Tags_To_Allow);
+			$linkres->link_field5 = sanitize($_POST['link_field5'], 4, $Story_Content_Tags_To_Allow);
+			$linkres->link_field6 = sanitize($_POST['link_field6'], 4, $Story_Content_Tags_To_Allow);
+			$linkres->link_field7 = sanitize($_POST['link_field7'], 4, $Story_Content_Tags_To_Allow);
+			$linkres->link_field8 = sanitize($_POST['link_field8'], 4, $Story_Content_Tags_To_Allow);
+			$linkres->link_field9 = sanitize($_POST['link_field9'], 4, $Story_Content_Tags_To_Allow);
+			$linkres->link_field10 = sanitize($_POST['link_field10'], 4, $Story_Content_Tags_To_Allow);
+			$linkres->link_field11 = sanitize($_POST['link_field11'], 4, $Story_Content_Tags_To_Allow);
+			$linkres->link_field12 = sanitize($_POST['link_field12'], 4, $Story_Content_Tags_To_Allow);
+			$linkres->link_field13 = sanitize($_POST['link_field13'], 4, $Story_Content_Tags_To_Allow);
+			$linkres->link_field14 = sanitize($_POST['link_field14'], 4, $Story_Content_Tags_To_Allow);
+			$linkres->link_field15 = sanitize($_POST['link_field15'], 4, $Story_Content_Tags_To_Allow);
 			// Steef 2k7-07 security fix end --------------------------------------------------------------
 			
 			// $linkres->content = str_replace("\n", "<br />", $linkres->content);
@@ -199,7 +199,7 @@ if ($link) {
 			$main_smarty->assign('author', $user->user_id);
 			
 			$usersql = mysql_query("SELECT user_id, user_login FROM " . table_users . " WHERE user_enabled=1 and user_login!='' ORDER BY user_login");
-			$userdata = array();				
+			$userdata = array();
 			while ($rows = mysql_fetch_array ($usersql, MYSQL_ASSOC)) array_push ($userdata, $rows);
 			//$userdata = $db->get_results("SELECT user_id, user_login FROM " . table_users . " WHERE user_enabled=1");
 			
@@ -218,7 +218,7 @@ if ($link) {
 			if(isset($trackback)){$main_smarty->assign('submit_trackback', $trackback);}
 			$main_smarty->assign('SubmitSummary_Allow_Edit', SubmitSummary_Allow_Edit);
 			$main_smarty->assign('StorySummary_ContentTruncate', StorySummary_ContentTruncate);
-			$main_smarty->assign('submit_summary', $link_summary);			
+			$main_smarty->assign('submit_summary', $link_summary);
 			$main_smarty->assign('submit_link_field1', $linkres->link_field1);
 			$main_smarty->assign('submit_link_field2', $linkres->link_field2);
 			$main_smarty->assign('submit_link_field3', $linkres->link_field3);
@@ -265,7 +265,7 @@ if ($link) {
 			$CSRF->create('edit_link', true, true);
 			
 			// pagename
-			define('pagename', 'editlink'); 
+			define('pagename', 'editlink');
 		        $main_smarty->assign('pagename', pagename);
 			
 			// sidebar
@@ -310,7 +310,7 @@ function link_errors($linkres)
 		$main_smarty->assign('submit_error', 'long_title');
 		$error = true;
 	}
-  	if (utf8_strlen($linkres->content) > maxStoryLength ) { 
+  	if (utf8_strlen($linkres->content) > maxStoryLength ) {
 		$main_smarty->assign('submit_error', 'long_content');
 		$error = true;
 	}
@@ -318,7 +318,7 @@ function link_errors($linkres)
 		$main_smarty->assign('submit_error', 'long_tags');
 		$error = true;
 	}
-  	if (utf8_strlen($linkres->summary) > maxSummaryLength ) { 
+  	if (utf8_strlen($linkres->summary) > maxSummaryLength ) {
 		$main_smarty->assign('submit_error', 'long_summary');
 		$error = true;
 	}
@@ -345,7 +345,7 @@ function link_errors($linkres)
 		$main_smarty->assign('link_id', $_GET['id']);
 		
 		// pagename
-		define('pagename', 'editlink'); 
+		define('pagename', 'editlink');
 		$main_smarty->assign('pagename', pagename);
 		
 		// show the template

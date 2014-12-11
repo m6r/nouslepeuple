@@ -82,7 +82,7 @@ function get_cached_category_data($field, $value){
 
 	foreach($cached_categories as $cat){
 		if($cat->$field == $value)
-		{ 
+		{
 			return $cat;
 		}
 	}
@@ -94,7 +94,7 @@ function get_cached_between($lft, $rgt){
 
 	foreach($cached_categories as $cat){
 		if($cat->lft >= $lft && $cat->rgt <= $rgt)
-		{ 
+		{
 			$results[] = $cat;
 		}
 	}
@@ -166,7 +166,7 @@ function tree_to_array($root, $table, $showRoot = TRUE) {
 		$left[] = $row->lft;
 		if($array[$i]['leftrightdiff'] != 1)
 		{
-			for($j=0;$j<=$array[$i]['leftrightdiff'];$j++) 
+			for($j=0;$j<=$array[$i]['leftrightdiff'];$j++)
 			{
 				$array[$i]['subcatalign'] = 1;
 			}
@@ -185,7 +185,7 @@ function GetSubCatCount($catid){
 	foreach($the_cats as $cat){
 		if(isset($cat->category_parent)){
 			if($cat->category_parent == $catid && $cat->category__auto_id <> 0 && $cat->category_lang == $dblang)
-			{ 
+			{
 				$count = $count + 1;
 			}
 		}

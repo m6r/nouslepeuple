@@ -30,7 +30,7 @@ class LinkTotal extends Link {
 		$this->store_basic();
 		
 		$vars = array('link' => $this);
-		check_actions('link_remove_vote_post', $vars);	
+		check_actions('link_remove_vote_post', $vars);
 	}
 	
 	function insert_vote($user=0, $value=10) {
@@ -53,7 +53,7 @@ class LinkTotal extends Link {
 			$this->check_should_publish();
 			
 			$vars = array('vote' => $this);
-			check_actions('link_insert_vote_post', $vars);		
+			check_actions('link_insert_vote_post', $vars);
 			
 			return true;
 		}
@@ -91,7 +91,7 @@ if(is_numeric($post_id) && $post_id > 0){
 	} else {
 		
 		//Checking for ip vote
-	   if($current_user->user_id!=0){	  
+	   if($current_user->user_id!=0){
 		if($link->votes($current_user->user_id) > 0)
 		  error($main_smarty->get_config_vars('PLIGG_Visual_Vote_AlreadyVoted').$link->votes($current_user->user_id).'/'.$value);
 	   }else{

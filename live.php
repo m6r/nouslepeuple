@@ -27,7 +27,7 @@ $main_smarty->assign('showsideleftsidebar', "no");
 $main_smarty->assign('showsiderightsidebar', "no");
 
 // pagename
-define('pagename', 'live'); 
+define('pagename', 'live');
 $main_smarty->assign('pagename', pagename);
 
 // sidebar

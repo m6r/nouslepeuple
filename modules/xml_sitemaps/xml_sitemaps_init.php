@@ -30,6 +30,6 @@ if(defined('mnminclude')){
                 }
            	module_add_action('do_submit3', 'xml_sitemaps_sites_ping', '');
                 include_once(mnmmodules . 'xml_sitemaps/xml_sitemaps_main.php');
- 	}       
+ 	}
 }
 ?>

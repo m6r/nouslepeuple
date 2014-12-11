@@ -24,20 +24,20 @@ function check_if_table_exists($table) {
 }
 
 function pligg_version(){
-	// returns the version of Pligg that's installed 
+	// returns the version of Pligg that's installed
 	$ver = get_misc_data('pligg_version');
 	return $ver;
 }
 
 function pligg_hash(){
-	// returns the version of Pligg that's installed 
+	// returns the version of Pligg that's installed
 	$hash = get_misc_data('hash');
 	return $hash;
 }
 
 
 function pligg_validate(){
-	// returns the value for register validation 
+	// returns the value for register validation
 	$vars = array('validate' => misc_validate);
 	check_actions('pligg_validate', $vars);
 
@@ -61,17 +61,17 @@ function misc_data_update($name, $data){
 	$sql = "SELECT `data` FROM `" . table_misc_data . "` WHERE `name` = '" . $name . "';";
 	if(count($db->get_results($sql)) == 0){
 		$sql = "INSERT INTO `" . table_misc_data . "` (`data`, `name`) VALUES ('" . $data . "', '" . $name . "');";
-	} else {	
+	} else {
 		$sql = "UPDATE `" . table_misc_data . "` SET `data` = '" . $data . "' WHERE `name` = '$name';";
 	}
-	$db->query($sql); 
+	$db->query($sql);
 }
 
 function safeAddSlashes($string) {
 	// if function get_magic_quotes_gpc exists, returns a string with backslashes before characters that need to be quoted in database queries etc
 //	if (get_magic_quotes_gpc()) {
 //		return $string;
-//	} 
+//	}
 //	else {
 		return addslashes($string);
 //	}
@@ -130,7 +130,7 @@ function check_email_address($email) {
      if (!preg_match('/^(([A-Za-z0-9!#$%&\'*+\/=?^_`{|}~-][A-Za-z0-9!#$%&\'*+\/=?^_`{|}~\.-]{0,63})|(\"[^(\\|\")]{0,62}\"))$/', $local_array[$i])) {
       return false;
     }
-  }  
+  }
   if (!preg_match('/^\[?[0-9\.]+\]?$/', $email_array[1])) { // Check if domain is IP. If not, it should be valid domain name
     $domain_array = explode(".", $email_array[1]);
     if (sizeof($domain_array) < 2) {
@@ -149,7 +149,7 @@ function txt_time_diff($from, $now=0){
 	global $main_smarty;
 
 	if (empty($from))
-        	return "No date provided"; 
+        	return "No date provided";
 	
 	$txt = '';
 	if($now==0) $now = time();
@@ -301,32 +301,32 @@ function utils_makeUrlFriendly($output)
 	{
       		$translations = parse_ini_file(mnmpath.'languages/translit.txt');
   		$output = strtr($output, $translations);
-	} 
+	}
 		
 	$output = preg_replace("/\s/e" , "_" , $output); 	// Replace spaces with underscores
-	$output = str_replace("_", "-", $output); 	
-	$output = str_replace("&amp;", "", $output); 	 
-	$output = str_replace("__", "_", $output); 	 
-	$output = str_replace("---", "-", $output); 	 
+	$output = str_replace("_", "-", $output);
+	$output = str_replace("&amp;", "", $output);
+	$output = str_replace("__", "_", $output);
+	$output = str_replace("---", "-", $output);
 	$output = str_replace("/", "", $output);
 	$output = str_replace("\\", "", $output);
-	$output = str_replace("'", "", $output); 	 
-	$output = str_replace(",", "", $output); 	 
-	$output = str_replace(";", "", $output); 	 
-	$output = str_replace(":", "", $output); 	 
-	$output = str_replace(".", "-", $output); 	 
-	$output = str_replace("?", "", $output); 	 
-	$output = str_replace("=", "-", $output); 	 
-	$output = str_replace("+", "", $output); 	 
-	$output = str_replace("$", "", $output); 	 
-	$output = str_replace("&", "", $output); 	 
-	$output = str_replace("!", "", $output); 	 
-	$output = str_replace(">>", "-", $output); 	 
-	$output = str_replace(">", "-", $output); 	 
-	$output = str_replace("<<", "-", $output); 	 
-	$output = str_replace("<", "-", $output); 	 
-	$output = str_replace("*", "", $output); 	 
-	$output = str_replace(")", "", $output); 	 
+	$output = str_replace("'", "", $output);
+	$output = str_replace(",", "", $output);
+	$output = str_replace(";", "", $output);
+	$output = str_replace(":", "", $output);
+	$output = str_replace(".", "-", $output);
+	$output = str_replace("?", "", $output);
+	$output = str_replace("=", "-", $output);
+	$output = str_replace("+", "", $output);
+	$output = str_replace("$", "", $output);
+	$output = str_replace("&", "", $output);
+	$output = str_replace("!", "", $output);
+	$output = str_replace(">>", "-", $output);
+	$output = str_replace(">", "-", $output);
+	$output = str_replace("<<", "-", $output);
+	$output = str_replace("<", "-", $output);
+	$output = str_replace("*", "", $output);
+	$output = str_replace(")", "", $output);
 	$output = str_replace("(", "", $output);
 	$output = str_replace("[", "", $output);
 	$output = str_replace("]", "", $output);
@@ -347,8 +347,8 @@ function utils_makeUrlFriendly($output)
 
 // function makeCategoryFriendly has been moved to admin_categories.php
 
-function remove_error_creating_chars($chars) { 
-	$replace=array( 
+function remove_error_creating_chars($chars) {
+	$replace=array(
 	'Á' => 'A',
 	'Å' => 'A',
 	'Ä' => 'A',
@@ -367,8 +367,8 @@ function remove_error_creating_chars($chars) {
 	'É' => 'E',
 	'Ë' => 'E',
 	'ë' => 'e',
-	'Ì' => 'I', 
-	'ì' => 'i', 
+	'Ì' => 'I',
+	'ì' => 'i',
 	'Í' => 'I',
 	'í' => 'i',
 	'Ï' => 'I',
@@ -400,8 +400,8 @@ function remove_error_creating_chars($chars) {
 	'ý' => 'y',
 	'Ÿ' => 'Y',
 	'ÿ' => 'y',
-	'Ž' => 'Z', 
-	'ž' => 'z', 
+	'Ž' => 'Z',
+	'ž' => 'z',
 	'€' => ''
 	);
 
@@ -478,7 +478,7 @@ function object_2_array($result, $cur_depth = 0, $depth_limit = 1000) {
 		}
 	}
 	return $array;
-} 
+}
 
 function phpnum() {
 	// returns the php version number

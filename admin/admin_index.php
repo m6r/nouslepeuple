@@ -29,9 +29,9 @@ if ($is_moderator == '1'){
 	die();
 }
 
-if($canIhaveAccess == 0){	
+if($canIhaveAccess == 0){
 //	$main_smarty->assign('tpl_center', '/admin/access_denied');
-//	$main_smarty->display($template_dir . '/admin/admin.tpl');		
+//	$main_smarty->display($template_dir . '/admin/admin.tpl');
 	header("Location: " . getmyurl('admin_login', $_SERVER['REQUEST_URI']));
 	die();
 }
@@ -70,7 +70,7 @@ $navwhere['link1'] = getmyurl('admin', '');
 $main_smarty->assign('navbar_where', $navwhere);
 $main_smarty->assign('posttitle', " / " . $main_smarty->get_config_vars('PLIGG_Visual_Header_AdminPanel'));
 
-// grab general statistics for the admin index page	
+// grab general statistics for the admin index page
 $members = $db->get_var('SELECT count(*) from ' . table_users . ';');
 $main_smarty->assign('members', $members);
 
@@ -107,15 +107,15 @@ $sql = mysql_query("SELECT link_id,comment_id,comment_link_id,comment_date FROM 
 
 $sql = "SELECT user_login FROM " . table_users . " ORDER BY user_id DESC LIMIT 1";
 $last_user = $db->get_var($sql);
-$main_smarty->assign('last_user', $last_user); 
+$main_smarty->assign('last_user', $last_user);
 
 // read the mysql database to get the pligg version
 $sql = "SELECT data FROM " . table_misc_data . " WHERE name = 'pligg_version'";
 $pligg_version = $db->get_var($sql);
-$main_smarty->assign('version_number', $pligg_version); 
+$main_smarty->assign('version_number', $pligg_version);
 
 // pagename
-define('pagename', 'admin_index'); 
+define('pagename', 'admin_index');
 $main_smarty->assign('pagename', pagename);
 
 
@@ -124,11 +124,11 @@ $main_smarty->assign('pligg_lang_conf',lang_loc . "/languages/lang_" . pligg_lan
 #$db->cache_queries = false;
 if($widgets){
 	// for each module...
-	for($i=0; $i<sizeof($widgets); $i++) 
+	for($i=0; $i<sizeof($widgets); $i++)
 	{
 		$file = '../widgets/' . $widgets[$i]['folder'] . '/' . 'init.php';
 		$widget = array();
-		if (file_exists($file)) 
+		if (file_exists($file))
 		{
 			include_once($file);
 			$widgets[$i]['settings'] = '../widgets/'.$widgets[$i]['folder'].'/templates/settings.tpl';

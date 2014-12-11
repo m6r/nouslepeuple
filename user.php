@@ -21,7 +21,7 @@ $navwhere['link2'] = getmyurl('user2', $login, 'profile');
 $offset=(get_current_page()-1)* $page_size;
 $main_smarty = do_sidebar($main_smarty);
 
-define('pagename', 'user'); 
+define('pagename', 'user');
 $main_smarty->assign('pagename', pagename);
 
 $CSRF = new csrf();
@@ -55,10 +55,10 @@ if ($login) {
 	}
 }
 
-require_once(mnminclude.'check_behind_proxy.php'); 	 
+require_once(mnminclude.'check_behind_proxy.php');
 
 if(ShowProfileLastViewers == true){
-	$main_smarty->assign('ShowProfileLastViewers', true);		
+	$main_smarty->assign('ShowProfileLastViewers', true);
 	// setup some arrays
 		$last_viewers_names = array();
 		$last_viewers_profile = array();
@@ -80,7 +80,7 @@ if(ShowProfileLastViewers == true){
 		$main_smarty->assign('last_viewers_profile', $last_viewers_profile);
 		$main_smarty->assign('last_viewers_avatar', $last_viewers_avatar);
 } else {
-	$main_smarty->assign('ShowProfileLastViewers', false);		
+	$main_smarty->assign('ShowProfileLastViewers', false);
 }
 	
 
@@ -111,7 +111,7 @@ if ($view == 'search') {
 	$friend = new Friend;
 	if(isset($_REQUEST['keyword'])){$keyword = $db->escape(sanitize(trim($_REQUEST['keyword']), 3));}
 
-	if ($keyword) 
+	if ($keyword)
 	{
 		$searchsql = "SELECT * FROM " . table_users . " where ((user_login LIKE '%".$keyword."%' AND user_login !='".$current_user->user_login."') OR public_email LIKE '%".$keyword."%') AND user_level!='Spammer' ";
 		$results = $db->get_results($searchsql);
@@ -173,7 +173,7 @@ $main_smarty->assign('user_url_news_published2', getmyurl('user2', $login, 'publ
 $main_smarty->assign('user_url_news_unpublished2', getmyurl('user2', $login, 'new'));
 $main_smarty->assign('user_url_news_voted2', getmyurl('user2', $login, 'voted'));
 $main_smarty->assign('user_url_news_upvoted2', getmyurl('user2', $login, 'upvoted'));
-$main_smarty->assign('user_url_news_downvoted2', getmyurl('user2', $login, 'downvoted'));	
+$main_smarty->assign('user_url_news_downvoted2', getmyurl('user2', $login, 'downvoted'));
 $main_smarty->assign('user_url_commented2', getmyurl('user2', $login, 'commented'));
 $main_smarty->assign('user_url_saved2', getmyurl('user2', $login, 'saved'));
 $main_smarty->assign('user_url_friends', getmyurl('user_friends', $login, 'following'));
@@ -182,7 +182,7 @@ $main_smarty->assign('user_url_add', getmyurl('user_friends', $login, 'addfriend
 $main_smarty->assign('user_url_remove', getmyurl('user_friends', $login, 'removefriend'));
 $main_smarty->assign('user_rss', getmyurl('rssuser', $login));
 $main_smarty->assign('URL_Profile2', getmyurl('user_edit', $login));
-$main_smarty->assign('form_action', getmyurl('profile')); 
+$main_smarty->assign('form_action', getmyurl('profile'));
 $main_smarty->assign('user_url_member_groups', getmyurl('user2', $login, 'member_groups	'));
 
 // tell smarty about our user
@@ -215,7 +215,7 @@ if ($view == 'voted') {
 	$main_smarty->assign('nav_nv', 4);
  } else {
 	$main_smarty->assign('nav_nv', 3);
-}	
+}
 
 if ($view == 'upvoted') {
 	$page_header .= $main_smarty->get_config_vars('PLIGG_Visual_UpVoted');
@@ -248,7 +248,7 @@ if ($view == 'history') {
 	$main_smarty->assign('nav_ns', 3);
 }
 
-if ($view == 'setting') 
+if ($view == 'setting')
 {
 	
 	$usercategorysql = "SELECT * FROM " . table_users . " where user_login = '".$db->escape($login)."' ";
@@ -330,7 +330,7 @@ if ($view == 'saved') {
 	$main_smarty->assign('nav_s', 4);
  } else {
 	$main_smarty->assign('nav_s', 3);
-}	
+}
 
 if ($view == 'following') {
 	$page_header .= $main_smarty->get_config_vars('PLIGG_Visual_User_Profile_View_Friends');
@@ -446,7 +446,7 @@ switch ($view) {
 		// display the template
 		$main_smarty->assign('tpl_center', $the_template . '/user_history_center');
 		$main_smarty->display($the_template . '/pligg.tpl');
-		break;	
+		break;
 		
 	case 'upvoted':
 		do_updownvoted('up');
@@ -482,7 +482,7 @@ switch ($view) {
 		// display the template
 		$main_smarty->assign('tpl_center', $the_template . '/user_history_center');
 		$main_smarty->display($the_template . '/pligg.tpl');
-		break;  
+		break;
 		
 	case 'removefriend':
 		do_removefriend();
@@ -544,24 +544,24 @@ function do_stories () {
 	if($fieldexists)
 	{
 		if ($current_user->user_id == $user->id)
-		{	
-			$links = $db->get_results("SELECT * FROM " . table_saved_links . " 
+		{
+			$links = $db->get_results("SELECT * FROM " . table_saved_links . "
 							LEFT JOIN " . table_links . " ON saved_link_id=link_id
 							WHERE saved_user_id=$user->id ORDER BY saved_link_id DESC LIMIT $offset,$page_size");
 		}
 		else
 		{
-			$links = $db->get_results("SELECT * FROM " . table_saved_links . " 
+			$links = $db->get_results("SELECT * FROM " . table_saved_links . "
 							LEFT JOIN " . table_links . " ON saved_link_id=link_id
-							WHERE saved_user_id=$user->id and saved_privacy = 'public' ORDER BY saved_link_id DESC LIMIT $offset,$page_size");	
+							WHERE saved_user_id=$user->id and saved_privacy = 'public' ORDER BY saved_link_id DESC LIMIT $offset,$page_size");
 		}
 	}
 	else
 	{
-		$links = $db->get_results("SELECT * FROM " . table_saved_links . " 
+		$links = $db->get_results("SELECT * FROM " . table_saved_links . "
 						LEFT JOIN " . table_links . " ON saved_link_id=link_id
 						WHERE saved_user_id=$user->id ORDER BY saved_link_id DESC LIMIT $offset,$page_size");
-	}	
+	}
 	if ($links) {
 		foreach($links as $dblink) {
 			$link->id=$dblink->link_id;
@@ -696,7 +696,7 @@ function do_commented () {
 
 			$output .= $main_smarty->fetch($the_template . '/' . 'user_comment_center.tpl');
 		}
-	}     
+	}
 	$main_smarty->assign('user_page', $output);
 }
 

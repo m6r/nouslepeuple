@@ -9,7 +9,7 @@ function akismet_save_profile(&$x){
 	$user->read();
 
 	if(phpnum()>=5){
-		include akismet_lib_path . 'Akismet.class_5.php'; 
+		include akismet_lib_path . 'Akismet.class_5.php';
 			
 		$akismet = new Akismet(my_base_url . my_pligg_base, get_misc_data('wordpress_key'));
 		$akismet->setCommentAuthor($user->username);
@@ -22,7 +22,7 @@ function akismet_save_profile(&$x){
 		} else {
 		}
 	} else {
-		include akismet_lib_path . 'Akismet.class_4.php'; 
+		include akismet_lib_path . 'Akismet.class_4.php';
 
 		$story['author'] = $user->username;
 		//$story['email'] = $user->email;
@@ -31,17 +31,17 @@ function akismet_save_profile(&$x){
 		$story['referrer']   = $_SERVER['HTTP_REFERER'];
 		$story['user_ip'] = $user->extra_field['user_lastip'];
 
-		$akismet = new Akismet(my_base_url . my_pligg_base, get_misc_data('wordpress_key'), $story); 
+		$akismet = new Akismet(my_base_url . my_pligg_base, get_misc_data('wordpress_key'), $story);
 
-		if($akismet->errorsExist()) { // returns true if any errors exist 
-			if($akismet->isError('AKISMET_INVALID_KEY')) { 
+		if($akismet->errorsExist()) { // returns true if any errors exist
+			if($akismet->isError('AKISMET_INVALID_KEY')) {
 				 echo 'invalid key';
-			} elseif($akismet->isError('AKISMET_RESPONSE_FAILED')) { 
+			} elseif($akismet->isError('AKISMET_RESPONSE_FAILED')) {
 				 echo 'response failed';
-			} elseif($akismet->isError('AKISMET_SERVER_NOT_FOUND')) { 
+			} elseif($akismet->isError('AKISMET_SERVER_NOT_FOUND')) {
 				 echo 'server not found';
-			} 
-		} else { // No errors, check for spam 
+			}
+		} else { // No errors, check for spam
 			if ($akismet->isSpam()){
 				$x['error'] = 'Spam';
 			} else {
@@ -53,7 +53,7 @@ function akismet_save_profile(&$x){
 
 function akismet_save_comment(&$x){
 	if(phpnum()>=5){
-		include akismet_lib_path . 'Akismet.class_5.php'; 
+		include akismet_lib_path . 'Akismet.class_5.php';
 			
 		$comment = $x['comment'];
 		$user = new User;
@@ -76,7 +76,7 @@ function akismet_save_comment(&$x){
 			$x['comment']->canSave = true;
 		}
 	} else {
-		include akismet_lib_path . 'Akismet.class_4.php'; 
+		include akismet_lib_path . 'Akismet.class_4.php';
 // echo "this is version 4";
 		$comment = $x['comment'];
 		
@@ -92,17 +92,17 @@ function akismet_save_comment(&$x){
 		$story['referrer']   = $_SERVER['HTTP_REFERER'];
 		$story['user_ip'] = $user->extra_field['user_lastip'];
 
-		$akismet = new Akismet(my_base_url . my_pligg_base, get_misc_data('wordpress_key'), $story); 
+		$akismet = new Akismet(my_base_url . my_pligg_base, get_misc_data('wordpress_key'), $story);
 
-		if($akismet->errorsExist()) { // returns true if any errors exist 
-			if($akismet->isError('AKISMET_INVALID_KEY')) { 
+		if($akismet->errorsExist()) { // returns true if any errors exist
+			if($akismet->isError('AKISMET_INVALID_KEY')) {
 				 echo 'invalid key';
-			} elseif($akismet->isError('AKISMET_RESPONSE_FAILED')) { 
+			} elseif($akismet->isError('AKISMET_RESPONSE_FAILED')) {
 				 echo 'response failed';
-			} elseif($akismet->isError('AKISMET_SERVER_NOT_FOUND')) { 
+			} elseif($akismet->isError('AKISMET_SERVER_NOT_FOUND')) {
 				 echo 'server not found';
-			} 
-		} else { // No errors, check for spam 
+			}
+		} else { // No errors, check for spam
 			if ($akismet->isSpam()){
 				$x['comment']->canSave = false;
 #				$x['comment']->status = 'spam';
@@ -117,7 +117,7 @@ function akismet_save_comment(&$x){
 
 function akismet_check_submit(&$vars){
 	if(phpnum()>=5){
-		include akismet_lib_path . 'Akismet.class_5.php'; 
+		include akismet_lib_path . 'Akismet.class_5.php';
 
 		$user = new User;
 		$user->id = $vars['linkres']->author;
@@ -142,7 +142,7 @@ function akismet_check_submit(&$vars){
 		}
 	}
 	else{
-		include akismet_lib_path . 'Akismet.class_4.php'; 
+		include akismet_lib_path . 'Akismet.class_4.php';
 
 		$user = new User;
 		$user->id = $vars['linkres']->author;
@@ -155,33 +155,33 @@ function akismet_check_submit(&$vars){
 		$story['permalink'] = my_base_url.getmyurl('story', $vars['linkres']->id);
 		$story['user_ip'] = $user->extra_field['user_lastip'];
 
-		$akismet = new Akismet(my_base_url . my_pligg_base, get_misc_data('wordpress_key'), $story); 
+		$akismet = new Akismet(my_base_url . my_pligg_base, get_misc_data('wordpress_key'), $story);
 
-		// test for errors 
+		// test for errors
 
-		if($akismet->errorsExist()) { // returns true if any errors exist 
-			if($akismet->isError('AKISMET_INVALID_KEY')) { 
+		if($akismet->errorsExist()) { // returns true if any errors exist
+			if($akismet->isError('AKISMET_INVALID_KEY')) {
 				// echo 'invalid key';
-			} elseif($akismet->isError('AKISMET_RESPONSE_FAILED')) { 
+			} elseif($akismet->isError('AKISMET_RESPONSE_FAILED')) {
 				// echo 'response failed';
-			} elseif($akismet->isError('AKISMET_SERVER_NOT_FOUND')) { 
+			} elseif($akismet->isError('AKISMET_SERVER_NOT_FOUND')) {
 				// echo 'server not found';
-			} 
-		} else { // No errors, check for spam 
-			if ($akismet->isSpam()) { // returns true if Akismet thinks the comment is spam 
+			}
+		} else { // No errors, check for spam
+			if ($akismet->isSpam()) { // returns true if Akismet thinks the comment is spam
 				akismet_link_to_spam($vars['linkres']->id);
 
 				totals_adjust_count($vars['linkres']->status, -1);
 				totals_adjust_count('moderated', 1);
 				$vars['linkres']->status = 'moderated';
-			} else { 
+			} else {
 				// echo 'not spam';
-			} 
-		} 
+			}
+		}
 	}
 }
 
-// verified 03/19/10 
+// verified 03/19/10
 function akismet_top(){
 
 	global $main_smarty, $the_template, $current_user, $db;
@@ -206,14 +206,14 @@ function akismet_showpage(){
 	$canIhaveAccess = $canIhaveAccess + checklevel('admin');
 
 	if($canIhaveAccess == 1)
-	{	
+	{
 		$navwhere['text1'] = 'Akismet';
 		$navwhere['link1'] = URL_akismet;
 
-		define('pagename', 'akismet'); 
+		define('pagename', 'akismet');
 		$main_smarty->assign('pagename', pagename);
 		
-		define('modulename', 'akismet'); 
+		define('modulename', 'akismet');
 		$main_smarty->assign('modulename', modulename);
 
 		if(isset($_REQUEST['view'])){$view = sanitize($_REQUEST['view'], 3);}else{$view='';}
@@ -238,7 +238,7 @@ function akismet_showpage(){
 	
 			    // Verify key before save
 			    if(phpnum()>=5){
-				include akismet_lib_path . 'Akismet.class_5.php'; 
+				include akismet_lib_path . 'Akismet.class_5.php';
 
 				$akismet = new Akismet(my_base_url . my_pligg_base, $wordpress_key);
 				if (!$akismet->isKeyValid())
@@ -246,10 +246,10 @@ function akismet_showpage(){
 				else
 					misc_data_update('wordpress_key', $wordpress_key);
 			    } else {
-				include akismet_lib_path . 'Akismet.class_4.php'; 
+				include akismet_lib_path . 'Akismet.class_4.php';
                 
-				$akismet = new Akismet(my_base_url . my_pligg_base, $wordpress_key); 
-				if (!$akismet->_isValidApiKey($wordpress_key)) 
+				$akismet = new Akismet(my_base_url . my_pligg_base, $wordpress_key);
+				if (!$akismet->_isValidApiKey($wordpress_key))
 					$main_smarty->assign('error', 1);
 				else
 					misc_data_update('wordpress_key', $wordpress_key);
@@ -274,11 +274,11 @@ function akismet_showpage(){
 
 		if($view == 'manageSpam'){
 
-			$sql = "SELECT " . table_links . ".*, " . table_users . ".user_login FROM " . table_links . " 
-					LEFT JOIN " . table_users . " ON link_author=user_id 
+			$sql = "SELECT " . table_links . ".*, " . table_users . ".user_login FROM " . table_links . "
+					LEFT JOIN " . table_users . " ON link_author=user_id
 					LEFT JOIN " . table_prefix. "spam_links ON linkid=link_id
 					WHERE !ISNULL(linkid)";
-			$link_data = $db->get_results($sql);	
+			$link_data = $db->get_results($sql);
 			if (sizeof($link_data)) {
 				$main_smarty->assign('link_data', object_2_array($link_data));
 			} else {
@@ -305,7 +305,7 @@ function akismet_showpage(){
 
 		}
 		if($view == 'manageSpamcomments'){
-			$sql = "SELECT * FROM ".table_prefix . "spam_comments "; 
+			$sql = "SELECT * FROM ".table_prefix . "spam_comments ";
 			$link_data = $db->get_results($sql);
 			if (sizeof($link_data))
 			{
@@ -360,12 +360,12 @@ function akismet_showpage(){
 			include_once akismet_lib_path . 'Akismet.class_4.php';
 
 		if($view == 'isSpam'){
-			if ($_GET['action'] == "bulkmod") 
+			if ($_GET['action'] == "bulkmod")
 			{
-				if(isset($_POST['submit'])) 
+				if(isset($_POST['submit']))
 				{
 					$spam = array();
-					foreach ($_POST["spam"] as $k => $v) 
+					foreach ($_POST["spam"] as $k => $v)
 						$spam[intval($k)] = $v;
 					foreach($spam as $key => $value) {
 						if(isset($key)){ $link_id = sanitize($key, 3); } else { continue; }
@@ -418,15 +418,15 @@ function akismet_showpage(){
 		}
 		
 		if($view == 'isSpamcomment'){
-			if ($_GET['action'] == "bulkmod") 
+			if ($_GET['action'] == "bulkmod")
 			{
-				if(isset($_POST['submit'])) 
+				if(isset($_POST['submit']))
 				{
 					$spamcomment = array();
 					foreach ($_POST["spamcomment"] as $k => $v)
 						$spamcomment[intval($k)] = $v;
 
-					foreach($spamcomment as $key => $value) 
+					foreach($spamcomment as $key => $value)
 					{
 						if(isset($key)){ $link_id = sanitize($key, 3); } else { continue; }
 						$sql_result = "Select * from ".table_prefix . "spam_comments where auto_id=".$link_id;
@@ -459,9 +459,9 @@ function akismet_showpage(){
 							$akismet->setCommentContent($result->cmt_content);
 							$akismet->setPermalink(my_base_url.getmyurl('story', $link->id));
 						}
-						if ($value == "spamcomment") 
+						if ($value == "spamcomment")
 							$akismet->submitSpam();
-						elseif ($value == "notspamcomment") 
+						elseif ($value == "notspamcomment")
 						{
 							$akismet->submitHam();
 									
@@ -516,7 +516,7 @@ function akismet_comment_to_spam($comment)
 function akismet_get_link_count()
 {
 	global $db;
-	return $db->get_var("SELECT COUNT(*) FROM " . table_links . " 
+	return $db->get_var("SELECT COUNT(*) FROM " . table_links . "
 					LEFT JOIN " . table_prefix. "spam_links ON linkid=link_id
 					WHERE !ISNULL(linkid)");
 

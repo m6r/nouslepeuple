@@ -51,7 +51,7 @@ $search=new Search();
 	if(isset($_REQUEST['category'])){
 		// filter to just the category we're looking at
 		$search->category = sanitize($_REQUEST['category'], 1);
-	} 
+	}
 
 
 //Advanced Search
@@ -63,8 +63,8 @@ if( isset( $_REQUEST['adv'] ) && $_REQUEST['adv'] == 1 ){
 	$search->status = sanitize($_REQUEST['status'],2);
 	$search->s_user = sanitize($_REQUEST['suser'],2);
 	$search->s_cat = sanitize($_REQUEST['scategory'],2);
-	$search->s_comments = sanitize($_REQUEST['scomments'],2);		
-	$search->s_date = sanitize($_REQUEST['date'],2);	
+	$search->s_comments = sanitize($_REQUEST['scomments'],2);
+	$search->s_date = sanitize($_REQUEST['date'],2);
 
 	if( intval( $_REQUEST['sgroup'] ) > 0 )
 		$display_grouplinks = true;
@@ -98,15 +98,15 @@ if ($links) {
 		$link->link_summary = str_replace("òÀÓ", "-", $link->link_summary);
 		$link->link_summary = str_replace("òÀÔ", "-", $link->link_summary);
 		$link->link_summary = str_replace("òÀÜ", "\"", $link->link_summary);
-		$link->link_summary = str_replace("òÀÝ", "\"", $link->link_summary);		
+		$link->link_summary = str_replace("òÀÝ", "\"", $link->link_summary);
 		
 		echo "<item>\n";
-		echo "<title><![CDATA[". $link->title . "]]></title>\n"; 
+		echo "<title><![CDATA[". $link->title . "]]></title>\n";
 		echo "<link>".getmyFullurl("storyURL", $link->category_safe_names($link->category), urlencode($link->title_url), $link->id)."</link>\n";
 		echo "<comments>".getmyFullurl("storyURL", $link->category_safe_names($link->category), urlencode($link->title_url), $link->id)."</comments>\n";
 		if (!empty($link_date))
 			echo "<pubDate>".date('D, d M Y H:i:s T', $link->$link_date-misc_timezone*3600)."</pubDate>\n";
-		else 
+		else
 			echo "<pubDate>".date('D, d M Y H:i:s T', time()-misc_timezone*3600)."</pubDate>\n";
 		echo "<dc:creator>" . $link->username($link->author) . "</dc:creator>\n";
 		echo "<category>" . htmlspecialchars($category_name) . "</category>\n";

@@ -1,4 +1,4 @@
-<?php 
+<?php
 if(!defined('mnminclude')){
 	header('Location: ../error_404.php');
 	die();
@@ -10,18 +10,18 @@ $do_check = true;
 if($do_check == true){
 	if (strpos($_SERVER['SCRIPT_NAME'], "install.php") == 0){
 		$errors = array();
-		$file = dirname(__FILE__) . '/../settings.php'; 
+		$file = dirname(__FILE__) . '/../settings.php';
 		if (!file_exists($file)) { $errors[]="<strong>/settings.php was not found!</strong><br /> Try renaming 'settings.php.default' to 'settings.php'"; }
 		elseif (filesize($file) <= 0) { $errors[]="/settings.php is 0 bytes!"; }
 
-		$file = dirname(__FILE__) . '/../libs/dbconnect.php'; 
+		$file = dirname(__FILE__) . '/../libs/dbconnect.php';
 		if (!file_exists($file)) { $errors[]="<strong>/libs/dbconnect.php was not found!</strong><br />Try renaming '/libs/dbconnect.php.default' to '/libs/dbconnect.php'"; }
 
-		$file= dirname(__FILE__) . '/../cache'; 
+		$file= dirname(__FILE__) . '/../cache';
 		if (!file_exists($file)) { $errors[]="<strong>/cache/ was not found!</strong> Create a directory called cache in your root directory and CHMOD it to 777."; }
 		elseif (!is_writable($file)) { $errors[]="<strong>/cache/ is not writable!</strong><br />Please CHMOD this directory to 777"; }
 
-		if (sizeof($errors)) {	
+		if (sizeof($errors)) {
 			$output = '';
 			echo '<!DOCTYPE html>
 				<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">

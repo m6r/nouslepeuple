@@ -2,14 +2,14 @@
 function sendannouncement_showpage(){
 
 	// Method for identifying modules rather than pagename
-	define('modulename', 'send_announcement'); 
+	define('modulename', 'send_announcement');
 	// $main_smarty->assign('modulename', modulename);
 
 	force_authentication();
 	$canIhaveAccess = 0;
 	$canIhaveAccess = $canIhaveAccess + checklevel('admin');
 	
-	if($canIhaveAccess == 0){	
+	if($canIhaveAccess == 0){
 		header("Location: " .my_base_url.my_pligg_base );
 		die();
 	}

@@ -580,9 +580,9 @@ function pligg_createtables($conn) {
 //	echo "Adding default 'totals' data</li>";
 	$sql = "insert into `" . table_totals . "` (`name`, `total`) values ('published', 0);";
 	mysql_query( $sql, $conn );
-	$sql = "insert into `" . table_totals . "` (`name`, `total`) values ('new', 0);";	
+	$sql = "insert into `" . table_totals . "` (`name`, `total`) values ('new', 0);";
 	mysql_query( $sql, $conn );
-	$sql = "insert into `" . table_totals . "` (`name`, `total`) values ('discard', 0);";	
+	$sql = "insert into `" . table_totals . "` (`name`, `total`) values ('discard', 0);";
 	mysql_query( $sql, $conn );
 
 	echo '<li>Creating About Page</li>';
@@ -611,7 +611,7 @@ function pligg_createtables($conn) {
 		ALTER TABLE  `pligg_users` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
 		ALTER TABLE  `pligg_votes` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
 
-		ALTER TABLE  `pligg_categories` 
+		ALTER TABLE  `pligg_categories`
 		CHANGE  `category_lang`  `category_lang` VARCHAR( 2 ) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT  'en',
 		CHANGE  `category_name`  `category_name` VARCHAR( 64 ) CHARACTER SET utf8 COLLATE utf8_general_ci,
 		CHANGE  `category_safe_name`  `category_safe_name` VARCHAR( 64 ) CHARACTER SET utf8 COLLATE utf8_general_ci,

@@ -73,7 +73,7 @@ if ( !empty($tb_url) && !empty($title) && !empty($tb_url) ) {
 		trackback_response(1, $main_smarty->get_config_vars('PLIGG_Visual_Trackback_AlreadyPing'));
   
 	$contents=@file_get_contents($tb_url);
-	if(!$contents) 
+	if(!$contents)
 		trackback_response(1, $main_smarty->get_config_vars('PLIGG_Visual_Trackback_BadURL'));
 	
 

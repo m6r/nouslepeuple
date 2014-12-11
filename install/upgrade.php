@@ -13,11 +13,11 @@ if (isset($_REQUEST['step'])) { $step=addslashes(strip_tags($_REQUEST['step']));
 if ((!isset($step)) || ($step == "")) { $step = 0; }
 
 // If they haven't selected a step yet, start them off at the language selection screen
-if ($step == 0) { 
+if ($step == 0) {
 	include('upgrade_language.php');
 }
 
-$include='header.php'; 
+$include='header.php';
 
 // Sanitize and set $language
 if ($_GET['language'])
@@ -44,7 +44,7 @@ if($language == 'arabic'){
 	include_once('./languages/lang_english.php');
 }
 
-if ($step == 1) { 
+if ($step == 1) {
 	include('upgrade1.php');
 }
 

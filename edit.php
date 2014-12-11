@@ -38,7 +38,7 @@ if(is_numeric($_GET['id'])) {
 		$comments = $db->get_results("SELECT * FROM " . table_comments . " WHERE comment_id=$link->commentid ORDER BY comment_date");
 	} else {
 		$comments = $db->get_results("SELECT * FROM " . table_comments . " WHERE comment_status='published' AND comment_id=$link->commentid and comment_user_id=$current_user->user_id ORDER BY comment_date");
-	}	
+	}
 	if ($comments) {
 		$current_user->owncomment = "YES";
 		require_once(mnminclude.'comment.php');
@@ -62,10 +62,10 @@ if(is_numeric($_GET['id'])) {
 		if($current_user->owncomment=="YES"){
 			$main_smarty->assign('comment_form', print_comment_form(true));
 		}
-	} 
+	}
 
 	// pagename
-	define('pagename', 'edit'); 
+	define('pagename', 'edit');
 	$main_smarty->assign('pagename', pagename);
 	// sidebar
 	$main_smarty = do_sidebar($main_smarty);
@@ -99,11 +99,11 @@ function insert_comment () {
         check_actions('story_edit_comment',$vars);
 
 	// Check if is a POST of a comment
-	if(sanitize($_POST['link_id'], 3) == $link->id && 
+	if(sanitize($_POST['link_id'], 3) == $link->id &&
 			$current_user->authenticated &&
 			sanitize($_POST['user_id'], 3) == $current_user->user_id &&
 			is_numeric(sanitize($_POST['randkey'], 3)) &&
-			sanitize($_POST['randkey'], 3) > 0 && 
+			sanitize($_POST['randkey'], 3) > 0 &&
 			sanitize($_POST['comment_content'], 4) != '' ) {
 		require_once(mnminclude.'comment.php');
 		$comment = new Comment;

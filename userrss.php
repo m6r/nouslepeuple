@@ -36,9 +36,9 @@ $rows = isset($_GET['rows']) && is_numeric($_GET['rows']) ? $_GET['rows'] : 40;
 $time = isset($_GET['time']) && is_numeric($_GET['time']) ? $_GET['time'] : 0;
 if($time > 0) {
 	// Prepare for times
-	$sql = "SELECT *, count(*) as votes FROM " . table_votes . ", " . table_links . " 
-			LEFT JOIN " . table_users . " ON link_author=user_id 
-			WHERE  ";	
+	$sql = "SELECT *, count(*) as votes FROM " . table_votes . ", " . table_links . "
+			LEFT JOIN " . table_users . " ON link_author=user_id
+			WHERE  ";
 	if ($time > 0) {
 		$from = time()-$time;
 		$sql .= "vote_date > FROM_UNIXTIME($from) AND ";
@@ -62,8 +62,8 @@ if($time > 0) {
 			$title = $main_smarty->get_config_vars("PLIGG_Visual_Published_News");
 			$order_field = 'link_published_date';
 			$link_date = 'published_date';
-			$from_where = "FROM " . table_links . " 
-						LEFT JOIN " . table_users . " ON link_author=user_id 
+			$from_where = "FROM " . table_links . "
+						LEFT JOIN " . table_users . " ON link_author=user_id
 						WHERE link_status='published' ";
 			$from_where .= " AND link_author=$user->id ";
 			break;
@@ -71,8 +71,8 @@ if($time > 0) {
 			$title = $main_smarty->get_config_vars("PLIGG_Visual_Pligg_Queued");
 			$order_field = 'link_date';
 			$link_date = "date";
-			$from_where = "FROM " . table_links . " 
-						LEFT JOIN " . table_users . " ON link_author=user_id 
+			$from_where = "FROM " . table_links . "
+						LEFT JOIN " . table_users . " ON link_author=user_id
 						WHERE link_status='new' ";
 			$from_where .= " AND link_author=$user->id ";
 			break;
@@ -80,8 +80,8 @@ if($time > 0) {
 			$title = $main_smarty->get_config_vars("PLIGG_Visual_RSS_All");
 			$order_field = 'link_date';
 			$link_date = "date";
-			$from_where = "FROM " . table_links . " 
-						LEFT JOIN " . table_users . " ON link_author=user_id 
+			$from_where = "FROM " . table_links . "
+						LEFT JOIN " . table_users . " ON link_author=user_id
 						WHERE (link_status='published' OR link_status='new') ";
 			$from_where .= " AND link_author=$user->id ";
 			break;
@@ -91,7 +91,7 @@ if($time > 0) {
 			$link_date = "date";
 			$from_where = "FROM " . table_links . "
 						LEFT JOIN " . table_votes . " ON vote_link_id=link_id
-						LEFT JOIN " . table_users . " ON link_author=user_id 
+						LEFT JOIN " . table_users . " ON link_author=user_id
 						WHERE vote_user_id=$user->id AND (link_status='published' OR link_status='new') ";
 			break;
 		case 'upvoted':
@@ -100,7 +100,7 @@ if($time > 0) {
 			$link_date = "date";
 			$from_where = "FROM " . table_links . "
 						LEFT JOIN " . table_votes . " ON vote_link_id=link_id
-						LEFT JOIN " . table_users . " ON link_author=user_id 
+						LEFT JOIN " . table_users . " ON link_author=user_id
 						WHERE vote_user_id=$user->id AND (link_status='published' OR link_status='new')  AND vote_value>0";
 			break;
 		case 'downvoted':
@@ -109,7 +109,7 @@ if($time > 0) {
 			$link_date = "date";
 			$from_where = "FROM " . table_links . "
 						LEFT JOIN " . table_votes . " ON vote_link_id=link_id
-						LEFT JOIN " . table_users . " ON link_author=user_id 
+						LEFT JOIN " . table_users . " ON link_author=user_id
 						WHERE vote_user_id=$user->id AND (link_status='published' OR link_status='new')  AND vote_value<0";
 			break;
 
@@ -119,8 +119,8 @@ if($time > 0) {
 			$order_field = 'link_date';
 			$link_date = "date";
 			$from_where = "FROM " . table_links . "
-						LEFT JOIN " . table_comments . " ON comment_link_id=link_id 
-						LEFT JOIN " . table_users . " ON link_author=user_id 
+						LEFT JOIN " . table_comments . " ON comment_link_id=link_id
+						LEFT JOIN " . table_users . " ON link_author=user_id
 						WHERE comment_status='published' AND comment_user_id=$user->id AND (link_status='published' OR link_status='new') ";
 			break;
 		case 'saved':
@@ -130,9 +130,9 @@ if($time > 0) {
 			$link_date = "date";
 			$from_where = "FROM " . table_links . "
 						LEFT JOIN " . table_saved_links . " ON saved_link_id=link_id
-						LEFT JOIN " . table_users . " ON link_author=user_id 
+						LEFT JOIN " . table_users . " ON link_author=user_id
 						WHERE saved_user_id=$user->id AND (link_status='published' OR link_status='new') ";
-			break;		
+			break;
 		default:
 			header("Location: $my_pligg_base/error_404.php");
 			die();
@@ -142,7 +142,7 @@ if($time > 0) {
 	$cat = isset($_GET['category']) && is_numeric($_GET['category']) ? $_GET['category'] : 0;
 	if($cat > 0) {
 		$child_cats = '';
-		// do we also search the subcategories? 
+		// do we also search the subcategories?
 		if( Independent_Subcategories == true){
 			$child_array = '';
 
@@ -207,7 +207,7 @@ if ($links) {
 		echo "\n	<description><![CDATA[" . $link->content . " ]]></description>\n";
 		if (!empty($link_date))
 			echo "	<pubDate>".date("r", $link->$link_date-misc_timezone*3600)."</pubDate>\n";
-		else 
+		else
 			echo "	<pubDate>".date("r", time()-misc_timezone*3600)."</pubDate>\n";
 		echo "	<author>" . $dblink->user_login . "</author>\n";
 		echo "	<category>" . htmlspecialchars($category_name) . "</category>\n";

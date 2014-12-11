@@ -31,13 +31,13 @@ if(!defined('mnminclude')){header('Location: ../error_404.php');die();}
 	}
 	
 	
-	//For Infinit scrolling and continue reading option 
+	//For Infinit scrolling and continue reading option
 	if(Auto_scroll==2 || Auto_scroll==3){
 		
-		$main_smarty->assign('total_row', $rows);			
+		$main_smarty->assign('total_row', $rows);
 		if(isset($_GET['part'])){
 			$main_smarty->assign('part', $db->escape($_GET['part']));
-		}  
+		}
 		
 		if(isset($_GET['order'])){
 			$main_smarty->assign('searchOrder', $db->escape($_GET['order']));
@@ -61,14 +61,14 @@ if(!defined('mnminclude')){header('Location: ../error_404.php');die();}
 //		$results = $vote->user_list_all_votes();
 /////
 		$vote = '';
-		$results = ''; // we don't actually need the results 
+		$results = ''; // we don't actually need the results
 				// we're just calling this to cache the results
-				// so when we foreach the links we don't have to 
+				// so when we foreach the links we don't have to
 				// run 1 extra query for each story to determine
 				// current user votes
   
 		// setup the link cache
-		$sql = "SELECT " . table_links . ".* FROM " . table_links . " WHERE "; 
+		$sql = "SELECT " . table_links . ".* FROM " . table_links . " WHERE ";
 		$sql_saved = "SELECT * FROM " . table_saved_links . " WHERE saved_user_id=" . $current_user->user_id . " AND ";
 		$ids = array();
 		foreach($the_results as $link_id) {
@@ -149,7 +149,7 @@ if(!defined('mnminclude')){header('Location: ../error_404.php');die();}
 	}
 	if(isset($fetch_link_summary) && $fetch_link_summary == true){
 		$main_smarty->assign('link_summary_output', $link_summary_output);
-	} else {	
+	} else {
 		echo $link_summary_output;
 	}
 ?>

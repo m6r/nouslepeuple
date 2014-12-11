@@ -1,4 +1,4 @@
-<?php	
+<?php
 	$module_info['name'] = 'Anonymous Comments';
 	$module_info['desc'] = 'Allows any user to submit a comment without registering an account.';
 	$module_info['version'] = 0.1;

@@ -18,7 +18,7 @@ if($canIhaveAccess == 0)
 }
 
 // pagename
-define('pagename', 'admin_modules'); 
+define('pagename', 'admin_modules');
 $main_smarty->assign('pagename', pagename);
 
 // read the mysql database to get the pligg version
@@ -118,7 +118,7 @@ if($status=="uninstalled")
 				 
 				if(isset($module_info['update_url']))
 				{
-					$updateurl  = $module_info['update_url'];		
+					$updateurl  = $module_info['update_url'];
 					$versionupdate = safe_file_get_contents($updateurl);
 
 					if (preg_match('/(\d+[\d\.]+)/',$versionupdate,$m))
@@ -180,7 +180,7 @@ if($status=="uninstalled")
 						}
 						$req_data.= '</ul>';
 					}
-					$module_info_data[$i]['requires']=$req_data;	
+					$module_info_data[$i]['requires']=$req_data;
 				} else {
 					$module_info_data[$i]['requires']="&nbsp;";
 				}
@@ -190,10 +190,10 @@ if($status=="uninstalled")
 					$homepage_url = $module_info['homepage_url'];
 					$module_info_data[$i]['homepage_url']= " <a class='btn btn-default btn-xs' href='" . $homepage_url . "' target='_blank'>Homepage</a>";
 				} else {
-					$module_info_data[$i]['homepage_url']="&nbsp;";	
+					$module_info_data[$i]['homepage_url']="&nbsp;";
 				}
 			
-				$i++;	
+				$i++;
 			
 			}
 		}
@@ -230,7 +230,7 @@ if($status=="uninstalled")
 	{
 		$modules = $db->get_results('SELECT * from ' . table_modules . ' where latest_version>version order by weight asc;');
 		
-	} else {	
+	} else {
 		$modules = $db->get_results('SELECT * from ' . table_modules . ' order by weight asc;');
 	}
 	
@@ -269,7 +269,7 @@ if($status=="uninstalled")
 					
 					if($module_info['update_url']!="")
 					{
-						$updateurl  = $module_info['update_url'];					   
+						$updateurl  = $module_info['update_url'];
 						$versionupdate = safe_file_get_contents($updateurl);
 					
 					if (preg_match('/(\d+[\d\.]+)/',$versionupdate,$m) && $m[1] != $module->latest_version)
@@ -283,7 +283,7 @@ if($status=="uninstalled")
 						$versionupdate = 'N/A';
 					
 				  }else{
-					  $db->query("UPDATE `". table_modules . "` SET `latest_version`=0 WHERE `id`='".$module->id."'"); 
+					  $db->query("UPDATE `". table_modules . "` SET `latest_version`=0 WHERE `id`='".$module->id."'");
 				  }
 				}
 				
@@ -358,7 +358,7 @@ if($status=="uninstalled")
 						$module_info_data[$i]['version']= "<a class='btn btn-default disabled btn-xs' href='" . $homepage_url . "' title='No Upgrade URL Provided'>Download Update</a></td>";
 					} else {
 						$module_info_data[$i]['version']= "<a class='btn btn-success btn-xs' href='" . $homepage_url . "' title='Upgrade to $versionupdate'>Download Update</a></td>";
-					}		
+					}
 				}
 
 				if(isset($module_info['settings_url']))
@@ -369,7 +369,7 @@ if($status=="uninstalled")
 					$module_info_data[$i]['settings_url']="&nbsp;" ;
 				}
 				
-			 $i++;	
+			 $i++;
 			}
 		}
 	}
@@ -386,7 +386,7 @@ if($status=="uninstalled")
 	}
 
 	$main_smarty->assign('no_module_update_require', $num_update_required);
-	$main_smarty->assign('module_info', $module_info_data);	
+	$main_smarty->assign('module_info', $module_info_data);
 }
 
 //print_r($module_info_data);
@@ -418,7 +418,7 @@ $main_smarty->assign('action', '');
 if($canIhaveAccess == 1){
 	if ($_POST["enabled"])
 	{
-		foreach($_POST["enabled"] as $id => $value) 
+		foreach($_POST["enabled"] as $id => $value)
 		{
 			$sql = "UPDATE " . table_modules . " set enabled = $value where id=$id";
 			$db->query($sql);
@@ -453,7 +453,7 @@ if($canIhaveAccess == 1){
 	}
 	
 	$main_smarty->assign('tpl_center', '/admin/modules');
-	$output = $main_smarty->fetch($template_dir . '/admin/admin.tpl');		
+	$output = $main_smarty->fetch($template_dir . '/admin/admin.tpl');
 
 	if (!function_exists('clear_module_cache'))
 	{
@@ -544,7 +544,7 @@ function safe_file_get_contents($url,$redirect=0)
 			fputs( $sock, $dump );
 		// Read all
 		$header = true;
-		while( $str = fgets( $sock, 1024 ) ) 
+		while( $str = fgets( $sock, 1024 ) )
 		{
 			if ($header)
 			{

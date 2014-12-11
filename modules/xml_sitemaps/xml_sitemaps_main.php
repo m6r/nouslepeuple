@@ -127,7 +127,7 @@ function create_sitemap_links($index,$max_rec)
 			$freq = freq_calc($link->modified);
 			echo "<url>\n";
 			echo "<loc>".getmyFullurl("storyURL", urlencode($link->category_safe_name($link->category)), urlencode($link->title_url), $link->id)."</loc>\n";
-			//c / v  * 30   + vo /v * 10 +  ( 100 / acum-mod  ) * 60  
+			//c / v  * 30   + vo /v * 10 +  ( 100 / acum-mod  ) * 60
 			$v=(time()-$link->date)/60;
 			$pri=max(0.0001,(( $link->comments /$v ) * 30  + ( $link->votes * 10  / $v ) + ( 100 / max(100,time()-$link->modified) )  * 60 )/ 100 );
 			echo "<lastmod>";
@@ -137,7 +137,7 @@ function create_sitemap_links($index,$max_rec)
 			echo "<priority>".$pri."</priority>\n";
 			echo "</url>\n";
 		}
-	}	
+	}
 
 	sitemap_footer($index);
 }
@@ -173,7 +173,7 @@ function create_sitemap_main()
 			create_entry($res[0],$path);
 			if ($res[0] > $maxtime) $maxtime = $res[0];
 		}
-		$sql = "SELECT UNIX_TIMESTAMP(link_date) FROM ".table_links." WHERE link_category=".$i->category_id." AND link_status='new' ORDER BY link_date DESC LIMIT 1";	
+		$sql = "SELECT UNIX_TIMESTAMP(link_date) FROM ".table_links." WHERE link_category=".$i->category_id." AND link_status='new' ORDER BY link_date DESC LIMIT 1";
 		$res = $db->get_col($sql);
                 if (isset($res[0])){
 			$path = getmyFullurl('newcategory',urlencode($i->category_safe_name));
@@ -196,7 +196,7 @@ function xml_sitemaps_sites_ping(){
 	global $my_base_url,$my_pligg_base;
 	$res= "";
 
-	if (XmlSitemaps_friendly_url) 
+	if (XmlSitemaps_friendly_url)
 		$Url = "$my_base_url$my_pligg_base/sitemapindex.xml";
 	else {
 		$Url = "$my_base_url$my_pligg_base/modules.php?module=xml_sitemaps_show_sitemap";
@@ -221,7 +221,7 @@ function xml_sitemaps_sites_ping(){
 function sitemap_call_url($pingUrl)
 {
 	$pingres=fopen($pingUrl,'r');
-	while ($res=fread($pingres,8192)){	
+	while ($res=fread($pingres,8192)){
 //		echo $res."\n";
 	}
 	fclose($pingres);
@@ -250,16 +250,16 @@ function sitemap_index_body($sql,$name,$max_rec)
 		// Get last modification timestamp for next part of the data
 		$r=$db->get_var($sql1="SELECT MAX(UNIX_TIMESTAMP(l.date)) FROM ($sql LIMIT ".$i*$max_rec.",$max_rec ) l");
 		echo "<sitemap>\n";
-		if (XmlSitemaps_friendly_url) 
+		if (XmlSitemaps_friendly_url)
 			echo "<loc>$my_base_url$my_pligg_base/sitemap-$name$i.xml</loc>\n";
-		else 
+		else
 			echo "<loc>$my_base_url$my_pligg_base/module.php?module=xml_sitemaps_show_sitemap&amp;i=$name$i</loc>\n";
 		echo "<lastmod>";
 		echo my_format_date($r);
 		echo "</lastmod>";
 		echo "</sitemap>";
 
-	}		
+	}
 }
 
 //
@@ -270,7 +270,7 @@ function sitemap_body($sql, $datefield, $urlname, $urlfield, $pri, $index, $max_
 	global $db;
 
 	$results = $db->get_results($sql." LIMIT ".($index*$max_rec).",$max_rec");
-	if ($results) 
+	if ($results)
 	{
 		foreach($results as $result) {
 			$timestamp = strtotime($result->$datefield);
@@ -284,7 +284,7 @@ function sitemap_body($sql, $datefield, $urlname, $urlfield, $pri, $index, $max_
 			echo "<priority>".$pri."</priority>\n";
 			echo "</url>\n";
 		}
-	}	
+	}
 }
 
 //
@@ -309,7 +309,7 @@ function sitemap_header($name,$isindex)
 		$icf="cache/sitemap-$name.xml";
 		if(file_exists($icf) && ($s=stat($icf)) && time()-$s['mtime']<XmlSitemaps_cache_ttl){
 			echo file_get_contents($icf);
-			return true;			
+			return true;
 		}
 		ob_start();
 	}

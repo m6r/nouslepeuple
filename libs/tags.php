@@ -46,7 +46,7 @@ class TagCloud {
     var $max_points = NULL; // the size of the largest tag
     
     //CDPDF
-    var $search_subcats = true; // search it's subcategories? 
+    var $search_subcats = true; // search it's subcategories?
     //CDPDF
     
     function show(){
@@ -79,7 +79,7 @@ class TagCloud {
         if(is_numeric($this->filterCategory) && $this->filterCategory > 0){
 		$catId = $this->filterCategory;
 		$child_cats = '';
-		// do we also search the subcategories? 
+		// do we also search the subcategories?
 		if( Independent_Subcategories == true){
 			$child_array = '';
 
@@ -111,7 +111,7 @@ class TagCloud {
             //$catId = get_category_id($this->category);
             if(isset($catId)){
                 $child_cats = '';
-                // do we also search the subcategories? 
+                // do we also search the subcategories?
 		if (! Independent_Subcategories){
                     $child_array = '';
                     // get a list of all children and put them in $child_array.
@@ -148,7 +148,7 @@ class TagCloud {
 	{
             $sql = "select * FROM ".table_tag_cache." limit $this->word_limit";
             $res = $db->get_results($sql);
-	}	
+	}
 	else
 	{
             $sql = "select tag_words, count(DISTINCT link_id) as count $from_where order by count desc limit $this->word_limit";
@@ -162,7 +162,7 @@ class TagCloud {
                 $words[$item->tag_words] = $item->count;
                 $tagcount[] = $item->count;
             }
-            //CDPDF modification 
+            //CDPDF modification
             $max = max($tagcount);
 	    // DB 12/10/08
 	    if ($max != 1)
@@ -216,7 +216,7 @@ class TagCloud {
             $this->smarty_variable->assign('tags_largest_tag', $max);
             $this->smarty_variable->assign('tags_coef', $coef);
     }
-}  
+}
 
 
 ?>

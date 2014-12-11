@@ -1,4 +1,4 @@
-<?php 
+<?php
 /* This file checks if the installation file still exists. If so, you will be presented with a message telling you to remove it from your server. */
 
 $install = '../install/install.php';
@@ -39,7 +39,7 @@ if (file_exists($install)) {
 					<div class="col-md-12">
 						<div class="well install_warning">
 							<h2>Warning!</h2>
-							<p>The file ../install/install.php still exists on your server! 
+							<p>The file ../install/install.php still exists on your server!
 								<br />For security reasons, you need to <strong>remove the /install/ directory</strong> from your server immediately after you have completed an installation or upgrade of your website.
 							</p>
 							<p>To temporarily ignore this error and continue to the Admin Panel <a href="./admin_index.php">Click Here</a></p>

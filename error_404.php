@@ -11,7 +11,7 @@ include(mnminclude.'smartyvariables.php');
 $vars = '';
 check_actions('error_404', $vars);
 
-define('pagename', 'error_404'); 
+define('pagename', 'error_404');
 $main_smarty->assign('pagename', pagename);
 
 // sidebar

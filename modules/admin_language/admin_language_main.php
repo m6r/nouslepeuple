@@ -18,7 +18,7 @@ class LangFiles implements Iterator {
 
     /**
      * Initialize file list
-     */ 
+     */
     public function __construct() {
 	global $db;
 
@@ -60,17 +60,17 @@ class LangFiles implements Iterator {
 	$ret = "$id not found in $filename";
 	$lines = file($filename);
 	if ($handle = fopen($filename, 'w')) {
-	    foreach ($lines as $line) {	
+	    foreach ($lines as $line) {
 		if (preg_match("/^$id\s*=/", $line, $m)) {
 			$line = $id . ' = "' . $value . '"' . "\n";
 			$ret = '';
 		}
 
-		if (!fwrite($handle, $line)) 
+		if (!fwrite($handle, $line))
 			$ret = "Could not write to '$filename' file";
 	    }
 	    fclose($handle);
-	} else 
+	} else
 		$ret = "Could not open '$filename' file for writing";
 
 	return $ret;
@@ -80,7 +80,7 @@ class LangFiles implements Iterator {
      * Iterator methods
      *
      * @see Iterator
-     */ 
+     */
     function rewind() {
         $this->position = 0;
 	$this->fileno   = 0;
@@ -128,7 +128,7 @@ function admin_language_showpage(){
 	$canIhaveAccess = $canIhaveAccess + checklevel('admin');
 	
 	if($canIhaveAccess == 1)
-	{	
+	{
 		// Lines from all language files
 		$files = new LangFiles();
 
@@ -145,7 +145,7 @@ function admin_language_showpage(){
 		    foreach ($files as $lnum => $line) {
 			$l = array();
 
-			// Extract filename 
+			// Extract filename
 			list($file, $pos) = explode('#', $lnum);
 			$l['file'] = $file;
 
@@ -199,10 +199,10 @@ function admin_language_showpage(){
 		// breadcrumbs
 
 			//Method for identifying modules rather than pagename
-			define('modulename', 'admin_language'); 
+			define('modulename', 'admin_language');
 			$main_smarty->assign('modulename', modulename);
 			
-			define('pagename', 'admin_modifylanguage'); 
+			define('pagename', 'admin_modifylanguage');
 			$main_smarty->assign('pagename', pagename);
 			
 		    	$main_smarty->assign('editinplace_init', $editinplace_init);
@@ -213,5 +213,5 @@ function admin_language_showpage(){
 	}
 	else
 		header("Location: " . getmyurl('login', $_SERVER['REQUEST_URI']));
-}	
+}
 ?>

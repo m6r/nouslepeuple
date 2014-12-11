@@ -70,7 +70,7 @@ if( (isset($_POST["processlogin"]) && is_numeric($_POST["processlogin"])) || (is
 				$errorMsg=$main_smarty->get_config_vars('PLIGG_Visual_Resend_Email') .
 					"<form method='post'>
 						<div class='input-append notvalidated'>
-							<input type='text' class='col-md-2' name='email'> 
+							<input type='text' class='col-md-2' name='email'>
 							<input type='submit' class='btn btn-default' value='Send'>
 							<input type='hidden' name='processlogin' value='5'/>
 						</div>
@@ -116,9 +116,9 @@ if( (isset($_POST["processlogin"]) && is_numeric($_POST["processlogin"])) || (is
 				$to = $user->user_email;
 				$subject = $main_smarty->get_config_vars("PLIGG_Visual_Name").' '.$main_smarty->get_config_vars("PLIGG_PassEmail_Subject");
 			
-				$times= time();		
+				$times= time();
 						
-				$body = sprintf($main_smarty->get_config_vars("PLIGG_PassEmail_Body"),$main_smarty->get_config_vars("PLIGG_Visual_Name")); 
+				$body = sprintf($main_smarty->get_config_vars("PLIGG_PassEmail_Body"),$main_smarty->get_config_vars("PLIGG_Visual_Name"));
 				$body .="\n \n";
 				$body .= $my_base_url . $my_pligg_base . '/recover.php?id=' . base64_encode($username). '&n=' . time();
 	
@@ -129,7 +129,7 @@ if( (isset($_POST["processlogin"]) && is_numeric($_POST["processlogin"])) || (is
 				if(phpnum()>=5)
 				    require("libs/class.phpmailer5.php");
 				else
-				    require("libs/class.phpmailer4.php");	
+				    require("libs/class.phpmailer4.php");
 				
 				$mail = new PHPMailer();
 				$mail->From = $main_smarty->get_config_vars('PLIGG_PassEmail_From');
@@ -184,7 +184,7 @@ if( (isset($_POST["processlogin"]) && is_numeric($_POST["processlogin"])) || (is
 				}
 			} else {
 				$errorMsg = $main_smarty->get_config_vars('PLIGG_Visual_Login_Forgot_ErrorBadCode');
-			} 
+			}
 		}
 	}
 
@@ -195,7 +195,7 @@ if( (isset($_POST["processlogin"]) && is_numeric($_POST["processlogin"])) || (is
 			if($user){
 				$encode=md5($_POST['email'] . $user->karma .  $user->username. pligg_hash().$main_smarty->get_config_vars('PLIGG_Visual_Name'));
 
-				$domain = $main_smarty->get_config_vars('PLIGG_Visual_Name');			
+				$domain = $main_smarty->get_config_vars('PLIGG_Visual_Name');
 				$validation = my_base_url . my_pligg_base . "/validation.php?code=$encode&uid=".urlencode($user->username)."&email=".urlencode($_POST['email']);
 				$str = $main_smarty->get_config_vars('PLIGG_PassEmail_verification_message');
 				eval('$str = "'.str_replace('"','\"',$str).'";');
@@ -215,7 +215,7 @@ if( (isset($_POST["processlogin"]) && is_numeric($_POST["processlogin"])) || (is
 				$mail->Body = $message;
 				$mail->CharSet = 'utf-8';
 
-#print_r($mail);					
+#print_r($mail);
 				if(!$mail->Send())
 					return false;
 
@@ -225,14 +225,14 @@ if( (isset($_POST["processlogin"]) && is_numeric($_POST["processlogin"])) || (is
 			$errorMsg = $main_smarty->get_config_vars('PLIGG_Visual_Register_Error_BadEmail');
 		}
 	}
-}   
+}
     
 // pagename
-define('pagename', 'login'); 
+define('pagename', 'login');
 $main_smarty->assign('pagename', pagename);
  
-// misc smarty 
-$main_smarty->assign('errorMsg',$errorMsg);  
+// misc smarty
+$main_smarty->assign('errorMsg',$errorMsg);
 $main_smarty->assign('register_url', getmyurl('register'));
 
 // show the template

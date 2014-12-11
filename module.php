@@ -10,8 +10,8 @@ include_once(mnminclude.'tags.php');
 include_once(mnminclude.'search.php');
 include_once(mnminclude.'smartyvariables.php');
 
-// pagename	
-define('pagename', 'module'); 
+// pagename
+define('pagename', 'module');
 $main_smarty->assign('pagename', pagename);
 
 $res_for_update=mysql_query("select var_value from " . table_config . "  where var_name = 'uninstall_module_updates'");

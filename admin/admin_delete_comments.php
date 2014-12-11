@@ -18,7 +18,7 @@ force_authentication();
 $canIhaveAccess = 0;
 $canIhaveAccess = $canIhaveAccess + checklevel('admin');
 
-if($canIhaveAccess == 0){	
+if($canIhaveAccess == 0){
 	header("Location: " . getmyurl('admin_login', $_SERVER['REQUEST_URI']));
 	die();
 }
@@ -62,7 +62,7 @@ while($comment = mysql_fetch_object($result))
 			<h4 class="modal-title"><?php echo $main_smarty->get_config_vars('PLIGG_Visual_AdminPanel_Discarded_Comments_Removed') ?></h4>
 		</div>
 		<div class="modal-body">
-			<?php 
+			<?php
 			$query = "OPTIMIZE TABLE comments";
 			mysql_query($query);
 			if (mysql_error()){

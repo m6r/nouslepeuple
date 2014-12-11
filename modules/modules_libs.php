@@ -6,7 +6,7 @@ function module_add_action($location, $the_function, $variables, $weight = array
 	global $script_name, $module_actions, $include_in_pages, $do_not_include_in_pages;
 	if(is_array($include_in_pages)){
 		if (in_array($script_name, $include_in_pages) || in_array('all', $include_in_pages)) {
-			if(is_array($do_not_include_in_pages) && in_array($script_name, $do_not_include_in_pages)) 
+			if(is_array($do_not_include_in_pages) && in_array($script_name, $do_not_include_in_pages))
 				return;
 			$module_actions[$location][$the_function] = $weight;
 		}
@@ -30,7 +30,7 @@ function module_add_action_tpl($location, $the_tpl, $weight = array ('weight' =>
 	global $script_name, $module_actions_tpl, $include_in_pages, $do_not_include_in_pages;
 	if(is_array($include_in_pages)){
 		if (in_array($script_name, $include_in_pages) || in_array('all', $include_in_pages)) {
-			if(is_array($do_not_include_in_pages) && in_array($script_name, $do_not_include_in_pages)) 
+			if(is_array($do_not_include_in_pages) && in_array($script_name, $do_not_include_in_pages))
 				return;
 			$module_actions_tpl[$location][$the_tpl] = get_module_weight($the_tpl,$weight);
 		}
@@ -62,7 +62,7 @@ function module_add_css($the_css, $weight = array ('weight' => 0) )
 	global $script_name, $module_css, $include_in_pages, $do_not_include_in_pages;
 	if(is_array($include_in_pages)){
 		if (in_array($script_name, $include_in_pages) || in_array('all', $include_in_pages)) {
-			if(is_array($do_not_include_in_pages) && in_array($script_name, $do_not_include_in_pages)) 
+			if(is_array($do_not_include_in_pages) && in_array($script_name, $do_not_include_in_pages))
 				return;
 			$module_css[$the_css] = $weight;
 		}
@@ -74,7 +74,7 @@ function module_add_js($the_js, $weight = array ('weight' => 0) )
 	global $script_name, $module_js, $include_in_pages, $do_not_include_in_pages;
 	if(is_array($include_in_pages)){
 		if (in_array($script_name, $include_in_pages) || in_array('all', $include_in_pages)) {
-			if(is_array($do_not_include_in_pages) && in_array($script_name, $do_not_include_in_pages)) 
+			if(is_array($do_not_include_in_pages) && in_array($script_name, $do_not_include_in_pages))
 				return;
 			$module_js[$the_js] = $weight;
 		}
@@ -134,7 +134,7 @@ function check_actions_tpl($location,&$smarty)
 		//$weight=sort_cloumn($module_actions_tpl[$location]);
 		//array_multisort($weight, SORT_ASC,  $module_actions_tpl[$location]);
 
-		// Override module templates		
+		// Override module templates
 		$path = 'templates/' . $thetemp . '/';
 		foreach ( $module_actions_tpl[$location] as $kk => $vv ) {
 		    $file = $path . str_replace(array('../','templates/'),'',$kk);
@@ -144,7 +144,7 @@ function check_actions_tpl($location,&$smarty)
         	        $smarty->display($kk);
 		}
 	}
-} 
+}
 
 function sort_cloumn($myArray){
 	$sort_numcie=array();
@@ -186,7 +186,7 @@ function include_module_settings($module)
 {
 	if(file_exists(mnmmodules . $module . '/' . $module . '_install.php'))
 	{
-		include(mnmmodules . $module . '/' . $module . '_install.php');		
+		include(mnmmodules . $module . '/' . $module . '_install.php');
 		return $module_info;
 	} else {
 		return false;

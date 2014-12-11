@@ -22,7 +22,7 @@
 		foreach ($_GET as $k => $v)
 		$get[$k] = stripslashes(htmlentities(strip_tags($v),ENT_QUOTES,'UTF-8'));
 		$get['return'] = addslashes($get['return']);
-		$main_smarty->assign('get',$get);           
+		$main_smarty->assign('get',$get);
 	}
 
 	$_REQUEST['search'] = str_replace(array(':\\',':\\','|'),array('://',':/','/'),$_REQUEST['search']);
@@ -67,7 +67,7 @@
 	if(isset($_REQUEST['category'])){
 		// filter to just the category we're looking at
 		$search->category = sanitize($_REQUEST['category'], 1);
-	} 
+	}
 
 $sort_uri = $URLMethod == 2 ? 'order/' : '&order=';
 $request_uri = preg_replace('/' . str_replace('/', '\/', $sort_uri) . '.*$/', '', $_SERVER['REQUEST_URI']) . $sort_uri;
@@ -93,8 +93,8 @@ if( isset( $_REQUEST['adv'] ) && $_REQUEST['adv'] == 1 ){
 	$search->status = sanitize($_REQUEST['status'],2);
 	$search->s_user = sanitize($_REQUEST['suser'],2);
 	$search->s_cat = sanitize($_REQUEST['scategory'],2);
-	$search->s_comments = sanitize($_REQUEST['scomments'],2);		
-	$search->s_date = sanitize($_REQUEST['date'],2);	
+	$search->s_comments = sanitize($_REQUEST['scomments'],2);
+	$search->s_date = sanitize($_REQUEST['date'],2);
 	
 	if( intval( $_REQUEST['sgroup'] ) > 0 )
 		$display_grouplinks = true;
@@ -129,8 +129,8 @@ else
 	$linksum_sql = $search->sql;
 	
 	$main_smarty->assign('sql', $linksum_sql);
-	// pagename	
-	define('pagename', 'search'); 
+	// pagename
+	define('pagename', 'search');
 	$main_smarty->assign('pagename', pagename);
 
 	$fetch_link_summary = true;

@@ -28,9 +28,9 @@ $canIhaveAccess = $canIhaveAccess + checklevel('admin');
 $canIhaveAccess = $canIhaveAccess + checklevel('moderator');
 
 
-if($canIhaveAccess == 0){	
+if($canIhaveAccess == 0){
 //	$main_smarty->assign('tpl_center', '/admin/access_denied');
-//	$main_smarty->display($template_dir . '/admin/admin.tpl');		
+//	$main_smarty->display($template_dir . '/admin/admin.tpl');
 	header("Location: " . getmyurl('admin_login', $_SERVER['REQUEST_URI']));
 	die();
 }
@@ -44,7 +44,7 @@ if (isset($_REQUEST["mode"]) && sanitize($_REQUEST["mode"], 3) == "newuser"){
 		$level=trim($db->escape($_POST['level']));
 		$saltedpass=generateHash($password);
 			if (!isset($username) || strlen($username) < 3) {
-				$main_smarty->assign(username_error, $main_smarty->get_config_vars('PLIGG_Visual_Register_Error_UserTooShort'));			
+				$main_smarty->assign(username_error, $main_smarty->get_config_vars('PLIGG_Visual_Register_Error_UserTooShort'));
 			}
 			elseif (!preg_match('/^[a-zA-Z0-9\-]+$/', $username)) {
 				$main_smarty->assign(username_error, $main_smarty->get_config_vars('PLIGG_Visual_Register_Error_UserInvalid'));
@@ -56,10 +56,10 @@ if (isset($_REQUEST["mode"]) && sanitize($_REQUEST["mode"], 3) == "newuser"){
 				$main_smarty->assign(email_error, $main_smarty->get_config_vars('PLIGG_Visual_Register_Error_BadEmail'));
 			}
 			elseif (email_exists(trim($email))) {
-				$main_smarty->assign(email_error, $main_smarty->get_config_vars('PLIGG_Visual_Register_Error_EmailExists'));			
+				$main_smarty->assign(email_error, $main_smarty->get_config_vars('PLIGG_Visual_Register_Error_EmailExists'));
 			}
 			elseif (strlen($password) < 5 ) {
-				$main_smarty->assign(password_error, $main_smarty->get_config_vars('PLIGG_Visual_Register_Error_FiveCharPass'));			
+				$main_smarty->assign(password_error, $main_smarty->get_config_vars('PLIGG_Visual_Register_Error_FiveCharPass'));
 			}
 			else {
 				$db->query("INSERT IGNORE INTO " . table_users . " (user_login, user_level, user_email, user_pass, user_date) VALUES ('$username', '$level', '$email', '$saltedpass', now())");

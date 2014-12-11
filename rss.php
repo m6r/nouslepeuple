@@ -11,7 +11,7 @@ include(mnminclude.'user.php');
 include_once(mnminclude.'smartyvariables.php');
 
 // pagename
-define('pagename', 'rss'); 
+define('pagename', 'rss');
 $main_smarty->assign('pagename', pagename);
 
 $rows = isset($_GET['rows']) && is_numeric($_GET['rows']) ? $_GET['rows'] : 20;
@@ -34,7 +34,7 @@ if($time > 0) {
 } else {
 	// All the others
 	$tmpsearch = new Search;
-	$tmpsearch->searchTerm = isset($_GET['search']) && sanitize($_GET['search'], 3) != '' ? sanitize($_GET['search'], 3) : '';	
+	$tmpsearch->searchTerm = isset($_GET['search']) && sanitize($_GET['search'], 3) != '' ? sanitize($_GET['search'], 3) : '';
 	$search = $tmpsearch->get_search_clause();
 	if ($search) $status='all';
 
@@ -91,7 +91,7 @@ if($time > 0) {
 		{
 			header("Location: $my_pligg_base/storyrss.php?title=".urlencode($_REQUEST['category']));
 			die();
-		}	
+		}
 	    }
 	    $where .= " AND link_category IN (SELECT category_ID from ". table_categories ." where category_id=$cat OR category_parent=$cat )";
 	    $category_name = $db->get_var("SELECT category_name FROM " . table_categories . " WHERE category_id = $cat AND category_lang='$dblang'");
@@ -145,10 +145,10 @@ if ($links) {
 		$link->link_summary = str_replace("â€“", "-", $link->link_summary);
 		$link->link_summary = str_replace("â€”", "-", $link->link_summary);
 		$link->link_summary = str_replace("â€œ", "\"", $link->link_summary);
-		$link->link_summary = str_replace("â€", "\"", $link->link_summary);		
+		$link->link_summary = str_replace("â€", "\"", $link->link_summary);
 		
 		echo "<item>\n";
-		echo "	<title>". htmlspecialchars($link->title) . "</title>\n"; 
+		echo "	<title>". htmlspecialchars($link->title) . "</title>\n";
 		echo "	<link>".getmyFullurl("storyURL", $link->category_safe_names($link->category), urlencode($link->title_url), $link->id)."</link>\n";
 		$vars = array('link' => $link);
 		check_actions('rss_add_data', $vars);
@@ -162,7 +162,7 @@ if ($links) {
 		echo "	<description><![CDATA[ " . $description . " ]]></description>\n";
 		if (!empty($link_date))
 			echo "	<pubDate>".date('D, d M Y H:i:s T', $link->$link_date-misc_timezone*3600)."</pubDate>\n";
-		else 
+		else
 			echo "	<pubDate>".date('D, d M Y H:i:s T', time()-misc_timezone*3600)."</pubDate>\n";
 		echo "	<dc:creator>" . htmlspecialchars($user->username) . "</dc:creator>\n";
 		echo "	<category>" . htmlspecialchars($category_name) . "</category>\n";

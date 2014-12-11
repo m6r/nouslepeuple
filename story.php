@@ -10,19 +10,19 @@ include(mnminclude.'group.php');
 include(mnminclude.'smartyvariables.php');
 include_once(mnminclude.'user.php');
 
-$requestID = isset($_GET['id']) && is_numeric($_GET['id']) ? $_GET['id'] : 0; 
+$requestID = isset($_GET['id']) && is_numeric($_GET['id']) ? $_GET['id'] : 0;
 
 if(isset($_GET['title']) && sanitize($_GET['title'], 3) != ''){$requestTitle = sanitize($_GET['title'], 3);}
 // if we're using "Friendly URL's for categories"
 if(isset($_GET['category']) && sanitize($_GET['category'], 3) != '')
-{	
+{
     // One or multiple categories in the URL
     $thecat = explode(',',$_GET['category']);
     if (sizeof($thecat)<=1)
-        $thecat[0] = $db->get_var("SELECT category_id FROM " . table_categories . " WHERE `category_safe_name` = '".$db->escape(urlencode(sanitize($_GET['category'], 3)))."';"); 
+        $thecat[0] = $db->get_var("SELECT category_id FROM " . table_categories . " WHERE `category_safe_name` = '".$db->escape(urlencode(sanitize($_GET['category'], 3)))."';");
     else
 	foreach ($thecat as &$cat)
-            $cat = $db->get_var("SELECT category_id FROM " . table_categories . " WHERE `category_safe_name` = '".$db->escape(urlencode(sanitize($cat, 3)))."';"); 
+            $cat = $db->get_var("SELECT category_id FROM " . table_categories . " WHERE `category_safe_name` = '".$db->escape(urlencode(sanitize($cat, 3)))."';");
 }
 
 if($requestID > 0 && enable_friendly_urls == true){
@@ -32,8 +32,8 @@ if($requestID > 0 && enable_friendly_urls == true){
 
 	$link = new Link;
 	$link->id=$requestID;
-	if ($link->read() == false || (sizeof($thecat)>0 && 
-				      (array_diff($thecat, $link->additional_cats, array($link->category)) || 
+	if ($link->read() == false || (sizeof($thecat)>0 &&
+				      (array_diff($thecat, $link->additional_cats, array($link->category)) ||
 				       sizeof($thecat)!=sizeof($link->additional_cats)+1)))
 	{
 		header("Location: $my_pligg_base/error_404.php");
@@ -52,7 +52,7 @@ if($requestID > 0 && enable_friendly_urls == true){
 if(isset($requestTitle)){
 	$requestID = $db->get_var($sql="SELECT link_id FROM " . table_links . " WHERE `link_title_url` = '".$db->escape(sanitize($requestTitle,4))."';");
 	// Search in old urls if not found
-	if (!is_numeric($requestID)) 
+	if (!is_numeric($requestID))
 		$requestID = $db->get_var($sql="SELECT old_link_id FROM " . table_old_urls . " WHERE `old_title_url` = '".$db->escape(sanitize($requestTitle,4))."';");
 }
 
@@ -60,8 +60,8 @@ if(is_numeric($requestID)) {
 	$id = $requestID;
 	$link = new Link;
 	$link->id=$requestID;
-	if ($link->read() == false || (sizeof($thecat)>0 && 
-				      (array_diff($thecat, $link->additional_cats, array($link->category)) || 
+	if ($link->read() == false || (sizeof($thecat)>0 &&
+				      (array_diff($thecat, $link->additional_cats, array($link->category)) ||
 				       sizeof($thecat)!=sizeof($link->additional_cats)+1)) ||
 				      (($link->status=='spam' || $link->status=='discard') && !checklevel('admin') && !checklevel('moderator'))){
 
@@ -149,10 +149,10 @@ if(is_numeric($requestID)) {
 	$main_smarty->assign('meta_keywords', $link->tags);
 	
 	//sidebar
-	$main_smarty = do_sidebar($main_smarty);	
+	$main_smarty = do_sidebar($main_smarty);
 
 	// pagename
-	define('pagename', 'story'); 
+	define('pagename', 'story');
 	$main_smarty->assign('pagename', pagename);
 	
 	if($current_user->authenticated != TRUE){
@@ -169,7 +169,7 @@ if(is_numeric($requestID)) {
 	if(isset($_GET['reply']) && !empty($parent_comment_id)){
 		$main_smarty->assign('the_comments', get_comments(true,0,$_GET['comment_id']));
 		$main_smarty->assign('parrent_comment_id',$parent_comment_id);
-	}elseif(!empty($parent_comment_id)){	
+	}elseif(!empty($parent_comment_id)){
 		$main_smarty->assign('the_comments', get_comments(true,$parent_comment_id,0,1));
 		$main_smarty->assign('parrent_comment_id',$parent_comment_id);
 	}else{
@@ -193,7 +193,7 @@ if(is_numeric($requestID)) {
 	
 	header("Location: $my_pligg_base/error_404.php");
 //	$main_smarty->assign('tpl_center', 'error_404_center');
-//	$main_smarty->display($the_template . '/pligg.tpl');		
+//	$main_smarty->display($the_template . '/pligg.tpl');
 	die();
 }
 
@@ -201,7 +201,7 @@ function get_comments ($fetch = false, $parent = 0, $comment_id=0, $show_parent=
 	Global $db, $main_smarty, $current_user, $CommentOrder, $link, $cached_comments;
 	
 	//Set comment order to 1 if it's not set in the admin panel
-	if (isset($_GET['comment_sort'])) setcookie('CommentOrder', $CommentOrder = $_GET['comment_sort'], time()+60*60*24*180); 
+	if (isset($_GET['comment_sort'])) setcookie('CommentOrder', $CommentOrder = $_GET['comment_sort'], time()+60*60*24*180);
 	elseif (isset($_COOKIE['CommentOrder'])) $CommentOrder = $_COOKIE['CommentOrder'];
 
 	if (!isset($CommentOrder)) $CommentOrder = 1;
@@ -219,24 +219,24 @@ function get_comments ($fetch = false, $parent = 0, $comment_id=0, $show_parent=
 	
 	if($comment_id!=0){
 	
-	$comments = $db->get_results("SELECT * 
-	                                    FROM " . table_comments . " 
-	                                    WHERE (comment_status='published' $status_sql) AND 
-	                                           comment_link_id=$link->id AND comment_id = $comment_id 
+	$comments = $db->get_results("SELECT *
+	                                    FROM " . table_comments . "
+	                                    WHERE (comment_status='published' $status_sql) AND
+	                                           comment_link_id=$link->id AND comment_id = $comment_id
 	                                    ORDER BY " . $CommentOrderBy);
 										
 	}elseif($show_parent==1){
-	$comments = $db->get_results("SELECT * 
-	                                    FROM " . table_comments . " 
-	                                    WHERE (comment_status='published' $status_sql) AND 
-	                                           comment_link_id=$link->id AND comment_id = $parent 
+	$comments = $db->get_results("SELECT *
+	                                    FROM " . table_comments . "
+	                                    WHERE (comment_status='published' $status_sql) AND
+	                                           comment_link_id=$link->id AND comment_id = $parent
 	                                    ORDER BY " . $CommentOrderBy);
 	}else{
-	$comments = $db->get_results("SELECT * 
-	                                    FROM " . table_comments . " 
-	                                    WHERE (comment_status='published' $status_sql) AND 
-	                                           comment_link_id=$link->id AND comment_parent = $parent 
-	                                    ORDER BY " . $CommentOrderBy);	
+	$comments = $db->get_results("SELECT *
+	                                    FROM " . table_comments . "
+	                                    WHERE (comment_status='published' $status_sql) AND
+	                                           comment_link_id=$link->id AND comment_parent = $parent
+	                                    ORDER BY " . $CommentOrderBy);
 	}
 	if ($comments) {
 		require_once(mnminclude.'comment.php');
@@ -291,7 +291,7 @@ function insert_comment () {
 		exit;
 	}
 
-	if(sanitize($_POST['link_id'], 3) == $link->id && $current_user->authenticated && sanitize($_POST['user_id'], 3) == $current_user->user_id &&	sanitize($_POST['randkey'], 3) > 0) 
+	if(sanitize($_POST['link_id'], 3) == $link->id && $current_user->authenticated && sanitize($_POST['user_id'], 3) == $current_user->user_id &&	sanitize($_POST['randkey'], 3) > 0)
 	{
 		if(sanitize($_POST['comment_content'], 4) != '')
 			// this is a normal new comment
@@ -309,7 +309,7 @@ function insert_comment () {
 		    	}
 		}
 	}
-	elseif($_POST['link_id'] == $link->id && $_POST['randkey'] > 0 && $anon == 1) 
+	elseif($_POST['link_id'] == $link->id && $_POST['randkey'] > 0 && $anon == 1)
 	{
 		if(strlen($_POST['comment_content']) > 0)
 		{
@@ -346,7 +346,7 @@ function insert_comment () {
 		//$story_url;
 		header('Location: '.$story_url."#comment-reply-".$comment->id);
 		die;
-	}	
+	}
 }
 
 

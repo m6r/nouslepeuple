@@ -17,7 +17,7 @@ elseif ($_REQUEST["approve"] && is_numeric($_REQUEST["approve"]))
 
 
     $keyword = $db->escape(sanitize(trim($_REQUEST['keyword']), 3));
-    if ($keyword) 
+    if ($keyword)
     {
 		$from_where .= " AND (group_name LIKE '%$keyword%' OR group_description LIKE '%$keyword%')";
 		$main_smarty->assign('search', $keyword);
@@ -85,7 +85,7 @@ function group_read($from_where,$order_by)
 
 
 //$main_smarty->assign("scrollpageSize", "1");
-//For Infinit scrolling and continue reading option 
+//For Infinit scrolling and continue reading option
 
    $main_smarty->assign('link_pagination', do_pages($rows, $page_size, "published", true));
 

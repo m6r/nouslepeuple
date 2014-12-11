@@ -1,8 +1,8 @@
 <?php
-if (!$step) { 
-	header('Location: ./install.php'); die(); 
+if (!$step) {
+	header('Location: ./install.php'); die();
 } else if(@$_SESSION['checked_step'] != 3){
-	header('Location: ./install.php'); die(); 
+	header('Location: ./install.php'); die();
 }
 
 if ($_POST['language'])

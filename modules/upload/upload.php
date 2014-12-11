@@ -14,7 +14,7 @@ $upload_dir = mnmpath . get_misc_data('upload_directory');
 $thumb_dir  = mnmpath . get_misc_data('upload_thdirectory');
 $isadmin = checklevel('admin');
 
-// Upload a file 
+// Upload a file
 if ($_POST['id'])
 {
 	$linkres=new Link;
@@ -34,12 +34,12 @@ if ($_POST['id'])
 		    @unlink("$thumb_dir/{$row->file_name}");
 	    }
 	$sql = "DELETE FROM ".table_prefix."files WHERE ".($isadmin ? "" : "file_user_id='{$current_user->user_id}' AND")." file_link_id='{$_POST['id']}' AND file_number='{$_POST['number']}' AND file_comment_id='$_POST[comment]'";
-	$db->query($sql); 
+	$db->query($sql);
 
 	// Save unique file ID
 	$id = upload_save_files();
 	if (is_numeric($id))
-	{	
+	{
 	    if ($id > 0)
 	    {
 	    	$_SESSION['upload_files'][$_POST['number']] = array('id' => $id, 'comment' => $_POST[comment]);
@@ -48,7 +48,7 @@ if ($_POST['id'])
 	    }
 	    else
 	    	$_SESSION['upload_files'][$_POST['number']] = array('error' => "No files to upload");
-	} else 
+	} else
 	    $_SESSION['upload_files'][$_POST['number']] = array('error' => $id);
 }
 // Check upload status by linkID and file number
@@ -62,7 +62,7 @@ elseif ($_GET['id'] && $_GET['number'] && is_numeric($_GET['id']) && is_numeric(
 
 	$main_smarty->assign('my_base_url', my_base_url);
 	$main_smarty->assign('my_pligg_base', my_pligg_base);
-	$main_smarty->assign('upload_directory',get_misc_data('upload_directory')); 
+	$main_smarty->assign('upload_directory',get_misc_data('upload_directory'));
 	$main_smarty->assign('upload_thdirectory',get_misc_data('upload_thdirectory'));
 	$main_smarty->assign('upload_allow_hide',get_misc_data('upload_allow_hide'));
 
@@ -79,7 +79,7 @@ elseif ($_GET['id'] && $_GET['number'] && is_numeric($_GET['id']) && is_numeric(
 	    else
 	    	$filename = $upload_dir."/".$images[0]['file_name'];
 
-	    if (!$images[0]['file_ispicture']) 
+	    if (!$images[0]['file_ispicture'])
 		$images = array();
 	}
 	$main_smarty->assign ("display",unserialize(get_misc_data('upload_display')));
@@ -102,7 +102,7 @@ elseif ($_GET['delid'] && $_GET['number'] && is_numeric($_GET['delid']) && is_nu
 		unlink("$thumb_dir/{$row->file_name}");
 	}
     $sql = "DELETE FROM ".table_prefix."files WHERE ".($isadmin ? "" : "file_user_id='{$current_user->user_id}' AND")." (file_id='$id' OR file_orig_id='$id')";
-    $db->query($sql); 
+    $db->query($sql);
     unset ($_SESSION['upload_files'][$_GET['number']]);
     print "OK";
 }

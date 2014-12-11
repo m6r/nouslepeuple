@@ -49,7 +49,7 @@ if(isset($_POST['id'])){
 	    $comment->insert_vote($current_user->user_id, $value);
 	}
 
-	$comment->store();	
+	$comment->store();
 	$count=$comment->votes;
 	echo "$count ~--~".sanitize($_POST['id'], 3);
 

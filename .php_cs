@@ -24,6 +24,6 @@ $finder = Symfony\CS\Finder\DefaultFinder::create()
 
 return Symfony\CS\Config\Config::create()
     ->level(Symfony\CS\FixerInterface::NONE_LEVEL)
-    ->fixers(array('encoding'))
+    ->fixers(array('encoding','trailing_spaces'))
     ->finder($finder)
 ;

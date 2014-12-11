@@ -102,7 +102,7 @@ class Mail_RFC822
      * @param string  $default_domain  Default domain/host etc. If not supplied, will be set to localhost.
      * @param boolean $nest_groups     Whether to return the structure with groups nested for easier viewing.
      * @param boolean $validate        Whether to validate atoms. Turn this off if you need to run addresses through before encoding the personal names, for instance.
-     * 
+     *
      * @return object Mail_RFC822 A new Mail_RFC822 object.
      */
     function Mail_RFC822($address = null, $default_domain = null, $nest_groups = null, $validate = null, $limit = null)
@@ -124,7 +124,7 @@ class Mail_RFC822
      * @param string  $default_domain  Default domain/host etc.
      * @param boolean $nest_groups     Whether to return the structure with groups nested for easier viewing.
      * @param boolean $validate        Whether to validate atoms. Turn this off if you need to run addresses through before encoding the personal names, for instance.
-     * 
+     *
      * @return array A structured array of addresses.
      */
     function parseAddressList($address = null, $default_domain = null, $nest_groups = null, $validate = null, $limit = null)
@@ -178,7 +178,7 @@ class Mail_RFC822
 
     /**
      * Splits an address into seperate addresses.
-     * 
+     *
      * @access private
      * @param string $address The addresses to split.
      * @return boolean Success or failure.
@@ -254,7 +254,7 @@ class Mail_RFC822
 
     /**
      * Checks for a group at the start of the string.
-     * 
+     *
      * @access private
      * @param string $address The address to check.
      * @return boolean Whether or not there is a group at the start of the string.
@@ -278,7 +278,7 @@ class Mail_RFC822
 
     /**
      * A common function that will check an exploded string.
-     * 
+     *
      * @access private
      * @param array $parts The exloded string.
      * @param string $char  The char that was exploded on.
@@ -311,7 +311,7 @@ class Mail_RFC822
 
     /**
      * Checks if a string has an unclosed quotes or not.
-     * 
+     *
      * @access private
      * @param string $string The string to check.
      * @return boolean True if there are unclosed quotes inside the string, false otherwise.
@@ -331,7 +331,7 @@ class Mail_RFC822
     /**
      * Checks if a string has an unclosed brackets or not. IMPORTANT:
      * This function handles both angle brackets and square brackets;
-     * 
+     *
      * @access private
      * @param string $string The string to check.
      * @param string $chars  The characters to check for.
@@ -355,7 +355,7 @@ class Mail_RFC822
 
     /**
      * Sub function that is used only by hasUnclosedBrackets().
-     * 
+     *
      * @access private
      * @param string $string The string to check.
      * @param integer &$num    The number of occurences.
@@ -498,12 +498,12 @@ class Mail_RFC822
     /**
      * Function to validate an atom which from rfc822 is:
      * atom = 1*<any CHAR except specials, SPACE and CTLs>
-     * 
+     *
      * If validation ($this->validate) has been turned off, then
      * validateAtom() doesn't actually check anything. This is so that you
      * can split a list of addresses up before encoding personal names
      * (umlauts, etc.), for example.
-     * 
+     *
      * @access private
      * @param string $atom The string to check.
      * @return boolean Success or failure.
@@ -536,7 +536,7 @@ class Mail_RFC822
     /**
      * Function to validate quoted string, which is:
      * quoted-string = <"> *(qtext/quoted-pair) <">
-     * 
+     *
      * @access private
      * @param string $qstring The string to check
      * @return boolean Success or failure.
@@ -554,7 +554,7 @@ class Mail_RFC822
      * Function to validate a mailbox, which is:
      * mailbox =   addr-spec         ; simple address
      *           / phrase route-addr ; name and route-addr
-     * 
+     *
      * @access public
      * @param string &$mailbox The string to check.
      * @return boolean Success or failure.
@@ -638,7 +638,7 @@ class Mail_RFC822
      *
      * Angle brackets have already been removed at the point of
      * getting to this function.
-     * 
+     *
      * @access private
      * @param string $route_addr The string to check.
      * @return mixed False on failure, or an array containing validated address/route information on success.
@@ -688,7 +688,7 @@ class Mail_RFC822
     /**
      * Function to validate a route, which is:
      * route = 1#("@" domain) ":"
-     * 
+     *
      * @access private
      * @param string $route The string to check.
      * @return mixed False on failure, or the validated $route on success.
@@ -711,14 +711,14 @@ class Mail_RFC822
      * you expect of a strict internet domain.
      *
      * domain = sub-domain *("." sub-domain)
-     * 
+     *
      * @access private
      * @param string $domain The string to check.
      * @return mixed False on failure, or the validated domain on success.
      */
     function _validateDomain($domain)
     {
-        // Note the different use of $subdomains and $sub_domains                        
+        // Note the different use of $subdomains and $sub_domains
         $subdomains = explode('.', $domain);
 
         while (count($subdomains) > 0) {
@@ -739,7 +739,7 @@ class Mail_RFC822
     /**
      * Function to validate a subdomain:
      *   subdomain = domain-ref / domain-literal
-     * 
+     *
      * @access private
      * @param string $subdomain The string to check.
      * @return boolean Success or failure.
@@ -759,7 +759,7 @@ class Mail_RFC822
     /**
      * Function to validate a domain literal:
      *   domain-literal =  "[" *(dtext / quoted-pair) "]"
-     * 
+     *
      * @access private
      * @param string $dliteral The string to check.
      * @return boolean Success or failure.
@@ -773,7 +773,7 @@ class Mail_RFC822
      * Function to validate an addr-spec.
      *
      * addr-spec = local-part "@" domain
-     * 
+     *
      * @access private
      * @param string $addr_spec The string to check.
      * @return mixed False on failure, or the validated addr-spec on success.
@@ -804,7 +804,7 @@ class Mail_RFC822
     /**
      * Function to validate the local part of an address:
      *   local-part = word *("." word)
-     * 
+     *
      * @access private
      * @param string $local_part
      * @return mixed False on failure, or the validated local part on success.

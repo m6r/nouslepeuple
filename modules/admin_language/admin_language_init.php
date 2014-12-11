@@ -8,14 +8,14 @@ if(defined('mnminclude')){
 	$do_not_include_in_pages = array();
 
 	$include_in_pages = array('all');
-	if( do_we_load_module() ) {		
+	if( do_we_load_module() ) {
 		//module_add_action_tpl('tpl_header_admin_links', admin_language_tpl_path . 'admin_language_admin_link.tpl');
 		module_add_action_tpl('tpl_header_admin_main_links', admin_language_tpl_path . 'admin_language_admin_main_link.tpl');
 	}
 	
 
 	$include_in_pages = array('module');
-	if( do_we_load_module() ) {		
+	if( do_we_load_module() ) {
 
 		$moduleName = $_REQUEST['module'];
 

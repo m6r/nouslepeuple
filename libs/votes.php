@@ -38,7 +38,7 @@ class Vote {
 			$where .= " AND vote_user_id=$this->user";
 		}
 		// DB 11/10/08
-		if($this->user <= 0 || !empty($this->ip)) {	
+		if($this->user <= 0 || !empty($this->ip)) {
 		/////
 			if ($this->ip == '') {
 				require_once(mnminclude.'check_behind_proxy.php');
@@ -62,7 +62,7 @@ class Vote {
 
 		$get_data = FALSE;
 		// by default we won't touch the DB
-		// we'll check the cache first, and 
+		// we'll check the cache first, and
 		// access the DB only if needed.
 
 		$link_copy = $this->link;
@@ -116,7 +116,7 @@ class Vote {
 
 		if($cache_user == 0 || !empty($this->ip)) {
 			$where .= " AND vote_user_id=0 AND vote_ip='$this->ip'";
-		} else { 
+		} else {
 			$where .= " AND vote_user_id=$cache_user";
 		}
 		
@@ -162,7 +162,7 @@ class Vote {
 				}
 			}
 
-			return $sql;		
+			return $sql;
 		} else {
 			// in the cache so return the cached results only if $this->link
 			// is NOT an array. if it is an array then we're just doing
@@ -297,7 +297,7 @@ class Vote {
 		if($the_vote){
 			$sql = "Delete from "	. table_votes . " where vote_id = " . $the_vote;
 			return $db->query($sql);
-		}	
+		}
 	
 	}
 }

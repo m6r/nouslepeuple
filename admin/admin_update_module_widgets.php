@@ -14,7 +14,7 @@ force_authentication();
 $canIhaveAccess = 0;
 $canIhaveAccess = $canIhaveAccess + checklevel('admin');
 
-if($canIhaveAccess == 0){	
+if($canIhaveAccess == 0){
 	header("Location: " . getmyurl('admin_login', $_SERVER['REQUEST_URI']));
 	die();
 }

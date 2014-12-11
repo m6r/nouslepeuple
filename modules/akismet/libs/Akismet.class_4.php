@@ -1,9 +1,9 @@
 <?php
 /**
  * 01.26.2006 12:29:28est
- * 
+ *
  * Akismet PHP4 class
- * 
+ *
  * <b>Usage</b>
  * <code>
  *    $comment = array(
@@ -26,7 +26,7 @@
  *        }
  *    }
  * </code>
- * 
+ *
  * @author Bret Kuhns {@link www.miphp.net}
  * @link http://www.miphp.net/blog/view/php4_akismet_class/
  * @version 0.3.3
@@ -53,7 +53,7 @@ class AkismetObject {
 	 * @param	String	$name	A name (array key) for the error
 	 * @param	String	$string	The error message
 	 * @return void
-	 */ 
+	 */
 	// Set an error in the object
 	function setError($name, $message) {
 		$this->errors[$name] = $message;
@@ -79,7 +79,7 @@ class AkismetObject {
 	 * Return all errors in the object
 	 *
 	 * @return String[]
-	 */ 
+	 */
 	function getErrors() {
 		return (array)$this->errors;
 	}
@@ -90,7 +90,7 @@ class AkismetObject {
 	 *
 	 * @param	String	$name	The name of the error you want
 	 * @return boolean
-	 */ 
+	 */
 	function isError($name) {
 		return isset($this->errors[$name]);
 	}
@@ -137,7 +137,7 @@ class AkismetHttpClient extends AkismetObject {
 		$this->_connect();
 		
 		if($this->con && !$this->isError(AKISMET_SERVER_NOT_FOUND)) {
-			$request  = 
+			$request  =
 					strToUpper($type)." /{$this->akismetVersion}/$path HTTP/1.0\r\n" .
 					"Host: ".((!empty($this->apiKey)) ? $this->apiKey."." : null)."{$this->host}\r\n" .
 					"Content-Type: application/x-www-form-urlencoded; charset=utf-8\r\n" .
@@ -215,9 +215,9 @@ class Akismet extends AkismetObject {
 	
 	/**
 	 * Constructor
-	 * 
+	 *
 	 * Set instance variables, connect to Akismet, and check API key
-	 * 
+	 *
 	 * @param	String	$blogUrl	The URL to your own blog
 	 * @param 	String	$apiKey		Your wordpress API key
 	 * @param 	String[]	$comment	A formatted comment array to be examined by the Akismet service
@@ -256,7 +256,7 @@ class Akismet extends AkismetObject {
 	
 	/**
 	 * Query the Akismet and determine if the comment is spam or not
-	 * 
+	 *
 	 * @return	boolean
 	 */
 	function isSpam() {
@@ -268,7 +268,7 @@ class Akismet extends AkismetObject {
 	
 	/**
 	 * Submit this comment as an unchecked spam to the Akismet server
-	 * 
+	 *
 	 * @return	void
 	 */
 	function submitSpam() {

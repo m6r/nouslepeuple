@@ -44,8 +44,8 @@ else
 }
 
 $select = "SELECT * ";
-$from_where = " FROM " . table_links . " 
-		LEFT JOIN " . table_users . " ON link_author=user_id 
+$from_where = " FROM " . table_links . "
+		LEFT JOIN " . table_users . " ON link_author=user_id
 		$from
 		WHERE link_status = 'published' $where";
 $order_by = " ORDER BY link_published_date DESC, link_date DESC";
@@ -74,7 +74,7 @@ if($stories) {
 	}
 	$live_item['link_username'] = $story->user_login;
 	$live_item['link_category'] = GetCatName($link->category);
-	$live_item['link_category_url'] = getmyurl("maincategory",$link->category_safe_name()); 
+	$live_item['link_category_url'] = getmyurl("maincategory",$link->category_safe_name());
 	$live_item['link_url'] = $link->get_internal_url();
 	$live_items[] = $live_item;
 	}

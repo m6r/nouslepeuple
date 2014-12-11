@@ -18,9 +18,9 @@
 	
 	if($list_savedlinks)
 	{
-		foreach($list_savedlinks as $row){            
+		foreach($list_savedlinks as $row){
 			$story_url = getmyurl("story", $row->link_id);
-			$html .= "<li><a class='switchurl' href='".$story_url."'>".$row->link_title."</a></li>";                
+			$html .= "<li><a class='switchurl' href='".$story_url."'>".$row->link_title."</a></li>";
 		}
 		
 		echo $html;

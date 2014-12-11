@@ -19,7 +19,7 @@ class Link {
 	var $status = 'discard';
 	var $type = '';
 	var $category = 0;
-	var $additional_cats = array();	
+	var $additional_cats = array();
 	var $votes = 0;
 	var $comments = 0;
 	var $reports = 0;
@@ -202,7 +202,7 @@ class Link {
 		$link_group_id = $this->link_group_id;
 
 		$vars = array('link' => $this);
-		check_actions('link_store_basic_pre_sql', $vars);		
+		check_actions('link_store_basic_pre_sql', $vars);
 		
 
 		if($this->id===0) {
@@ -229,7 +229,7 @@ class Link {
 		    $db->query("INSERT INTO ".table_additional_categories." SET ac_cat_id='".sanitize($cat,3)."', ac_link_id={$this->id}");
 			
 		$vars = array('link' => $this);
-		check_actions('link_store_basic_post_sql', $vars);		
+		check_actions('link_store_basic_post_sql', $vars);
 
 	}
 
@@ -260,13 +260,13 @@ class Link {
 			$this->randkey=$link->link_randkey;
 			$this->category=$link->link_category;
 			$this->url= $link->link_url;
-			$this->url= str_replace('&amp;', '&', $link->link_url);  
+			$this->url= str_replace('&amp;', '&', $link->link_url);
 			$this->url_title=$link->link_url_title;
 			$this->url_description=$link->link_url_description;
 			$this->title=$link->link_title;
 			$this->title_url=$link->link_title_url;
 			$this->tags=$link->link_tags;
-			$this->content=$link->link_content;     
+			$this->content=$link->link_content;
 // DB 01/08/09
 			$this->date=strtotime($link->link_date);
 //			$date=$link->link_date;
@@ -432,7 +432,7 @@ class Link {
 		if(!$this->read) return $smarty;
 
 		$url = str_replace('&amp;', '&', htmlspecialchars($this->url));
-		$url_short = txt_shorter($url);	
+		$url_short = txt_shorter($url);
 
 		if($this->url == "http://" || $this->url == ''){
 			$url_short = "http://";
@@ -445,7 +445,7 @@ class Link {
 		$smarty->assign('viewtype', $type);
 		$smarty->assign('URL_tagcloud', getmyurl("tagcloud"));
 		$smarty->assign('No_URL_Name', No_URL_Name);
-		if(track_outgoing == true && $url_short != "http://"){ 
+		if(track_outgoing == true && $url_short != "http://"){
 			if(track_outgoing_method == "id"){$smarty->assign('url', getmyurl("out", ($this->id)));}
 			if(track_outgoing_method == "title"){$smarty->assign('url', getmyurl("outtitle", urlencode($this->title_url)));}
 			if(track_outgoing_method == "url"){$smarty->assign('url', getmyurl("outurl", ($url)));}
@@ -528,7 +528,7 @@ class Link {
 
 			$current_user_id = $current_user->user_id;
 			$jsLink = "vote($current_user_id, $this->id, $link_index, '" . md5($current_user_id . $this->randkey) . "', ";
-			for ($stars = 1; $stars <= 5; $stars++) 
+			for ($stars = 1; $stars <= 5; $stars++)
 				$smarty->assign("link_shakebox_javascript_vote_{$stars}star", $jsLink . ($stars * 2) . ')' );
 
 			$smarty->assign('vote_count', $this->votecount);
@@ -539,7 +539,7 @@ class Link {
 				$smarty->assign('star_class', "");
 			}
 		}
-		$smarty->assign('get_group_membered', $this->get_group_membered()); 
+		$smarty->assign('get_group_membered', $this->get_group_membered());
 		if($this->status == "published"){$smarty->assign('category_url', getmyurl("maincategory", $catvar));}
 		if($this->status == "new"){$smarty->assign('category_url', getmyurl("newcategory", $catvar));}
 		if($this->status == "discard"){$smarty->assign('category_url', getmyurl("discardedcategory", $catvar));}
@@ -569,7 +569,7 @@ class Link {
 			$smarty->assign('link_field15', $this->link_field15);
 		}
 		$smarty->assign('link_group_id', $this->link_group_id);
-		$smarty->assign('instpath', my_base_url . my_pligg_base . "/");		
+		$smarty->assign('instpath', my_base_url . my_pligg_base . "/");
 		$smarty->assign('UseAvatars', do_we_use_avatars());
 		$smarty->assign('Avatar', $avatars = get_avatar('all', "", "", "", $this->userid));
 		$smarty->assign('Avatar_ImgSrc', $avatars['large']);
@@ -594,7 +594,7 @@ class Link {
 					if (!$isfriend)	{$friend_text = 'add to';	$friend_url = 'addfriend';}
 						else{$friend_text = 'remove from';	$friend_url = 'removefriend';}
 		
-					$smarty->assign('Friend_Text', $friend_text);				
+					$smarty->assign('Friend_Text', $friend_text);
 					$smarty->assign('user_add_remove', getmyurl('user', $this->username(), $friend_url));
 				}
 		
@@ -607,7 +607,7 @@ class Link {
 			check_actions('friends_activity_function', $vars);
 			if($vars['value'] == true){
 				$smarty->assign('friendvoted', 1);
-			}	
+			}
 		}
 		/*
 		//for friends voting activity
@@ -641,7 +641,7 @@ class Link {
 		$smarty->assign('group_story_links_publish', getmyurl('group_story_links_publish', $this->id));
 		$smarty->assign('group_story_links_new', getmyurl('group_story_links_new', $this->id));
 		$smarty->assign('group_story_links_discard', getmyurl('group_story_links_discard', $this->id));
-		$smarty->assign('link_id',$this->id);   
+		$smarty->assign('link_id',$this->id);
 		$smarty->assign('user_url_add_links', getmyurl('user_add_links', $this->id));
 		$smarty->assign('user_url_remove_links', getmyurl('user_remove_links', $this->id));
 		$smarty->assign('enable_tags', Enable_Tags);
@@ -687,7 +687,7 @@ class Link {
 			// for pages like index, this ->display was being called for each story
 			// which was sometimes 15+ times per page. this way it's just called once
 			$smarty->display('blank.tpl'); //this is just to load the lang file so we can pull from it in php
-			define('alltagtext', $smarty->get_config_vars('PLIGG_Visual_Tags_All_Tags')); 			
+			define('alltagtext', $smarty->get_config_vars('PLIGG_Visual_Tags_All_Tags'));
 		}
 		$alltagtext = alltagtext;
 	
@@ -705,7 +705,7 @@ class Link {
  				for($i=0; $i<=$c; $i++)
  				{
  					if(isset($tag_array[$i])){
-						if ( $URLMethod == 1 ) { 
+						if ( $URLMethod == 1 ) {
 						    $tags_url_array[$i] = my_pligg_base . "/search.php?search=".urlencode(trim($tag_array[$i]))."&amp;tag=true";
 						} elseif ( $URLMethod == 2) {
 						    $tags_url_array[$i] = my_pligg_base . "/tag/" . urlencode(trim($tag_array[$i]));
@@ -945,7 +945,7 @@ class Link {
 		if($user>0) {
 			require_once(mnminclude.'user.php');
 			$dbuser = new User($user);
-			if($dbuser->id>0) 
+			if($dbuser->id>0)
 				$vote->karma = $dbuser->karma;
 		} elseif (!anonymous_vote) {
 			return;
@@ -975,7 +975,7 @@ class Link {
 			$this->check_should_publish();
 			
 			$vars = array('vote' => $this);
-			check_actions('link_insert_vote_post', $vars);		
+			check_actions('link_insert_vote_post', $vars);
 			
 			return true;
 		}
@@ -1045,7 +1045,7 @@ class Link {
 
 		foreach($the_cats as $cat){
 			if($cat->category_id == $this->category)
-				return $cat->category_votes; 
+				return $cat->category_votes;
 		}
 
 		return $main_smarty->get_config_vars('PLIGG_Visual_Submit3Errors_NoCategory');
@@ -1056,7 +1056,7 @@ class Link {
 
 		foreach($the_cats as $cat){
 			if($cat->category_id == $this->category)
-				return $cat->category_karma; 
+				return $cat->category_karma;
 		}
 
 		return $main_smarty->get_config_vars('PLIGG_Visual_Submit3Errors_NoCategory');
@@ -1071,8 +1071,8 @@ class Link {
 		foreach($the_cats as $cat){
 			if($cat->category_id == $id)
 //			if($cat->category_id == $this->category && $cat->category_lang == $dblang)
-			{ 
-				return $cat->category_name; 
+			{
+				return $cat->category_name;
 			}
 		}
 
@@ -1087,8 +1087,8 @@ class Link {
 
 		foreach($the_cats as $cat){
 			if($cat->category_id == $id && $cat->category_lang == $dblang)
-			{ 
-				return $cat->category_safe_name; 
+			{
+				return $cat->category_safe_name;
 			}
 		}
 	}
@@ -1146,7 +1146,7 @@ class Link {
 	function comments() {
 		global $db;
 
-		if(summarize_mysql == 1){		
+		if(summarize_mysql == 1){
 			return $this->comments;
 		}else{
 		// DB 08/04/08
@@ -1217,7 +1217,7 @@ class Link {
 	}
 
 	function get_internal_url(){
-		// returns the internal (comments page) url	
+		// returns the internal (comments page) url
 		if ($this->title_url == ""){
 			return getmyurl("story", $this->id);
 		} else {
@@ -1271,9 +1271,9 @@ class Link {
 			$expression = str_replace('.','\.',$expression);
 			// Check $text against http://<domain>
 			if (strlen($expression) > 0 && preg_match("/\/\/([^\.]+\.)*$expression(\/|$)/i", $text))
-			{ 
-				$this->logSpam( "$ruleFile violation: $expression"); 
-				return true; 
+			{
+				$this->logSpam( "$ruleFile violation: $expression");
+				return true;
 			}
 		}
 		fclose($handle);
@@ -1281,7 +1281,7 @@ class Link {
 	}
 
 	
-	// log date, time, IP address and rule which triggered the spam	
+	// log date, time, IP address and rule which triggered the spam
 	function logSpam($message)
 	{
 		global $SPAM_LOG_BOOK;

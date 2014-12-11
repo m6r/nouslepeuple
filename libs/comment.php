@@ -67,7 +67,7 @@ class Comment {
 		}
 
 		$vars = array('comment' => $this);
-		check_actions('comment_store_post_sql', $vars);		
+		check_actions('comment_store_post_sql', $vars);
 
 	}
 	
@@ -133,7 +133,7 @@ class Comment {
 		// if we can't read the comment, return
 			if(!$this->read) return;
 		
-		// counter	
+		// counter
 			$comment_counter++;
 		
 		$smarty = $this->fill_smarty($smarty);
@@ -148,7 +148,7 @@ class Comment {
 	}
 	
 	function fill_smarty($smarty){
-		global $current_user, $the_template, $comment_counter, $link, $ranklist, $db;  
+		global $current_user, $the_template, $comment_counter, $link, $ranklist, $db;
 	    if (!$ranklist)
 	    {
 		$users = $db->get_results("SELECT user_karma, COUNT(*) FROM ".table_users." WHERE user_level NOT IN ('Spammer') AND user_karma>0 GROUP BY user_karma ORDER BY user_karma DESC",ARRAY_N);
@@ -166,18 +166,18 @@ class Comment {
 
 		$text = save_text_to_html($this->content);
 		$vars = array('comment_text' => $text, 'comment_id' => $this->id, 'smarty' => $smarty);
-		check_actions('show_comment_content', $vars); 
-		$smarty->assign('comment_content', $vars['comment_text']); 
+		check_actions('show_comment_content', $vars);
+		$smarty->assign('comment_content', $vars['comment_text']);
 
 		$vars = array('comment_form_label' => '');
-		check_actions('comment_form_label', $vars); 
+		check_actions('comment_form_label', $vars);
 		$smarty->assign('comment_form_label', $vars['comment_form_label']);
 
 		$smarty->assign('current_userid', $current_user->user_id);
 		$smarty->assign('user_logged_in', $current_user->user_login);
 
 		$vars = array('comment_username' => $this->username(), 'is_anonymous' => 0, 'comment_id' => $this->id);
-		check_actions('show_comment_username', $vars); 
+		check_actions('show_comment_username', $vars);
 		$smarty->assign('user_username', $vars['comment_username']);
 		$smarty->assign('user_rank', $ranklist[$this->userkarma]);
 		$smarty->assign('is_anonymous', $vars['is_anonymous']);
@@ -331,7 +331,7 @@ class Comment {
 			}
 
 			$vars = array('vote' => $this);
-			check_actions('comment_insert_vote_post', $vars);		
+			check_actions('comment_insert_vote_post', $vars);
 
 			return $vote->sum();
 		}

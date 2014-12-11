@@ -46,7 +46,7 @@ if(isset($_REQUEST['category'])){
 	{
 		header("Location: $my_pligg_base/error_404.php");
 		//$main_smarty->assign('tpl_center', 'error_404_center');
-		//$main_smarty->display($the_template . '/pligg.tpl');		
+		//$main_smarty->display($the_template . '/pligg.tpl');
 		die();
 	}
 }
@@ -71,7 +71,7 @@ $search->offset = (get_current_page()-1)*$page_size;
 // pagesize set in the admin panel
 $search->pagesize = $page_size;
 
-// on veut voir tous les posts les mieux classés de la semaine avec les sticky	
+// on veut voir tous les posts les mieux classés de la semaine avec les sticky
 $search->filterToStatus = "all";
 $search->sticky = true;
 $search->filterToTimeFrame = "week";
@@ -79,7 +79,7 @@ $search->orderBy = "link_votes DESC";
 
 // this is for the tabs on the top that filter
 if(isset($_GET['part'])){$search->setmek = $db->escape($_GET['part']);}
-$search->do_setmek();	
+$search->do_setmek();
 
 // do the search
 $search->doSearch();
@@ -101,8 +101,8 @@ if(isset($_REQUEST['category'])) {
 	$main_smarty->assign('pretitle', $thecat );
 	$main_smarty->assign('posttitle', $main_smarty->get_config_vars('PLIGG_Visual_Published_News'));
 	$main_smarty->assign('page_header', $thecat . $main_smarty->get_config_vars('PLIGG_Visual_Published_News'));
-	// pagename	
-	define('pagename', 'published'); 
+	// pagename
+	define('pagename', 'published');
 	$main_smarty->assign('pagename', pagename);
 } else {
 	// breadcrumbs and page title
@@ -112,8 +112,8 @@ if(isset($_REQUEST['category'])) {
 	$main_smarty->assign('navbar_where', $navwhere);
 	$main_smarty->assign('posttitle', $main_smarty->get_config_vars('PLIGG_Visual_Home_Title'));
 	$main_smarty->assign('page_header', $main_smarty->get_config_vars('PLIGG_Visual_Published_News'));
-	// pagename	
-	define('pagename', 'index'); 
+	// pagename
+	define('pagename', 'index');
 	$main_smarty->assign('pagename', pagename);
 }
 
@@ -128,7 +128,7 @@ if(isset($_GET['category'])){
 	$main_smarty->assign('index_url_alltime', getmyurl('new_sort', 'alltime', sanitize($_GET['category'],2)));
 	$main_smarty->assign('index_url_upvoted', getmyurl('new_sort', 'upvoted', sanitize($_GET['category'],2)));
 	$main_smarty->assign('index_url_downvoted', getmyurl('new_sort', 'downvoted', sanitize($_GET['category'],2)));
-	$main_smarty->assign('index_url_commented', getmyurl('new_sort', 'commented', sanitize($_GET['category'],2)));	
+	$main_smarty->assign('index_url_commented', getmyurl('new_sort', 'commented', sanitize($_GET['category'],2)));
 	$main_smarty->assign('cat_url', getmyurl("newcategory"));
 } else {
 	$main_smarty->assign('index_url_recent', getmyurl('new'));
@@ -168,7 +168,7 @@ $main_smarty->assign('URL_rss_page', getmyurl('rsspage', $category_data->categor
 $fetch_link_summary = true;
 include('./libs/link_summary.php'); // this is the code that show the links / stories
 
-//For Infinit scrolling and continue reading option 
+//For Infinit scrolling and continue reading option
 if(Auto_scroll==2 || Auto_scroll==3){
    $main_smarty->assign("scrollpageSize", $page_size);
  

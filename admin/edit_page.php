@@ -26,9 +26,9 @@ $canIhaveAccess = 0;
 $canIhaveAccess = $canIhaveAccess + checklevel('admin');
 $canIhaveAccess = $canIhaveAccess + checklevel('moderator');
 
-if($canIhaveAccess == 0){	
+if($canIhaveAccess == 0){
 //	$main_smarty->assign('tpl_center', '/admin/access_denied');
-//	$main_smarty->display($template_dir . '/admin/admin.tpl');		
+//	$main_smarty->display($template_dir . '/admin/admin.tpl');
 	header("Location: " . getmyurl('admin_login', $_SERVER['REQUEST_URI']));
 	die();
 }
@@ -42,8 +42,8 @@ $main_smarty = do_sidebar($main_smarty);
 	$randkey = rand(1000000,100000000);
 	$main_smarty->assign('randkey', $randkey);
 	
-// pagename	
-define('pagename', 'edit_page'); 
+// pagename
+define('pagename', 'edit_page');
 $main_smarty->assign('pagename', pagename);
 if(isset($_REQUEST['link_id'])){
 	if(is_numeric($_REQUEST['link_id'])){
@@ -89,7 +89,7 @@ if($_REQUEST['process']=='edit_page'){
 			    $db->query("INSERT INTO ".table_old_urls." SET old_link_id=$link_id, old_title_url='$old_url'");
 
 			$sql = " UPDATE ".table_links." SET `link_modified` = NOW( ) , `link_title` = '$page_title', `link_title_url` = '$page_url', `link_content` = '$page_content', link_field1='$page_keywords', link_field2='$page_description' WHERE `link_id` =".$link_id." LIMIT 1 ";
-			$result = @mysql_query ($sql); 
+			$result = @mysql_query ($sql);
 			if($result==1){
 				header('Location: '.getmyurl("page", $page_url));
 				die();
@@ -99,7 +99,7 @@ if($_REQUEST['process']=='edit_page'){
   }
 // show the template
 $main_smarty->assign('tpl_center', '/admin/page_edit');
-$main_smarty->display($template_dir . '/admin/admin.tpl');	
+$main_smarty->display($template_dir . '/admin/admin.tpl');
 
 ?>
 

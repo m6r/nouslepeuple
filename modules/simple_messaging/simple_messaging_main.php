@@ -1,4 +1,4 @@
-<?php  
+<?php
 include_once(mnminclude.'../modules/simple_messaging/kmessaging/class.KMessaging.php');
 function get_new_messages(){
 
@@ -6,7 +6,7 @@ function get_new_messages(){
 
 	// get the new messages
 		if ($current_user->user_id > 0) {
-			$message = new KMessaging(true);	
+			$message = new KMessaging(true);
 			$array = $message->GetAllMessages(5, $current_user->user_id, '', 1);
 			if(is_array($array)){
 				$message_count = count($array);
@@ -53,7 +53,7 @@ function simple_messaging_showpage(){
 	$navwhere['text1'] = 'Messaging';
 	$navwhere['link1'] = URL_simple_messaging_inbox;
 
-	if($view == 'inbox'){	
+	if($view == 'inbox'){
 	
 		define('modulename_sm', 'simple_messaging_inbox');
 		$main_smarty->assign('modulename_sm', modulename_sm);
@@ -103,7 +103,7 @@ function simple_messaging_showpage(){
 		$main_smarty = do_sidebar($main_smarty, $navwhere);
 		$main_smarty->assign('posttitle', "Inbox");
 		
-		define('modulepage', 'simple_messaging_inbox'); 
+		define('modulepage', 'simple_messaging_inbox');
 		$main_smarty->assign('modulepage', modulepage);
 	
 		$main_smarty->assign('tpl_center', simple_messaging_tpl_path . 'inbox');
@@ -117,7 +117,7 @@ function simple_messaging_showpage(){
 		define('modulename_sm', 'simple_messaging_sent');
 		$main_smarty->assign('modulename_sm', modulename_sm);
 		
-		define('modulepage', 'simple_messaging_sent'); 
+		define('modulepage', 'simple_messaging_sent');
 		$message = new KMessaging(true);
 		$array = $message->GetAllMessages(5, '', $current_user->user_id);
 		if(is_array($array)){
@@ -134,7 +134,7 @@ function simple_messaging_showpage(){
 				$array[$key]['sender_name'] = $user->username;
 				$user = "";
 			}
-		} else 
+		} else
 		   	$array = '';
 		$main_smarty->assign('msg_array', $array);
 
@@ -162,7 +162,7 @@ function simple_messaging_showpage(){
 		$main_smarty = do_sidebar($main_smarty, $navwhere);
 		$main_smarty->assign('posttitle', "Inbox");
 		
-		define('modulepage', 'simple_messaging_sentbox'); 
+		define('modulepage', 'simple_messaging_sentbox');
 		$main_smarty->assign('modulepage', modulepage);
 	
 		$main_smarty->assign('tpl_center', simple_messaging_tpl_path . 'sent');
@@ -190,7 +190,7 @@ function simple_messaging_showpage(){
 		$main_smarty = do_sidebar($main_smarty, $navwhere);
 		$main_smarty->assign('posttitle', "Inbox");
 		
-		define('modulepage', 'simple_messaging_compose'); 
+		define('modulepage', 'simple_messaging_compose');
 		$main_smarty->assign('modulepage', modulepage);
 	
 		$main_smarty->assign('tpl_center', simple_messaging_tpl_path . 'compose');
@@ -207,7 +207,7 @@ function simple_messaging_showpage(){
 		$main_smarty = do_sidebar($main_smarty, $navwhere);
 		$main_smarty->assign('posttitle', "Inbox");
 		
-		define('modulepage', 'simple_messaging_error'); 
+		define('modulepage', 'simple_messaging_error');
 		$main_smarty->assign('modulepage', modulepage);
 
 		if(isset($_REQUEST['return'])){$return = html_entity_decode(urldecode(sanitize($_REQUEST['return'], 3)));}else{$return='';}
@@ -273,7 +273,7 @@ function simple_messaging_showpage(){
 		$main_smarty = do_sidebar($main_smarty, $navwhere);
 		$main_smarty->assign('posttitle', "Inbox");
 		
-		define('modulepage', 'viewmsg'); 
+		define('modulepage', 'viewmsg');
 		$main_smarty->assign('modulepage', modulepage);
 	
 		$main_smarty->assign('tpl_center', simple_messaging_tpl_path . 'show_message');
@@ -295,7 +295,7 @@ function simple_messaging_showpage(){
 		$main_smarty = do_sidebar($main_smarty, $navwhere);
 		$main_smarty->assign('posttitle', "Inbox");
 		
-		define('modulepage', 'viewsentmsg'); 
+		define('modulepage', 'viewsentmsg');
 		$main_smarty->assign('modulepage', modulepage);
 	
 		$main_smarty->assign('tpl_center', simple_messaging_tpl_path . 'show_sent_message');
@@ -337,7 +337,7 @@ function simple_messaging_showpage(){
 		$main_smarty = do_sidebar($main_smarty, $navwhere);
 		$main_smarty->assign('posttitle', "Inbox");
 		
-		define('modulepage', 'reply'); 
+		define('modulepage', 'reply');
 		$main_smarty->assign('modulepage', modulepage);
 	
 		$main_smarty->assign('tpl_center', simple_messaging_tpl_path . 'compose');
@@ -347,7 +347,7 @@ function simple_messaging_showpage(){
 
 }
 
-function messaging_get_message_details($msgID){	
+function messaging_get_message_details($msgID){
 	global $db, $current_user, $main_smarty;
 	
 	// Method for identifying modules rather than pagename
@@ -389,6 +389,6 @@ function messaging_get_message_details($msgID){
 		$main_smarty->assign('message', 'This is not your message!');
 		$main_smarty->display(messaging_tpl_path . 'error.tpl');
 		die();
-	}	
+	}
 }
 ?>

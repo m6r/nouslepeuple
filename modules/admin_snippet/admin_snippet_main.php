@@ -22,7 +22,7 @@ function admin_snippet_showpage(){
 	$canIhaveAccess = $canIhaveAccess + checklevel('admin');
 	
 	if($canIhaveAccess == 1)
-	{	
+	{
 		// breadcrumbs
 			$navwhere['text1'] = $main_smarty->get_config_vars('PLIGG_Visual_Header_AdminPanel');
 			$navwhere['link1'] = getmyurl('admin', '');
@@ -32,10 +32,10 @@ function admin_snippet_showpage(){
 			$main_smarty->assign('posttitle', " | " . $main_smarty->get_config_vars('PLIGG_Visual_Header_AdminPanel'));
 		// breadcrumbs
 		//Method for identifying modules rather than pagename
-		define('modulename', 'admin_snippet'); 
+		define('modulename', 'admin_snippet');
 		$main_smarty->assign('modulename', modulename);
 		
-		define('pagename', 'admin_modifysnippet'); 
+		define('pagename', 'admin_modifysnippet');
 		$main_smarty->assign('pagename', pagename);
 		
 		// Add new snippet
@@ -50,7 +50,7 @@ function admin_snippet_showpage(){
 					$snippet_name = $db->escape(sanitize($_POST['snippet_name'],4));
 					$snippet_location = $db->escape(sanitize($_POST['snippet_location'],4));
 					$snippet_content  = $db->escape($_POST['snippet_content']);
-					$db->query("INSERT INTO ".table_prefix."snippets (snippet_name,snippet_location,snippet_updated,snippet_order,snippet_content) 
+					$db->query("INSERT INTO ".table_prefix."snippets (snippet_name,snippet_location,snippet_updated,snippet_order,snippet_content)
 						   VALUES ('$snippet_name','$snippet_location',NOW(),'1','$snippet_content')");
 					header("Location: ".my_pligg_base."/module.php?module=admin_snippet");
 					die();
@@ -93,13 +93,13 @@ function admin_snippet_showpage(){
 			}
 			$main_smarty->assign('tpl_center', admin_snippet_tpl_path . 'admin_snippet_edit');
 		// Export selected
-		} elseif(isset($_POST['export'])) { 
+		} elseif(isset($_POST['export'])) {
 			if (sizeof($_POST["snippet_delete"]))
 			{
-				header('Content-Description: File Transfer'); 
+				header('Content-Description: File Transfer');
 				header('Pragma: no-cache');
 				header('Cache-Control: no-cache, must-revalidate');
-				header("Content-Disposition: attachment; filename=admin_snippet.xml"); 
+				header("Content-Disposition: attachment; filename=admin_snippet.xml");
 				header("Content-type: text/xml; charset=utf-8");
 
     			echo "<?xml version=\"1.0\"?>\r\n";
@@ -122,7 +122,7 @@ function admin_snippet_showpage(){
 			header("Location: ".my_pligg_base."/module.php?module=admin_snippet");
 			die();
 		// Delete selected
-		} elseif(isset($_POST['delete'])) { 
+		} elseif(isset($_POST['delete'])) {
 			if (sizeof($_POST["snippet_delete"]))
 				$db->query("DELETE FROM ".table_prefix."snippets WHERE snippet_id IN(".join(",",array_keys($_POST["snippet_delete"])).")");
 
@@ -141,7 +141,7 @@ function admin_snippet_showpage(){
 		} else {
 		    	// Import snippets
 		     	if($_REQUEST['import']) {
-		    	    if ($_FILES["file"]["error"] == UPLOAD_ERR_OK) 
+		    	    if ($_FILES["file"]["error"] == UPLOAD_ERR_OK)
 	  	    	    {
 				$xml = file_get_contents($_FILES["file"]["tmp_name"]);
 				if (preg_match_all('/<snippet>(.+?)<\/snippet>/is',$xml,$m))
@@ -157,7 +157,7 @@ function admin_snippet_showpage(){
 					    	$snippet_location = $db->escape($m[1]);
 					    if (preg_match('/<content>(<!\[CDATA\[)?(.+?)(\]\]>)?<\/content>/is',$snippet,$m))
 					    	$snippet_content = $db->escape($m[2]);
-					    $db->query("INSERT INTO ".table_prefix."snippets (snippet_name,snippet_location,snippet_updated,snippet_order,snippet_content) 
+					    $db->query("INSERT INTO ".table_prefix."snippets (snippet_name,snippet_location,snippet_updated,snippet_order,snippet_content)
 							   VALUES ('$snippet_name','$snippet_location',NOW(),'1','$snippet_content')");
 					}
 					header("Location: ".my_pligg_base."/module.php?module=admin_snippet");
@@ -178,7 +178,7 @@ function admin_snippet_showpage(){
 	 		$filtered = $db->get_results("SELECT * FROM ".table_prefix."snippets ORDER BY snippet_location, snippet_order");
 			if ($filtered)
 			{
-			    foreach($filtered as $dbfiltered) 
+			    foreach($filtered as $dbfiltered)
 			  	$template_snippets[] = (array) $dbfiltered;
 		  	    $main_smarty->assign('template_snippets', $template_snippets);
 		  	}
@@ -191,6 +191,6 @@ function admin_snippet_showpage(){
 		header("Location: " . getmyurl('login', $_SERVER['REQUEST_URI']));
 	}
 		
-}	
+}
 
 ?>

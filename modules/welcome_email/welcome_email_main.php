@@ -1,4 +1,4 @@
-<?php	
+<?php
 function welcome_email_send(&$registration_details)
 {
 	global $main_smarty, $current_user;
@@ -7,11 +7,11 @@ function welcome_email_send(&$registration_details)
 
 	// Check User ID != 0
 	if ($registration_details['id'] > 0)
-	{		
+	{
 
-		$username = $registration_details['username']; 
-		$password = $registration_details['password']; 
-		$email = $registration_details['email']; 
+		$username = $registration_details['username'];
+		$password = $registration_details['password'];
+		$email = $registration_details['email'];
 		$id = $registration_details['id'];
 
 		$user = new User();
@@ -31,7 +31,7 @@ function welcome_email_send(&$registration_details)
 			$thisUserEmail = $email;
 			
 			// Pligg Information
-			$siteName = $main_smarty->get_config_vars('PLIGG_Visual_Name'); 
+			$siteName = $main_smarty->get_config_vars('PLIGG_Visual_Name');
 			$siteEmail = $main_smarty->get_config_vars('PLIGG_PassEmail_From');
 			
 			$installedURL = my_base_url;
@@ -44,11 +44,11 @@ function welcome_email_send(&$registration_details)
 			$messageText  = "Hello, ".$thisUserName.".\n\n";
 			$messageText .= "Your account at ".$siteName." has been successfully set up.\n\n";
 			$messageText .= "Please keep the below information for future reference:\n";
-			$messageText .= "-----------------------------------------\n\n";		
+			$messageText .= "-----------------------------------------\n\n";
 			$messageText .= "  Login URL: ".$installedURL.$installedBase."/login.php\n\n";
 			$messageText .= "  Username.: ".$thisUserName."\n";
 			$messageText .= "  Password.: (password choosen when registered)\n\n";
-			$messageText .= "-----------------------------------------\n";		
+			$messageText .= "-----------------------------------------\n";
 			$messageText .= "Email has been automatically generated on ".$thisDate." at ".$thisTime.".\n";
 			
 			// Setup Mail Class
@@ -61,7 +61,7 @@ function welcome_email_send(&$registration_details)
 			$mail->setFrom($siteName." <".$siteEmail.">");
 			
 			// Set Mail Subject
-			$mail->setSubject($messageSubject);	
+			$mail->setSubject($messageSubject);
 			
 			// Send Mail
 			$mail->send(array($thisUserEmail));

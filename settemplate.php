@@ -18,7 +18,7 @@ $main_smarty->assign('navbar_where', $navwhere);
 $main_smarty->assign('posttitle', $main_smarty->get_config_vars('PLIGG_Visual_Change_Template'));
 
 // pagename
-define('pagename', 'settemplate'); 
+define('pagename', 'settemplate');
 $main_smarty->assign('pagename', pagename);
 
 
@@ -34,7 +34,7 @@ if(isset($_GET['template'])){
 	}
 }
 
-// show the template	
+// show the template
 $main_smarty->assign('tpl_center', $the_template . '/settemplate_center');
 $main_smarty->display($the_template . '/pligg.tpl');
 ?>

@@ -45,7 +45,7 @@ if($canIhaveAccess == 1)
 				$main_smarty->assign('story',getmyurl('story', $link->link_id));
 				
 				// pagename
-				define('pagename', 'linkadmin'); 
+				define('pagename', 'linkadmin');
 				$main_smarty->assign('pagename', pagename);
 				
 				// show the template
@@ -69,13 +69,13 @@ if($canIhaveAccess == 1)
 				$main_smarty->assign('link_content',$link->link_content);
 				$main_smarty->assign('link_status',$link->link_status);
 				$main_smarty->assign('user_login',$author->user_login);
-				$main_smarty->assign('action',$action);				
+				$main_smarty->assign('action',$action);
 				$main_smarty->assign('banned_domain_url',get_base_url($link->link_url));
 				$main_smarty->assign('admin_modify_url',getmyurl('admin_modify', $link->link_id));
 				$main_smarty->assign('admin_modify_do_url',getmyurl('admin_modify_do', $link->link_id, $action));
 				
 				// pagename
-				define('pagename', 'linkadmin'); 
+				define('pagename', 'linkadmin');
 			  $main_smarty->assign('pagename', pagename);
 				
 				//show the template
@@ -105,7 +105,7 @@ if($canIhaveAccess == 1)
 			totals_regenerate();
 
 			// pagename
-			define('pagename', 'linkadmin'); 
+			define('pagename', 'linkadmin');
 			$main_smarty->assign('pagename', pagename);
 
 			// show the template
@@ -114,7 +114,7 @@ if($canIhaveAccess == 1)
 			}else{
 				echo 'Error: link not found';
 			}
-		}			
+		}
 	}else{
 			//no request
 	}

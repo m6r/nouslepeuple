@@ -55,17 +55,17 @@
 			if (in_array($script_name, $include_in_pages) || in_array('all', $include_in_pages)) {
 				$doit = 1;
 			}
-		}		
+		}
 		if(is_array($do_not_include_in_pages)){
 			// if page we're viewing is on the modules do_not_include list
 			if (in_array($script_name, $do_not_include_in_pages)) {
 				$doit = 0;
 			}
-		}	
+		}
 		// if the page we're viewing is on the core do_not_include list
 		if (in_array($script_name, $do_not_include_in_pages_core)) {
 			$doit = 0;
-		}			
+		}
 
 	return $doit;
 	}

@@ -91,7 +91,7 @@ if (!$errors) {
 		</form>';
     } else { //they clicked yes!
 	$include='../config.php';
-	if (file_exists($include)) { 
+	if (file_exists($include)) {
 		include_once($include);
 		include(mnminclude.'html1.php');
 	}
@@ -319,12 +319,12 @@ if (!$errors) {
     }
 //end of no errors
 }
-else { 
+else {
 	echo DisplayErrors($errors);
 	echo '<p>' . $lang['PleaseFix'] . '</p>';
 }
 
-echo '</div>'; // .well	
+echo '</div>'; // .well
 
 $include='footer.php'; if (file_exists($include)) { include_once($include); }
 ?>

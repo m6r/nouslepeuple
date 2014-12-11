@@ -28,7 +28,7 @@ define('sidebar_stats_pligg_lang_conf', lang_loc . "/languages/lang_" . pligg_la
 if(is_object($main_smarty)){
 	$sql = "SELECT user_login FROM " . table_users . " WHERE user_enabled = '1' ORDER BY user_id DESC LIMIT 1";
 	$last_user = $db->get_var($sql);
-	$main_smarty->assign('sidebar_stats_last_user', $last_user); 
+	$main_smarty->assign('sidebar_stats_last_user', $last_user);
 
 	$members = $db->get_var('SELECT count(*) from ' . table_users . ' WHERE user_enabled = "1";');
 	$main_smarty->assign('sidebar_stats_members', $members);

@@ -165,7 +165,7 @@ if ($old_version < $new_version) {
 		$db->query("INSERT INTO `" . table_config . "` VALUES (NULL, 'Submit', 'Multiple_Categories', 'false', 'false', 'true / false', 'Allow multiple categories', 'User may choose more than one category for each story', 'define', NULL)");
 	}
     
-	// out.php alter table 
+	// out.php alter table
 	$fieldexists = checkforfield('link_out', table_links);
 	if (!$fieldexists) {
 		$sql = "ALTER TABLE `".table_links."` ADD `link_out` INT( 11 ) NOT NULL ;";
@@ -187,7 +187,7 @@ if ($old_version < $new_version) {
 		$db->query($sql);
 	}
 
-	// Groups module alter table 
+	// Groups module alter table
 	$fieldexists = checkforfield('link_group_id', table_links);
 	if (!$fieldexists) {
 		$sql = "ALTER TABLE `".table_links."` ADD `link_group_id` INT( 20 ) NOT NULL ;";
@@ -212,24 +212,24 @@ if ($old_version < $new_version) {
 	if (!$fieldexists) {
 		$sql = "ALTER TABLE `".table_modules."` ADD `latest_version` float NOT NULL AFTER `version`;";
 		$db->query($sql);
-	}  
+	}
   
 	// Disable Multibox Module (replaced by Colorbox)
 	$result = $db->get_results("select * from `" . table_modules . "` where `folder` = 'multibox_admin';");
-	if (count($result) == 0) 
+	if (count($result) == 0)
 		$db->query("insert into `" . table_modules . "` (`id`, `name`, `version`, `latest_version`, `folder`, `enabled`) VALUES (97, 'Multibox Admin', 0.1, 0, 'multibox_admin', 0);");
 	
 	// Install Hello World Module
 	$result = $db->get_results("select * from `" . table_modules . "` where `folder` = 'hello_world';");
-	if (count($result) == 0) 
-		$db->query("insert into `" . table_modules . "` (`id`, `name`, `version`, `latest_version`, `folder`, `enabled`) VALUES (99, 'Hello World', 0.3, 0, 'hello_world', 1);");	
+	if (count($result) == 0)
+		$db->query("insert into `" . table_modules . "` (`id`, `name`, `version`, `latest_version`, `folder`, `enabled`) VALUES (99, 'Hello World', 0.3, 0, 'hello_world', 1);");
 
 	// Voting method 3
 	$sql = "UPDATE `" . table_config . "` set  var_optiontext='1-3', var_desc='<b>1</b> = the digg method. <b>2</b> = 5 star rating method. <b>3</b> = Karma method' WHERE `var_name` = 'Voting_Method';";
 	$db->query($sql);
 
 	$result = $db->get_results("select * from `" . table_config . "` where `var_name` = 'karma_to_publish';");
-	if (count($result) == 0) 
+	if (count($result) == 0)
 	    $db->query("INSERT INTO `" . table_config . "` VALUES (NULL, 'Voting', 'karma_to_publish', '100', '100', 'number', 'Karma to publish', 'Minimum karma value before story is sent to the front page.', 'define', NULL)");
 	
 
@@ -237,32 +237,32 @@ if ($old_version < $new_version) {
 	$sql = "UPDATE `" . table_config . "` set  var_title='HTML tags to allow for Normal users' WHERE `var_id` = 20;";
 	$db->query($sql);
 	$result = $db->get_results("select * from `" . table_config . "` where `var_name` = 'Story_Content_Tags_To_Allow_Admin';");
-	if (count($result) == 0) 
+	if (count($result) == 0)
 		$db->query("INSERT INTO `" . table_config . "` VALUES (91, 'Submit', 'Story_Content_Tags_To_Allow_Admin', '', '', 'HTML tags', 'HTML tags to allow for Moderators', 'leave blank to not allow tags. Examples are \"&lt;strong>&lt;br>&lt;font>&lt;img>&lt;p>\"', 'define', '''')");
 	$result = $db->get_results("select * from `" . table_config . "` where `var_name` = 'Story_Content_Tags_To_Allow_God';");
-	if (count($result) == 0) 
+	if (count($result) == 0)
 		$db->query("INSERT INTO `" . table_config . "` VALUES (92, 'Submit', 'Story_Content_Tags_To_Allow_God', '', '', 'HTML tags', 'HTML tags to allow for Admins', 'leave blank to not allow tags. Examples are \"&lt;strong>&lt;br>&lt;font>&lt;img>&lt;p>\"', 'define', '''')");
 	$db->query("UPDATE `" . table_config . "` SET var_name='Story_Content_Tags_To_Allow_Normal' WHERE var_name='Story_Content_Tags_To_Allow'");
 
 	$result = $db->get_results("select * from `" . table_config . "` where `var_name` = 'maxTitleLength';");
-	if (count($result) == 0) 
+	if (count($result) == 0)
 		$db->query("INSERT INTO `" . table_config . "` VALUES (NULL, 'Submit', 'maxTitleLength', '120', '120', 'number', 'Maximum Title Length', 'Maximum number of characters for the story title.', 'define', NULL)");
 	$result = $db->get_results("select * from `" . table_config . "` where `var_name` = 'maxTagsLength';");
-	if (count($result) == 0) 
+	if (count($result) == 0)
 		$db->query("INSERT INTO `" . table_config . "` VALUES (NULL, 'Submit', 'maxTagsLength', '40', '40', 'number', 'Maximum Tag Line Length', 'Maximum number of characters for the story tags.', 'define', NULL)");
 		
 	$result = $db->get_results("select * from `" . table_config . "` where `var_name` = 'minTagsLength';");
-	if (count($result) == 0) 
+	if (count($result) == 0)
 		$db->query("INSERT INTO `" . table_config . "` VALUES (NULL, 'Submit', 'minTagsLength', '3', '3', 'number', 'Minimum Tag Character Length', 'Minimum number of characters allowed for story tags. Should be at least 3 to be searchable.', 'define', NULL)");
 			
 	$result = $db->get_results("select * from `" . table_config . "` where `var_name` = 'maxStoryLength';");
-	if (count($result) == 0) 
+	if (count($result) == 0)
 		$db->query("INSERT INTO `" . table_config . "` VALUES (NULL, 'Submit', 'maxStoryLength', '1000', '1000', 'number', 'Maximum Story Length', 'Maximum number of characters for the story description.', 'define', NULL)");
 	$result = $db->get_results("select * from `" . table_config . "` where `var_name` = 'maxSummaryLength';");
-	if (count($result) == 0) 
+	if (count($result) == 0)
 		$db->query("INSERT INTO `" . table_config . "` VALUES (NULL, 'Submit', 'maxSummaryLength', '400', '400', 'number', 'Maximum Summary Length', 'Maximum number of characters for the story summary.', 'define', NULL)");
 	$result = $db->get_results("select * from `" . table_config . "` where `var_name` = 'maxCommentLength';");
-	if (count($result) == 0) 
+	if (count($result) == 0)
 		$db->query("INSERT INTO `" . table_config . "` VALUES (NULL, 'Comments', 'maxCommentLength', '1200', '1200', 'number', 'Maximum Comment Length', 'Maximum number of characters for the comment.', 'define', NULL)");
 
 	$tableexists = checkfortable(table_widgets);
@@ -289,9 +289,9 @@ if ($old_version < $new_version) {
 	}
 	else
 	{
-		$fieldexists = checkforindex('folder', table_widgets); 	 
+		$fieldexists = checkforindex('folder', table_widgets);
 		if (!$fieldexists)
-			$db->query("ALTER TABLE `".table_widgets."` ADD UNIQUE (`folder`)");	
+			$db->query("ALTER TABLE `".table_widgets."` ADD UNIQUE (`folder`)");
 	}
 
 	$tableexists = checkfortable(table_old_urls);
@@ -327,7 +327,7 @@ if ($old_version < $new_version) {
 		$sql = "ALTER TABLE `" . table_links . "` ADD `link_reports` int(20) NOT NULL default '0'";
 		$db->query($sql);
 	} else {
-		// this is for caching link_reports in the links table instead of checking the 
+		// this is for caching link_reports in the links table instead of checking the
 		// votes table every link->read()
 		// this is here for people who already upgraded to the SVN and may have
 		// stories that have been reported. this field wasn't used right away so may
@@ -341,10 +341,10 @@ if ($old_version < $new_version) {
 		$db->query($sql);
 	}
 	
-	$fieldexists = checkforfield('link_blog', table_links); 	 
-	if ($fieldexists) { 	 
-	         $sql = "ALTER TABLE `" . table_links . "` drop column `link_blog`"; 	 
-	         $db->query($sql); 	 
+	$fieldexists = checkforfield('link_blog', table_links);
+	if ($fieldexists) {
+	         $sql = "ALTER TABLE `" . table_links . "` drop column `link_blog`";
+	         $db->query($sql);
 	}
 	/* modification for page cms*/
 	$fieldexists = checkforfield('link_status', table_links);
@@ -366,36 +366,36 @@ if ($old_version < $new_version) {
 		if ($field->Field == 'link_status' && !strstr($field->Type,"'page'"))
 		    $db->query("ALTER TABLE `".table_links."` CHANGE  `link_status`  `link_status` ".str_replace(')',",'page')",$field->Type)." DEFAULT  'discard'");
 	/////
-	$fieldexists = checkforfield('user_lang', table_users); 	 
-	if ($fieldexists) { 	 
-	    $sql = "ALTER TABLE `" . table_users . "` drop column `user_lang`"; 	 
-	    $db->query($sql); 	 
+	$fieldexists = checkforfield('user_lang', table_users);
+	if ($fieldexists) {
+	    $sql = "ALTER TABLE `" . table_users . "` drop column `user_lang`";
+	    $db->query($sql);
 	}
-	$fieldexists = checkforfield('user_language', table_users); 	 
-	if (!$fieldexists) { 	 
-	    $sql = "ALTER TABLE `" . table_users . "` ADD `user_language` VARCHAR(32)"; 	 
-	    $db->query($sql); 	 
+	$fieldexists = checkforfield('user_language', table_users);
+	if (!$fieldexists) {
+	    $sql = "ALTER TABLE `" . table_users . "` ADD `user_language` VARCHAR(32)";
+	    $db->query($sql);
 	}
 	
-	$fieldexists = checkforfield('comment_nick', table_comments); 	 
-	if ($fieldexists) { 	 
-		$sql = "ALTER TABLE `" . table_comments . "` drop column `comment_nick`"; 	 
-		$db->query($sql); 	 
+	$fieldexists = checkforfield('comment_nick', table_comments);
+	if ($fieldexists) {
+		$sql = "ALTER TABLE `" . table_comments . "` drop column `comment_nick`";
+		$db->query($sql);
 	}
 
-	$fieldexists = checkforfield('comment_status', table_comments); 	 
-	if (!$fieldexists) { 	 
-		$sql = "ALTER TABLE `" . table_comments . "` ADD `comment_status` enum('discard','moderated','published','spam') NOT NULL default 'published' "; 	 
-		$db->query($sql); 	 
+	$fieldexists = checkforfield('comment_status', table_comments);
+	if (!$fieldexists) {
+		$sql = "ALTER TABLE `" . table_comments . "` ADD `comment_status` enum('discard','moderated','published','spam') NOT NULL default 'published' ";
+		$db->query($sql);
 	} else {
 		$sql = (" ALTER TABLE `" . table_comments . "` CHANGE `comment_status` `comment_status` ENUM('discard','moderated','published','spam') NOT NULL DEFAULT 'published' ");
 		$db->query($sql);
 	}
 	$sql = "ALTER TABLE  `" . table_comments . "` CHANGE  `comment_date`  `comment_date` DATETIME";
-	$db->query($sql); 	 
+	$db->query($sql);
 
 	$sql = "ALTER TABLE ".table_links." MODIFY `link_content` MEDIUMTEXT";
-    $db->query($sql); 	 
+    $db->query($sql);
 
 	// Add Groups table
 	echo '<li>Creating table: \'groups\'</li>';
@@ -459,71 +459,71 @@ if ($old_version < $new_version) {
 		}
 	echo '<li>Creating table: \'group_shared\'</li>';
 	
-	$fieldexists = checkforindex('tag_words', table_tags); 	 
-	if (!$fieldexists) { 	 
-	    $sql = "ALTER TABLE `" . table_tags . "`  ADD INDEX `tag_words` ( `tag_words` , `tag_link_id` )"; 	 
-	    $db->query($sql); 	 
+	$fieldexists = checkforindex('tag_words', table_tags);
+	if (!$fieldexists) {
+	    $sql = "ALTER TABLE `" . table_tags . "`  ADD INDEX `tag_words` ( `tag_words` , `tag_link_id` )";
+	    $db->query($sql);
 	}
 
-	$fieldexists = checkforindex('group_name', table_groups); 	 
-	if (!$fieldexists) { 	 
-	    $sql = "ALTER TABLE `" . table_groups . "` ADD INDEX (  `group_name`(100) )"; 	 
-	    $db->query($sql); 	 
-	    $sql = "ALTER TABLE `" . table_groups . "` ADD INDEX  `group_creator` (  `group_creator` ,  `group_status` )"; 	 
-	    $db->query($sql); 	 
+	$fieldexists = checkforindex('group_name', table_groups);
+	if (!$fieldexists) {
+	    $sql = "ALTER TABLE `" . table_groups . "` ADD INDEX (  `group_name`(100) )";
+	    $db->query($sql);
+	    $sql = "ALTER TABLE `" . table_groups . "` ADD INDEX  `group_creator` (  `group_creator` ,  `group_status` )";
+	    $db->query($sql);
 	}
-	$fieldexists = checkforfield('group_notify_email', table_groups); 	 
-	if (!$fieldexists) { 	 
-	    $sql = "ALTER TABLE `" . table_groups . "` ADD `group_notify_email` tinyint(1) NOT NULL default '0'"; 	 
-	    $db->query($sql); 	 
+	$fieldexists = checkforfield('group_notify_email', table_groups);
+	if (!$fieldexists) {
+	    $sql = "ALTER TABLE `" . table_groups . "` ADD `group_notify_email` tinyint(1) NOT NULL default '0'";
+	    $db->query($sql);
 	}
-	$fieldexists = checkforindex('share_group_id', table_group_shared); 	 
-	if (!$fieldexists) { 	 
-		$sql = "ALTER TABLE `" . table_group_shared . "` ADD UNIQUE (`share_group_id` ,`share_link_id`)"; 	 
-		$db->query($sql); 	 
+	$fieldexists = checkforindex('share_group_id', table_group_shared);
+	if (!$fieldexists) {
+		$sql = "ALTER TABLE `" . table_group_shared . "` ADD UNIQUE (`share_group_id` ,`share_link_id`)";
+		$db->query($sql);
 	}
-	$fieldexists = checkforindex('user_group', table_group_member); 	 
-	if (!$fieldexists) { 	 
-		$sql = "ALTER TABLE `" . table_group_member . "` ADD INDEX `user_group` (  `member_group_id`, `member_user_id` )"; 	 
-		$db->query($sql); 	 
+	$fieldexists = checkforindex('user_group', table_group_member);
+	if (!$fieldexists) {
+		$sql = "ALTER TABLE `" . table_group_member . "` ADD INDEX `user_group` (  `member_group_id`, `member_user_id` )";
+		$db->query($sql);
 	}
-	$fieldexists = checkforindex('category_id', table_categories); 	 
-	if (!$fieldexists) { 	 
-		$sql = "ALTER TABLE `" . table_categories . "` ADD INDEX (  `category_id` )"; 	 
-		$db->query($sql); 	 
+	$fieldexists = checkforindex('category_id', table_categories);
+	if (!$fieldexists) {
+		$sql = "ALTER TABLE `" . table_categories . "` ADD INDEX (  `category_id` )";
+		$db->query($sql);
 	}
-	$fieldexists = checkforindex('category_parent', table_categories); 	 
-	if (!$fieldexists) { 	 
-		$sql = "ALTER TABLE `" . table_categories . "` ADD INDEX (  `category_parent` )"; 	 
-		$db->query($sql); 	 
-		$sql = "ALTER TABLE `" . table_categories . "` ADD INDEX (  `category_safe_name` )"; 	 
-		$db->query($sql); 	 
+	$fieldexists = checkforindex('category_parent', table_categories);
+	if (!$fieldexists) {
+		$sql = "ALTER TABLE `" . table_categories . "` ADD INDEX (  `category_parent` )";
+		$db->query($sql);
+		$sql = "ALTER TABLE `" . table_categories . "` ADD INDEX (  `category_safe_name` )";
+		$db->query($sql);
 	}
-	$fieldexists = checkforindex('category_name', table_categories); 	 
-	if ($fieldexists) { 	 
-		$sql = "ALTER TABLE `" . table_categories . "` DROP INDEX `category_name`"; 	 
-		$db->query($sql); 	 
+	$fieldexists = checkforindex('category_name', table_categories);
+	if ($fieldexists) {
+		$sql = "ALTER TABLE `" . table_categories . "` DROP INDEX `category_name`";
+		$db->query($sql);
 	}
-	$fieldexists = checkforindex('comment_date', table_comments); 	 
-	if (!$fieldexists) { 	 
-		$sql = "ALTER TABLE `" . table_comments . "` ADD INDEX (  `comment_date` )"; 	 
-		$db->query($sql); 	 
-		$sql = "ALTER TABLE `" . table_comments . "` ADD INDEX `comment_link_id` (  `comment_link_id`, `comment_parent`, `comment_date` )"; 	 
-		$db->query($sql); 	 
-		$sql = "ALTER TABLE `" . table_comments . "` ADD INDEX `comment_parent` (   `comment_parent`, `comment_date` )"; 	 
-		$db->query($sql); 	 
+	$fieldexists = checkforindex('comment_date', table_comments);
+	if (!$fieldexists) {
+		$sql = "ALTER TABLE `" . table_comments . "` ADD INDEX (  `comment_date` )";
+		$db->query($sql);
+		$sql = "ALTER TABLE `" . table_comments . "` ADD INDEX `comment_link_id` (  `comment_link_id`, `comment_parent`, `comment_date` )";
+		$db->query($sql);
+		$sql = "ALTER TABLE `" . table_comments . "` ADD INDEX `comment_parent` (   `comment_parent`, `comment_date` )";
+		$db->query($sql);
 	}
-	$fieldexists = checkforindex('link_title_url', table_links); 	 
-	if (!$fieldexists) { 	 
-		$sql = "ALTER TABLE `" . table_links . "` ADD INDEX (  `link_title_url` )"; 	 
-		$db->query($sql); 	 
-		$sql = "ALTER TABLE `" . table_links . "` ADD INDEX `link_status` (  `link_status` ,  `link_date` )"; 	 
-		$db->query($sql); 	 
+	$fieldexists = checkforindex('link_title_url', table_links);
+	if (!$fieldexists) {
+		$sql = "ALTER TABLE `" . table_links . "` ADD INDEX (  `link_title_url` )";
+		$db->query($sql);
+		$sql = "ALTER TABLE `" . table_links . "` ADD INDEX `link_status` (  `link_status` ,  `link_date` )";
+		$db->query($sql);
 	}
-	$fieldexists = checkforindex('saved_user_id', table_saved_links); 	 
-	if (!$fieldexists) { 	 
-		$sql = "ALTER TABLE `" . table_saved_links . "` ADD INDEX (  `saved_user_id` )"; 	 
-		$db->query($sql); 	 
+	$fieldexists = checkforindex('saved_user_id', table_saved_links);
+	if (!$fieldexists) {
+		$sql = "ALTER TABLE `" . table_saved_links . "` ADD INDEX (  `saved_user_id` )";
+		$db->query($sql);
 	}
 	
 	// for the 'totals' table for summarizing
@@ -536,9 +536,9 @@ if ($old_version < $new_version) {
 			) ENGINE = MyISAM;";
         	$db->query($sql);
 	
-		$db->query("insert into `" . table_totals . "` (`name`, `total`) values ('published', 0);");	
-		$db->query("insert into `" . table_totals . "` (`name`, `total`) values ('new', 0);");	
-		$db->query("insert into `" . table_totals . "` (`name`, `total`) values ('discard', 0);");	
+		$db->query("insert into `" . table_totals . "` (`name`, `total`) values ('published', 0);");
+		$db->query("insert into `" . table_totals . "` (`name`, `total`) values ('new', 0);");
+		$db->query("insert into `" . table_totals . "` (`name`, `total`) values ('discard', 0);");
 	}
 	
 	$tableexists = checkfortable(table_tag_cache);
@@ -623,7 +623,7 @@ if ($old_version < $new_version) {
 			$sqlGetiCategory = "SELECT category__auto_id from " . table_categories . " where category__auto_id!= 0;";
 			$sqlGetiCategoryQ = mysql_query($sqlGetiCategory);
 			$arr = array();
-			while ($row = mysql_fetch_array($sqlGetiCategoryQ, MYSQL_NUM)) 
+			while ($row = mysql_fetch_array($sqlGetiCategoryQ, MYSQL_NUM))
 				$arr[] = $row[0];
 
 			$result = mysql_query("SELECT * FROM ".table_users);

@@ -43,14 +43,14 @@ $users = $db->get_results("SELECT user_karma, COUNT(*) FROM " . table_users . " 
 			$main_smarty->assign('user_username', $user->username);
 			$main_smarty->assign('user_total_links', $user->total_links);
 			$main_smarty->assign('user_published_links', $user->published_links);
-			if($user->total_links>0) 
+			if($user->total_links>0)
 				$main_smarty->assign('user_published_links_percent', intval($user->published_links/$user->total_links*100));
 			else
 				$main_smarty->assign('user_published_links_percent', '');
 			$main_smarty->assign('user_total_comments', $user->total_comments);
 			$main_smarty->assign('user_total_votes', $user->total_votes);
 			$main_smarty->assign('user_published_votes', $user->published_votes);
-			if($user->total_votes>0) 
+			if($user->total_votes>0)
 				$main_smarty->assign('user_published_votes_percent', intval($user->published_votes/$user->total_votes*100));
 			else
 				$main_smarty->assign('user_published_votes_percent', '');

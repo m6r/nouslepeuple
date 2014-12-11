@@ -9,7 +9,7 @@ function welcome_privmsg_send(&$registration_details)
 	include_once('config.php');
 	include_once(my_pligg_base.'/modules/simple_messaging/kmessaging/class.KMessaging.php');
 
-	$siteName = $main_smarty->get_config_vars('PLIGG_Visual_Name'); 
+	$siteName = $main_smarty->get_config_vars('PLIGG_Visual_Name');
 	
 	// User ID of Admin
 	define('welcome_privmsg_admin_id', '1');
@@ -22,7 +22,7 @@ function welcome_privmsg_send(&$registration_details)
 			
 	// Check User ID != 0
 	if ($registration_details['id'] > 0)
-	{		
+	{
 		$msg_subject = sanitize(welcome_privmsg_subject, 2);
 		$msg_body = welcome_privmsg_body;
 		$msg_to_ID = $registration_details['id'];

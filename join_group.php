@@ -125,7 +125,7 @@ if( $_REQUEST['activate'] == 'withdraw')
 		$sql2 = "delete from ". table_group_member ." where member_user_id = ".$user_id." and member_group_id = ".$group_id." ";
 		//echo $sql;
 		$result1 = $db->query($sql2);
-	}	
+	}
 	//page redirect
 	$redirect = '';
 	$redirect = getmyurl("group_story", $group_id);

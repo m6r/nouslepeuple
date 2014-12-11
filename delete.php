@@ -23,15 +23,15 @@ force_authentication();
 // restrict access to admins
 $canIhaveAccess = 0;
 $canIhaveAccess = $canIhaveAccess + checklevel('admin');
-if($canIhaveAccess == 0){	
+if($canIhaveAccess == 0){
 //	$main_smarty->assign('tpl_center', '/templates/admin/admin_access_denied');
-//	$main_smarty->display($template_dir . '/admin/admin.tpl');		
+//	$main_smarty->display($template_dir . '/admin/admin.tpl');
 	header("Location: " . getmyurl('login', $_SERVER['REQUEST_URI']));
 	die();
 }
 
 
-function dowork(){	
+function dowork(){
 
 	$canIhaveAccess = 0;
 	$canIhaveAccess = $canIhaveAccess + checklevel('admin');
@@ -59,10 +59,10 @@ function dowork(){
 			$config->store();
 		}
 	}
-}	
+}
 
 // pagename
-define('pagename', 'delete'); 
+define('pagename', 'delete');
 $main_smarty->assign('pagename', pagename);
 if(isset($_REQUEST['link_id'])){
 
@@ -107,7 +107,7 @@ if(isset($_REQUEST['link_id'])){
 				$redirectUrl = $firstlnk;
 			}
 		}
-	} 
+	}
 	if(isset($_REQUEST['pnme']) and $_REQUEST['pnme'] != 'story' and $_REQUEST['pnme'] != 'published' and $_REQUEST['pnme'] != 'group_story'){
 		
 		$redirectUrl = $_REQUEST['pnme'].'/'.$linkslug;

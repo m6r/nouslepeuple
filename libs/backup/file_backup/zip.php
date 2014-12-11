@@ -903,7 +903,7 @@ class Archive_Zip
     }
 
     // ----- Swap the file descriptor
-    // Here is a trick : I swap the temporary fd with the zip fd, in order to 
+    // Here is a trick : I swap the temporary fd with the zip fd, in order to
     // use the following methods on the temporary fil and not the real archive
     $v_swap = $this->_zip_fd;
     $this->_zip_fd = $v_zip_temp_fd;

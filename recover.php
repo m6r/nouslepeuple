@@ -51,7 +51,7 @@ if($user){
 			if($password !== $password2) { // if both passwords do not match
 				$form_password_error[] = $main_smarty->get_config_vars('PLIGG_Visual_Register_Error_NoPassMatch');
 				$error = true;
-			}	
+			}
 			
 			if($error==false){
 			
@@ -107,13 +107,13 @@ if($user){
 }
 
 // pagename
-define('pagename', 'recover'); 
+define('pagename', 'recover');
 $main_smarty->assign('pagename', pagename);
  
-// misc smarty 
-$main_smarty->assign('errorMsg',$errorMsg); 
-$main_smarty->assign('id',$id); 
-$main_smarty->assign('n',$n); 
+// misc smarty
+$main_smarty->assign('errorMsg',$errorMsg);
+$main_smarty->assign('id',$id);
+$main_smarty->assign('n',$n);
 
 
 // show the template

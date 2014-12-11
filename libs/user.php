@@ -101,7 +101,7 @@ class User {
 					$my_base_url=$my_base_url;
 					$my_pligg_base=$my_pligg_base;
 					
-					$domain = $main_smarty->get_config_vars('PLIGG_Visual_Name');			
+					$domain = $main_smarty->get_config_vars('PLIGG_Visual_Name');
 					$validation = my_base_url . my_pligg_base . "/validation.php?code=$encode&uid=".$this->username;
 					$str = $main_smarty->get_config_vars('PLIGG_PassEmail_verification_message');
 					eval('$str = "'.str_replace('"','\"',$str).'";');
@@ -230,12 +230,12 @@ class User {
 		if($this->id > 0)
 		{
 			$where = "user_id = $this->id";
-		}	
+		}
 		else if(!empty($this->username))
 		{
 			$where = "user_login='".$db->escape($this->username)."'";
 
-			// if we only know the users login, check the cache to see if it's 
+			// if we only know the users login, check the cache to see if it's
 			// already in there and set $this->id so the code below can find it in the cache.
 			foreach($cached_users as $user){
 				if($user->user_login == $this->username){$this->id = $user->user_id;}
@@ -258,7 +258,7 @@ class User {
 				{
 					//only cache when the id is provided.
 					$cached_users[$this->id] = $user;
-				}	
+				}
 			}
 
 			$this->id = $user->user_id;
@@ -366,9 +366,9 @@ class User {
 		$main_smarty->assign('user_rank', $ranklist[$this->karma]);
 
 /*		global $db;
-		$groups = $db->get_results($sql="SELECT * FROM " . table_group_member . "  	
+		$groups = $db->get_results($sql="SELECT * FROM " . table_group_member . "
 					LEFT JOIN " . table_groups . " ON group_id=member_group_id
-					WHERE member_user_id = {$this->id} 
+					WHERE member_user_id = {$this->id}
 						AND member_status = 'active'
 						AND group_status = 'Enable'");
 //print $sql;
@@ -379,7 +379,7 @@ print_r($main_smarty);
 */
 		user_group_read($this->id);
 			
-		if($stats == 1){		
+		if($stats == 1){
 			$this->all_stats();
 			$main_smarty->assign('user_total_links', $this->total_links);
 			$main_smarty->assign('user_published_links', $this->published_links);
@@ -393,17 +393,17 @@ print_r($main_smarty);
 
 	function getFollowersCount() {
 	    global $db;
-	    return $db->get_var($sql="SELECT COUNT(*) 
-					FROM ".table_friends." 
-					LEFT JOIN ".table_users." ON friend_from=user_id 
+	    return $db->get_var($sql="SELECT COUNT(*)
+					FROM ".table_friends."
+					LEFT JOIN ".table_users." ON friend_from=user_id
 					WHERE friend_to=$this->id AND friend_from!=$this->id AND user_enabled=1");
 	}
 
 	function getFollowingCount() {
 	    global $db;
-	    return $db->get_var("SELECT COUNT(*) 
-					FROM ".table_friends." 
-					LEFT JOIN ".table_users." ON friend_to=user_id 
+	    return $db->get_var("SELECT COUNT(*)
+					FROM ".table_friends."
+					LEFT JOIN ".table_users." ON friend_to=user_id
 					WHERE friend_from=$this->id AND friend_to!=$this->id AND user_enabled=1");
 	}
 }
@@ -418,18 +418,18 @@ function user_group_read($user_id,$order_by='')
 		$order_by = "group_name DESC";
 	include_once(mnminclude.'smartyvariables.php');
 
-	$groups = $db->get_results($sql="SELECT * FROM " . table_group_member . "  	
+	$groups = $db->get_results($sql="SELECT * FROM " . table_group_member . "
 					LEFT JOIN " . table_groups . " ON group_id=member_group_id
-					WHERE member_user_id = $user_id 
+					WHERE member_user_id = $user_id
 						AND member_status = 'active'
 						AND group_status = 'Enable'
 						ORDER BY $order_by");
 	if ($groups) {
 		foreach($groups as $groupid){
-			$group_display .= "<tr><td><a href='".getmyurl("group_story_title", $groupid->group_safename)."'>".$groupid->group_name."</a></td><td style='text-align:center;'>".$groupid->group_members."</td></tr>"; 
+			$group_display .= "<tr><td><a href='".getmyurl("group_story_title", $groupid->group_safename)."'>".$groupid->group_name."</a></td><td style='text-align:center;'>".$groupid->group_members."</td></tr>";
 		}
 		$main_smarty->assign('group_display', $group_display);
-	}	
+	}
 	return true;
 }
 
@@ -532,9 +532,9 @@ function killspam($id)
 	if ($changed) {
 		if (is_writable($filename)) {
 		   if ($handle = fopen($filename, 'w')) {
-		   	fwrite($handle,join("\n",$lines)); 
+		   	fwrite($handle,join("\n",$lines));
 			fclose($handle);
-		   } 
+		   }
 		}
 	}
 	$db->query($sql='UPDATE `' . table_links . '` SET `link_status` = "spam" WHERE `link_author` = "'.$id.'"');
@@ -542,7 +542,7 @@ function killspam($id)
 	$db->query('DELETE FROM `' . table_trackbacks . '` WHERE `trackback_user_id` = "'.$id.'"');
 	$db->query('DELETE FROM `' . table_friends . '` WHERE `friend_id` = "'.$id.'"');
 	$db->query('DELETE FROM `' . table_messages . "` WHERE `sender`=$id OR `receiver`=$id");
-}		
+}
 
 function canIChangeUser($user_level) {
 	// Don't let admins delete other admins and moderators

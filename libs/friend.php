@@ -41,17 +41,17 @@ class Friend {
 	}
 	
 	function get_friend_list($user_id)
-	{	
+	{
 		// returns an array of people you've added as a friend
 		global $db, $current_user;
 		//echo "SELECT " . table_users . ".user_login FROM " . table_friends . " INNER JOIN " . table_users . " ON friends.friend_to = " . table_users . ".user_id WHERE (((friends.friend_from)=$current_user->user_id));";
-		$friends = $db->get_results("SELECT " . table_users . ".user_login, " . table_users . ".user_avatar_source, " . table_users . ".user_email, " . table_users . ".user_id 
-						FROM " . table_friends . " 
-						INNER JOIN " . table_users . " ON " . table_friends . ".friend_to = " . table_users . ".user_id 
+		$friends = $db->get_results("SELECT " . table_users . ".user_login, " . table_users . ".user_avatar_source, " . table_users . ".user_email, " . table_users . ".user_id
+						FROM " . table_friends . "
+						INNER JOIN " . table_users . " ON " . table_friends . ".friend_to = " . table_users . ".user_id
 						WHERE " . table_friends . ".friend_from=$user_id AND " . table_users . ".user_id != $user_id AND user_enabled=1",
 					     ARRAY_A);
-		foreach ($friends as &$friend) 
-		    if ($db->get_var($sql="SELECT friend_id FROM " . table_friends . " WHERE friend_to=$friend[user_id] AND friend_from='{$current_user->user_id}'")) 
+		foreach ($friends as &$friend)
+		    if ($db->get_var($sql="SELECT friend_id FROM " . table_friends . " WHERE friend_to=$friend[user_id] AND friend_from='{$current_user->user_id}'"))
 			$friend['following'] = true;
 		foreach ($friends as &$friend) {
 			$friend['is_mutual'] = $this->get_friend_status($friend['user_id']);
@@ -64,12 +64,12 @@ class Friend {
 	{
 		// returns an array of people who have added you as a friend
 		global $db, $current_user;
-		$friends = $db->get_results("SELECT " . table_users . ".user_login, " . table_users . ".user_avatar_source, " . table_users . ".user_email, " . table_users . ".user_id 
-						FROM " . table_friends . " 
-						INNER JOIN " . table_users . " ON " . table_friends . ".friend_from = " . table_users . ".user_id 
+		$friends = $db->get_results("SELECT " . table_users . ".user_login, " . table_users . ".user_avatar_source, " . table_users . ".user_email, " . table_users . ".user_id
+						FROM " . table_friends . "
+						INNER JOIN " . table_users . " ON " . table_friends . ".friend_from = " . table_users . ".user_id
 						WHERE " . table_friends . ".friend_to=$user_id AND " . table_users . ".user_id != $user_id  AND user_enabled=1",
 					     ARRAY_A);
-		foreach ($friends as &$friend) 
+		foreach ($friends as &$friend)
 		    if ($db->get_var("SELECT friend_id FROM " . table_friends . " WHERE friend_from=$user_id AND friend_to=$friend[user_id]"))
 			$friend['is_friend'] = true;
 		foreach ($friends as &$friend) {

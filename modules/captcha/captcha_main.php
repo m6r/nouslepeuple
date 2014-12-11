@@ -14,11 +14,11 @@ function captcha_showpage(){
 		$navwhere['text1'] = 'Captcha';
 		$navwhere['link1'] = URL_captcha;
 
-		define('pagename', 'captcha'); 
+		define('pagename', 'captcha');
 		$main_smarty->assign('pagename', pagename);
 		
 		// New method for identifying modules rather than pagename
-		define('modulename', 'captcha'); 
+		define('modulename', 'captcha');
 		$main_smarty->assign('modulename', modulename);
 
 		$main_smarty = do_sidebar($main_smarty, $navwhere);
@@ -32,7 +32,7 @@ function captcha_showpage(){
 
 		if($action == 'configure')
 		{
-			if(isset($_REQUEST['captcha']) && !strstr($_REQUEST['captcha'], '/')) 
+			if(isset($_REQUEST['captcha']) && !strstr($_REQUEST['captcha'], '/'))
 			{
 				$captcha = $_REQUEST['captcha'];
 				include_once(captcha_captchas_path . '/' . $captcha . '/main.php');
@@ -90,7 +90,7 @@ function enable_captcha($captcha){
 	if(captcha_can_we_use()){
 		misc_data_update('captcha_method', $captcha);
 		//captcha_admin();
-	}	
+	}
 
 }
 

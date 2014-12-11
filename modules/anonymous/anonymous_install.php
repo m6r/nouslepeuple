@@ -1,4 +1,4 @@
-<?php	
+<?php
 	$module_info['name'] = 'Anonymous Mode';
 	$module_info['desc'] = 'Serves as the backbone for the Anonymous Comments and Anonymous Story modules.';
 	$module_info['version'] = 0.1;

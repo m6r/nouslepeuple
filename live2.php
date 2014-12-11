@@ -16,7 +16,7 @@ $max_items = items_to_show;
 
 if(!($time=check_integer('time'))) {
 	$time = 0;
-} 
+}
 
 header('Content-Type: text/plain; charset=UTF-8');
 
@@ -69,10 +69,10 @@ echo "]);";
 // get latest votes
 function get_votes($time) {
 	global $db, $events, $last_timestamp;
-	$res = $db->get_results("SELECT *, unix_timestamp(vote_date) as timestamp 
-	                            FROM " . table_votes . ", " . table_links . " 
-	                            WHERE vote_date > FROM_UNIXTIME($time) AND link_id = vote_link_id AND vote_user_id != link_author AND (link_status='published' OR link_status='new') AND vote_type = 'links' 
-	                            ORDER BY vote_date DESC 
+	$res = $db->get_results("SELECT *, unix_timestamp(vote_date) as timestamp
+	                            FROM " . table_votes . ", " . table_links . "
+	                            WHERE vote_date > FROM_UNIXTIME($time) AND link_id = vote_link_id AND vote_user_id != link_author AND (link_status='published' OR link_status='new') AND vote_type = 'links'
+	                            ORDER BY vote_date DESC
 	                            LIMIT 20");
 	if (!$res) return;
 	foreach ($res as $event) {
@@ -90,7 +90,7 @@ function get_votes($time) {
 			} elseif ($event->vote_value >= 0) {
 				$type = 'Up Vote';
 				$who = $user;
-			} else { 
+			} else {
 				$type = 'Problem';
 				$who = $event->vote_value;
 			}
@@ -111,11 +111,11 @@ function get_votes($time) {
 // get latest stories
 function get_new_stories($time) {
 	global $db, $events, $last_timestamp, $from, $where;
-	$res = $db->get_results("select unix_timestamp(link_date) as timestamp, user_login, link_author, link_id, link_title, link_url, link_status, link_date, link_votes 
+	$res = $db->get_results("select unix_timestamp(link_date) as timestamp, user_login, link_author, link_id, link_title, link_url, link_status, link_date, link_votes
 					from " . table_links . "
-					LEFT JOIN " . table_users . "  ON user_id=link_author 
+					LEFT JOIN " . table_users . "  ON user_id=link_author
 					$from
-					where link_status='new' and  link_date > from_unixtime($time) 
+					where link_status='new' and  link_date > from_unixtime($time)
 					$where
 					order by link_date desc limit 20");
 	if (!$res) return;
@@ -137,9 +137,9 @@ function get_new_stories($time) {
 // get latest published stories
 function get_new_published($time) {
 	global $db, $events, $last_timestamp,$from, $where;;
-	$res = $db->get_results("select unix_timestamp(link_published_date) as timestamp, user_login, link_author, link_id, link_title, link_url, link_status, link_date, link_votes 
-					from " . table_links . "	
-					LEFT JOIN " . table_users . " ON user_id=link_author 
+	$res = $db->get_results("select unix_timestamp(link_published_date) as timestamp, user_login, link_author, link_id, link_title, link_url, link_status, link_date, link_votes
+					from " . table_links . "
+					LEFT JOIN " . table_users . " ON user_id=link_author
 					$from
 					where link_status='published' and link_published_date > from_unixtime($time)
 					$where

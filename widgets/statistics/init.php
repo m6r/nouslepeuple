@@ -95,7 +95,7 @@ function CalcFullDatabaseSize($database, $db) {
 }
 
 // open mysql connection:
-$handle = mysql_connect(EZSQL_DB_HOST, EZSQL_DB_USER, EZSQL_DB_PASSWORD); 
+$handle = mysql_connect(EZSQL_DB_HOST, EZSQL_DB_USER, EZSQL_DB_PASSWORD);
 if (!$handle) { die('Connection failed!'); }
 
 // get the size of all tables in this database:

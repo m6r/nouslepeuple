@@ -18,9 +18,9 @@ force_authentication();
 $canIhaveAccess = 0;
 $canIhaveAccess = $canIhaveAccess + checklevel('admin');
 
-if($canIhaveAccess == 0){	
+if($canIhaveAccess == 0){
 //	$main_smarty->assign('tpl_center', '/admin/access_denied');
-//	$main_smarty->display($template_dir . '/admin/admin.tpl');			
+//	$main_smarty->display($template_dir . '/admin/admin.tpl');
 	header("Location: " . getmyurl('admin_login', $_SERVER['REQUEST_URI']));
 	die();
 }
@@ -33,13 +33,13 @@ $main_smarty->assign('navbar_where', $navwhere);
 $main_smarty->assign('posttitle', " / " . $main_smarty->get_config_vars('PLIGG_Visual_Header_AdminPanel'));
 
 // pagename
-define('pagename', 'admin_editor'); 
+define('pagename', 'admin_editor');
 $main_smarty->assign('pagename', pagename);
 
 // read the mysql database to get the pligg version
 $sql = "SELECT data FROM " . table_misc_data . " WHERE name = 'pligg_version'";
 $pligg_version = $db->get_var($sql);
-$main_smarty->assign('version_number', $pligg_version); 
+$main_smarty->assign('version_number', $pligg_version);
 
 $filedir = "../templates/".The_Template;
 #echo $filedir;
@@ -69,7 +69,7 @@ elseif ($_POST["the_file"])
 	    $current_data = str_ireplace("</textarea>", "<END-TA-DO-NOT-EDIT>", $current_data);
 	    $main_smarty->assign('filedata', htmlspecialchars($current_data));
 	    fclose($file2open);
-    } else 
+    } else
 	    $main_smarty->assign('error', 1);
     $main_smarty->assign('the_file', sanitize($_POST['the_file'],3));
 }
@@ -81,27 +81,27 @@ elseif ($_POST["save"])
 		$data_to_save = $_POST["updatedfile"];
 		$data_to_save = str_ireplace("<END-TA-DO-NOT-EDIT>", "</textarea>", $data_to_save);
 		$data_to_save = stripslashes($data_to_save);
-		if (fwrite($file2ed,$data_to_save)!==FALSE) { 
-			$error = "<h3>File Saved</h3><p><a href=\"\">Click here to go back to the editor.</a></p>";	
+		if (fwrite($file2ed,$data_to_save)!==FALSE) {
+			$error = "<h3>File Saved</h3><p><a href=\"\">Click here to go back to the editor.</a></p>";
 			fclose($file2ed);
 		}
-		else {	
+		else {
 			$error = "<h3>ERROR!</h3><p>cant File NOT saved! <br /> Check your CHMOD settings in case it is a file/folder permissions problem. <br />  <a href=\"\">Click here to go back to the editor.</a></p>";
 			fclose($file2ed);
 		}
 	}
-	else 
+	else
 		$error = "<h3>ERROR!</h3><p>writable File NOT saved! <br />Check your CHMOD settings in case it is a file/folder permissions problem.</p>";
      	$main_smarty->assign('error', $error);
 }
 
 // show the template
 $main_smarty->assign('tpl_center', '/admin/template_editor');
-$main_smarty->display($template_dir . '/admin/admin.tpl');	
+$main_smarty->display($template_dir . '/admin/admin.tpl');
 
 	
 function directoryToArray($directory, $recursive) {
-$me = basename($_SERVER['PHP_SELF']);	
+$me = basename($_SERVER['PHP_SELF']);
 $array_items = array();
 	if ($handle = opendir($directory)) {
   	while (false !== ($file = readdir($handle))) {
@@ -109,7 +109,7 @@ $array_items = array();
         if (is_dir($directory. "/" . $file)) {
 					if($recursive) {
 						$array_items = array_merge($array_items, directoryToArray($directory. "/" . $file, $recursive));
-          }						 
+          }
 				}
 				else {
             $file = $directory . "/" . $file;

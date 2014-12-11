@@ -8,12 +8,12 @@ if(defined('mnminclude')){
 	$do_not_include_in_pages = array();
 
 	$include_in_pages = array('all');
-	if( do_we_load_module() ) {		
+	if( do_we_load_module() ) {
 		module_add_action_tpl('tpl_header_admin_main_links', status_tpl_path . 'status_admin_main_link.tpl');
 		module_add_action('comment_post_save', 'status_comment_submit', '' ) ;
 		module_add_action('do_submit3', 'status_story_submit', '' ) ;
 
-		$place = get_misc_data('status_place');		
+		$place = get_misc_data('status_place');
 		if ($place)
         	    module_add_action_tpl($place, status_tpl_path . '/status_list.tpl');
 
@@ -31,7 +31,7 @@ if(defined('mnminclude')){
 	}
 
 	$include_in_pages = array('module');
-	if( do_we_load_module() ) {		
+	if( do_we_load_module() ) {
 
 		$moduleName = $_REQUEST['module'];
 

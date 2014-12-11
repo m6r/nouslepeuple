@@ -1,4 +1,4 @@
-<?php	
+<?php
 	$module_info['name'] = 'Anonymous Story';
 	$module_info['desc'] = 'Allows any user to submit a story without registering an account.';
 	$module_info['version'] = 0.1;

@@ -53,7 +53,7 @@ if( (isset($_POST["processlogin"]) && is_numeric($_POST["processlogin"])) || (is
 					$errorMsg=$main_smarty->get_config_vars('PLIGG_Visual_Resend_Email') .
 						"<form method='post'>
 							<div class='input-append notvalidated'>
-								<input type='text' class='form-control col-md-12' name='email'> 
+								<input type='text' class='form-control col-md-12' name='email'>
 								<input type='submit' class='btn btn-default col-md-12' value='Send'>
 								<input type='hidden' name='processlogin' value='5'/>
 							</div>
@@ -86,14 +86,14 @@ if( (isset($_POST["processlogin"]) && is_numeric($_POST["processlogin"])) || (is
 			}
 		}
 	}
-}   
+}
 
-// misc smarty 
-$main_smarty->assign('errorMsg',$errorMsg);  
-$main_smarty->assign('post_username',$username);  
+// misc smarty
+$main_smarty->assign('errorMsg',$errorMsg);
+$main_smarty->assign('post_username',$username);
 
 // pagename
-define('pagename', 'admin_login'); 
+define('pagename', 'admin_login');
 $main_smarty->assign('pagename', pagename);
 
 if($canIhaveAccess == 0){

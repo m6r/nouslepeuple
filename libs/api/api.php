@@ -2,7 +2,7 @@
 	/*
 	############### About  ###################
 	Script name : Pligg API (mini)
-	Version : 0.1 
+	Version : 0.1
 	Developer : Thawatchai Fhaipolsan (powerpc)
 	Email : inside3d at hotmail.com
 	Website : http://www.jum.name
@@ -24,7 +24,7 @@
 	// API Configuration
 	// Submit links status configuration
 	// 1 'discard'
-	// 2 'new' 
+	// 2 'new'
 	// 3 'published'
 	$status = 2; // new or upcomming
 	$autovote = 1; // 0 = no vote, 1 = auto vote
@@ -96,7 +96,7 @@
 		if ($santype == 3) {
 			if (!get_magic_quotes_gpc()) {
 				return addslashes(htmlentities(strip_tags($var),ENT_QUOTES,'UTF-8'));
-			} 
+			}
 			else {
 			   return htmlentities(strip_tags($var),ENT_QUOTES,'UTF-8');
 			}
@@ -115,7 +115,7 @@
 		}
 	
         return $salt . hash('sha512', $salt . $plainText);
-	} 
+	}
 
 	function is_valid_url ( $url )
 	{
@@ -173,7 +173,7 @@
 	  $badWords = array("fuck","sex","anal","ass","asshole","boob","blowjobs","blowjob","bondage","boobs","cock","cum","cumshot","cumshots","dick","dicks","dildo","doggystyle","dogging","erotica","exhibtionism","facial","facials","fetish","fisting","flikker","footjob","foursome","foursomes","gangbang","gay","gloryhole","groupsex","gspot","handjob","handjobs","hardcore","homosexual","homosexuals","interracial","jackoff","lesbian","lesbians","lolita","milf","naked","nigger","nude","nudes","orgasm","orgasms","orgies","orgy","penis","porn","pussies","pussy","rape","raped","rapes","sadism","sadist","softcore","sperm","strap-on","suck","sucking","sucks","threesome","tit","tits","topless","tranny","transsexual","upskirt","vagina","vaginas","vibrator","xxx","adult","hentai");
 	  
 	  foreach ($badWords as $badWord) {
-		if(!$badWord) continue; 
+		if(!$badWord) continue;
 		else {
 		  $regexp = "/\b".$badWord."\b/i";
 		  if(preg_match($regexp,$str)) $badFlag = 1;
@@ -190,7 +190,7 @@
 		$row[user_pass];
 		if($row[user_pass] == '') return 0;
 		
-		$saltedpass = generateHash($password,$row[user_pass]);  
+		$saltedpass = generateHash($password,$row[user_pass]);
 		
 		$sql = "select user_id from ".table_prefix."users where user_login = '$username' and user_pass = '".substr($saltedpass,-49)."'";
 		$rs = mysql_query($sql) or die(mysql_error());
@@ -285,7 +285,7 @@
 			// Random Vote
 			if($autovote && $num > 1){
 				while(1){
-					srand((double) microtime() * 1000000); 
+					srand((double) microtime() * 1000000);
 					$lucky = rand(1,$num);
 					
 					$sql = "select link_id from ".table_prefix."links where link_status <> 'discard' and link_id != $lastid and link_id = ".$lucky;

@@ -19,9 +19,9 @@ force_authentication();
 $canIhaveAccess = 0;
 $canIhaveAccess = $canIhaveAccess + checklevel('admin');
 
-if($canIhaveAccess == 0){	
+if($canIhaveAccess == 0){
 //	$main_smarty->assign('tpl_center', '/admin/access_denied');
-//	$main_smarty->display($template_dir . '/admin/admin.tpl');		
+//	$main_smarty->display($template_dir . '/admin/admin.tpl');
 	header("Location: " . getmyurl('admin_login', $_SERVER['REQUEST_URI']));
 	die();
 }
@@ -34,27 +34,27 @@ $navwhere['link2'] = my_pligg_base . "/admin/admin_config.php";
 $main_smarty->assign('navbar_where', $navwhere);
 $main_smarty->assign('posttitle', " / " . $main_smarty->get_config_vars('PLIGG_Visual_Header_AdminPanel'));
 
-// pagename	
-define('pagename', 'admin_config'); 
+// pagename
+define('pagename', 'admin_config');
 $main_smarty->assign('pagename', pagename);
 
 // read the mysql database to get the pligg version
 $sql = "SELECT data FROM " . table_misc_data . " WHERE name = 'pligg_version'";
 $pligg_version = $db->get_var($sql);
-$main_smarty->assign('version_number', $pligg_version); 
+$main_smarty->assign('version_number', $pligg_version);
 
 // show the template
 $main_smarty->assign('tpl_center', '/admin/configure');
 if(isset($_REQUEST['action'])){
 	dowork();
 } else {
-	// sidebar	
+	// sidebar
 	$main_smarty = do_sidebar($main_smarty);
 
-	$main_smarty->display($template_dir . '/admin/admin.tpl');	
+	$main_smarty->display($template_dir . '/admin/admin.tpl');
 }
 
-function dowork(){	
+function dowork(){
 	global $db, $main_smarty;
 
 	$canIhaveAccess = 0;

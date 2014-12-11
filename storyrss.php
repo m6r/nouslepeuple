@@ -16,7 +16,7 @@ include(mnminclude.'link.php');
 include(mnminclude.'smartyvariables.php');
 include_once(mnminclude.'user.php');
 
-$requestID = isset($_GET['id']) && is_numeric($_GET['id']) ? $_GET['id'] : 0; 
+$requestID = isset($_GET['id']) && is_numeric($_GET['id']) ? $_GET['id'] : 0;
 
 if(isset($_GET['title']) && sanitize($_GET['title'], 3) != ''){$requestTitle = sanitize(sanitize($_GET['title'], 3),4);}
 if(isset($requestTitle)){$requestID = $db->get_var($sql = "SELECT link_id FROM " . table_links . " WHERE `link_title_url` = '".$db->escape($requestTitle)."';"); }
@@ -36,7 +36,7 @@ if(is_numeric($requestID)) {
 
 		header("Location: $my_pligg_base/error_404.php");
 //		$main_smarty->assign('tpl_center', 'error_404_center');
-//		$main_smarty->display($the_template . '/pligg.tpl');		
+//		$main_smarty->display($the_template . '/pligg.tpl');
 		die();
 	}
 
@@ -44,12 +44,12 @@ if(is_numeric($requestID)) {
 
 	// get all parent comments
 	$sql = "SELECT * FROM " . table_comments . "
-			LEFT JOIN " . table_users . " ON comment_user_id=user_id 
+			LEFT JOIN " . table_users . " ON comment_user_id=user_id
 			WHERE comment_status='published' AND comment_link_id=$link->id";
 	if($time > 0) {
      		$from = time()-$time;
 		$sql .= " AND comment_date > FROM_UNIXTIME($from)";
-        } 
+        }
 	$sql .= " ORDER BY comment_date DESC ";
 	if($rows > 0) {
 		$sql .= " LIMIT 0,$rows";
@@ -73,7 +73,7 @@ if(is_numeric($requestID)) {
 			echo "\n	<description><![CDATA[" . $comment->content . "]]></description>\n";
 			if (!empty($comment->date))
 				echo "	<pubDate>".date('D, d M Y H:i:s T', $comment->date-misc_timezone*3600)."</pubDate>\n";
-			else 
+			else
 				echo "	<pubDate>".date('D, d M Y H:i:s T', time()-misc_timezone*3600)."</pubDate>\n";
 			echo "	<author>" . $dbcomment->user_login . "</author>\n";
 			echo "	<votes>".$comment->votes."</votes>\n";
@@ -84,7 +84,7 @@ if(is_numeric($requestID)) {
 			check_actions('comment_rss_item', $vars);
 
 			echo "</item>\n\n";
- 		} 
+ 		}
 	}
 
 	do_rss_footer();
@@ -98,7 +98,7 @@ if(is_numeric($requestID)) {
 	header("Location: $my_pligg_base/error_404.php");
 //	header("Location: error_404.php");
 //	$main_smarty->assign('tpl_center', 'error_404_center');
-//	$main_smarty->display($the_template . '/pligg.tpl');		
+//	$main_smarty->display($the_template . '/pligg.tpl');
 	die();
 }
 
@@ -118,7 +118,7 @@ function do_rss_header($link) {
 
 	if (!empty($link->date))
 		echo '<pubDate>'.date('D, d M Y H:i:s T', $link->date-misc_timezone*3600).'</pubDate>'."\n";
-	else 
+	else
 		echo "<pubDate>".date('D, d M Y H:i:s T', time()-misc_timezone*3600)."</pubDate>\n";
 	echo '<language>'.$dblang.'</language>'."\n";
 }

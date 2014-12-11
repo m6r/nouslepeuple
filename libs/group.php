@@ -137,7 +137,7 @@ function get_groupid_user($userid)
 			return $groupcount->group_id;
 			array_splice($groupcount, count($grouup_id), 0, $groupcount->group_id);
 			//return $group_id_array;
-		}	
+		}
 		*/
 }
 /*function get_groupname_user()
@@ -173,7 +173,7 @@ function reached_max_joinable_groups($db, $current_user) {
  $user_id = $current_user->user_id;
  if (!is_numeric($user_id)) die();
 
- $current_memberships = $db->get_var('SELECT COUNT(*) FROM ' . table_group_member 
+ $current_memberships = $db->get_var('SELECT COUNT(*) FROM ' . table_group_member
   . " WHERE member_user_id = '$user_id'");
 
  return $current_memberships >= max_groups_to_join;
@@ -205,7 +205,7 @@ function group_display($requestID)
 		$group_date = $date;
 		//$group_date = date('M j, Y', $group->group_date);
 		
-		//smarty variables	
+		//smarty variables
 		$main_smarty->assign('pretitle', "$group_name - $group_description");
 		$main_smarty->assign('group_id', $group_id);
 		$main_smarty->assign('group_name', $group_name);
@@ -264,7 +264,7 @@ function group_display($requestID)
 		$main_smarty->assign('user_logged_in', $current_user->user_login);
 		
 		//sidebar
-		$main_smarty = do_sidebar($main_smarty);	
+		$main_smarty = do_sidebar($main_smarty);
 
 		//$main_smarty->assign('form_action', $_SERVER["PHP_SELF"]);
 		$group_story_url = getmyurl("group_story_title", $group_safename);
@@ -330,11 +330,11 @@ function member_display($requestID)
 									<h4 class="modal-title">Group User Management</h4>
 								</div>
 								<div class="modal-body">
-									<a class="btn btn-default" href="'.$member_adminchange_url.'">'.$role_admin.'</a> 
-									<a class="btn btn-default" href="'.$member_normalchange_url.'">'.$role_normal.'</a> 
-									<a class="btn btn-default" href="'.$member_moderatorchange_url.'">'.$role_moderator.'</a> 
+									<a class="btn btn-default" href="'.$member_adminchange_url.'">'.$role_admin.'</a>
+									<a class="btn btn-default" href="'.$member_normalchange_url.'">'.$role_normal.'</a>
+									<a class="btn btn-default" href="'.$member_moderatorchange_url.'">'.$role_moderator.'</a>
 									<hr />
-									<a class="btn btn-warning" href="'.$member_flaggedchange_url.'">'.$role_flagged.'</a> 
+									<a class="btn btn-warning" href="'.$member_flaggedchange_url.'">'.$role_flagged.'</a>
 									<a class="btn btn-danger" href="'.$member_bannedchange_url.'">'.$role_banned.'</a>
 								</div>
 								<div class="modal-footer">
@@ -366,10 +366,10 @@ function group_stories($requestID,$catId,$view,$flag=0)
 	$group_new_display = "";
 	$group_published_display = "";
 
-	if ($catId) 
+	if ($catId)
         {
 		$child_cats = '';
-		// do we also search the subcategories? 
+		// do we also search the subcategories?
 		if( Independent_Subcategories == true){
 			$child_array = '';
 
@@ -394,7 +394,7 @@ function group_stories($requestID,$catId,$view,$flag=0)
 	
 	if ($view == 'new')
 		$from_where .= " AND link_votes<$group_vote AND link_status='new'";
-	else                
+	else
 		$from_where .= " AND ((link_votes >= $group_vote AND link_status = 'new') OR link_status = 'published')";
 
 	$offset = (get_current_page()-1)*$page_size;
@@ -443,10 +443,10 @@ function group_shared($requestID,$catId,$flag=0)
 
 	$link = new Link;
 	$group_shared_display = "";
-	if ($catId) 
+	if ($catId)
         {
 		$child_cats = '';
-		// do we also search the subcategories? 
+		// do we also search the subcategories?
 		if( Independent_Subcategories == true){
 			$child_array = '';
 
@@ -471,13 +471,13 @@ function group_shared($requestID,$catId,$flag=0)
 	if($flag==1){
 	$sql="SELECT SQL_CALC_FOUND_ROWS b.* FROM " . table_group_shared . " a
 				    LEFT JOIN " . table_links . " b ON link_id=share_link_id
-				    WHERE share_group_id = $requestID AND !ISNULL(link_id) $from_where 
+				    WHERE share_group_id = $requestID AND !ISNULL(link_id) $from_where
 				    GROUP BY link_id
 				    ORDER BY link_published_date DESC, link_date DESC ";
 	}else{
 	$sql="SELECT SQL_CALC_FOUND_ROWS b.* FROM " . table_group_shared . " a
 				    LEFT JOIN " . table_links . " b ON link_id=share_link_id
-				    WHERE share_group_id = $requestID AND !ISNULL(link_id) $from_where 
+				    WHERE share_group_id = $requestID AND !ISNULL(link_id) $from_where
 				    GROUP BY link_id
 				    ORDER BY link_published_date DESC, link_date DESC  LIMIT $offset, $page_size";
 		
@@ -511,7 +511,7 @@ function group_shared($requestID,$catId,$flag=0)
 	  
 	  $main_smarty->assign('total_row', $rows);
 	  
-	}else  
+	}else
 	  $main_smarty->assign('group_story_pagination', do_pages($rows, $page_size, 'group_story', true));
 }
 //displaying group as story
@@ -539,7 +539,7 @@ function group_print_summary($requestID)
 		//echo $date;
 		$group_date = $date;
 		
-		//smarty variables	
+		//smarty variables
 		$main_smarty->assign('group_id', $group_id);
 		$main_smarty->assign('group_name', $group_name);
 		$main_smarty->assign('group_safename', $group_safename);
@@ -594,7 +594,7 @@ function group_print_summary($requestID)
 		$main_smarty->assign('user_logged_in', $current_user->user_login);
 		
 		//sidebar
-		$main_smarty = do_sidebar($main_smarty);	
+		$main_smarty = do_sidebar($main_smarty);
 
 		//$main_smarty->assign('form_action', $_SERVER["PHP_SELF"]);
 		$group_story_url = getmyurl("group_story_title", $group_safename);
@@ -603,7 +603,7 @@ function group_print_summary($requestID)
 		$group_edit_url = getmyurl("editgroup", $group_id);
 		$group_delete_url = getmyurl("deletegroup", $group_id);
 		
-		$group_output .= $main_smarty->fetch(The_Template . '/group_summary.tpl'); 
+		$group_output .= $main_smarty->fetch(The_Template . '/group_summary.tpl');
 				
 		$index++;
 	}

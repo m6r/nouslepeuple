@@ -22,9 +22,9 @@ $main_smarty->assign('amIadmin', $amIadmin);
 $canIhaveAccess = 0;
 $canIhaveAccess = $canIhaveAccess + checklevel('admin');
 
-if($canIhaveAccess == 0){	
+if($canIhaveAccess == 0){
 //	$main_smarty->assign('tpl_center', '/admin/access_denied');
-//	$main_smarty->display($template_dir . '/admin/admin.tpl');		
+//	$main_smarty->display($template_dir . '/admin/admin.tpl');
 	header("Location: " . getmyurl('admin_login', $_SERVER['REQUEST_URI']));
 	die();
 }
@@ -36,7 +36,7 @@ $main_smarty->assign('isAdmin', $canIhaveAccess);
 $main_smarty = do_sidebar($main_smarty);
 
 // pagename
-define('pagename', 'admin_page'); 
+define('pagename', 'admin_page');
 $main_smarty->assign('pagename', pagename);
 
 // read the mysql database to get the pligg version

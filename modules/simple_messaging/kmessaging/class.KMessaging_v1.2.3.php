@@ -33,11 +33,11 @@
 // New Version 1.2 so structural bugs have been arranjed
 // 1.2.1 -- Author: AshDigg from the Pligg Team
 //		added $id = $idMsg to GetAllmessages() and GetMessage() arrays
-// 1.2.2 -- Author: AshDigg from the Pligg Team 
+// 1.2.2 -- Author: AshDigg from the Pligg Team
 //		renamed $order to $sort
 //		fixed bug with GetAllmessages() switch on $sort -- missing break; so it always used the last item
 //		added sort by date asc / desc
-// 1.2.3 -- Author: AshDigg from the Pligg Team 
+// 1.2.3 -- Author: AshDigg from the Pligg Team
 //		added $filter to GetAllmessages()
 
 
@@ -104,21 +104,21 @@ var $DBHost = EZSQL_DB_HOST;
 	 *	@return Int 4	If Conection var is not correct
 	*/
 	function KMessaging($connect = false,$selectDB = false,$con = '')
-	{		
+	{
 		if($connect)
 		{
 			$con = @mysql_connect($this->DBHost,$this->DBUser,$this->DBPass);
 			if($con)
 				if(!@mysql_select_db($this->DBName,$con))
 					return 1;
-			else 
+			else
 				return 2;
 		}elseif ($selectDB)
 		{
 			if( strlen($con) > 0 )
 				if(!@mysql_select_db($this->DBName,$con))
 					return 3;
-			else 
+			else
 				return 4;
 		}
 	}
@@ -156,7 +156,7 @@ var $DBHost = EZSQL_DB_HOST;
 		$result = mysql_query($sql);
 		if($result)
 			return 0;
-		else 	
+		else
 			return 6;
 	}
 	/**
@@ -285,7 +285,7 @@ var $DBHost = EZSQL_DB_HOST;
 		$result = mysql_query("UPDATE ".$this->tblName." SET readed=readed|1 WHERE idMsg=$msgId");
 		if($result)
 			return 0;
-		else 
+		else
 			return 2;
 	}
 	
@@ -293,7 +293,7 @@ var $DBHost = EZSQL_DB_HOST;
 	* @return Int 1			Error while gathering info on database
 	* @return Int 2			No messages with this settings
 	* @return Array			Returns one array with all messages
-	* 
+	*
 	* @param Int $order		Can take values from 0 to 5(0-> Order By senderLevel Ascendent,
 	*													1-> Order By senderLevel Descendent,
 	*													2-> Order By read message Ascendent,
@@ -339,10 +339,10 @@ var $DBHost = EZSQL_DB_HOST;
 			case 0:
 				break;
 			case 1:
-				$where = ' AND readed&1 = 0 ';			
+				$where = ' AND readed&1 = 0 ';
 				break;
 			case 2:
-				$where = ' AND readed&1 = 1 ';			
+				$where = ' AND readed&1 = 1 ';
 				break;
 		}
 
@@ -368,7 +368,7 @@ var $DBHost = EZSQL_DB_HOST;
 			$message[$i]['title'] = $row->title;
 			$message[$i]['body'] = $row->body;
 			$message[$i]['senderLevel'] = $row->senderLevel;
-			$message[$i]['readed'] = $row->readed&1;	
+			$message[$i]['readed'] = $row->readed&1;
 			$message[$i]['date'] = $row->date;
 		}
 		if( !is_array($message) )
@@ -401,7 +401,7 @@ var $DBHost = EZSQL_DB_HOST;
 		    $result = mysql_query("DELETE FROM ".$this->tblName." WHERE idMsg=$msgId");
 		if($result)
 			return 0;
-		else 
+		else
 			return 2;
 	}
 

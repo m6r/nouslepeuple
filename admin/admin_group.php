@@ -24,7 +24,7 @@ $canIhaveAccess = $canIhaveAccess + checklevel('moderator');
 
 $is_moderator = checklevel('moderator'); // Moderators have a value of '1' for the variable $is_moderator
 
-if($canIhaveAccess == 0){	
+if($canIhaveAccess == 0){
 	header("Location: " . getmyurl('admin_login', $_SERVER['REQUEST_URI']));
 	die();
 }
@@ -36,13 +36,13 @@ $main_smarty->assign('isAdmin', $canIhaveAccess);
 $main_smarty = do_sidebar($main_smarty);
 
 // pagename
-define('pagename', 'admin_group'); 
+define('pagename', 'admin_group');
 $main_smarty->assign('pagename', pagename);
 
 // read the mysql database to get the pligg version
 $sql = "SELECT data FROM " . table_misc_data . " WHERE name = 'pligg_version'";
 $pligg_version = $db->get_var($sql);
-$main_smarty->assign('version_number', $pligg_version); 
+$main_smarty->assign('version_number', $pligg_version);
 
 global $db;
 

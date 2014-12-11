@@ -34,15 +34,15 @@ $main_smarty = do_sidebar($main_smarty);
 
 
 // pagename
-define('pagename', 'group_story'); 
+define('pagename', 'group_story');
 
-$main_smarty->assign('pagename', pagename); 
+$main_smarty->assign('pagename', pagename);
 
 $privacy = $db->get_var("SELECT group_privacy FROM " . table_groups . " WHERE group_id = '$requestID';");
 $view = sanitize(sanitize($_REQUEST["view"],1),3);
 if($requestID > 0)
 {
-	//For Infinit scrolling and continue reading option 
+	//For Infinit scrolling and continue reading option
 	
     if (($privacy!='private' || isMemberActive($requestID)=='active'))
     {
@@ -77,7 +77,7 @@ if($requestID > 0)
 	$main_smarty->assign('group_published_display', $main_smarty->get_config_vars('PLIGG_Visual_Group_Is_Private'));
 	$main_smarty->assign('member_display', $main_smarty->get_config_vars('PLIGG_Visual_Group_Is_Private'));
     }
-} else 
+} else
 {
 	$redirect = '';
 	$redirect = getmyurl("groups");

@@ -47,16 +47,16 @@ class SidebarStories {
 //			$results = $vote->user_list_all_votes();
 //////
 			$vote = '';
-			$results = ''; // we don't actually need the results 
+			$results = ''; // we don't actually need the results
 					// we're just calling this to cache the results
-					// so when we foreach the links we don't have to 
+					// so when we foreach the links we don't have to
 					// run 1 extra query for each story to determine
 					// current user votes
 	  
 			// setup the link cache
 			$i = 0;
 			// if this query changes also change it in the read() function in /libs/link.php
-			$sql = "SELECT " . table_links . ".* FROM " . table_links . " WHERE "; 
+			$sql = "SELECT " . table_links . ".* FROM " . table_links . " WHERE ";
 			foreach($the_results as $link_id) {
 				// first make sure we don't already have it cached
 				if(!isset($cached_links[$link_id])){
@@ -73,7 +73,7 @@ class SidebarStories {
 			if ($i > 0){
 				$results = $db->get_results($sql);
 	
-				// add the results to the cache  
+				// add the results to the cache
 				foreach ($results as $row){
 					$cached_links[$row->link_id] = $row;
 				}

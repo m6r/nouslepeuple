@@ -29,8 +29,8 @@ if($current_user->user_id != get_group_creator($requestID) && $canIhaveAccess !=
 }
 
 // pagename
-define('pagename', 'editgroup'); 
-$main_smarty->assign('pagename', pagename); 
+define('pagename', 'editgroup');
+$main_smarty->assign('pagename', pagename);
 
 $CSRF = new csrf();
 
@@ -118,7 +118,7 @@ elseif(isset($_POST["action"]))
 	 	if ($exists) $errors = $main_smarty->get_config_vars('PLIGG_Visual_Group_Title_Exists');
 	}
 
-	if (!$errors && 
+	if (!$errors &&
 	    $db->query("update ". table_groups ." set group_name = '".$group_title."', group_safename='$group_safename', group_description = '".$group_description."', group_privacy = '".$group_privacy."', group_vote_to_publish = '".$group_vote_to_publish."', group_notify_email=$group_notify_email where group_id = '".$requestID."'"))
 		$errors = $main_smarty->get_config_vars('PLIGG_Visual_Group_Saved_Changes');
 

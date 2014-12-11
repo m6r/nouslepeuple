@@ -20,54 +20,54 @@ if ($pligg_version == '1.2.2') {
     }
 	
     // Renamed "Upcoming" and "Queued" to "New" in 2.0.0 Needs to be reflected in database.
-    $sql = "ALTER TABLE ".table_links." 
+    $sql = "ALTER TABLE ".table_links."
 			CHANGE link_status link_status ENUM('discard','new','published','abuse','duplicate','page','spam','moderated');";
     $db->query($sql);
-    $sql = "UPDATE ".table_links." 
-			SET link_status='new' 
+    $sql = "UPDATE ".table_links."
+			SET link_status='new'
 			WHERE link_status='';";
     $db->query($sql);
-    $sql = "ALTER TABLE ".table_links." 
+    $sql = "ALTER TABLE ".table_links."
 			CHANGE link_group_status link_group_status ENUM('new','published','discard');";
     $db->query($sql);
-    $sql = "UPDATE ".table_links." 
-			SET link_group_status='new' 
+    $sql = "UPDATE ".table_links."
+			SET link_group_status='new'
 			WHERE link_group_status='';";
     $db->query($sql);
     echo '<li>Changed story link_status and link_group_status from "queued" to "new".</li>';
 
 	// Change log file locations to new /logs directory
-	$sql = "UPDATE ".table_config." 
-			SET var_value='logs/antispam.log' 
+	$sql = "UPDATE ".table_config."
+			SET var_value='logs/antispam.log'
 			WHERE var_name='$MAIN_SPAM_RULESET';";
 	$db->query($sql);
-	$sql = "UPDATE ".table_config." 
-			SET var_defaultvalue='logs/antispam.log' 
+	$sql = "UPDATE ".table_config."
+			SET var_defaultvalue='logs/antispam.log'
 			WHERE var_name='$MAIN_SPAM_RULESET';";
 	$db->query($sql);
-	$sql = "UPDATE ".table_config." 
-			SET var_title='Domain Blacklist File' 
+	$sql = "UPDATE ".table_config."
+			SET var_title='Domain Blacklist File'
 			WHERE var_name='$USER_SPAM_RULESET';";
 	$db->query($sql);
-	$sql = "UPDATE ".table_config." 
-			SET var_value='logs/domain-blacklist.log' 
+	$sql = "UPDATE ".table_config."
+			SET var_value='logs/domain-blacklist.log'
 			WHERE var_name='$USER_SPAM_RULESET';";
 	$db->query($sql);
-	$sql = "UPDATE ".table_config." 
-			SET var_defaultvalue='logs/domain-blacklist.log' 
+	$sql = "UPDATE ".table_config."
+			SET var_defaultvalue='logs/domain-blacklist.log'
 			WHERE var_name='$USER_SPAM_RULESET';";
 	$db->query($sql);
-	$sql = "UPDATE ".table_config." 
-			SET var_value='logs/spam.log' 
+	$sql = "UPDATE ".table_config."
+			SET var_value='logs/spam.log'
 			WHERE var_name='$SPAM_LOG_BOOK';";
 	$db->query($sql);
-	$sql = "UPDATE ".table_config." 
-			SET var_defaultvalue='logs/spam.log' 
+	$sql = "UPDATE ".table_config."
+			SET var_defaultvalue='logs/spam.log'
 			WHERE var_name='$SPAM_LOG_BOOK';";
 	$db->query($sql);
 	// Add friendly domain list
-	$db->query("INSERT INTO `" . table_config . "` 
-				VALUES (NULL, 'AntiSpam', '\$FRIENDLY_DOMAINS', 'logs/domain-whitelist.log', 'logs/domain-whitelist.log', 'Text file', 'Local Domain Whitelist File', 'File containing a list of domains that cannot be banned.', 'normal', '\"')");	
+	$db->query("INSERT INTO `" . table_config . "`
+				VALUES (NULL, 'AntiSpam', '\$FRIENDLY_DOMAINS', 'logs/domain-whitelist.log', 'logs/domain-whitelist.log', 'Text file', 'Local Domain Whitelist File', 'File containing a list of domains that cannot be banned.', 'normal', '\"')");
 	echo '<li>Changed log file locations</li>';
 	
 	$sql = "ALTER TABLE `" . table_modules . "` ADD  `weight` INT NOT NULL";
@@ -75,115 +75,115 @@ if ($pligg_version == '1.2.2') {
 	echo '<li>Order modules via the Admin Panel</li>';
 	
 	// Change the template value to Bootstrap
-	$sql = "UPDATE `" . table_config . "` 
-			SET `var_value` = 'bootstrap' 
+	$sql = "UPDATE `" . table_config . "`
+			SET `var_value` = 'bootstrap'
 			WHERE `var_name` = '$thetemp';";
 	$db->query($sql);
-	echo '<li>Changed template to Bootstrap</li>';	
+	echo '<li>Changed template to Bootstrap</li>';
 	
 	// Change default captcha to SolveMedia
-	$sql = "UPDATE `" . table_misc_data . "` 
-			SET `data` = 'solvemedia' 
+	$sql = "UPDATE `" . table_misc_data . "`
+			SET `data` = 'solvemedia'
 			WHERE `pligg_misc_data`.`name` = 'captcha_method';";
 	$db->query($sql);
-	$sql = "INSERT INTO `" . table_misc_data . "` ( `name` , `data` ) 
+	$sql = "INSERT INTO `" . table_misc_data . "` ( `name` , `data` )
 			VALUES ('adcopy_lang', 'en');";
 	$db->query($sql);
-	$sql = "INSERT INTO `" . table_misc_data . "` ( `name` , `data` ) 
+	$sql = "INSERT INTO `" . table_misc_data . "` ( `name` , `data` )
 			VALUES ('adcopy_theme', 'white');";
 	$db->query($sql);
-	$sql = "INSERT INTO `" . table_misc_data . "` ( `name` , `data` ) 
+	$sql = "INSERT INTO `" . table_misc_data . "` ( `name` , `data` )
 			VALUES ('adcopy_pubkey', 'KLoj-jfX2UP0GEYOmYX.NOWL0ReUhErZ');";
 	$db->query($sql);
-	$sql = "INSERT INTO `" . table_misc_data . "` ( `name` , `data` ) 
+	$sql = "INSERT INTO `" . table_misc_data . "` ( `name` , `data` )
 			VALUES ('adcopy_privkey', 'Dm.c-mjmNP7Fhz-hKOpNz8l.NAMGp0wO');";
 	$db->query($sql);
-	$sql = "INSERT INTO `" . table_misc_data . "` ( `name` , `data` ) 
+	$sql = "INSERT INTO `" . table_misc_data . "` ( `name` , `data` )
 			VALUES ('adcopy_hashkey', 'nePptHN4rt.-UVLPFScpSuddqdtFdu2N');";
 	$db->query($sql);
-	echo '<li>Changed default CAPTCHA to Solve Media</li>';	
+	echo '<li>Changed default CAPTCHA to Solve Media</li>';
 	
 	// Change some user profile fields
 	$sql = "ALTER TABLE ".table_users." CHANGE `user_aim` `user_facebook` VARCHAR( 64 ) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL;";
 	$db->query($sql);
-	$sql = "UPDATE ".table_users." 
+	$sql = "UPDATE ".table_users."
 			SET user_facebook='';";
 	$db->query($sql);
 	$sql = "ALTER TABLE ".table_users." CHANGE `user_msn` `user_twitter` VARCHAR( 64 ) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL;";
 	$db->query($sql);
-	$sql = "UPDATE ".table_users." 
+	$sql = "UPDATE ".table_users."
 			SET user_twitter='';";
 	$db->query($sql);
 	$sql = "ALTER TABLE ".table_users." CHANGE `user_yahoo` `user_linkedin` VARCHAR( 64 ) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL;";
 	$db->query($sql);
-	$sql = "UPDATE ".table_users." 
+	$sql = "UPDATE ".table_users."
 			SET user_linkedin='';";
 	$db->query($sql);
 	$sql = "ALTER TABLE ".table_users." CHANGE `user_gtalk` `user_googleplus` VARCHAR( 64 ) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL;";
 	$db->query($sql);
-	$sql = "UPDATE ".table_users." 
+	$sql = "UPDATE ".table_users."
 			SET user_googleplus='';";
 	$db->query($sql);
 	$sql = "ALTER TABLE ".table_users." CHANGE `user_irc` `user_pinterest` VARCHAR( 64 ) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL;";
 	$db->query($sql);
-	$sql = "UPDATE ".table_users." 
+	$sql = "UPDATE ".table_users."
 			SET user_pinterest='';";
 	$db->query($sql);
 	echo '<li>Changed user profile fields to match new social media sites</li>';
 	
 	// Change default avatar to new larger png files
-	$sql = "UPDATE ".table_config." 
-			SET var_defaultvalue='/avatars/Avatar_100.png' 
+	$sql = "UPDATE ".table_config."
+			SET var_defaultvalue='/avatars/Avatar_100.png'
 			WHERE var_name='Default_Gravatar_Large';";
 	$db->query($sql);
 	// Change the large avatar location, only if it is still set to the default value
-	$sql = "UPDATE ".table_config." 
-			SET var_value='/avatars/Avatar_100.png' 
+	$sql = "UPDATE ".table_config."
+			SET var_value='/avatars/Avatar_100.png'
 			WHERE var_value='/avatars/Gravatar_30.gif';";
 	$db->query($sql);
-	$sql = "UPDATE ".table_config." 
-			SET var_defaultvalue='/avatars/Avatar_32.png' 
+	$sql = "UPDATE ".table_config."
+			SET var_defaultvalue='/avatars/Avatar_32.png'
 			WHERE var_name='Default_Gravatar_Small';";
 	$db->query($sql);
-	$sql = "UPDATE ".table_config." 
-			SET var_value='/avatars/Avatar_32.png' 
+	$sql = "UPDATE ".table_config."
+			SET var_value='/avatars/Avatar_32.png'
 			WHERE var_value='/avatars/Gravatar_15.gif';";
 	$db->query($sql);
 	// Force a change of avatar sizes
-	$sql = "UPDATE ".table_config." 
-			SET var_defaultvalue='32' 
+	$sql = "UPDATE ".table_config."
+			SET var_defaultvalue='32'
 			WHERE var_name='Avatar_Small';";
 	$db->query($sql);
-	$sql = "UPDATE ".table_config." 
-			SET var_value='32' 
+	$sql = "UPDATE ".table_config."
+			SET var_value='32'
 			WHERE var_name='Avatar_Small';";
 	$db->query($sql);
-	$sql = "UPDATE ".table_config." 
-			SET var_defaultvalue='100' 
+	$sql = "UPDATE ".table_config."
+			SET var_defaultvalue='100'
 			WHERE var_name='Avatar_Large';";
 	$db->query($sql);
-	$sql = "UPDATE ".table_config." 
-			SET var_value='100' 
+	$sql = "UPDATE ".table_config."
+			SET var_value='100'
 			WHERE var_name='Avatar_Large';";
 	$db->query($sql);
 	// We need to regenerate avatars to the new size here
 	echo '<li>Changed default avatars to larger format .png files</li>';
 	
 	// Update group avatar height/width sizes to 100
-	$sql = "UPDATE ".table_config." 
-			SET var_value='100' 
+	$sql = "UPDATE ".table_config."
+			SET var_value='100'
 			WHERE var_name='group_avatar_size_width';";
 	$db->query($sql);
-	$sql = "UPDATE ".table_config." 
-			SET var_defaultvalue='100' 
+	$sql = "UPDATE ".table_config."
+			SET var_defaultvalue='100'
 			WHERE var_name='group_avatar_size_width';";
 	$db->query($sql);
-	$sql = "UPDATE ".table_config." 
-			SET var_value='100' 
+	$sql = "UPDATE ".table_config."
+			SET var_value='100'
 			WHERE var_name='group_avatar_size_height';";
 	$db->query($sql);
-	$sql = "UPDATE ".table_config." 
-			SET var_defaultvalue='100' 
+	$sql = "UPDATE ".table_config."
+			SET var_defaultvalue='100'
 			WHERE var_name='group_avatar_size_height';";
 	$db->query($sql);
 	echo '<li>Changed group avatar height/width size setting to 100px</li>';
@@ -220,19 +220,19 @@ if ($pligg_version == '1.2.2') {
 	*/
 
 	// Update User Levels, removing the 'god' level
-	$sql = "UPDATE ".table_users." 
-			SET user_level='moderator' 
+	$sql = "UPDATE ".table_users."
+			SET user_level='moderator'
 			WHERE user_level='admin';";
 	$db->query($sql);
 	echo '<li>Changed Admin user level to Moderator</li>';
-	$sql = "UPDATE ".table_users." 
-			SET user_level='admin' 
+	$sql = "UPDATE ".table_users."
+			SET user_level='admin'
 			WHERE user_level='god';";
 	$db->query($sql);
 	echo '<li>Changed God user level to Admin</li>';
 	
 	// Remove the Spell Checker from Admin Config
-	$sql = "DELETE FROM " . table_config . " 
+	$sql = "DELETE FROM " . table_config . "
 			WHERE var_name='Spell_Checker'";
 	$db->query($sql);
 	echo '<li>Removed Spell Checker</li>';

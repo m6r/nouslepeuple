@@ -18,7 +18,7 @@ function upload_showpage(){
 	$canIhaveAccess = $canIhaveAccess + checklevel('admin');
 	
 	if($canIhaveAccess == 1)
-	{	
+	{
 		// Save settings
 		if ($_POST['submit'])
 		{
@@ -123,10 +123,10 @@ function upload_showpage(){
 			$main_smarty->assign('navbar_where', $navwhere);
 			$main_smarty->assign('posttitle', " / " . $main_smarty->get_config_vars('PLIGG_Visual_Header_AdminPanel'));
 		// breadcrumbs
-		define('modulename', 'upload'); 
+		define('modulename', 'upload');
 		$main_smarty->assign('modulename', modulename);
 		
-		define('pagename', 'admin_modifyupload'); 
+		define('pagename', 'admin_modifyupload');
 		$main_smarty->assign('pagename', pagename);
 		$main_smarty->assign('settings', str_replace('"','&#034;',get_upload_settings()));
 		$main_smarty->assign('places',$upload_places);
@@ -137,7 +137,7 @@ function upload_showpage(){
 	{
 		header("Location: " . getmyurl('login', $_SERVER['REQUEST_URI']));
 	}
-}	
+}
 
 function upload_edit_link()
 {
@@ -158,7 +158,7 @@ function upload_edit_link()
 		    	else
 			    @unlink("$thumb_dir/{$row->file_name}");
 		    }
-	    	$db->query("DELETE FROM ".table_prefix."files WHERE (file_id='$id' OR file_orig_id='$id') AND file_user_id='{$current_user->user_id}' AND file_comment_id=0"); 
+	    	$db->query("DELETE FROM ".table_prefix."files WHERE (file_id='$id' OR file_orig_id='$id') AND file_user_id='{$current_user->user_id}' AND file_comment_id=0");
  	    }
 	upload_save_files();
 }
@@ -173,7 +173,7 @@ function upload_do_comment_submit($vars)
 	global $db;
 
 	if ($vars['comment'])
-    	    foreach ($_SESSION['upload_files'] as $number => $file) 
+    	    foreach ($_SESSION['upload_files'] as $number => $file)
 		if ($file['comment']) {
 	    	    $db->query("UPDATE ".table_prefix."files SET file_comment_id=$vars[comment] WHERE file_comment_id=-1 AND (file_id=$file[id] OR file_orig_id=$file[id])");
     		    unset ($_SESSION['upload_files'][$number]);
@@ -200,11 +200,11 @@ function upload_save_files()
     {
 	if (is_dir($upload_dir))
 	{
-	    foreach ($_FILES["upload_files"]["error"] as $key => $err) 
+	    foreach ($_FILES["upload_files"]["error"] as $key => $err)
 	    {
 		if ($_FILES["upload_files"]["size"][$key]/1024 > $settings['filesize'])
 		    $error = "Maximum file size ({$settings['filesize']} Kb) exceeded";
-	    	elseif ($err == UPLOAD_ERR_OK) 
+	    	elseif ($err == UPLOAD_ERR_OK)
 	  	{
 	            $tmp_name = $_FILES["upload_files"]["tmp_name"][$key];
 	            $name = $_FILES["upload_files"]["name"][$key];
@@ -220,11 +220,11 @@ function upload_save_files()
 	
 		            if (@move_uploaded_file($tmp_name, "$upload_dir/$name.$ext"))
 			    {
-				$db->query("INSERT INTO ".table_prefix."files 
+				$db->query("INSERT INTO ".table_prefix."files
 						SET file_size='orig',
 						    file_user_id={$current_user->user_id},
 						    file_link_id={$linkres->id},
-						    file_real_size='{$_FILES["upload_files"]["size"][$key]}',	
+						    file_real_size='{$_FILES["upload_files"]["size"][$key]}',
 						    file_fields='".base64_encode(serialize($fields))."',
 						    file_comment_id='".$db->escape($_POST['comment'])."',
 						    file_name='".$db->escape("$name.$ext")."'");
@@ -239,7 +239,7 @@ function upload_save_files()
 			$error = "Extension .$ext is not allowed";
 	        }
 	    }
-	} 
+	}
 	else
 	    $error = "Directory $upload_dir does not exists";
     }
@@ -247,13 +247,13 @@ function upload_save_files()
 	// Add external links here
 	if (strstr($settings['external'],'url') && $_POST["upload_urls"])
 	{
-		foreach ($_POST["upload_urls"] as $url) 
+		foreach ($_POST["upload_urls"] as $url)
 		{
 		    if ($count > $settings['maxnumber']) break;
 		    $url = trim($url);
-		    if (strlen($url)>10 && strpos($url,'http')===0) 
+		    if (strlen($url)>10 && strpos($url,'http')===0)
 		    {
-			$db->query("INSERT INTO ".table_prefix."files 
+			$db->query("INSERT INTO ".table_prefix."files
 					SET file_size='orig',
 					    file_user_id={$current_user->user_id},
 					    file_link_id={$linkres->id},
@@ -282,7 +282,7 @@ function generate_thumbs($fname,$link_id,$settings,$orig_id,$only_size='')
     
     try
     {
-        if (!($str = @file_get_contents($fname)))   throw new Exception("Can't read file $fname");  
+        if (!($str = @file_get_contents($fname)))   throw new Exception("Can't read file $fname");
     }
     catch(Exception $e)
     {
@@ -295,9 +295,9 @@ function generate_thumbs($fname,$link_id,$settings,$orig_id,$only_size='')
         if ($contents) $str = $contents;
             else return $e->getMessage();
     }
-    if (!($img = @imagecreatefromstring($str))) 
-	return; 
-    else	
+    if (!($img = @imagecreatefromstring($str)))
+	return;
+    else
 	$db->query("UPDATE ".table_prefix."files SET file_ispicture=1 WHERE file_id='$orig_id'");
 
     if (!$settings['thumb']) return;
@@ -337,7 +337,7 @@ function generate_thumbs($fname,$link_id,$settings,$orig_id,$only_size='')
 	// create a new temporary image
       	$tmp_img = imagecreatetruecolor( $new_width, $new_height );
 	
-      	// copy and resize old image into new image 
+      	// copy and resize old image into new image
         while (file_exists("$thumb_dir/$name$i.jpg")) $i++;
 	$name = "$name$i.jpg";
 
@@ -346,7 +346,7 @@ function generate_thumbs($fname,$link_id,$settings,$orig_id,$only_size='')
       	if (!imagejpeg( $tmp_img, "$thumb_dir/$name",$settings['quality'] ))
 	    $error .= "Can't create thumbnail $thumb_dir/$name";
 	else
-	    $db->query("INSERT INTO ".table_prefix."files 
+	    $db->query("INSERT INTO ".table_prefix."files
 				SET file_size='$size',
 				    file_orig_id='$orig_id',
 				    file_user_id={$current_user->user_id},
@@ -359,35 +359,35 @@ function generate_thumbs($fname,$link_id,$settings,$orig_id,$only_size='')
     return $error;
 }
 
-// 
+//
 // Read module settings
 //
 function get_upload_settings()
 {
     return array(
-		'thumb' => get_misc_data('upload_thumb'), 
-		'sizes' => unserialize(get_misc_data('upload_sizes')), 
-		'place' => get_misc_data('upload_place'), 
-		'defsize' => get_misc_data('upload_defsize'), 
-		'external' => get_misc_data('upload_external'), 
-		'quality' => get_misc_data('upload_quality'), 
-		'allow_hide' => get_misc_data('upload_allow_hide'), 
-		'fields' => unserialize(base64_decode(get_misc_data('upload_fields'))), 
-		'alternates' => unserialize(base64_decode(get_misc_data('upload_alternates'))), 
-		'mandatory' => unserialize(get_misc_data('upload_mandatory')), 
-		'display' => unserialize(get_misc_data('upload_display')), 
-		'format' => get_misc_data('upload_format'), 
-		'pre_format' => get_misc_data('upload_pre_format'), 
-		'post_format' => get_misc_data('upload_post_format'), 
-		'thumb_format' => get_misc_data('upload_thumb_format'), 
-		'thumb_pre_format' => get_misc_data('upload_t_pre_format'), 
-		'thumb_post_format' => get_misc_data('upload_t_post_format'), 
-		'link' => get_misc_data('upload_link'), 
-		'directory' => get_misc_data('upload_directory'), 
-		'thdirectory' => get_misc_data('upload_thdirectory'), 
-		'filesize' => get_misc_data('upload_filesize'), 
-		'maxnumber' => get_misc_data('upload_maxnumber'), 
-		'extensions' => get_misc_data('upload_extensions'), 
+		'thumb' => get_misc_data('upload_thumb'),
+		'sizes' => unserialize(get_misc_data('upload_sizes')),
+		'place' => get_misc_data('upload_place'),
+		'defsize' => get_misc_data('upload_defsize'),
+		'external' => get_misc_data('upload_external'),
+		'quality' => get_misc_data('upload_quality'),
+		'allow_hide' => get_misc_data('upload_allow_hide'),
+		'fields' => unserialize(base64_decode(get_misc_data('upload_fields'))),
+		'alternates' => unserialize(base64_decode(get_misc_data('upload_alternates'))),
+		'mandatory' => unserialize(get_misc_data('upload_mandatory')),
+		'display' => unserialize(get_misc_data('upload_display')),
+		'format' => get_misc_data('upload_format'),
+		'pre_format' => get_misc_data('upload_pre_format'),
+		'post_format' => get_misc_data('upload_post_format'),
+		'thumb_format' => get_misc_data('upload_thumb_format'),
+		'thumb_pre_format' => get_misc_data('upload_t_pre_format'),
+		'thumb_post_format' => get_misc_data('upload_t_post_format'),
+		'link' => get_misc_data('upload_link'),
+		'directory' => get_misc_data('upload_directory'),
+		'thdirectory' => get_misc_data('upload_thdirectory'),
+		'filesize' => get_misc_data('upload_filesize'),
+		'maxnumber' => get_misc_data('upload_maxnumber'),
+		'extensions' => get_misc_data('upload_extensions'),
 		'fileplace' => get_misc_data('upload_fileplace'),
 		'commentplace' => get_misc_data('upload_commentplace'),
 		'commentfilelist' => get_misc_data('upload_cfilelist'),
@@ -395,8 +395,8 @@ function get_upload_settings()
 		);
 }
 
-// 
-// 
+//
+//
 //
 function upload_get_file_count($link_id)
 {
@@ -408,7 +408,7 @@ function upload_get_file_count($link_id)
 }
 
 /*
-// 
+//
 // not used?
 //
 function upload_get_file_size($link_id)
@@ -447,7 +447,7 @@ function upload_track($vars)
 		$image = "<img src='".my_pligg_base."{$thumb_dir}/{$file->file_name}'/>";
 	}
 	else
-	    $image = '';	
+	    $image = '';
 	$content = str_replace($m[0][$i],$image,$content);
     }
 
@@ -496,7 +496,7 @@ function upload_comment_track($vars)
 		$image = "<img src='".my_pligg_base."{$thumb_dir}/{$file->file_name}'/>";
 	}
 	else
-	    $image = '';	
+	    $image = '';
 	$content = str_replace($m[0][$i],$image,$content);
     }
 
@@ -526,7 +526,7 @@ function upload_delete($vars)
     $upload_dir = mnmpath . get_misc_data('upload_directory');
     $thumb_dir  = mnmpath . get_misc_data('upload_thdirectory');
 
-    // Remove files 
+    // Remove files
     if (is_numeric($vars['link_id']))
     {
 	    if ($files = $db->get_results($sql = "SELECT * FROM ".table_prefix."files WHERE file_link_id='{$vars['link_id']}'"))
@@ -537,7 +537,7 @@ function upload_delete($vars)
 		    else
 			    @unlink("$thumb_dir/{$row->file_name}");
 		}
-	    $db->query("DELETE FROM ".table_prefix."files WHERE file_link_id='{$vars['link_id']}'"); 
+	    $db->query("DELETE FROM ".table_prefix."files WHERE file_link_id='{$vars['link_id']}'");
     }
 }
 
@@ -553,7 +553,7 @@ function upload_comment_delete($vars)
     $upload_dir = mnmpath . get_misc_data('upload_directory');
     $thumb_dir  = mnmpath . get_misc_data('upload_thdirectory');
 
-    // Remove files 
+    // Remove files
     if (is_numeric($vars['comment_id']))
     {
 	    if ($files = $db->get_results($sql = "SELECT * FROM ".table_prefix."files WHERE file_comment_id='{$vars['comment_id']}'"))
@@ -564,7 +564,7 @@ function upload_comment_delete($vars)
 		    else
 			    @unlink("$thumb_dir/{$row->file_name}");
 		}
-	    $db->query("DELETE FROM ".table_prefix."files WHERE file_comment_id='{$vars['comment_id']}'"); 
+	    $db->query("DELETE FROM ".table_prefix."files WHERE file_comment_id='{$vars['comment_id']}'");
     }
 }
 
@@ -578,9 +578,9 @@ function upload_rss_item($vars) {
 	$upload_thdirectory = get_misc_data('upload_thdirectory');
 	$upload_thumb_format = get_misc_data('upload_thumb_format');
 
-     	$sql = "SELECT *, IF(LEFT(file_name,4)='http',file_name,CONCAT('$upload_directory/',file_name)) AS link_name 
+     	$sql = "SELECT *, IF(LEFT(file_name,4)='http',file_name,CONCAT('$upload_directory/',file_name)) AS link_name
 			FROM " . table_prefix . "files a
-			WHERE a.file_link_id='{$vars['item']->id}' AND a.file_size='orig' AND a.file_comment_id=0 
+			WHERE a.file_link_id='{$vars['item']->id}' AND a.file_size='orig' AND a.file_comment_id=0
 			ORDER BY file_number";
 	$images = $db->get_results($sql,ARRAY_A);
 	if($images)
@@ -598,9 +598,9 @@ function upload_comment_rss_item($vars) {
 	$upload_thdirectory = get_misc_data('upload_thdirectory');
 	$upload_thumb_format = get_misc_data('upload_thumb_format');
 
-     	$sql = "SELECT *, IF(LEFT(file_name,4)='http',file_name,CONCAT('$upload_directory/',file_name)) AS link_name 
+     	$sql = "SELECT *, IF(LEFT(file_name,4)='http',file_name,CONCAT('$upload_directory/',file_name)) AS link_name
 			FROM " . table_prefix . "files a
-			WHERE a.file_comment_id='{$vars['item']->id}' AND a.file_size='orig' 
+			WHERE a.file_comment_id='{$vars['item']->id}' AND a.file_size='orig'
 			ORDER BY file_number";
 	$images = $db->get_results($sql,ARRAY_A);
 	if($images)

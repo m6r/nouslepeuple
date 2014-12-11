@@ -18,7 +18,7 @@ function spam_trigger_showpage(){
 	$canIhaveAccess = $canIhaveAccess + checklevel('admin');
 	
 	if($canIhaveAccess == 1)
-	{	
+	{
 		// Save settings
 		if ($_POST['submit'])
 		{
@@ -37,10 +37,10 @@ function spam_trigger_showpage(){
 		$main_smarty->assign('navbar_where', $navwhere);
 		$main_smarty->assign('posttitle', " / " . $main_smarty->get_config_vars('PLIGG_Visual_Header_AdminPanel'));
 
-		define('modulename', 'spam_trigger'); 
+		define('modulename', 'spam_trigger');
 		$main_smarty->assign('modulename', modulename);
 		
-		define('pagename', 'admin_modifyspam_trigger'); 
+		define('pagename', 'admin_modifyspam_trigger');
 		$main_smarty->assign('pagename', pagename);
 		$main_smarty->assign('settings', str_replace('"','&#034;',get_spam_trigger_settings()));
 		$main_smarty->assign('places',$spam_trigger_places);
@@ -51,7 +51,7 @@ function spam_trigger_showpage(){
 	{
 		header("Location: " . getmyurl('login', $_SERVER['REQUEST_URI']));
 	}
-}	
+}
 
 function spam_trigger_editlink()
 {
@@ -214,14 +214,14 @@ function spam_trigger_check($text, $wordlist)
 	return true;
 }
 
-// 
+//
 // Read module settings
 //
 function get_spam_trigger_settings()
 {
     return array(
-		'spam_light' => get_misc_data('spam_trigger_light'), 
-		'spam_medium' => get_misc_data('spam_trigger_medium'), 
+		'spam_light' => get_misc_data('spam_trigger_light'),
+		'spam_medium' => get_misc_data('spam_trigger_medium'),
 		'spam_hard' => get_misc_data('spam_trigger_hard')
 		);
 }

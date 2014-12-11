@@ -185,7 +185,7 @@ if($pligg_category != ''){
 	$main_smarty->assign('index_url_commented', getmyurl('index_sort', 'commented', $pligg_category));
 	
 	$main_smarty->assign('cat_url', getmyurl("maincategory"));
-}	
+}
 else {
 	$main_smarty->assign('index_url_recent', getmyurl('index'));
 	$main_smarty->assign('index_url_today', getmyurl('index_sort', 'today'));
@@ -207,7 +207,7 @@ $main_smarty->assign('group_url_members', getmyurl('group_sort', 'members'));
 $main_smarty->assign('group_url_name', getmyurl('group_sort', 'name'));
 
 // setup the links
-if ($current_user->user_id > 0 && $current_user->authenticated) 
+if ($current_user->user_id > 0 && $current_user->authenticated)
 {
 	$login=$current_user->user_login;
 	$main_smarty->assign('user_url_personal_data', getmyurl('user', $login));

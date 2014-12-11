@@ -8,10 +8,10 @@ function status_is_allowed($user)
 	array_walk($users, 'status_trim_value');
 	array_walk($groups, 'status_trim_value');
 
-	    if (!strstr($settings['level'],$user->level) && 
+	    if (!strstr($settings['level'],$user->level) &&
 		!in_array($user->username,$users) &&
 		(!$settings['groups'] ||
-		 !$db->get_row($sql="SELECT group_id FROM ".table_groups." 
+		 !$db->get_row($sql="SELECT group_id FROM ".table_groups."
 					INNER JOIN ".table_group_member." ON member_group_id=group_id AND member_user_id='{$user->id}' AND member_status='active'
 					WHERE group_name IN ('".join("','",$groups)."')")))
 		return false;
@@ -19,9 +19,9 @@ function status_is_allowed($user)
 		return true;
 }
 
-function status_trim_value(&$value) 
-{ 
-    $value = trim($value); 
+function status_trim_value(&$value)
+{
+    $value = trim($value);
 }
 
 function status_comment_submit($vars)
@@ -38,7 +38,7 @@ function status_comment_submit($vars)
 	$user->id = $comment->author;
 	$linkres=new Link;
 	$linkres->id = $comment->link;
-	if($user->read() && $linkres->read()) 
+	if($user->read() && $linkres->read())
 	{
 	    if (!status_is_allowed($user) || !$user->extra_field['status_switch'] || !$user->extra_field['status_comment']) return;
 
@@ -48,7 +48,7 @@ function status_comment_submit($vars)
 	    if ($limit>0 && strlen($text)+strlen($user->username)+strlen($linkres->title)-4 > $limit)
 	    	$linkres->title = substr($linkres->title,0,max($limit+4-strlen($text)-strlen($user->username)-3,10)).'...';
 	    $text = sprintf( $text, $user->username, '<a href="'.$linkres->get_internal_url().'">'.$linkres->title.'</a>' );
-	    $db->query($sql="INSERT INTO ".table_prefix."updates SET update_time=UNIX_TIMESTAMP(), 
+	    $db->query($sql="INSERT INTO ".table_prefix."updates SET update_time=UNIX_TIMESTAMP(),
 							    update_type='c',
 							    update_user_id='{$comment->author}',
 							    update_link_id='{$comment->id}',
@@ -68,7 +68,7 @@ function status_story_submit($vars)
 
 	$user=new User();
 	$user->id = $linkres->author;
-	if($user->read()) 
+	if($user->read())
 	{
 	    if (!status_is_allowed($user) || !$user->extra_field['status_switch'] || !$user->extra_field['status_story']) return;
 
@@ -78,7 +78,7 @@ function status_story_submit($vars)
 	    if ($limit>0 && strlen($text)+strlen($user->username)+strlen($linkres->title)-4 > $limit)
 	    	$linkres->title = substr($linkres->title,0,max($limit+4-strlen($text)-strlen($user->username)-3,10)).'...';
 	    $text = sprintf( $text, $user->username, '<a href="'.$linkres->get_internal_url().'">'.$linkres->title.'</a>' );
-	    $db->query($sql="INSERT INTO ".table_prefix."updates SET update_time=UNIX_TIMESTAMP(), 
+	    $db->query($sql="INSERT INTO ".table_prefix."updates SET update_time=UNIX_TIMESTAMP(),
 							    update_type='s',
 							    update_user_id='{$linkres->author}',
 							    update_link_id='{$linkres->id}',
@@ -106,7 +106,7 @@ function status_showpage(){
 	$canIhaveAccess = $canIhaveAccess + checklevel('admin');
 	
 	if($canIhaveAccess == 1)
-	{	
+	{
 		if ($_POST['submit'])
 		{
 			if ($_REQUEST['status_level'])
@@ -148,7 +148,7 @@ function status_showpage(){
 			misc_data_update('status_user_comment', mysql_real_escape_string($_REQUEST['status_user_comment']));
 			misc_data_update('status_user_group', mysql_real_escape_string($_REQUEST['status_user_group']));
 			misc_data_update('status_user_email', mysql_real_escape_string($_REQUEST['status_user_email']));
-			$db->query("ALTER TABLE ".table_users." 
+			$db->query("ALTER TABLE ".table_users."
 					CHANGE  `status_switch`  `status_switch` TINYINT(1) DEFAULT '".($_REQUEST['status_user_switch']+0)."',
 					CHANGE  `status_friends` `status_friends` TINYINT(1) DEFAULT '".($_REQUEST['status_user_friends']+0)."',
 					CHANGE  `status_story`  `status_story` TINYINT(1) DEFAULT  '".($_REQUEST['status_user_story']+0)."',
@@ -162,10 +162,10 @@ function status_showpage(){
 		$main_smarty->assign('navbar_where', $navwhere);
 		$main_smarty->assign('posttitle', " / " . $main_smarty->get_config_vars('PLIGG_Visual_Header_AdminPanel'));
 		// breadcrumbs
-		define('modulename', 'status'); 
+		define('modulename', 'status');
 		$main_smarty->assign('modulename', modulename);
 		
-		define('pagename', 'admin_modifystatus'); 
+		define('pagename', 'admin_modifystatus');
 		$main_smarty->assign('pagename', pagename);
 
 		$main_smarty->assign('settings', get_status_settings());
@@ -176,16 +176,16 @@ function status_showpage(){
 	{
 		header("Location: " . getmyurl('login', $_SERVER['REQUEST_URI']));
 	}
-}	
+}
 
-// 
+//
 // Read module settings
 //
 function get_status_settings()
 {
     return array(
-		'level' => get_misc_data('status_level'), 
-		'profile_level' => get_misc_data('status_profile_level'), 
+		'level' => get_misc_data('status_level'),
+		'profile_level' => get_misc_data('status_profile_level'),
 		'switch' => get_misc_data('status_switch'),
 		'allowsearch' => get_misc_data('status_allowsearch'),
 		'place' => get_misc_data('status_place'),
@@ -223,14 +223,14 @@ function get_status_settings()
 function status_profile_save(){
 	global $user, $users_extra_fields_field;
 
-	$user->extra['status_switch']=sanitize($_POST['status_switch']);	
-	$user->extra['status_friends']=sanitize($_POST['status_friends']);	
-	$user->extra['status_all_friends']=sanitize($_POST['status_all_friends']);	
-	$user->extra['status_friend_list']=sanitize(@join(',',$_POST['status_friend_list']));	
-	$user->extra['status_comment']=sanitize($_POST['status_comment']);	
-	$user->extra['status_group']=sanitize($_POST['status_group']);	
-	$user->extra['status_story']=sanitize($_POST['status_story']);	
-	$user->extra['status_email']=sanitize($_POST['status_email']);	
+	$user->extra['status_switch']=sanitize($_POST['status_switch']);
+	$user->extra['status_friends']=sanitize($_POST['status_friends']);
+	$user->extra['status_all_friends']=sanitize($_POST['status_all_friends']);
+	$user->extra['status_friend_list']=sanitize(@join(',',$_POST['status_friend_list']));
+	$user->extra['status_comment']=sanitize($_POST['status_comment']);
+	$user->extra['status_group']=sanitize($_POST['status_group']);
+	$user->extra['status_story']=sanitize($_POST['status_story']);
+	$user->extra['status_email']=sanitize($_POST['status_email']);
 }
 
 function status_profile_show(){

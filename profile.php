@@ -27,7 +27,7 @@ $canIhaveAccess = $canIhaveAccess + checklevel('admin');
 $canIhaveAccess = $canIhaveAccess + checklevel('moderator');
 
 // If not logged in, redirect to the index page
-if ($_GET['login'] && $canIhaveAccess) 
+if ($_GET['login'] && $canIhaveAccess)
 	$login=$_GET['login'];
 elseif ($current_user->user_id > 0 && $current_user->authenticated) {
 	$login = $current_user->user_login;
@@ -64,7 +64,7 @@ $main_smarty->assign('user_url_news_published2', getmyurl('user2', $login, 'publ
 $main_smarty->assign('user_url_news_unpublished2', getmyurl('user2', $login, 'new'));
 $main_smarty->assign('user_url_news_voted2', getmyurl('user2', $login, 'voted'));
 $main_smarty->assign('user_url_news_upvoted2', getmyurl('user2', $login, 'upvoted'));
-$main_smarty->assign('user_url_news_downvoted2', getmyurl('user2', $login, 'downvoted'));	
+$main_smarty->assign('user_url_news_downvoted2', getmyurl('user2', $login, 'downvoted'));
 $main_smarty->assign('user_url_commented2', getmyurl('user2', $login, 'commented'));
 $main_smarty->assign('user_url_saved2', getmyurl('user2', $login, 'saved'));
 $main_smarty->assign('user_url_friends', getmyurl('user_friends', $login, 'following'));
@@ -73,7 +73,7 @@ $main_smarty->assign('user_url_add', getmyurl('user_friends', $login, 'addfriend
 $main_smarty->assign('user_url_remove', getmyurl('user_friends', $login, 'removefriend'));
 $main_smarty->assign('user_rss', getmyurl('rssuser', $login));
 $main_smarty->assign('URL_Profile2', getmyurl('user_edit', $login));
-$main_smarty->assign('form_action', getmyurl('profile')); 
+$main_smarty->assign('form_action', getmyurl('profile'));
 $main_smarty->assign('user_url_member_groups', getmyurl('user2', $login, 'member_groups	'));
 
 $main_smarty->assign('user_followers', $user->getFollowersCount());
@@ -100,7 +100,7 @@ $main_smarty->assign('user_following', $user->getFollowingCount());
 			if(empty($error)){
 				$imagesize = getimagesize($mytmpfile);
 				$width = $imagesize[0];
-				$height = $imagesize[1];	
+				$height = $imagesize[1];
 		
 				$imagename = $user->id . "_original.jpg";
 		
@@ -109,7 +109,7 @@ $main_smarty->assign('user_following', $user->getFollowingCount());
 				$result = move_uploaded_file($_FILES['image_file']['tmp_name'], $newimage);
 				if(empty($result))
 					$error["result"] = "There was an error moving the uploaded file.";
-			}			
+			}
 		
 			// create large avatar
 			include mnminclude . "class.pThumb.php";
@@ -128,13 +128,13 @@ $main_smarty->assign('user_following', $user->getFollowingCount());
 			$img->pSave($user_image_path . $user->id . "_".Avatar_Small.".jpg");
 			$img = "";
 
-			$db->query($sql="UPDATE ".table_users." SET user_avatar_source='useruploaded' WHERE user_id='$user->id'");	
+			$db->query($sql="UPDATE ".table_users." SET user_avatar_source='useruploaded' WHERE user_id='$user->id'");
 			unset($cached_users[$user->id]);
 		} else {
 			echo 'An error occured while uploading your avatar.';
 		}
 			
-	}		
+	}
 
 	if(isset($error) && is_array($error)) {
 		while(list($key, $val) = each($error)) {
@@ -188,7 +188,7 @@ function show_profile() {
 	$vars = '';
 	check_actions('profile_show', $vars);
 	
-	// assign profile information to smarty	
+	// assign profile information to smarty
 	$main_smarty->assign('user_id', $user->id);
 	$main_smarty->assign('user_email', $user->email);
 	$main_smarty->assign('user_login', $user->username);
@@ -214,7 +214,7 @@ function show_profile() {
 	$main_smarty->assign('user_total_comments', $user->total_comments);
 	$main_smarty->assign('user_total_votes', $user->total_votes);
 	$main_smarty->assign('user_published_votes', $user->published_votes);
-	$main_smarty->assign('user_biographie', $user->biographie);        
+	$main_smarty->assign('user_biographie', $user->biographie);
 	
 	// If the user language setting is NULL, present the site's default language file
 	$main_smarty->assign('user_language', !empty($user->language) ? $user->language : pligg_language);
@@ -226,8 +226,8 @@ function show_profile() {
 		$languages[] = $m[1];
 	$main_smarty->assign('languages', $languages);
 		
-	// pagename	
-	define('pagename', 'user_edit'); 
+	// pagename
+	define('pagename', 'user_edit');
 	$main_smarty->assign('pagename', pagename);
 	
 	$main_smarty->assign('form_action', $_SERVER["PHP_SELF"]);
@@ -267,7 +267,7 @@ function show_profile() {
 
 	// show the template
 	$main_smarty->assign('tpl_center', $the_template . '/user_settings_center');
-	$main_smarty->display($the_template . '/pligg.tpl');	
+	$main_smarty->display($the_template . '/pligg.tpl');
 }
 
 function save_profile() {
@@ -284,7 +284,7 @@ function save_profile() {
 		    if(!check_email(sanitize($_POST['email'], 3))) {
 			$savemsg = $main_smarty->get_config_vars("PLIGG_Visual_Profile_BadEmail");
 			return $savemsg;
-		    } 
+		    }
 		    elseif(email_exists(trim(sanitize($_POST['email'], 3)))) { // if email already exists
 			$savemsg = $main_smarty->get_config_vars("PLIGG_Visual_Register_Error_EmailExists");
 			return $savemsg;
@@ -293,7 +293,7 @@ function save_profile() {
 			if(pligg_validate()){
 				$encode=md5($_POST['email'] . $user->karma .  $user->username. pligg_hash().$main_smarty->get_config_vars('PLIGG_Visual_Name'));
 
-				$domain = $main_smarty->get_config_vars('PLIGG_Visual_Name');			
+				$domain = $main_smarty->get_config_vars('PLIGG_Visual_Name');
 				$validation = my_base_url . my_pligg_base . "/validation.php?code=$encode&uid=".urlencode($user->username)."&email=".urlencode($_POST['email']);
 				$str = $main_smarty->get_config_vars('PLIGG_PassEmail_verification_message');
 				eval('$str = "'.str_replace('"','\"',$str).'";');
@@ -313,7 +313,7 @@ function save_profile() {
 				$mail->Body = $message;
 				$mail->CharSet = 'utf-8';
 
-#print_r($mail);					
+#print_r($mail);
 				if(!$mail->Send())
 					return false;
 				$savemsg = $main_smarty->get_config_vars("PLIGG_Visual_Register_Noemail").' '.sprintf($main_smarty->get_config_vars("PLIGG_Visual_Register_ToDo"),$main_smarty->get_config_vars('PLIGG_PassEmail_From'));
@@ -333,7 +333,7 @@ function save_profile() {
 		$sqlGetiCategory = "SELECT category__auto_id from " . table_categories . " where category__auto_id!= 0;";
 		$sqlGetiCategoryQ = mysql_query($sqlGetiCategory);
 		$arr = array();
-		while ($row = mysql_fetch_array($sqlGetiCategoryQ, MYSQL_NUM)) 
+		while ($row = mysql_fetch_array($sqlGetiCategoryQ, MYSQL_NUM))
 			$arr[] = $row[0];
 
 		$select_check = $_POST['chack'];
@@ -341,7 +341,7 @@ function save_profile() {
 		$diff = array_diff($arr,$select_check);
 		$select_checked = $db->escape(implode(",",$diff));
 
-		$sql = "UPDATE " . table_users . " set user_categories='$select_checked' WHERE user_id = '{$user->id}'";	
+		$sql = "UPDATE " . table_users . " set user_categories='$select_checked' WHERE user_id = '{$user->id}'";
 		$query = mysql_query($sql);
 		/////
 		
@@ -398,7 +398,7 @@ function save_profile() {
 			$avatar_source == "";
 		}
 		$user->avatar_source=$avatar_source;
-*/	
+*/
 	  if($user->level=="admin" || $user->level=="moderator"){
 		  if ($user->username!=sanitize($_POST['user_login'], 3))
 			{
@@ -447,9 +447,9 @@ function save_profile() {
 				$savemsg = $main_smarty->get_config_vars("PLIGG_Visual_Profile_BadOldPass");
 				return $savemsg;
 			}
-		}                
+		}
                 
-                $user->biographie = sanitize($_POST['newbiographie'], 3);                
+                $user->biographie = sanitize($_POST['newbiographie'], 3);
                 
 		$user->store();
 		$user->read();

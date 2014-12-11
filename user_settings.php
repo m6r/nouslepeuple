@@ -19,7 +19,7 @@ $CSRF = new csrf();
 $offset=(get_current_page()-1)*$page_size;
 $main_smarty = do_sidebar($main_smarty);
 
-define('pagename', 'user'); 
+define('pagename', 'user');
 $main_smarty->assign('pagename', pagename);
 
 
@@ -64,7 +64,7 @@ $url = strtolower(end(explode('/', $geturl)));
 	$sqlGetiCategory = "SELECT category__auto_id from " . table_categories . " where category__auto_id!= 0;";
 	$sqlGetiCategoryQ = mysql_query($sqlGetiCategory);
 	$arr = array();
-	while ($row = mysql_fetch_array($sqlGetiCategoryQ, MYSQL_NUM)) 
+	while ($row = mysql_fetch_array($sqlGetiCategoryQ, MYSQL_NUM))
 		$arr[] = $row[0];
 
 	if (!$select_check) $select_check = array();
@@ -72,7 +72,7 @@ $url = strtolower(end(explode('/', $geturl)));
 
 	$select_checked = $db->escape(implode(",",$diff));
 
-	$sql = "UPDATE " . table_users . " set user_categories='$select_checked' WHERE user_id = '$sqlGetiUserId'";	
+	$sql = "UPDATE " . table_users . " set user_categories='$select_checked' WHERE user_id = '$sqlGetiUserId'";
 	$query = mysql_query($sql);
 	$to_page = preg_replace("/&err=.+$/","",$geturl);
 	header("location:".$to_page."");

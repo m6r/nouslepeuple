@@ -116,7 +116,7 @@ class FileBackup {
 	                       }
 	                   } else {
 	                       if (!$directoriesonly) {
-	                           //if you want to include files; build your file array 
+	                           //if you want to include files; build your file array
 	                           //however you choose; add other file details that you want.
 	                         $directorylist[$startdir . $file]['level'] = $level;
 	                         $directorylist[$startdir . $file]['dir'] = 0;

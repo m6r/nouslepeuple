@@ -14,7 +14,7 @@ force_authentication();
 $canIhaveAccess = 0;
 $canIhaveAccess = $canIhaveAccess + checklevel('admin');
 
-if($canIhaveAccess == 0){	
+if($canIhaveAccess == 0){
 	header("Location: " . getmyurl('admin_login', $_SERVER['REQUEST_URI']));
 	die();
 }
@@ -41,7 +41,7 @@ $main_smarty = do_sidebar($main_smarty);
 
 if($canIhaveAccess == 1){
 	if ($_POST["enabled"]) {
-		foreach($_POST["enabled"] as $id => $value) 
+		foreach($_POST["enabled"] as $id => $value)
 		{
 			$sql = "UPDATE " . table_widgets . " set enabled = $value where id=$id";
 			$db->query($sql);
@@ -60,7 +60,7 @@ if($canIhaveAccess == 1){
 
 		header('Location: admin_widgets.php');
 		die();
-	}	
+	}
 	if($_GET['action'] == 'enable'){
 		$module = $db->escape(sanitize($_REQUEST['module'],3));
 		$sql = "UPDATE " . table_widgets . " set enabled = 1 where `name` = '" . $module . "';";
@@ -93,7 +93,7 @@ if($_GET['action'] == 'install'){
 
 	header('Location: admin_widgets.php?status=uninstalled');
 	die();
-}	
+}
 if($_GET['action'] == 'remove'){
 	$widget = $db->escape(sanitize($_REQUEST['widget'],3));
 	$sql = "SELECT * FROM " . table_widgets . " WHERE `name` = '" . $widget . "';";
@@ -107,13 +107,13 @@ if($_GET['action'] == 'remove'){
 
 	header('Location: admin_widgets.php?status=uninstalled');
 	die();
-}	
+}
 
 
 	
 
 	$main_smarty->assign('tpl_center', '/admin/widgets');
-	$output = $main_smarty->fetch($template_dir . '/admin/admin.tpl');		
+	$output = $main_smarty->fetch($template_dir . '/admin/admin.tpl');
 
 	if (!function_exists('clear_widget_cache')) {
 		echo "Your template is not compatible with this version of Pligg. Missing the 'clear_widgets_cache' function in admin_widgets_center.tpl.";
@@ -141,7 +141,7 @@ function include_widget_settings($name)
 {
 	if(file_exists(mnmpath . '/widgets/'. $name . '/' . 'init.php'))
 	{
-		include_once(mnmpath . '/widgets/' . $name . '/' . 'init.php');		
+		include_once(mnmpath . '/widgets/' . $name . '/' . 'init.php');
 
 		return $widget;
 	} else {

@@ -14,7 +14,7 @@ if ($pligg_version == '2.0.0rc1') {
 	echo '<li>Performing one-time Pligg 2.0.0 RC2 Upgrade<ul>';
 
     // Fixed a user level bug that users upgrading from 2.0.0 beta might now have fixed on their own
-    $sql = "ALTER TABLE ".table_users." 
+    $sql = "ALTER TABLE ".table_users."
 			CHANGE user_level user_level ENUM('normal','moderator','admin','Spammer') NOT NULL DEFAULT 'normal';";
     $db->query($sql);
     echo '<li>Fixing a user level bug for Beta users</li>';

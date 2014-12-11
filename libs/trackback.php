@@ -44,7 +44,7 @@ class Trackback {
 		if(!is_numeric($this->link)) die();
 		//$this->link = sanitize($this->link,4);
 		/////
-		if($this->id == 0 && !empty($this->url) && $this->link > 0) 
+		if($this->id == 0 && !empty($this->url) && $this->link > 0)
 			$cond = "trackback_type = '$this->type' AND trackback_link_id = $this->link AND trackback_url = '$this->url'";
 
 		else $cond = "trackback_id = $this->id";
@@ -100,9 +100,9 @@ class Trackback {
       	@fclose($fs);
 			$this->status='ok';
 			$this->store();
-			return true;	
+			return true;
 		}
-		$this->status='error';	
+		$this->status='error';
 		$this->store();
         return $false;
 	}

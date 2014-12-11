@@ -14,7 +14,7 @@ class UserAuth {
 
 		if(isset($_COOKIE['mnm_user']) && isset($_COOKIE['mnm_key']) && $_COOKIE['mnm_user'] !== '') {
 			$userInfo=explode(":", base64_decode($db->escape($_COOKIE['mnm_key'])));
-			if(crypt($userInfo[0], 22)===$userInfo[1] 
+			if(crypt($userInfo[0], 22)===$userInfo[1]
 				&& $db->escape($_COOKIE['mnm_user']) === $userInfo[0]) {
 				$dbusername = $db->escape($_COOKIE['mnm_user']);
 
@@ -75,7 +75,7 @@ class UserAuth {
 			$saltedpass = $already_salted_pass;
 		}
 		if ($user->user_id > 0 && $user->user_pass === $saltedpass && $user->user_lastlogin != "0000-00-00 00:00:00"  && $user->user_enabled) {
-			$this->user_login = $user->user_login;  
+			$this->user_login = $user->user_login;
 			$this->user_id = $user->user_id;
 
 			$vars = array('user' => serialize($this), 'can_login' => true);
@@ -109,7 +109,7 @@ class UserAuth {
 		if (preg_match('/user\.php\?login=(.+)$/', $url, $m)) {
 			$user=new User();
 			$user->username = $m[1];
-			if(!$user->all_stats() || $user->total_links+$user->total_comments==0) 
+			if(!$user->all_stats() || $user->total_links+$user->total_comments==0)
 				$url = my_pligg_base.'/';
 		}
 			

@@ -24,9 +24,9 @@ force_authentication();
 $canIhaveAccess = 0;
 $canIhaveAccess = $canIhaveAccess + checklevel('admin');
 
-if($canIhaveAccess == 0){	
+if($canIhaveAccess == 0){
 //	$main_smarty->assign('tpl_center', '/admin/access_denied');
-//	$main_smarty->display($template_dir . '/admin/admin.tpl');		
+//	$main_smarty->display($template_dir . '/admin/admin.tpl');
 	header("Location: " . getmyurl('admin_login', $_SERVER['REQUEST_URI']));
 	die();
 }
@@ -49,18 +49,18 @@ if($canIhaveAccess == 1)
 	$CSRF = new csrf();
 
 	// clear the category sidebar module from the cache so it can regenerate in case we make changes
-	$main_smarty->cache = 2; 
+	$main_smarty->cache = 2;
 	$main_smarty->cache_dir = "cache";
 	$main_smarty->clear_cache();
-	$main_smarty->cache = false; 
+	$main_smarty->cache = false;
 
 	$main_smarty = do_sidebar($main_smarty);
 
 	$smarty = $main_smarty;
-	$main_smarty = $smarty;	
+	$main_smarty = $smarty;
 
 	// pagename
-	define('pagename', 'admin_categories'); 
+	define('pagename', 'admin_categories');
 	$main_smarty->assign('pagename', pagename);
 	
 	// read the mysql database to get the pligg version
@@ -346,7 +346,7 @@ function makeCategoryFriendly($output) {
 		$output = utils_makeUrlFriendly($output);
 	}
 	
-	return $output;	   
+	return $output;
 }
 
 function Cat_Safe_Names(){
@@ -386,7 +386,7 @@ function move_delete_stories($id) {
 	if ($_REQUEST['sub'] == 'delete')
 	{
 	    if (Multiple_Categories)
-		$sql = "SELECT link_id FROM " . table_links . " 
+		$sql = "SELECT link_id FROM " . table_links . "
 				LEFT JOIN " . table_additional_categories . " ON ac_link_id=link_id
 				WHERE link_category=$id OR ac_cat_id=$id
 				GROUP BY link_id";
