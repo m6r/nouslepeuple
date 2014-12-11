@@ -28,9 +28,9 @@
             return false;
 
         } else {
-        
+
       return true;
-      
+
     }
 
 
@@ -53,7 +53,7 @@
 
         $main_smarty->assign('captcha_pubkey', get_misc_data('reCaptcha_pubkey'));
         $main_smarty->assign('captcha_prikey', get_misc_data('reCaptcha_prikey'));
-        
+
     }
 
     function captcha_can_we_use(){

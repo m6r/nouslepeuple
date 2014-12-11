@@ -26,7 +26,7 @@ $main_smarty->assign('pagename', pagename);
 
 $CSRF = new csrf();
 $CSRF->create('user_settings', true, true);
-    
+
 // if not logged in, redirect to the index page
 $login = isset($_GET['login']) ? sanitize($_GET['login'], 3) : '';
 $truelogin = isset($_COOKIE['mnm_user'] ) ? sanitize($_COOKIE['mnm_user'] , 3) : '';
@@ -63,7 +63,7 @@ if(ShowProfileLastViewers == true){
         $last_viewers_names = array();
         $last_viewers_profile = array();
         $last_viewers_avatar = array();
-            
+
     // for each viewer, get their name, profile link and avatar and put it in an array
         $viewers=new User();
         if ($last_viewers) {
@@ -82,7 +82,7 @@ if(ShowProfileLastViewers == true){
 } else {
     $main_smarty->assign('ShowProfileLastViewers', false);
 }
-    
+
 
 // User IP for Admin Use
 $user_ip = $user->extra_field['user_ip'];
@@ -126,7 +126,7 @@ if ($view == 'search') {
                 }elseif ($results[$key]['status'] == 'following' || $results[$key]['status'] =='mutual') {
                     $results[$key]['remove_friend'] = getmyurl('user_add_remove', 'removefriend', $val['user_login']);
                 }
-                
+
             }
             else
             unset ($results[$key]);
@@ -250,13 +250,13 @@ if ($view == 'history') {
 
 if ($view == 'setting')
 {
-    
+
     $usercategorysql = "SELECT * FROM " . table_users . " where user_login = '".$db->escape($login)."' ";
     $userresults = $db->get_results($usercategorysql);
     $userresults = object_2_array($userresults);
     $get_categories = $userresults['0']['user_categories'];
     $user_categories = explode(",", $get_categories);
-    
+
     $categorysql = "SELECT * FROM " . table_categories . " where category__auto_id!='0' ";
     $results = $db->get_results($categorysql);
     $results = object_2_array($results);
@@ -271,7 +271,7 @@ if ($view == 'setting')
         $err = "You have to select at least 1 category";
         $main_smarty->assign('err', $err);
     }
-    
+
     $main_smarty->assign('category', $results);
     $main_smarty->assign('user_category', $user_categories);
     $main_smarty->assign('view_href', 'submitted');
@@ -291,7 +291,7 @@ if ($view == 'setting')
 } else {
     $main_smarty->assign('nav_set', 3);
 }
-    
+
 if ($view == 'published') {
     $page_header .= $main_smarty->get_config_vars('PLIGG_Visual_User_NewsPublished');
     $navwhere['text3'] = $main_smarty->get_config_vars('PLIGG_Visual_User_NewsPublished');
@@ -399,7 +399,7 @@ switch ($view) {
         $main_smarty->assign('tpl_center', $the_template . '/user_history_center');
         $main_smarty->display($the_template . '/pligg.tpl');
         break;
-        
+
     case 'published':
         do_published();
         if(Auto_scroll==2 || Auto_scroll==3){
@@ -411,7 +411,7 @@ switch ($view) {
         $main_smarty->assign('tpl_center', $the_template . '/user_history_center');
         $main_smarty->display($the_template . '/pligg.tpl');
         break;
-        
+
     case 'new':
         do_new();
         if(Auto_scroll==2 || Auto_scroll==3){
@@ -423,7 +423,7 @@ switch ($view) {
         $main_smarty->assign('tpl_center', $the_template . '/user_history_center');
         $main_smarty->display($the_template . '/pligg.tpl');
         break;
-        
+
     case 'commented':
         do_commented();
         if(Auto_scroll==2 || Auto_scroll==3){
@@ -435,7 +435,7 @@ switch ($view) {
         $main_smarty->assign('tpl_center', $the_template . '/user_history_center');
         $main_smarty->display($the_template . '/pligg.tpl');
         break;
-        
+
     case 'voted':
         do_voted();
         if(Auto_scroll==2 || Auto_scroll==3){
@@ -447,7 +447,7 @@ switch ($view) {
         $main_smarty->assign('tpl_center', $the_template . '/user_history_center');
         $main_smarty->display($the_template . '/pligg.tpl');
         break;
-        
+
     case 'upvoted':
         do_updownvoted('up');
         if(Auto_scroll==2 || Auto_scroll==3){
@@ -459,7 +459,7 @@ switch ($view) {
         $main_smarty->assign('tpl_center', $the_template . '/user_history_center');
         $main_smarty->display($the_template . '/pligg.tpl');
         break;
-        
+
     case 'downvoted':
         do_updownvoted('dwn');
         if(Auto_scroll==2 || Auto_scroll==3){
@@ -471,7 +471,7 @@ switch ($view) {
         $main_smarty->assign('tpl_center', $the_template . '/user_history_center');
         $main_smarty->display($the_template . '/pligg.tpl');
         break;
-        
+
     case 'saved':
         do_stories();
         if(Auto_scroll==2 || Auto_scroll==3){
@@ -483,42 +483,42 @@ switch ($view) {
         $main_smarty->assign('tpl_center', $the_template . '/user_history_center');
         $main_smarty->display($the_template . '/pligg.tpl');
         break;
-        
+
     case 'removefriend':
         do_removefriend();
         // display the template
         $main_smarty->assign('tpl_center', $the_template . '/user_follow_center');
         $main_smarty->display($the_template . '/pligg.tpl');
         break;
-        
+
     case 'addfriend':
         do_addfriend();
         // display the template
         $main_smarty->assign('tpl_center', $the_template . '/user_follow_center');
         $main_smarty->display($the_template . '/pligg.tpl');
         break;
-        
+
     case 'following':
         do_following($user->id);
         // display the template
         $main_smarty->assign('tpl_center', $the_template . '/user_follow_center');
         $main_smarty->display($the_template . '/pligg.tpl');
         break;
-        
+
     case 'followers':
         do_followers($user->id);
         // display the template
         $main_smarty->assign('tpl_center', $the_template . '/user_follow_center');
         $main_smarty->display($the_template . '/pligg.tpl');
         break;
-        
+
     case 'sendmessage':
         do_sendmessage();
         // display the template
         $main_smarty->assign('tpl_center', $the_template . '/user_follow_center');
         $main_smarty->display($the_template . '/pligg.tpl');
         break;
-        
+
     case 'member_groups':
         do_member_groups();
         //$main_smarty->assign('user_pagination', do_pages($rows, $page_size, $the_page, true));
@@ -526,7 +526,7 @@ switch ($view) {
         $main_smarty->assign('tpl_center', $the_template . '/user_history_center');
         $main_smarty->display($the_template . '/pligg.tpl');
         break;
-        
+
 }
 
 do_following($user->id);
@@ -539,7 +539,7 @@ function do_stories () {
     $output = '';
     $link = new Link;
     $rows = $db->get_var("SELECT count(*) FROM " . table_saved_links . " WHERE saved_user_id=$user->id");
-        
+
     $fieldexists = checkforfield('saved_privacy', table_saved_links);
     if($fieldexists)
     {
@@ -582,7 +582,7 @@ function do_voted () {
     $link = new Link;
     $rows = $db->get_var("SELECT count(*) FROM " . table_links . ", " . table_votes . " WHERE vote_user_id=$user->id AND vote_link_id=link_id AND vote_value > 0 AND (link_status='published' OR link_status='new')");
     $links = $db->get_results($sql="SELECT DISTINCT * FROM " . table_links . ", " . table_votes . " WHERE vote_user_id=$user->id AND vote_link_id=link_id AND vote_value > 0  AND (link_status='published' OR link_status='new') ORDER BY link_date DESC LIMIT $offset, $page_size");
-    
+
     if ($links) {
         foreach($links as $dblink) {
             $link->id=$dblink->link_id;
@@ -599,7 +599,7 @@ function do_updownvoted ($status = null) {
 
     $output = '';
     $link = new Link;
-    
+
     if ($status == 'up'){
         $vote_stats = " > 0";
         $order = "DESC";
@@ -607,10 +607,10 @@ function do_updownvoted ($status = null) {
         $vote_stats = " < 0";
         $order = "ASC";
     }
-    
+
     $rows = $db->get_var("SELECT count(*) FROM " . table_links . ", " . table_votes . " WHERE vote_user_id=$user->id AND vote_link_id=link_id AND vote_value ".$vote_stats." AND (link_status='published' OR link_status='new')");
     $links = $db->get_results($sql="SELECT DISTINCT * FROM " . table_links . ", " . table_votes . " WHERE vote_user_id=$user->id AND vote_link_id=link_id AND vote_value ".$vote_stats."  AND (link_status='published' OR link_status='new') ORDER BY link_votes ".$order." LIMIT $offset, $page_size");
-    
+
     if ($links) {
         foreach($links as $dblink) {
             $link->id=$dblink->link_id;

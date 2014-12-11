@@ -34,7 +34,7 @@
             // for each module...
             foreach($modules as $module) {
                  $file=mnmmodules . $module->folder . '/' . $module->folder . '_init.php';
-                
+
                 // if this module has an init file then include it
                 if (file_exists($file)) {        include_once($file);    }
             }
@@ -43,12 +43,12 @@
 
     function do_we_load_module() {
         // this function is typically called in the <mymodule>_init file.
-        
+
         global $script_name, $include_in_pages, $do_not_include_in_pages, $do_not_include_in_pages_core;
-        
+
         // by default we don't load the module
         $doit = 0;
-    
+
         if(is_array($include_in_pages)){
             // if the module is set to be included on the page we're viewing
             // or the module is set to be included on "all" pages

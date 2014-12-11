@@ -19,7 +19,7 @@ if($current_user->user_id != 0)
 {
     $action = isset($_POST['action']) ? sanitize($_POST['action'], 3) : '';
     if($action == 'add') {
-        
+
         /*if(!($linkid = check_integer('link_id')))
         {
             die("Invalid Link ID");
@@ -37,9 +37,9 @@ if($current_user->user_id != 0)
             echo "1";
         }else
         echo "Error";
-        
+
     } elseif ($action == 'remove') {
-        
+
         /*if(!($linkid = check_integer('link')))
         {
             die("Invalid Link ID");
@@ -57,7 +57,7 @@ if($current_user->user_id != 0)
             echo "2";
         }else
         echo "Error";
-        
+
     }
 }
 ?>

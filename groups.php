@@ -65,7 +65,7 @@ function group_read($from_where,$order_by)
     global $db,$main_smarty;
     $rows = $db->get_var("SELECT count(*) FROM " . table_groups . " WHERE ".$from_where." ");
     $group = $db->get_results("SELECT distinct(group_id) as group_id FROM " . table_groups . " WHERE ".$from_where." ORDER BY group_status DESC, ".$order_by." LIMIT $offset,$page_size ");
-    
+
     if ($group)
     {
         foreach($group as $groupid)
@@ -77,7 +77,7 @@ function group_read($from_where,$order_by)
 
     if(Auto_scroll==2 || Auto_scroll==3){
        $main_smarty->assign("scrollpageSize", $page_size);
-     
+
     }else
         $main_smarty->assign('group_pagination', do_pages($rows, $page_size, "groups", true));
             return true;

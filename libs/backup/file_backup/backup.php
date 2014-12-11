@@ -2,11 +2,11 @@
 
 class FileBackup {
     var $Success = 0;
-    
+
     function MakeBackup() {
-        
+
         include ('zip.php');
-        
+
         $xlist = array();
         $files = $this->filelist("../",1,0); // call the function
         foreach ($files as $list) {//print array
@@ -16,8 +16,8 @@ class FileBackup {
            // and will get stuck in a loop trying to include the .zip file thats being created
            // it gets stuck trying to add itself into itself
            // it eventually breaks the loop, but takes a long time and sometimes timesout.
-          
-            
+
+
            // exclude the backup folder so we don't add in old backups.
            // exclude the dbconnect.php file because it stores our passwords.
            // exclude avatars (we just want a code backup)
@@ -27,17 +27,17 @@ class FileBackup {
                 $xlist[] = $list['path'] . $list['name'];
            }
         }
-        
+
         // Random 5 characters to append to file names to prevent name guessing
         $rand = substr(md5(microtime()),rand(0,26),5);
-    
+
         // code from http://www.phpit.net/article/creating-zip-tar-archives-dynamically-php/
         $zipname = 'Files'."_".date("Y-m-d_H-i-s").'_'.$rand.'.zip';
         $zipfile = New Archive_Zip('./backup/' . $zipname);
         //$list = array("../../");
-        
+
         $zipfile->create($xlist);
-        
+
         echo 'Zip file created -- <a href = "' . './backup/' . $zipname . '">'.$zipname.'</a>';
         $this->success = 1;
 
@@ -55,13 +55,13 @@ class FileBackup {
         $files = $this->filelist($_SERVER['DOCUMENT_ROOT'].my_pligg_base."/avatars/",1,0); // call the function
         //echo "<pre>";
         //print_r($files);
-        
+
         foreach ($files as $list) {//print array
            if($list['dir'] == 0){
                 $xlist[] = $list['path'] . $list['name'];
            }
         }
-        
+
         // Random 5 characters to append to file names to prevent name guessing
         $rand = substr(md5(microtime()),rand(0,26),5);
         //print_r($xlist);
@@ -91,7 +91,7 @@ class FileBackup {
     function filelist ($startdir="./", $searchSubdirs=1, $directoriesonly=0, $maxlevel="all", $level=1) {
        //list the directory/file names that you want to ignore
       // echo $startdir;
-       
+
        $ignoredDirectory[] = ".";
        $ignoredDirectory[] = "..";
        $ignoredDirectory[] = "_vti_cnf";

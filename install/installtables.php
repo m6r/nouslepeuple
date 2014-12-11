@@ -424,7 +424,7 @@ function pligg_createtables($conn) {
 		  UNIQUE KEY `login_username` (`login_ip`,`login_username`)
 	) DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;";
     mysql_query( $sql, $conn );
-            
+
 
 //	echo 'Creating table: \'widgets\'....<br />';
     $sql = 'DROP TABLE IF EXISTS `' . table_widgets . '`;';
@@ -444,14 +444,14 @@ function pligg_createtables($conn) {
 		  UNIQUE KEY `folder` (`folder`)
 	) ENGINE =MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci";
     mysql_query( $sql, $conn );
-            
+
 
     ///////////////////////////////////////////////////////////////////////////
 
     echo '<li>Setting Pligg Version</li>';
     $sql = "INSERT INTO `" . table_misc_data . "` ( `name` , `data` ) VALUES ('pligg_version', '2.0.3');";
     mysql_query( $sql, $conn );
-    
+
     echo '<li>Setting Captcha Method to SolveMedia</li>';
     $sql = "UPDATE `" . table_misc_data . "` SET `data` = 'solvemedia' WHERE `pligg_misc_data`.`name` = 'captcha_method';";
     mysql_query($sql,$conn);
@@ -716,9 +716,9 @@ function pligg_createtables($conn) {
 		CHANGE  `user_location`  `user_location` VARCHAR( 255 ) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL ,
 		CHANGE  `user_occupation`  `user_occupation` VARCHAR( 255 ) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL ,
 		CHANGE  `user_categories`  `user_categories` VARCHAR( 1024 ) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT  '';";
-    
+
     $stmts = explode("\n", $stmts);
-    
+
     foreach($stmts as $stmt) {
       $stmt = str_replace("`pligg_", "`".table_prefix, $stmt);
       mysql_query($stmt);
@@ -739,10 +739,10 @@ function pligg_createtables($conn) {
             }
         }
     }
-    
+
     mysql_query("INSERT INTO `" . table_config . "` ( `var_id` , `var_page` , `var_name` , `var_value` , `var_defaultvalue` , `var_optiontext` , `var_title` , `var_desc` , `var_method` , `var_enclosein` )VALUES (NULL, 'Misc', '\$language', '{$_SESSION['language']}', 'english', 'text', 'Site Language', 'Site Language', 'normal', '\'');");
     mysql_query("INSERT INTO `" . table_config . "` ( `var_id` , `var_page` , `var_name` , `var_value` , `var_defaultvalue` , `var_optiontext` , `var_title` , `var_desc` , `var_method` , `var_enclosein` )VALUES (NULL, 'Misc', 'user_language', '0', '0', '1 = yes / 0 = no', 'Select Language', 'Allow users to change Pligg language', 'normal', '\'');");
-    
+
     return 1;
 }
 

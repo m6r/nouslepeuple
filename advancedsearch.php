@@ -29,7 +29,7 @@ while( $row = mysql_fetch_array( $result ) ){
 }
 
 $main_smarty->assign('category_option', $category_option );
-          
+
 
 // pagename
 define('pagename', 'advancedsearch');

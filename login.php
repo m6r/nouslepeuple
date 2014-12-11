@@ -87,7 +87,7 @@ if( (isset($_POST["processlogin"]) && is_numeric($_POST["processlogin"])) || (is
             } else {
                 $return =  my_pligg_base.'/';
             }
-            
+
             define('logindetails', $username . ";" . $password . ";" . $return);
 
             $vars = '';
@@ -112,25 +112,25 @@ if( (isset($_POST["processlogin"]) && is_numeric($_POST["processlogin"])) || (is
                 $username = $user->user_login;
                 $salt = substr(md5(uniqid(rand(), true)), 0, SALT_LENGTH);
                 $saltedlogin = generateHash($user->user_login);
-    
+
                 $to = $user->user_email;
                 $subject = $main_smarty->get_config_vars("PLIGG_Visual_Name").' '.$main_smarty->get_config_vars("PLIGG_PassEmail_Subject");
-            
+
                 $times= time();
-                        
+
                 $body = sprintf($main_smarty->get_config_vars("PLIGG_PassEmail_Body"),$main_smarty->get_config_vars("PLIGG_Visual_Name"));
                 $body .="\n \n";
                 $body .= $my_base_url . $my_pligg_base . '/recover.php?id=' . base64_encode($username). '&n=' . time();
-    
+
                 $headers = 'From: ' . $main_smarty->get_config_vars("PLIGG_PassEmail_From") . "\r\n";
                 $headers .= "Content-type: text/html; charset=utf-8\r\n";
-    
-            
+
+
                 if(phpnum()>=5)
                     require("libs/class.phpmailer5.php");
                 else
                     require("libs/class.phpmailer4.php");
-                
+
                 $mail = new PHPMailer();
                 $mail->From = $main_smarty->get_config_vars('PLIGG_PassEmail_From');
                 $mail->FromName = $main_smarty->get_config_vars('PLIGG_PassEmail_Name');
@@ -157,7 +157,7 @@ if( (isset($_POST["processlogin"]) && is_numeric($_POST["processlogin"])) || (is
                     $main_smarty->assign('pagename', pagename);
                     $errorMsg = $main_smarty->get_config_vars('PLIGG_Visual_Password_Sent');
                 }
-                
+
             }else{
                 $errorMsg = $main_smarty->get_config_vars('PLIGG_Visual_Password_Sent');
             }
@@ -226,11 +226,11 @@ if( (isset($_POST["processlogin"]) && is_numeric($_POST["processlogin"])) || (is
         }
     }
 }
-    
+
 // pagename
 define('pagename', 'login');
 $main_smarty->assign('pagename', pagename);
- 
+
 // misc smarty
 $main_smarty->assign('errorMsg',$errorMsg);
 $main_smarty->assign('register_url', getmyurl('register'));

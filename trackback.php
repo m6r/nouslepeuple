@@ -71,18 +71,18 @@ if ( !empty($tb_url) && !empty($title) && !empty($tb_url) ) {
     $dupe = $trackres->read();
     if ( $dupe )
         trackback_response(1, $main_smarty->get_config_vars('PLIGG_Visual_Trackback_AlreadyPing'));
-  
+
     $contents=@file_get_contents($tb_url);
     if(!$contents)
         trackback_response(1, $main_smarty->get_config_vars('PLIGG_Visual_Trackback_BadURL'));
-    
+
 
     $permalink=get_permalink($tb_id);
   $permalink_q=preg_quote($permalink,'/');
     $pattern="/<\s*a.*href\s*=[\"'\s]*".$permalink_q."[\"'\s]*.*>.*<\s*\/\s*a\s*>/i";
     if(!preg_match($pattern,$contents))
         trackback_response(1, $main_smarty->get_config_vars('PLIGG_Visual_Trackback_NoReturnLink'));
-    
+
     $trackres->title=$title;
     $trackres->content=$excerpt;
     $trackres->status='ok';

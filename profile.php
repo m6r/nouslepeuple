@@ -101,16 +101,16 @@ $main_smarty->assign('user_following', $user->getFollowingCount());
                 $imagesize = getimagesize($mytmpfile);
                 $width = $imagesize[0];
                 $height = $imagesize[1];
-        
+
                 $imagename = $user->id . "_original.jpg";
-        
+
                 $newimage = $user_image_path . $imagename ;
 
                 $result = move_uploaded_file($_FILES['image_file']['tmp_name'], $newimage);
                 if(empty($result))
                     $error["result"] = "There was an error moving the uploaded file.";
             }
-        
+
             // create large avatar
             include mnminclude . "class.pThumb.php";
             $img=new pThumb();
@@ -119,7 +119,7 @@ $main_smarty->assign('user_following', $user->getFollowingCount());
             $img->pCreate($newimage);
             $img->pSave($user_image_path . $user->id . "_".Avatar_Large.".jpg");
             $img = "";
-    
+
             // create small avatar
             $img=new pThumb();
             $img->pSetSize(Avatar_Small, Avatar_Small);
@@ -133,7 +133,7 @@ $main_smarty->assign('user_following', $user->getFollowingCount());
         } else {
             echo 'An error occured while uploading your avatar.';
         }
-            
+
     }
 
     if(isset($error) && is_array($error)) {
@@ -145,12 +145,12 @@ $main_smarty->assign('user_following', $user->getFollowingCount());
 
 // Save changes
 if(isset($_POST['email'])){
-    
+
     $savemsg = save_profile();
-    
+
     if (is_string($savemsg)){
         $main_smarty->assign('savemsg', $savemsg);
-                
+
     }else
     {
         $save_message_text=$main_smarty->get_config_vars("PLIGG_Visual_Profile_DataUpdated");
@@ -187,7 +187,7 @@ function show_profile() {
     // module system hook
     $vars = '';
     check_actions('profile_show', $vars);
-    
+
     // assign profile information to smarty
     $main_smarty->assign('user_id', $user->id);
     $main_smarty->assign('user_email', $user->email);
@@ -215,7 +215,7 @@ function show_profile() {
     $main_smarty->assign('user_total_votes', $user->total_votes);
     $main_smarty->assign('user_published_votes', $user->published_votes);
     $main_smarty->assign('user_biographie', $user->biographie);
-    
+
     // If the user language setting is NULL, present the site's default language file
     $main_smarty->assign('user_language', !empty($user->language) ? $user->language : pligg_language);
 
@@ -225,30 +225,30 @@ function show_profile() {
         if (preg_match('/lang_(.+?)\.conf/',$file,$m))
         $languages[] = $m[1];
     $main_smarty->assign('languages', $languages);
-        
+
     // pagename
     define('pagename', 'user_edit');
     $main_smarty->assign('pagename', pagename);
-    
+
     $main_smarty->assign('form_action', $_SERVER["PHP_SELF"]);
 
     // User Settings
     $user_categories = explode(",", $user->extra_field['user_categories']);
-        
+
     $categorysql = "SELECT * FROM " . table_categories . " where category__auto_id!='0' ";
     $results = $db->get_results($categorysql);
     $results = object_2_array($results);
     $category = array();
     foreach($results as $key => $val)
         $category[] = $val['category_name'];
-            
+
 #	$sor = $_GET['err'];
 #	if($sor == 1)
 #	{
 #		$err = "You have to select at least 1 category";
 #		$main_smarty->assign('err', $err);
 #	}
-        
+
     $main_smarty->assign('category', $results);
     $main_smarty->assign('user_category', $user_categories);
     $main_smarty->assign('view_href', 'submitted');
@@ -272,13 +272,13 @@ function show_profile() {
 
 function save_profile() {
     global $user, $current_user, $db, $main_smarty, $CSRF, $canIhaveAccess, $language;
-  
-  
+
+
 
     if ($CSRF->check_valid(sanitize($_POST['token'], 3), 'profile_change')){
-    
+
         if(!isset($_POST['save_profile']) || !$_POST['process'] || (!$canIhaveAccess && sanitize($_POST['user_id'], 3) != $current_user->user_id)) return;
-        
+
         if ($user->email!=sanitize($_POST['email'], 3))
         {
             if(!check_email(sanitize($_POST['email'], 3))) {
@@ -344,7 +344,7 @@ function save_profile() {
         $sql = "UPDATE " . table_users . " set user_categories='$select_checked' WHERE user_id = '{$user->id}'";
         $query = mysql_query($sql);
         /////
-        
+
         // Santizie user input
         $user->url=sanitize($_POST['url'], 2);
         $user->public_email=sanitize($_POST['public_email'], 2);
@@ -360,7 +360,7 @@ function save_profile() {
         if (user_language){
             $user->language=sanitize($_POST['language'], 2);
         }
-        
+
         // Convert user input social URLs to username values
         $facebookUrl = $user->facebook;
         preg_match("/https?:\/\/(www\.)?facebook\.com\/([^\/]*)/", $facebookUrl, $matches);
@@ -387,11 +387,11 @@ function save_profile() {
         if ($matches){
             $user->pinterest = $matches[2];
         }
-        
+
         // module system hook
         $vars = '';
         check_actions('profile_save', $vars);
-    
+
 /*		$avatar_source = sanitize($_POST['avatarsource'], 2);
         if($avatar_source != "" && $avatar_source != "useruploaded"){
             loghack('Updating profile, avatar source is not one of the list options.', 'username: ' . sanitize($_POST["username"], 3) . '|email: ' . sanitize($_POST["email"], 3));
@@ -403,7 +403,7 @@ function save_profile() {
           if ($user->username!=sanitize($_POST['user_login'], 3))
             {
              $user_login=sanitize($_POST['user_login'], 2);
-                
+
             if (preg_match('/\pL/u', 'a')) {    // Check if PCRE was compiled with UTF-8 support
             if (!preg_match('/^[_\-\d\p{L}\p{M}]+$/iu',$user_login)) { // if username contains invalid characters
             $savemsg = $main_smarty->get_config_vars('PLIGG_Visual_Register_Error_UserInvalid');
@@ -415,21 +415,21 @@ function save_profile() {
                  return $savemsg;
                 }
             }
-        
-                    
+
+
             if(user_exists(trim($user_login)) ) {
               $savemsg = $main_smarty->get_config_vars("PLIGG_Visual_Register_Error_UserExists");
               $user->username= $user_login;
               return $savemsg;
-            
+
              }else{
               $user->username=$user_login;
               $saved['username']=1;
               }
-             
+
             }
         }
-    
+
         if(!empty($_POST['newpassword']) || !empty($_POST['newpassword2'])) {
             $oldpass = sanitize($_POST['oldpassword'], 2);
             $userX=$db->get_row("SELECT user_id, user_pass, user_login FROM " . table_users . " WHERE user_login = '".$user->username."'");
@@ -448,9 +448,9 @@ function save_profile() {
                 return $savemsg;
             }
         }
-                
+
                 $user->biographie = sanitize($_POST['newbiographie'], 3);
-                
+
         $user->store();
         $user->read();
         if($saved['pass']==1 || $saved['username']==1)

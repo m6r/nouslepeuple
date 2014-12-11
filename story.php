@@ -44,7 +44,7 @@ if($requestID > 0 && enable_friendly_urls == true){
 
     Header( "HTTP/1.1 301 Moved Permanently" );
     Header( "Location: " . $url );
-    
+
     die();
 }
 
@@ -86,7 +86,7 @@ if(is_numeric($requestID)) {
     if(isset($_POST['process']) && sanitize($_POST['process'], 3) != ''){
         if (sanitize($_POST['process'], 3)=='newcomment') {
             check_referrer();
-        
+
             $vars = array('user_id' => $link->author,'link_id' => $link->id);
             check_actions('comment_subscription', $vars);
             insert_comment();
@@ -121,7 +121,7 @@ if(is_numeric($requestID)) {
     $main_smarty->assign('link_id', $link->id);
     $main_smarty->assign('user_id', $current_user->user_id);
     $main_smarty->assign('randmd5', md5($current_user->user_id.$randkey));
-    
+
     if(!$current_user->authenticated){
         $vars = '';
         check_actions('anonymous_user_id', $vars);
@@ -147,14 +147,14 @@ if(is_numeric($requestID)) {
     $meta_description = preg_replace(array('/\r/', '/\n/'), '', $link->truncate_content());
     $main_smarty->assign('meta_description', strip_tags($meta_description));
     $main_smarty->assign('meta_keywords', $link->tags);
-    
+
     //sidebar
     $main_smarty = do_sidebar($main_smarty);
 
     // pagename
     define('pagename', 'story');
     $main_smarty->assign('pagename', pagename);
-    
+
     if($current_user->authenticated != TRUE){
         $vars = '';
         check_actions('register_showform', $vars);
@@ -162,10 +162,10 @@ if(is_numeric($requestID)) {
     $story_url = getmyurl("storyURL", $link->category_safe_names(), urlencode($link->title_url), $link->id);
     $main_smarty->assign('story_url',$story_url);
     $main_smarty->assign('the_story', $link->print_summary('full', true));
-    
-    
+
+
     $parent_comment_id=sanitize($_GET['comment_id'], 3);
-    
+
     if(isset($_GET['reply']) && !empty($parent_comment_id)){
         $main_smarty->assign('the_comments', get_comments(true,0,$_GET['comment_id']));
         $main_smarty->assign('parrent_comment_id',$parent_comment_id);
@@ -176,10 +176,10 @@ if(is_numeric($requestID)) {
         $main_smarty->assign('the_comments', get_comments(true));
         $main_smarty->assign('parrent_comment_id',0);
     }
-    
+
     $main_smarty->assign('url', $link->url);
     $main_smarty->assign('enc_url', urlencode($link->url));
-    
+
     $main_smarty->assign('story_comment_count', $link->comments());
     $main_smarty->assign('URL_rss_page', getmyurl('storyrss', isset($requestTitle) ? $requestTitle : urlencode($link->title_url), $link->category_safe_name($link->category)));
 
@@ -190,7 +190,7 @@ if(is_numeric($requestID)) {
     // check for redirects
     include(mnminclude.'redirector.php');
     $x = new redirector($_SERVER['REQUEST_URI']);
-    
+
     header("Location: $my_pligg_base/error_404.php");
 //	$main_smarty->assign('tpl_center', 'error_404_center');
 //	$main_smarty->display($the_template . '/pligg.tpl');
@@ -199,7 +199,7 @@ if(is_numeric($requestID)) {
 
 function get_comments ($fetch = false, $parent = 0, $comment_id=0, $show_parent=0){
     Global $db, $main_smarty, $current_user, $CommentOrder, $link, $cached_comments;
-    
+
     //Set comment order to 1 if it's not set in the admin panel
     if (isset($_GET['comment_sort'])) setcookie('CommentOrder', $CommentOrder = $_GET['comment_sort'], time()+60*60*24*180);
     elseif (isset($_COOKIE['CommentOrder'])) $CommentOrder = $_COOKIE['CommentOrder'];
@@ -216,15 +216,15 @@ function get_comments ($fetch = false, $parent = 0, $comment_id=0, $show_parent=
         $status_sql = " OR comment_status='moderated'";
 
     // get all parent comments
-    
+
     if($comment_id!=0){
-    
+
     $comments = $db->get_results("SELECT *
 	                                    FROM " . table_comments . "
 	                                    WHERE (comment_status='published' $status_sql) AND
 	                                           comment_link_id=$link->id AND comment_id = $comment_id
 	                                    ORDER BY " . $CommentOrderBy);
-                                        
+
     }elseif($show_parent==1){
     $comments = $db->get_results("SELECT *
 	                                    FROM " . table_comments . "
@@ -251,9 +251,9 @@ function get_comments ($fetch = false, $parent = 0, $comment_id=0, $show_parent=
             if($comment_id==0)
             $output .= get_comments(true, $dbcomment->comment_id);
             $output .= "</div>\n";
-    
+
         }
-          
+
         if($fetch == false){
             echo $output;
         } else {
@@ -266,9 +266,9 @@ function get_comments ($fetch = false, $parent = 0, $comment_id=0, $show_parent=
 function insert_comment () {
     global $link, $db, $current_user, $main_smarty, $the_template, $story_url;
 
-        
+
         $main_smarty->assign('TheComment',$_POST['comment_content']);
-        
+
     if($vars['error'] == true){
         $error = true;
         return;
@@ -277,7 +277,7 @@ function insert_comment () {
     $comment = new Comment;
 
     $cancontinue = false;
-    
+
     //anonymous comment
     $cancontinue_anon = false;
     $anon = $_POST['anon'];
@@ -332,7 +332,7 @@ function insert_comment () {
         $comment->parent= $parrent_comment_id;
         else
         $comment->parent=0;
-        
+
         $comment->randkey=sanitize($_POST['randkey'], 3);
         $comment->author=sanitize($_POST['user_id'], 3);
         $vars = array('comment'=>&$comment);

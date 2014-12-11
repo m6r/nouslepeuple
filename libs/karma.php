@@ -43,7 +43,7 @@ foreach($users as $dbuser) {
         echo "\n\n".$user->username."\n";
 
         echo "Votes Before Published: " . ($user->total_votes - $user->published_votes) . "\n";
-    
+
         echo "Votes After Published: " . ($user->published_votes) . "\n";
 
         echo "Links Submitted, Not Published: " . ($user->total_links - $user->published_links) . "\n";
@@ -60,7 +60,7 @@ foreach($users as $dbuser) {
             ($user->total_comments * $iPoints_Comments) .
             ")\n";
     }
-    
+
     // Add up the total points (karma) for the user
     $iTotalPoints = (
         (($user->total_votes - $user->published_votes) * $iPoints_VotesBeforeLinkWentPublished) +

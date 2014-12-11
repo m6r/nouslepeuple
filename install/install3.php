@@ -36,9 +36,9 @@ if(!isset($dbuser)){
 }
 
 if($conn = @mysql_connect($dbhost,$dbuser,$dbpass)) {
-    
+
     @$_SESSION['checked_step'] = 3;
-    
+
     $output.= "<p>" . $lang['ConnectionEstab'] . "</p>\n";
     if(mysql_select_db($dbname, $conn)) {
     $output.= "<p><strong>" . $lang['FoundDb'] . "</strong></p>\n";

@@ -56,7 +56,7 @@ class User {
 
     function Create(){
         global $db, $main_smarty,$the_template,$my_base_url,$my_pligg_base;
-        
+
         if($this->username == ''){return false;}
         if($this->pass == ''){return false;}
         if($this->email == ''){return false;}
@@ -64,7 +64,7 @@ class User {
         if($this->prenom == ''){return false;}
         if($this->code_postal == ''){return false;}
         if($this->numero_tel == ''){return false;}
-        
+
 
         if (!user_exists($this->username)) {
 
@@ -97,10 +97,10 @@ class User {
 
                     $username = $this->username;
                     $password = $this->pass;
-                    
+
                     $my_base_url=$my_base_url;
                     $my_pligg_base=$my_pligg_base;
-                    
+
                     $domain = $main_smarty->get_config_vars('PLIGG_Visual_Name');
                     $validation = my_base_url . my_pligg_base . "/validation.php?code=$encode&uid=".$this->username;
                     $str = $main_smarty->get_config_vars('PLIGG_PassEmail_verification_message');
@@ -121,8 +121,8 @@ class User {
                     $mail->Subject = $main_smarty->get_config_vars('PLIGG_PassEmail_Subject_verification');
                     $mail->CharSet = 'utf-8';
                     $mail->Body = $message;
-                
-                    
+
+
                     if(!$mail->Send())
                     {
                         return false;
@@ -133,7 +133,7 @@ class User {
                     return false;
                 }
             } else{
-            
+
                     if ($db->query("INSERT IGNORE INTO " . table_users . " (user_login, user_email, user_pass, user_date, user_ip, user_lastlogin,user_categories, user_numero_tel, user_nom, user_prenom, user_genre, user_date_naissance, user_code_postal, user_ville, user_pays, user_signature, user_biographie) "
                                         ." VALUES ('" .$db->escape($this->username)
                                         ."', '".$db->escape($this->email)
@@ -157,7 +157,7 @@ class User {
                     } else {
                         return false;
                     }
-            
+
             }
         } else {
             die('User already exists');
@@ -193,7 +193,7 @@ class User {
             $saltedpass=generateHash($user_pass);}
         else{
             $saltedpass=$user_pass;}
-            
+
         if($this->id===0) {
             $this->id = $db->insert_id;
         } else {
@@ -243,7 +243,7 @@ class User {
         }
 
         if(!empty($where)) {
-            
+
             // this is a simple cache type system
             // when we lookup a user from the DB, store the results in memory
             // in case we need to lookup that user information again
@@ -253,7 +253,7 @@ class User {
                 $user = $cached_users[$this->id];
             }else{
                 if(!$user = $db->get_row("SELECT  *  FROM " . table_users . " WHERE $where")){return false;}
-                
+
                 if($this->id > 0)
                 {
                     //only cache when the id is provided.
@@ -332,7 +332,7 @@ class User {
         $this->total_comments = $db->get_var("SELECT count(*) FROM " . table_comments . " WHERE comment_status='published' AND comment_user_id = $this->id $comment_date");
         return true;
     }
-    
+
     function fill_smarty($main_smarty, $stats = 1){
         global $db;
         $vars = '';
@@ -352,7 +352,7 @@ class User {
         $main_smarty->assign('user_login', $this->username);
         $main_smarty->assign('user_names', $this->names);
         $main_smarty->assign('user_username', $this->username);
-        
+
         $users = $db->get_results("SELECT user_karma, COUNT(*) FROM ".table_users." WHERE user_level NOT IN ('Spammer') AND user_karma>0 AND (user_login!='anonymous' OR user_lastip) GROUP BY user_karma ORDER BY user_karma DESC",ARRAY_N);
         $ranklist = array();
         $rank = 1;
@@ -378,7 +378,7 @@ class User {
 print_r($main_smarty);
 */
         user_group_read($this->id);
-            
+
         if($stats == 1){
             $this->all_stats();
             $main_smarty->assign('user_total_links', $this->total_links);
@@ -387,7 +387,7 @@ print_r($main_smarty);
             $main_smarty->assign('user_total_votes', $this->total_votes);
             $main_smarty->assign('user_published_votes', $this->published_votes);
         }
-                    
+
         return $main_smarty;
     }
 

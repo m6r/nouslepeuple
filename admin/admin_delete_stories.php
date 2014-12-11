@@ -26,7 +26,7 @@ if($canIhaveAccess == 0){
 
 function delete_storylink($linkid) {
     if (!is_numeric($linkid)) return;
-   
+
 
     $query="SELECT * FROM " . table_links . " WHERE link_id = '$linkid'";
     if (! $result=mysql_query($query)) {error_page(mysql_error());}

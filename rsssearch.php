@@ -99,7 +99,7 @@ if ($links) {
         $link->link_summary = str_replace("òÀÔ", "-", $link->link_summary);
         $link->link_summary = str_replace("òÀÜ", "\"", $link->link_summary);
         $link->link_summary = str_replace("òÀÝ", "\"", $link->link_summary);
-        
+
         echo "<item>\n";
         echo "<title><![CDATA[". $link->title . "]]></title>\n";
         echo "<link>".getmyFullurl("storyURL", $link->category_safe_names($link->category), urlencode($link->title_url), $link->id)."</link>\n";

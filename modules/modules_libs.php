@@ -26,7 +26,7 @@ function module_remove_action($location, $the_function)
 
 function module_add_action_tpl($location, $the_tpl, $weight = array ('weight' => 0) )
 {
-    
+
     global $script_name, $module_actions_tpl, $include_in_pages, $do_not_include_in_pages;
     if(is_array($include_in_pages)){
         if (in_array($script_name, $include_in_pages) || in_array('all', $include_in_pages)) {
@@ -49,12 +49,12 @@ function get_module_weight($the_tpl,$weight){
         $mod_weight = $db->get_var($mysql);
         $weight['weight']=$mod_weight;
         }
-        
+
     }
-    
-    
+
+
     return $weight;
-    
+
 }
 
 function module_add_css($the_css, $weight = array ('weight' => 0) )
@@ -117,7 +117,7 @@ function check_actions($location, &$vars)
 
 function actioncmp($a, $b)
 {
-    
+
     if ($a['weight'] == $b['weight']) {
         return 0;
     }
@@ -127,7 +127,7 @@ function actioncmp($a, $b)
 function check_actions_tpl($location,&$smarty)
 {
         global $module_actions_tpl, $main_smarty, $thetemp;
-    
+
         $smarty->assign("location",$location);
     if($module_actions_tpl[$location]){
         uasort($module_actions_tpl[$location], 'actioncmp');
@@ -151,14 +151,14 @@ function sort_cloumn($myArray){
     foreach($myArray as $c=>$key) {
         $sort_numcie[] = $key['weight'];
        }
-       
+
        return $sort_numcie;
 }
 
 function check_for_enabled_module($name, $version)
 {
     global $db;
-    
+
     if($name == 'PHP'){
         if(phpnum() == $version) {
             return $version;
@@ -235,7 +235,7 @@ function module_db_add_field($field_table, $field_name, $field_type,  $field_len
     //field_default = default value
 
     global $db;
-    
+
     if($field_table == 'users'){$field_table = table_users;}
 
     $fieldexists = checkforfield($field_name, $field_table);

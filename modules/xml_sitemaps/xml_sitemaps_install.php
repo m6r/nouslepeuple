@@ -22,7 +22,7 @@
     $module_info['version'] = 1.0;
     $module_info['homepage_url'] = 'http://forums.pligg.com/free-modules/20019-xml-sitemaps-module.html';
     $module_info['settings_url'] = 'admin_config.php?page=XmlSitemaps';
-    
+
     if(!defined('XmlSitemaps_ping_google')){
     $module_info['db_sql'][]="insert into ".table_prefix."config (var_page,var_name,var_value,var_defaultvalue,var_optiontext,var_title,var_desc,var_method) values ('XmlSitemaps','XmlSitemaps_ping_google','false','false','true / false','Ping Google?','Ping Google when new story posted', 'define')";
     }
@@ -33,7 +33,7 @@
     if(!defined('XmlSitemaps_ping_yahoo')){
     $module_info['db_sql'][]="insert into ".table_prefix."config (var_page,var_name,var_value,var_defaultvalue,var_optiontext,var_title,var_desc,var_method) values ('XmlSitemaps','XmlSitemaps_ping_yahoo','false','false','true / false','Ping Yahoo?','Ping Yahoo! when new story posted', 'define')";
     }
-    
+
     if(!defined('XmlSitemaps_yahoo_key')){
     $module_info['db_sql'][]="insert into ".table_prefix."config (var_page,var_name,var_value,var_defaultvalue,var_optiontext,var_title,var_desc,var_method) values ('XmlSitemaps','XmlSitemaps_yahoo_key','','','alfanumaric key from yahoo.com','Yahoo siteexplorer key','This key is required if you want to ping yahoo,<br />Don\\'t have one? get it <a href=\"http://developer.yahoo.com/wsregapp/index.php\">here</a>', 'define')";
     }

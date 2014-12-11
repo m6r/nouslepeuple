@@ -37,7 +37,7 @@ if(defined('mnminclude')){
 
         if($moduleName == 'status'){
             module_add_action('module_page', 'status_showpage', '');
-        
+
             include_once(mnmmodules . 'status/status_main.php');
         }
     }

@@ -7,7 +7,7 @@
     $module_info['update_url'] = 'http://pligg.com/downloads/module/akismet/version/';
 
     //$module_info['db_add_field'][]=array(table_prefix . 'links', 'akismet', 'TINYINT',  3, "UNSIGNED", 0, '0');
-    
+
     $module_info['db_add_table'][]=array(
     'name' => table_prefix . "spam_comments",
     'sql' => "CREATE TABLE ".table_prefix . "spam_comments (

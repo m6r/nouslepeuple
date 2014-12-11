@@ -41,7 +41,7 @@ $main_smarty = do_sidebar($main_smarty);
 
     $randkey = rand(1000000,100000000);
     $main_smarty->assign('randkey', $randkey);
-    
+
 // pagename
 define('pagename', 'edit_page');
 $main_smarty->assign('pagename', pagename);

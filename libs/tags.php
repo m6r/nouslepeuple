@@ -44,11 +44,11 @@ class TagCloud {
     var $range_values = NULL; // only used on the tagcloud page where there is a list of time ranges to filter to.
     var $min_points = NULL; // the size of the smallest tag
     var $max_points = NULL; // the size of the largest tag
-    
+
     //CDPDF
     var $search_subcats = true; // search it's subcategories?
     //CDPDF
-    
+
     function show(){
         // CDPDF old = global $db, $dblang, $URLMethod, $tags_words_limit, $tags_min_pts, $tags_max_pts;
         global $db, $dblang, $URLMethod, $tags_words_limit, $tags_min_pts, $tags_max_pts, $thecat;
@@ -100,12 +100,12 @@ class TagCloud {
 
         $cache_possible=0;
     }
-        
+
         //CDPDF
         if(isset($_REQUEST['category'])){
             $catId = $db->get_var("SELECT category_id from " . table_categories . " where category_safe_name = '".$db->escape($_REQUEST['category'])."';");
             $category_name = $db->get_var("SELECT category_name from " . table_categories . " where category_safe_name = '".$db->escape($_REQUEST['category'])."';");
-            
+
             $this->smarty_variable->assign('category_name', $category_name);
 
             //$catId = get_category_id($this->category);
@@ -136,14 +136,14 @@ class TagCloud {
             }
         }
         //CDPDF
-        
+
         $from_where .= " GROUP BY tag_words";
-        
+
    /*CDPDF : we calculate the coefficient with the following queries
         $max = max($db->get_var("select count(*) as words $from_where order by words desc limit 1"), 2);
         $coef = ($this->max_points - $this->min_points)/($max-1);
         CDPDF */
-        
+
     if ($cache_possible==2)
     {
             $sql = "select * FROM ".table_tag_cache." limit $this->word_limit";
@@ -155,7 +155,7 @@ class TagCloud {
             //echo $sql;
             $res = $db->get_results($sql);
     }
-        
+
         if ($res) {
             foreach ($res as $item) {
                 //echo $item->tag_words;
@@ -179,21 +179,21 @@ class TagCloud {
             $tag_count = array();
             $tag_size = array();
             $tag_url = array();
-            
+
             $tagnumber = 0;
             foreach (array_keys($words) as $theword) {
-                
+
                 $tag_number[$tagnumber] = $tagnumber;
                 $tag_name[$tagnumber] = $theword;
                 $tag_count[$tagnumber] = $words[$theword];
                 $tag_size[$tagnumber] = $tags_min_pts + ($tag_count[$tagnumber] - 1) * $coef;
-                
+
                 if(isset($time_query)){
                     $tag_url[$tagnumber] = getmyurl('tag2', urlencode($tag_name[$tagnumber]), $from_time);
                 } else {
                     $tag_url[$tagnumber] = getmyurl('tag', urlencode($tag_name[$tagnumber]));
                 }
-                
+
                 $tagnumber = $tagnumber + 1;
             }
         }

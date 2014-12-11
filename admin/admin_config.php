@@ -59,15 +59,15 @@ function dowork(){
 
     $canIhaveAccess = 0;
     $canIhaveAccess = $canIhaveAccess + checklevel('admin');
-    
+
     if($canIhaveAccess == 1)
     {
         if(is_writable('../settings.php') == 0){
             die("<div class='alert'>Error: settings.php is not writeable.</div>");
         }
-        
+
         $action = isset($_REQUEST['action']) && sanitize($_REQUEST['action'], 3) != '' ? sanitize($_REQUEST['action'], 3) : "view";
-        
+
         if($action == "view"){
             $config = new pliggconfig;
             if(isset($_REQUEST['page'])){
@@ -75,7 +75,7 @@ function dowork(){
                 $config->showpage();
             }
         }
-        
+
         if($action == "save"){
             $config = new pliggconfig;
 //			$config->var_id = substr(sanitize($_REQUEST['var_id'], 3), 6, 10);

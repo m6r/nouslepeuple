@@ -4,7 +4,7 @@
     // tell pligg what pages this module should be included in
     // pages are <script name> minus .php
     $do_not_include_in_pages = array();
-    
+
     $include_in_pages = array('all');
     if( do_we_load_module() ) {
         if(is_object($main_smarty)){

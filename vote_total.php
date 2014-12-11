@@ -28,11 +28,11 @@ class LinkTotal extends Link {
             $this->votes   = $vote->count()-$this->reports;
         }
         $this->store_basic();
-        
+
         $vars = array('link' => $this);
         check_actions('link_remove_vote_post', $vars);
     }
-    
+
     function insert_vote($user=0, $value=10) {
         if (parent::insert_vote($user, $value))
         {
@@ -51,10 +51,10 @@ class LinkTotal extends Link {
             }
             $this->store_basic();
             $this->check_should_publish();
-            
+
             $vars = array('vote' => $this);
             check_actions('link_insert_vote_post', $vars);
-            
+
             return true;
         }
         return false;
@@ -66,11 +66,11 @@ check_referrer();
 $post_id = sanitize($_POST['id'], 3);
 
 if(is_numeric($post_id) && $post_id > 0){
-    
+
     $link = new LinkTotal;
     $link->id=$post_id;
     $link->read_basic();
-    
+
     if ($current_user->user_id == 0 && !anonymous_vote) {
         error($main_smarty->get_config_vars('PLIGG_Visual_Vote_NoAnon'));
     }
@@ -89,16 +89,16 @@ if(is_numeric($post_id) && $post_id > 0){
     if(sanitize($_POST['unvote'], 3) == 'true'){
         $link->remove_vote($current_user->user_id, $value);
     } else {
-        
+
         //Checking for ip vote
        if($current_user->user_id!=0){
         if($link->votes($current_user->user_id) > 0)
           error($main_smarty->get_config_vars('PLIGG_Visual_Vote_AlreadyVoted').$link->votes($current_user->user_id).'/'.$value);
        }else{
-        
+
         if($value==10 && votes_per_ip > 0 && $link->votes_from_ip() >= votes_per_ip+1)
          error($main_smarty->get_config_vars('PLIGG_Visual_Vote_AlreadyVoted').'/'.$value);
-         
+
         if($value==-10 && votes_per_ip > 0 && $link->reports_from_ip() >= votes_per_ip+1)
          error($main_smarty->get_config_vars('PLIGG_Visual_Vote_AlreadyVoted').'/'.$value);
        }
@@ -106,7 +106,7 @@ if(is_numeric($post_id) && $post_id > 0){
             (votes_per_ip > 0 && $link->votes_from_ip() + $link->reports_from_ip() >= votes_per_ip)) {
             //error($main_smarty->get_config_vars('PLIGG_Visual_Vote_AlreadyVoted').$link->votes($current_user->user_id, $value).'/'.$value);
         }*/
-        
+
         $link->remove_vote($current_user->user_id, -$value);
         $link->insert_vote($current_user->user_id, $value);
     }

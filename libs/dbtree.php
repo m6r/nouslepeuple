@@ -69,7 +69,7 @@ function rebuild_the_tree(){
 function GetLastCategoryOrder($catParentId){
     global $db;
     if (!is_numeric($catParentId)) die();
-    
+
     $sql = "SELECT MAX(category_order) FROM ".table_categories." where category_parent = ".$catParentId.";";
     //echo $sql;
     $MaxOrder = $db->get_var($sql);
@@ -104,7 +104,7 @@ function get_cached_between($lft, $rgt){
 
 function tree_to_array($root, $table, $showRoot = TRUE) {
     // showRoot -- Do we want to include the "root" category named "all" in our results -- all subcats WILL appear regardless
-    
+
     global $db, $cached_categories;
     $row = get_cached_category_data('category__auto_id', $root);
     if(!$row){
@@ -122,7 +122,7 @@ function tree_to_array($root, $table, $showRoot = TRUE) {
     $result = get_cached_between($row->lft, $row->rgt);
     $i = 0;
     $lastspacer = 0;
-    
+
     foreach($result as $row){
         if (count($right)>0) {
             // check if we should remove a node from the stack

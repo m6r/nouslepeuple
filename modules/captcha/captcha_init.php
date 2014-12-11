@@ -7,7 +7,7 @@ if(defined('mnminclude')){
     // index.php becomes 'index' and new.php becomes 'new'
     $include_in_pages = array('all');
     $do_not_include_in_pages = array();
-        
+
     if( do_we_load_module() ) {
 
         module_add_action_tpl('tpl_header_admin_main_links', captcha_tpl_path . 'captcha_admin_main_link.tpl');
@@ -18,7 +18,7 @@ if(defined('mnminclude')){
             module_add_action('register_showModal', 'captcha_register', '');
             module_add_action('register_check_errors', 'captcha_register_check_errors', '');
             //if(pagename != "register")
-            
+
         }
         if(captcha_comment_enabled == true){
             module_add_action('story_top', 'captcha_register', '');
@@ -33,9 +33,9 @@ if(defined('mnminclude')){
         if($moduleName == 'captcha'){
             module_add_action('module_page', 'captcha_showpage', '');
         }
-         
-    
-  
+
+
+
         include_once(mnmmodules . 'captcha/captcha_main.php');
         $basename = basename($_SERVER['REQUEST_URI']);
         if ($current_user->user_id <= 0 && $current_user->authenticated==false && $basename!="register" && !strstr($_SERVER['REQUEST_URI'], '/admin/')){

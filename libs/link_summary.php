@@ -3,15 +3,15 @@ if(!defined('mnminclude')){header('Location: ../error_404.php');die();}
 
     global $main_smarty, $cached_totals, $new_search, $cached_links, $current_user, $cached_saved_links, $fetch_link_summary;
     $link = new Link;
-    
+
     if ($new_search) {
-        
+
         // used on the search page
         $rows = $new_search['count'];
         $new_search = $new_search['rows'];
         $the_results = $new_search;
     } else {
-        
+
         // used in the index and new pages
         $ls_debug = false;
         if($ls_debug == true){echo '--' . sanitize($linksum_count,3) . '--<br />';}
@@ -29,27 +29,27 @@ if(!defined('mnminclude')){header('Location: ../error_404.php');die();}
         $links = $db->get_col($linksum_sql);
         $the_results = $links;
     }
-    
-    
+
+
     //For Infinit scrolling and continue reading option
     if(Auto_scroll==2 || Auto_scroll==3){
-        
+
         $main_smarty->assign('total_row', $rows);
         if(isset($_GET['part'])){
             $main_smarty->assign('part', $db->escape($_GET['part']));
         }
-        
+
         if(isset($_GET['order'])){
             $main_smarty->assign('searchOrder', $db->escape($_GET['order']));
         }
-    
+
         if($catID!=0)
             $main_smarty->assign('catID', $catID);
     }
-    
-    
+
+
     if($the_results){
-            
+
         // find out if the logged in user voted / reported each of
         // the stories that the search found and cache the results
         require_once(mnminclude.'votes.php');
@@ -66,7 +66,7 @@ if(!defined('mnminclude')){header('Location: ../error_404.php');die();}
                 // so when we foreach the links we don't have to
                 // run 1 extra query for each story to determine
                 // current user votes
-  
+
         // setup the link cache
         $sql = "SELECT " . table_links . ".* FROM " . table_links . " WHERE ";
         $sql_saved = "SELECT * FROM " . table_saved_links . " WHERE saved_user_id=" . $current_user->user_id . " AND ";
@@ -80,12 +80,12 @@ if(!defined('mnminclude')){header('Location: ../error_404.php');die();}
                 $saved_ids[] = $link_id;
             }
         }
-        
+
         // if count  = 0 then all the links are already cached		// so don't touch the db
         // if count  > 0 then there is at least 1 link to get
         // so get the SQL and add results to the cache
 
-        
+
         if ( count ( $ids ) ) {
             $sql .= 'link_id IN ('.implode(',',$ids).')';
             foreach ( $db->get_results($sql) as $row ) {
@@ -117,7 +117,7 @@ if(!defined('mnminclude')){header('Location: ../error_404.php');die();}
                     $sl[$row->saved_link_id] = 1;
                 }
             }
-            
+
             foreach($the_results as $link_id) {
                 if(isset($sl[$link_id])){
                     $cached_saved_links[$link_id] = 1;

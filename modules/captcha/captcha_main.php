@@ -16,7 +16,7 @@ function captcha_showpage(){
 
         define('pagename', 'captcha');
         $main_smarty->assign('pagename', pagename);
-        
+
         // New method for identifying modules rather than pagename
         define('modulename', 'captcha');
         $main_smarty->assign('modulename', modulename);

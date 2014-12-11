@@ -8,19 +8,19 @@ function admin_snippet_fill_smarty($vars){
 
 function admin_snippet_showpage(){
     global $db, $main_smarty, $the_template;
-        
+
     include_once('config.php');
     include_once(mnminclude.'html1.php');
     include_once(mnminclude.'link.php');
     include_once(mnminclude.'tags.php');
     include_once(mnminclude.'smartyvariables.php');
-    
+
     $main_smarty = do_sidebar($main_smarty);
 
     force_authentication();
     $canIhaveAccess = 0;
     $canIhaveAccess = $canIhaveAccess + checklevel('admin');
-    
+
     if($canIhaveAccess == 1)
     {
         // breadcrumbs
@@ -34,10 +34,10 @@ function admin_snippet_showpage(){
         //Method for identifying modules rather than pagename
         define('modulename', 'admin_snippet');
         $main_smarty->assign('modulename', modulename);
-        
+
         define('pagename', 'admin_modifysnippet');
         $main_smarty->assign('pagename', pagename);
-        
+
         // Add new snippet
         if($_REQUEST['mode'] == 'new') {
             if($_POST['submit']) {
@@ -78,7 +78,7 @@ function admin_snippet_showpage(){
                     die();
                 }
             }
-    
+
             // Check ID
             if(!is_numeric($_GET['id'])) {
                 header("Location: ".my_pligg_base."/module.php?module=admin_snippet");
@@ -171,7 +171,7 @@ function admin_snippet_showpage(){
                     }
                 else
                 $error = 'Error uploading file';
-    
+
                 $main_smarty->assign('snippet_error',$error);
                 }
 
@@ -190,7 +190,7 @@ function admin_snippet_showpage(){
     {
         header("Location: " . getmyurl('login', $_SERVER['REQUEST_URI']));
     }
-        
+
 }
 
 ?>

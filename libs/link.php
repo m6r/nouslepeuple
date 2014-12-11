@@ -106,7 +106,7 @@ class Link {
                 $this->url_description=$paragraph;
             }
         }
-        
+
         // Detect trackbacks
         if (sanitize($_POST['trackback'], 3) != '') {
             $this->trackback=trim(sanitize($_POST['trackback'], 3));
@@ -174,7 +174,7 @@ class Link {
         if($this->debug == true){echo '<hr>Store:'. $sql . '<hr>';}
         //echo "query".$sql;
         $db->query($sql);
-        
+
         $pos = strrpos($_SERVER["SCRIPT_NAME"], "/");
         $script_name = substr($_SERVER["SCRIPT_NAME"], $pos + 1, 100);
         $script_name = str_replace(".php", "", $script_name);
@@ -203,12 +203,12 @@ class Link {
 
         $vars = array('link' => $this);
         check_actions('link_store_basic_pre_sql', $vars);
-        
+
 
         if($this->id===0) {
-        
+
             $sql = "INSERT IGNORE INTO " . table_links . " (link_author, link_status, link_randkey, link_category, link_date, link_published_date, link_votes, link_karma, link_title, link_content ,link_group_id) VALUES ($link_author, '$link_status', $link_randkey, $link_category, FROM_UNIXTIME($link_date), FROM_UNIXTIME($link_published_date), $link_votes, $link_karma, '', '',$link_group_id)";
-                
+
             if($this->debug == true){
                 echo '<hr>store_basic:Insert:' . $sql . '<hr>';
             }
@@ -227,7 +227,7 @@ class Link {
 
         foreach ($this->additional_cats as $cat)
             $db->query("INSERT INTO ".table_additional_categories." SET ac_cat_id='".sanitize($cat,3)."', ac_link_id={$this->id}");
-            
+
         $vars = array('link' => $this);
         check_actions('link_store_basic_post_sql', $vars);
 
@@ -241,14 +241,14 @@ class Link {
         // check to see if the link is cached
         // if it is, use it
         // if not, get from mysql and save to cache
-        
+
         if (isset($cached_links[$id]) && $usecache == TRUE) {
             $link = $cached_links[$id];
         } else {
             $link = $db->get_row("SELECT " . table_links . ".* FROM " . table_links . " WHERE link_id = $id");
             $cached_links[$id] = $link;
         }
-    
+
         if($link) {
             $this->author=$link->link_author;
             $this->userid=$link->link_author;
@@ -302,7 +302,7 @@ class Link {
             if ($results = $db->get_results("SELECT ac_cat_id FROM ".table_additional_categories." WHERE ac_link_id=$id", ARRAY_N))
                 foreach ($results as $cat)
                     $this->additional_cats[] = $cat[0];
-            
+
             return true;
         }
         $this->fullread = $this->read = false;
@@ -351,7 +351,7 @@ class Link {
         $n = $db->get_var("SELECT count(*) FROM " . table_links . " WHERE link_url = '$link_url' AND link_status != 'discard'");
         return $n;
     }
-    
+
     function duplicates_title($title) {
         global $db;
         $link_title=$db->escape($title);
@@ -359,7 +359,7 @@ class Link {
         return $n;
     }
 
-    
+
     function print_summary($type='full', $fetch = false, $link_summary_template = 'link_summary.tpl') {
         global $current_user, $globals, $the_template, $smarty, $ranklist, $db;
 
@@ -381,7 +381,7 @@ class Link {
         $main_smarty->config_dir = "";
         $main_smarty->assign('pligg_language', pligg_language);
         $main_smarty->config_load(lang_loc . "/languages/lang_" . pligg_language . ".conf");
-        
+
         $anonymous_can_vote = $db->get_var('SELECT var_value from ' . table_config . ' where var_name = "anonymous_vote";');
         $main_smarty->assign('anonymous_vote', $anonymous_can_vote);
 
@@ -396,7 +396,7 @@ class Link {
         $main_smarty->assign('the_template', The_Template);
 
         include mnminclude.'extra_fields_smarty.php';
-    
+
         if($fetch == false){
             $main_smarty->display($the_template . '/' . $link_summary_template, 'story' . $this->id . "|" . $current_user->user_id . "|" . $type);
         } else {
@@ -407,7 +407,7 @@ class Link {
     function fill_smarty($smarty, $type='full'){
 
         static $link_index=0;
-        
+
         $link_index=$this->id;
         global $current_user, $globals, $the_template, $db, $ranklist;
 
@@ -472,7 +472,7 @@ class Link {
         $smarty->assign('story_comment_count', $this->comments());
         $smarty->assign('story_status', $this->status);
         $smarty->assign('story_karma', $this->karma);
-        
+
         if($type == "summary"){
             if($this->link_summary == ""){
                 $smarty->assign('story_content', $this->truncate_content());
@@ -483,14 +483,14 @@ class Link {
         if($type == "full"){
             $smarty->assign('story_content', $this->content);
         }
-        
+
         if($this->get_author_info == true){
             $smarty->assign('link_submitter', $this->username());
             $smarty->assign('submitter_profile_url', getmyurl('user', $this->username));
             $smarty->assign('submitter_rank', $ranklist[$this->userkarma]);
             $smarty->assign('user_extra_fields', $this->extra_field);
         }
-        
+
         $smarty->assign('link_submit_time', $this->date);
         $smarty->assign('link_submit_timeago', txt_time_diff($this->date));
         $smarty->assign('link_submit_date', date('F, d Y g:i A',$this->date));
@@ -532,7 +532,7 @@ class Link {
                 $smarty->assign("link_shakebox_javascript_vote_{$stars}star", $jsLink . ($stars * 2) . ')' );
 
             $smarty->assign('vote_count', $this->votecount);
-            
+
             if($this->votes($current_user_id) > 0){
                 $smarty->assign('star_class', "-noh");
             } else {
@@ -589,15 +589,15 @@ class Link {
                 if($current_user->user_id > 0 && $current_user->user_login != $this->username()){
                     $friend_md5 = friend_MD5($current_user->user_login, $this->username());
                     $smarty->assign('FriendMD5', $friend_md5);
-        
+
                     $isfriend = $friend->get_friend_status($this->author);
                     if (!$isfriend)    {$friend_text = 'add to';    $friend_url = 'addfriend';}
                         else{$friend_text = 'remove from';    $friend_url = 'removefriend';}
-        
+
                     $smarty->assign('Friend_Text', $friend_text);
                     $smarty->assign('user_add_remove', getmyurl('user', $this->username(), $friend_url));
                 }
-        
+
                 $smarty->assign('Allow_Friends', Allow_Friends);
             // --- //
         }
@@ -634,10 +634,10 @@ class Link {
             }
         }
         $smarty->assign('user_url_saved', getmyurl('user2', $current_user->user_login, 'saved'));
-        
+
         $smarty->assign('user_add_links_private', getmyurl('user_add_links_private', $this->id));
         $smarty->assign('user_add_links_public', getmyurl('user_add_links_public', $this->id));
-        
+
         $smarty->assign('group_story_links_publish', getmyurl('group_story_links_publish', $this->id));
         $smarty->assign('group_story_links_new', getmyurl('group_story_links_new', $this->id));
         $smarty->assign('group_story_links_discard', getmyurl('group_story_links_discard', $this->id));
@@ -648,25 +648,25 @@ class Link {
         $smarty->assign('link_shakebox_index', $link_index);
         $smarty->assign('link_shakebox_votes', $this->votes);
         $smarty->assign('link_shakebox_showbury', $this->reports);
-        
-        
+
+
         $this->get_current_user_votes($current_user->user_id);
         if(votes_per_ip > 0){
             $smarty->assign('vote_from_this_ip', $this->vote_from_this_ip);
             $smarty->assign('report_from_this_ip', $this->report_from_this_ip);
         }
-            
+
         $smarty->assign('link_shakebox_currentuser_votes', $this->current_user_votes);
         $smarty->assign('link_shakebox_currentuser_reports', $this->current_user_reports);
-         
-         
+
+
         if($this->reports == -1){
             // reporting was added to the svn and some people started using it
             // so in upgrade if someone already has the reports field, we set it to
             // -1. Then when we read() we check if -1. if it still is, update the count
             // from the votes table and store it into the link_reports field so we
             // don't have to look at the votes table again.
-        
+
             $this->reports = $this->count_all_votes("<0");
             $this->store_basic();
             $smarty->assign('link_shakebox_reports', $this->reports);
@@ -678,10 +678,10 @@ class Link {
 
         $jsunvote = "unvote($current_user->user_id,$this->id,$link_index," . "'" . md5($current_user->user_id.$this->randkey) . "',10)";
         $smarty->assign('link_shakebox_javascript_unvote', $jsunvote);
-        
+
         $jsunbury = "unvote($current_user->user_id,$this->id,$link_index," . "'" . md5($current_user->user_id.$this->randkey) . "',-10)";
         $smarty->assign('link_shakebox_javascript_unbury', $jsunbury);
-        
+
         $smarty->assign('link_shakebox_javascript_report', $jsreportlink);
         if(!defined('alltagtext')){
             // for pages like index, this ->display was being called for each story
@@ -690,7 +690,7 @@ class Link {
             define('alltagtext', $smarty->get_config_vars('PLIGG_Visual_Tags_All_Tags'));
         }
         $alltagtext = alltagtext;
-    
+
         if(Enable_Tags){
             $smarty->assign('tags', $this->tags);
             if (!empty($this->tags)) {
@@ -728,7 +728,7 @@ class Link {
         $smarty->assign('my_base_url', my_base_url);
         $smarty->assign('my_pligg_base', my_pligg_base);
         $smarty->assign('Default_Gravatar_Large', Default_Gravatar_Large);
-            
+
         //$link_index++;
         $vars['smarty'] = $smarty;
         check_actions('lib_link_summary_fill_smarty', $vars);
@@ -757,7 +757,7 @@ class Link {
     //--------------------------------------
     function truncate_content(){
         if(utf8_strlen($this->content) > StorySummary_ContentTruncate){
-            
+
              if(Auto_scroll==true){
                 global $main_smarty;
                 $content=    close_tags(utf8_substr($this->content, 0, StorySummary_ContentTruncate));
@@ -768,10 +768,10 @@ class Link {
                 // echo $content;
                 return $content;
              }else{
-             
+
              return close_tags(utf8_substr($this->content, 0, StorySummary_ContentTruncate)) . "...";
              }
-             
+
              }
         return $this->content;
     }
@@ -862,16 +862,16 @@ class Link {
 
     function get_current_user_votes($user) {
         require_once(mnminclude.'votes.php');
-        
+
         $vote = new Vote;
         $vote->type='links';
         $vote->user=$user;
         $vote->link=$this->id;
         $results = $vote->user_list_all_votes();
-        
+
         $votes = 0;
         $reports = 0;
-        
+
         if(is_array($results)){
             foreach ($results as $row){
                 if(isset($row->vote_value)){
@@ -880,27 +880,27 @@ class Link {
             }
         }
         }
-                
+
         $this->current_user_votes = $votes;
         $this->current_user_reports = $reports;
-        
+
         if(votes_per_ip > 0 && $user==0){
         $ac_vote_from_IP=$this->votes_from_ip();
         if($ac_vote_from_IP<=1)
          $ac_vote_from_IP=0;
-        
+
         $ac_report_from_IP=$this->reports_from_ip();
         if($ac_report_from_IP<=1)
         $ac_report_from_IP=0;
-            
+
         $this->vote_from_this_ip=$ac_vote_from_IP;
         $this->report_from_this_ip=$ac_report_from_IP;
         }
-        
+
     }
 
     function remove_vote($user=0, $value=10) {
-    
+
         $vote = new Vote;
         $vote->type='links';
         $vote->user=$user;
@@ -927,11 +927,11 @@ class Link {
                 $this->reports = $this->count_all_votes("<0");
             }
             $this->store_basic();
-            
+
             $vars = array('link' => $this);
             check_actions('link_remove_vote_post', $vars);
     }
-    
+
     function insert_vote($user=0, $value=10) {
         global $anon_karma;
         require_once(mnminclude.'votes.php');
@@ -973,17 +973,17 @@ class Link {
             }
             $this->store_basic();
             $this->check_should_publish();
-            
+
             $vars = array('vote' => $this);
             check_actions('link_insert_vote_post', $vars);
-            
+
             return true;
         }
         return false;
     }
 
     function check_should_publish(){
-    
+
         $votes = $this->category_votes();
         // $votes must be explicitly cast to (int) to compare accurately
         if (!is_numeric($votes))
@@ -1102,7 +1102,7 @@ class Link {
         return join(',',$cats);
     }
 
-    
+
     function publish() {
         if(!$this->read) $this->read_basic();
         $this->published_date = time();
@@ -1124,18 +1124,18 @@ class Link {
         $user = new User;
         $user->id = $this->author;
         $user->read();
-      
+
         $this->username = $user->username;
         $this->userkarma = $user->karma;
         $this->extra_field = $user->extra_field;
-        
+
         return $user->username;
     }
 
 
     function recalc_comments(){
         global $db;
-        
+
         // DB 08/04/08
         if(!is_numeric($this->id)){return false;}
         /////
@@ -1159,7 +1159,7 @@ class Link {
     function evaluate_formulas ()
     {
         global $db;
-        
+
         if (buries_to_spam == 1) {
             $res = $db->get_results("select * from " . table_formulas . " where type = 'report' and enabled = 1;");
             if (!$res) return;
@@ -1185,17 +1185,17 @@ class Link {
                 }
             }
         }
-        
+
     }
-    
+
     function return_formula_system_version()
     {
         // 0.1 original
         // 0.2 added hours_since_submit
-        
+
         return 0.2;
     }
-    
+
     function adjust_comment($value)
     {
         $this->comments = $this->comments + $value;
@@ -1203,7 +1203,7 @@ class Link {
 
     function verify_ownership($authorid){
         global $db;
-        
+
         // DB 09/03/08
         if(!is_numeric($this->id)){return false;}
         if(!is_numeric($authorid)){return false;}
@@ -1224,7 +1224,7 @@ class Link {
             return getmyurl("storyURL", $this->category_safe_names(), urlencode($this->title_url), $this->id);
         }
     }
-    
+
     function check_spam($text )
     {
         global $MAIN_SPAM_RULESET;
@@ -1280,7 +1280,7 @@ class Link {
         return false;
     }
 
-    
+
     // log date, time, IP address and rule which triggered the spam
     function logSpam($message)
     {

@@ -15,7 +15,7 @@ class pliggconfig {
 
     function showpage(){
         global $db, $my_pligg_base;
-        
+
         ?>
 			<div class="admin_config_content">
 		<?php
@@ -32,7 +32,7 @@ class pliggconfig {
             echo '<th style="width:120px;">'.$main_smarty->get_config_vars(PLIGG_Visual_Config_Default_Value).'</th>';
             echo '<th style="width:120px;">'.$main_smarty->get_config_vars(PLIGG_Visual_Config_Expected_Values).'</th>';
             echo '</tr></thead><tbody>';
-            
+
             foreach($configs as $config) {
 //				$this->var_id=$config_id;
 //				$this->read();
@@ -62,7 +62,7 @@ class pliggconfig {
 
         return true;
     }
-        
+
     function store($loud = true){
         global $db;
         if(strtolower($this->var_value) == 'true'){$this->var_value = 'true';}
@@ -78,7 +78,7 @@ class pliggconfig {
 
         return true;
     }
-        
+
     function print_summary(){
         global $db, $main_smarty;
 
@@ -86,16 +86,16 @@ class pliggconfig {
         echo '<tr>';
         echo "<td>".translate($this->var_title)."</td>";
         echo "<td>".translate($this->var_desc)."</td><td>";
-        
+
         if($this->var_name == '$my_base_url'){echo translate("It looks like this should be set to")." <strong>"."http://" . $_SERVER["HTTP_HOST"]."</strong><br>";}
-        
+
         if($this->var_name == '$my_pligg_base'){
             $pos = strrpos($_SERVER["SCRIPT_NAME"], "/admin/");
             $path = substr($_SERVER["SCRIPT_NAME"], 0, $pos);
             if ($path == "/" || $path == ""){$path = translate("Nothing - Leave it blank");}
             echo translate("It looks like this should be set to")." <strong>".$path."</strong><br>";
         }
-        
+
         echo '<input class="form-control admin_config_input emptytext" id="editme' .$this->var_id. '" onclick="show_edit('.$this->var_id.')" value="'.htmlentities($this->var_value,ENT_QUOTES,'UTF-8').'">';
         echo '<span class="emptytext" id="showme' .$this->var_id. '" style="display:none;">';
         if (preg_match('/^\s*(.+),\s*(.+) or (.+)\s*$/',$this->var_optiontext,$m))
@@ -137,32 +137,32 @@ class pliggconfig {
         echo '<input type = "hidden" name = "var_id" value = "'.$this->var_id.'">';
         echo "</td></tr></form></span>";
 //		$this->EditInPlaceCode = "EditInPlace.makeEditable( {type: 'text', action: 'save', id: 'editme" .$this->var_id. "',	save_url: 'admin_config.php'} );";
-        
+
     }
 
 
     function create_file($filename = "../settings.php"){
         global $db;
         if($handle = fopen($filename, 'w')) {
-        
+
             fwrite($handle, "<?php\n");
             $usersql = $db->get_results('SELECT * FROM ' . table_prefix . 'config');
             foreach($usersql as $row) {
                 $value = $row->var_enclosein . $row->var_value. $row->var_enclosein;
-                
+
                 $write_vars = array('table_prefix', '$my_base_url', '$my_pligg_base', '$dblang', '$language' );
-                
+
                 if(in_array($row->var_name, $write_vars)){
-                
+
                     if ($row->var_method == "normal"){
                         $line =  $row->var_name . " = " . $value . ";";
                     }
                     if ($row->var_method == "define"){
                         $line = "define('" . $row->var_name . "', ". $value . ");";
                     }
-                
+
                     if(fwrite($handle, $line . "\n")) {
-            
+
                     } else {
                         echo "<strong>Could not write to '$filename' file</strong>";
                     }

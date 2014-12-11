@@ -5,7 +5,7 @@
     // pages are <script name> minus .php
     // index.php becomes 'index' and new.php becomes 'new'
     $do_not_include_in_pages = array();
-    
+
     $include_in_pages = array('all');
     if( do_we_load_module() ) {
         if(is_object($main_smarty)){

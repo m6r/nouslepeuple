@@ -92,7 +92,7 @@ function category_display()
 {
     global $db;
     $maincategory = $db->get_results("select * from ".table_categories."");
-    
+
     $maincategory = object_2_array($maincategory);
 
         foreach($maincategory as $id => $rs){
@@ -100,7 +100,7 @@ function category_display()
             $maincategory[$id]['id'] = $rs['category_id'];
             $maincategory[$id]['parent'] = $rs['category_parent'];
             $maincategory[$id]['order'] = $rs['category_order'];
-            
+
             $childcategory = $db->get_results("select * from ".table_categories." where category_parent =".$rs['category_id']);
             //echo "select * from ".table_categories." where category_parent =".$rs['category_id'];
             $childcategory = object_2_array($childcategory);
@@ -164,7 +164,7 @@ function latest_avatar($client_url, $server_path) {
 function get_avatar($size = "large", $avatarsource, $user_name = "", $user_email = "", $user_id=""){
     // returns the location of a user's avatar
     global $globals;
-    
+
     include_once(mnminclude.'user.php');
     $user=new User();
     if($user_name != ""){
@@ -172,7 +172,7 @@ function get_avatar($size = "large", $avatarsource, $user_name = "", $user_email
     } else {
         $user->id = $user_id;
     }
-    
+
     if(!$user->read()) {
         echo "invalid username or userid in get_avatar";
         die;
@@ -183,7 +183,7 @@ function get_avatar($size = "large", $avatarsource, $user_name = "", $user_email
         if(isset($user->login)){$user_email = $user->login;}
     }
     $user = "";
-    
+
     if ($size == "large")
         $imgsize = Avatar_Large;
     elseif ($size == "small")
@@ -224,7 +224,7 @@ function get_avatar($size = "large", $avatarsource, $user_name = "", $user_email
         }
     } elseif (!$imgsize)
         return $avatars;
-    
+
     if ($size == "large") {return my_base_url . my_pligg_base . Default_Gravatar_Large;}
     if ($size == "small") {return my_base_url . my_pligg_base . Default_Gravatar_Small;}
 }
@@ -232,7 +232,7 @@ function get_avatar($size = "large", $avatarsource, $user_name = "", $user_email
 function do_sidebar($var_smarty, $navwhere = '') {
     // show the categories in the sidebar
     global $db, $dblang, $globals, $the_cats;
-    
+
     if($navwhere == ''){global $navwhere;}
 
     // fix for 'undefined index' errors
@@ -245,7 +245,7 @@ function do_sidebar($var_smarty, $navwhere = '') {
         if(!isset($navwhere['link2'])){$navwhere['link2'] = '';}
         if(!isset($navwhere['link1'])){$navwhere['link1'] = '';}
         $var_smarty->assign('navbar_where', $navwhere);
-    
+
         $var_smarty->assign('body_args', '');
     // fix for 'undefined index' errors
 
@@ -270,7 +270,7 @@ function do_sidebar($var_smarty, $navwhere = '') {
             $catID  = $thecat->category_id;
             $thecat = $thecat->category_name;
         }
-    
+
         $var_smarty->assign('UrlMethod', urlmethod);
 
         foreach($the_cats as $cat){
@@ -280,11 +280,11 @@ function do_sidebar($var_smarty, $navwhere = '') {
                 $globals['category_name'] = $cat->category_name;
             }
         }
-    
+
         $pos = strrpos($_SERVER["SCRIPT_NAME"], "/");
         $script_name = substr($_SERVER["SCRIPT_NAME"], $pos + 1, 100);
         $script_name = str_replace(".php", "", $script_name);
-    
+
         include_once('dbtree.php');
         $login_user = $db->escape(sanitize($_COOKIE['mnm_user'],3));
         if($login_user)
@@ -304,7 +304,7 @@ function do_sidebar($var_smarty, $navwhere = '') {
             $i = 0;
             $lastspacer = 0;
             $array = array();
-            
+
             foreach($result as $row)
             {
                 if (count($right)>0) {
@@ -331,7 +331,7 @@ function do_sidebar($var_smarty, $navwhere = '') {
                     $array[$i]['parent_subcat_count'] = GetSubCatCount($row->category_parent);
                 }
                 $array[$i]['subcat_count'] = GetSubCatCount($row->category__auto_id);
-                
+
                 $lastspacer = count($right);
                 $i = $i + 1;
                 $right[] = $row->rgt;
@@ -349,10 +349,10 @@ function do_sidebar($var_smarty, $navwhere = '') {
 */
         $var_smarty->assign('lastspacer', 0);
         $var_smarty->assign('cat_array', $array);
-    
+
         // use the 'totals' table now
         $published_count = get_story_count('published');
-        
+
         $var_smarty->assign('published_count', $published_count);
 //	    $sql = "select *,  count(*) as count from " . table_links . ", " . table_categories . " where category_lang='$dblang' and category_id=link_category group by link_category ORDER BY category_name ASC";
 //		$categorylist = object_2_array($db->get_results($sql));
@@ -405,9 +405,9 @@ function force_authentication() {
 function do_pages($total, $page_size, $thepage, $fetch = false) {
     // "previous" and "next" page buttons
     global $db, $URLMethod, $main_smarty;
-    
+
     $index_limit = 10;
-    
+
     $current = get_current_page();
     $total_pages=ceil($total/$page_size);
     $start=max($current-intval($index_limit/2), 1);
@@ -443,7 +443,7 @@ function do_pages($total, $page_size, $thepage, $fetch = false) {
                     $output .= '<li><a href="?page='.$i.$query.'">'.$i.'</a></li>';
                 $output .= '<li class="active"><a href="#">...</a></li>';
             }
-            
+
             for ($i=$start;$i<=$end && $i<= $total_pages;$i++) {
                 if($i==$current)
                     $output .= '<li class="active"><a href="#">'.$i.'</a></li>';
@@ -452,13 +452,13 @@ function do_pages($total, $page_size, $thepage, $fetch = false) {
                 else
                     $output .= '<li><a href="?page='.$i.$query.'" class="pages">'.$i.'</a></li>';
             }
-            
+
             if($total_pages>$end) {
                 $i = $total_pages;
                 $output .= '<li class="disabled"><span>...</span></li>';
                 $output .= '<li><a href="?page='.$i.$query.'">'.$i.'</a></li>';
             }
-            
+
             if($current<$total_pages) {
                 $i = $current+1;
                 $output .= '<li><a href="?page='.$i.$query.'"> '.$main_smarty->get_config_vars("PLIGG_Visual_Page_Next"). ' &#187;' . '</a></li>';
@@ -468,9 +468,9 @@ function do_pages($total, $page_size, $thepage, $fetch = false) {
             }
             $output .= "</ul></div>\n";
         }
-        
+
         if ($URLMethod == 2) {
-                    
+
 
             $query=preg_replace('(login=)', '/', str_replace('amp;','&',sanitize($_SERVER['QUERY_STRING'],3)));    //remove login= from query string //
             $query=preg_replace('(view=)', '/', $query);                        //remove view= from query string //
@@ -571,7 +571,7 @@ function do_pages($total, $page_size, $thepage, $fetch = false) {
                     }
                 }
             }
-            
+
             if($total_pages>$end) {
                 $i = $total_pages;
                 $output .= '<li class="active"><a href="#">...</a></li>';
@@ -597,7 +597,7 @@ function do_pages($total, $page_size, $thepage, $fetch = false) {
                     $output .= '<li><a href="'.my_pligg_base.'/'.pagename.'/'.$query.'/page/'.$i.'">'.$i.'</a></li>';
                 }
             }
-            
+
             if($current<$total_pages) {
                 $i = $current+1;
                 if (pagename == "admin_users") {
@@ -624,7 +624,7 @@ function do_pages($total, $page_size, $thepage, $fetch = false) {
             }
             else {
                 $output .= '<li class="active"><a href="#">'.$main_smarty->get_config_vars("PLIGG_Visual_Page_Next"). ' &#187;' . '</a></li>';    }
-            
+
             $output .= "</ul></div>";
             $output = str_replace("/group_story/","/groups/",$output);
             $output = str_replace("//","/",$output);
@@ -652,13 +652,13 @@ function getmyFullurl($x, $var1="", $var2="", $var3="") {
 
 function getmyurl($x, $var1="", $var2="", $var3="") {
     global $URLMethod;
-    
+
     $var1 = sanitize($var1,1);
     $var2 = sanitize($var2,1);
     $var3 = sanitize($var3,1);
 
     $ret = '';
-    
+
     If ($x == "storyURL") {
         // var 1 = category_safe_name
         // var 2 = title_url
@@ -669,8 +669,8 @@ function getmyurl($x, $var1="", $var2="", $var3="") {
             return getmyurl("story", $var3);
         }
     }
-    
-    
+
+
     if ($URLMethod == 1) {
         if ($x == "index") $ret = "/index.php";
         elseif ($x == "maincategory") $ret = "/index.php?category=" . $var1;
@@ -747,7 +747,7 @@ function getmyurl($x, $var1="", $var2="", $var3="") {
         elseif ($x == "live") $ret = "/live.php";
         elseif ($x == "template") $ret = "/settemplate.php";
         elseif ($x == "settemplate") $ret = "/settemplate.php?template=" .$var1;
-        
+
         //group links
         elseif ($x == "groups") $ret = "/groups.php";
         elseif ($x == "submit_groups") $ret = "/submit_groups.php";
@@ -772,7 +772,7 @@ function getmyurl($x, $var1="", $var2="", $var3="") {
         elseif ($x == "admin_categories_tasks") $ret = "/admin_categories_tasks.php?action=" . $var1;
         elseif ($x == "editgroup") $ret = "/editgroup.php?id=" . $var1;
         elseif ($x == "deletegroup") $ret = "/deletegroup.php?id=" . $var1;
-        
+
     }
     if ($URLMethod == 2) {
         if ($x == "maincategory") $ret = "/" . $var1;
@@ -851,7 +851,7 @@ function getmyurl($x, $var1="", $var2="", $var3="") {
         elseif ($x == "admin_discard") $ret = "/story/" . $var1 . "/modify/discard/";
         elseif ($x == "admin_new") $ret = "/story/" . $var1 . "/modify/new/";
         elseif ($x == "admin_published") $ret = "/story/" . $var1 . "/modify/published/";
-        
+
         elseif ($x == "groups") $ret = "/groups/";
         elseif ($x == "submit_groups") $ret = "/groups/submit/";
         elseif ($x == "group_story") $ret = "/groups/id/" . $var1 . "/";
@@ -888,7 +888,7 @@ function SetSmartyURLs($main_smarty) {
         $main_smarty->assign('URL_login', getmyurl("loginNoVar"));
     }
     $main_smarty->assign('URL_logout', htmlentities(getmyurl("logout", $_SERVER['REQUEST_URI'])));
-    
+
     $main_smarty->assign('URL_home', getmyurl("pligg_index"));
     $main_smarty->assign('URL_register', getmyurl("register"));
     $main_smarty->assign('URL_root', getmyurl("root"));
@@ -941,7 +941,7 @@ function SetSmartyURLs($main_smarty) {
     $main_smarty->assign('URL_comments', getmyurl("live_comments"));
     $main_smarty->assign('URL_template', getmyurl("template"));
     $main_smarty->assign('URL_settemplate', getmyurl("settemplate"));
-    
+
     $main_smarty->assign('URL_groups', getmyurl("groups"));
     $main_smarty->assign('URL_submit_groups', getmyurl("submit_groups"));
     $main_smarty->assign('URL_join_group', getmyurl("join_group"));
@@ -973,7 +973,7 @@ function friend_MD5($userA, $userB) {
 
 function totals_regenerate(){
     global $db, $cached_totals;
-    
+
     $name = 'new';
     $count = $db->get_var("SELECT count(*) FROM " . table_links . " WHERE link_status='$name';");
     $db->query("UPDATE `" . table_totals . "` set `total` = $count where `name` = '$name';");
@@ -1013,7 +1013,7 @@ function totals_adjust_count($name, $adjust){
         $totals = $db->get_results("SELECT * FROM `" . table_totals . "`");
         $db->cache_queries = false;
     }
-    
+
     return true;
 }
 
@@ -1025,13 +1025,13 @@ function get_story_count($name){
         if(isset($cached_totals[$name])){
             return $cached_totals[$name];
         } else {
-            
+
             if(caching == 1){
                 $db->cache_dir = mnmpath.'cache';
                 $db->use_disk_cache = true;
                 $db->cache_queries = true;
             }
-            
+
             $totals = $db->get_results("SELECT * FROM `" . table_totals . "`");
 
             $db->cache_queries = false;
@@ -1049,7 +1049,7 @@ function get_story_count($name){
 function close_tags($html)
 {
    $single_tags = array('meta','img','br','link','area');
- 
+
    // Close HTML tags
    $html = preg_replace('/<[^>]*$/is', '', $html);
 
@@ -1057,15 +1057,15 @@ function close_tags($html)
     $opened_tags = $m[1];
    else
     return $html;
- 
+
    if (preg_match_all('/<\/([a-z]+)>/iU', $html, $m))
     $closed_tags = $m[1];
    else
     $closed_tags = array();
- 
+
    if (count($closed_tags) == count($opened_tags))
           return $html;
- 
+
    for ($i=count($opened_tags)-1; $i>=0; $i--)
    {
        if (!in_array($opened_tags[$i],$single_tags))
@@ -1074,7 +1074,7 @@ function close_tags($html)
                   $html .= '</'.$opened_tags[$i].'>';
        }
    }
- 
+
    return $html;
 }
 
@@ -1307,7 +1307,7 @@ function recursive_remove_directory($directory, $empty=TRUE)
         while (FALSE !== ($item = readdir($handle)))
         {
             //print $item."\n";
-            
+
             // if the filepointer is not the current directory
             // or the parent directory
             if($item != '.' && $item != '..' && $item != '.htaccess' && $item != 'index.html')
@@ -1342,7 +1342,7 @@ function recursive_remove_directory($directory, $empty=TRUE)
             }
         }
 
-            
+
         // return success
         return TRUE;
     }

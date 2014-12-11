@@ -46,7 +46,7 @@ if ($_GET['action']=='move')
     foreach ($list as $item)
         if ($item && is_numeric($item))
         $db->query($sql="UPDATE ".table_widgets." SET `position`=".(++$i)." WHERE id=$item");
-    
+
     $db->query($sql="UPDATE ".table_widgets." SET `column`='$column' WHERE id={$_GET['id']}");
     exit;
 }
@@ -96,7 +96,7 @@ $sql = mysql_query("SELECT link_id,link_date FROM " . table_links . " ORDER BY l
         $main_smarty->assign('link_date', $link_date . ' ' . $main_smarty->get_config_vars('PLIGG_Visual_Comment_Ago'));
         $main_smarty->assign('link_id', $rows['link_id']);
     }
-        
+
 $sql = mysql_query("SELECT link_id,comment_id,comment_link_id,comment_date FROM " . table_comments . "," . table_links . " WHERE comment_link_id = link_id ORDER BY comment_date DESC LIMIT 1");
     while ($rows = mysql_fetch_array($sql)) {
         $comment_date = txt_time_diff(unixtimestamp($rows['comment_date']));

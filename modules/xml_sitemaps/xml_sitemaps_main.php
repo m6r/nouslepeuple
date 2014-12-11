@@ -157,7 +157,7 @@ function create_sitemap_main()
     sitemap_add_page('tagcloud',"SELECT MAX(UNIX_TIMESTAMP(tag_date)) FROM ".table_tags);
     sitemap_add_page('live',    "SELECT MAX(UNIX_TIMESTAMP(link_date)) FROM ".table_links." WHERE link_status='new' OR link_status='published'");
     sitemap_add_page('topusers',"SELECT MAX(UNIX_TIMESTAMP(user_modification)) FROM " . table_users . " WHERE user_enabled");
-    
+
     create_entry(mktime(0,0,0,1,1,date('Y')),getmyFullurl('submit'));
     create_entry(mktime(0,0,0,1,1,date('Y')),getmyFullurl('advancedsearch'));
 
@@ -182,7 +182,7 @@ function create_sitemap_main()
     }
     // rssfeeds
     create_entry($maxtime,"$my_base_url$my_pligg_base/rssfeeds.php");
-    
+
     $vars = '';
     check_actions('xml_sitemaps_main', $vars);
 

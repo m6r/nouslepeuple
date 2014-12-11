@@ -82,11 +82,11 @@ if($_GET['action'] == 'install'){
 #		$requires = $widget_info['requires'];
 #		check_widget_requirements($requires);
 #		process_db_requirements($widget_info);
-        
+
     } else {
         die('no init.php file exists');
     }
-        
+
     $db->query("INSERT IGNORE INTO " . table_widgets . " (`name`, `version`, `folder`, `enabled`) values ('".$name."', '" . $version . "', '".$widget."', 1);");
 
     clear_widget_cache();
@@ -110,7 +110,7 @@ if($_GET['action'] == 'remove'){
 }
 
 
-    
+
 
     $main_smarty->assign('tpl_center', '/admin/widgets');
     $output = $main_smarty->fetch($template_dir . '/admin/admin.tpl');

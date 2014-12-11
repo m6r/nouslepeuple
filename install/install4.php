@@ -40,7 +40,7 @@ elseif (!is_writable($file)) { $errors[]="$file " . $lang['NotEditable'] ; }
 
 define("mnminclude", dirname(__FILE__).'/../libs/');
 include_once mnminclude.'db.php';
-        
+
 if (!$errors) {
     $dbuser = EZSQL_DB_USER;
     $dbpass = EZSQL_DB_PASSWORD;
@@ -69,7 +69,7 @@ if (!$errors) {
     // refresh / recreate settings
     // this is needed to update it with table_prefix if it has been changed from "pligg_"
     include_once( '../libs/admin_config.php' );
-    
+
     $config = new pliggconfig;
     $config->create_file('../settings.php');
 
@@ -81,7 +81,7 @@ if (!$errors) {
 
     $sql = "Update " . table_config . " set `var_value` = '" . $my_pligg_base . "' where `var_name` = '" . '$my_pligg_base' . "';";
     mysql_query( $sql, $conn );
-    
+
     // Set the site language to what the user has been using during the installation
     $language = addslashes(strip_tags($_REQUEST['language']));
     $sql = "Update " . table_config . " set `var_value` = '" . $language . "' where `var_name` = '" . '$language' . "';";
@@ -91,7 +91,7 @@ if (!$errors) {
     $config->create_file('../settings.php');
 
     include_once( '../config.php' );
-    
+
     // Remove the cookie setting a template value
     setcookie("template", "", time()-60000,$my_pligg_base,$domain);
 
@@ -102,32 +102,32 @@ if (!$errors) {
 				<td><label>' . $lang['AdminLogin'] . '</label></td>
 				<td><input name="adminlogin" type="text" class="form-control" value="" placeholder="Admin" /></td>
 			</tr>
-			
+
 			<tr>
 				<td><label>' . $lang['AdminPassword'] . '</label></td>
 				<td><input name="adminpassword" type="password" class="form-control" value="" /></td>
 			</tr>
-			
+
 			<tr>
 				<td><label>' . $lang['ConfirmPassword'] . '</label></td>
 				<td><input name="adminpassword2" type="password" class="form-control" value="" /></td>
 			</tr>
-			
+
 			<tr>
 				<td><label>' . $lang['AdminEmail'] . '</label></td>
 				<td><input name="adminemail" type="text" class="form-control" value="" placeholder="admin@domain.com" /></td>
 			</tr>
-			
+
 			<tr>
 				<td><label>' . $lang['SiteTitleLabel'] . '</label></td>
 				<td><input name="sitetitle" type="text" class="form-control" value="" placeholder="My Site" /></td>
 			</tr>
-			
+
 			<tr>
 				<td><label></label></td>
 				<td><input type="submit" class="btn btn-primary" name="Submit" value="' . $lang['CreateAdmin'] . '" /></td>
 			</tr>
-			
+
 			<input type="hidden" name="language" value="' . addslashes(strip_tags($_REQUEST['language'])) . '">
 			<input type="hidden" name="step" value="5">
 		</form>

@@ -35,7 +35,7 @@ class Trackback {
             $db->query("UPDATE " . table_trackbacks . " set trackback_user_id=$trackback_author, trackback_link_id=$trackback_link, trackback_type='$trackback_type', trackback_date=FROM_UNIXTIME($trackback_date), trackback_status='$trackback_status', trackback_url='$trackback_url', trackback_title='$trackback_title', trackback_content='$trackback_content' WHERE trackback_id=$this->id");
         }
     }
-    
+
     function read() {
         global $db, $current_user;
 
@@ -48,7 +48,7 @@ class Trackback {
             $cond = "trackback_type = '$this->type' AND trackback_link_id = $this->link AND trackback_url = '$this->url'";
 
         else $cond = "trackback_id = $this->id";
-    
+
         if(($link = $db->get_row("SELECT * FROM " . table_trackbacks . " WHERE $cond"))) {
             $this->id=$link->trackback_id;
             $this->author=$link->trackback_user_id;

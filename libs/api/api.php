@@ -10,7 +10,7 @@
     Download Pligg API website at http://api.jum.name
     Release date : 27/09/08
     */
-    
+
 /* REMOVE THIS LINE TO ACTIVATE (as well as a line at the bottom)
 
     $version = '0.1';
@@ -20,7 +20,7 @@
 
     mysql_connect(EZSQL_DB_HOST,EZSQL_DB_USER,EZSQL_DB_PASSWORD);
     mysql_select_db(EZSQL_DB_NAME);
-    
+
     // API Configuration
     // Submit links status configuration
     // 1 'discard'
@@ -30,7 +30,7 @@
     $autovote = 1; // 0 = no vote, 1 = auto vote
     $filter = 1; // 0 = not filter (fast), 1 = filter (slow)
     // End API Configuration
-    
+
     $username = sanitize(trim($_REQUEST['username']), 3);
     $password = sanitize(trim($_REQUEST['password']), 3);
     $fn = sanitize(trim($_REQUEST['fn']), 3);				// login, submit, list , version, ping
@@ -39,7 +39,7 @@
     $title = sanitize(trim($_REQUEST['title']), 3); 		// Title of story
     $content = sanitize(trim($_REQUEST['content']), 3); 	// Content to submit
     $tags = sanitize(trim($_REQUEST['tags']), 3); 			// tag,tag,tag
-    
+
     if($fn == 'ping'){
         echo "Active";
     }else if($fn == 'version'){
@@ -65,9 +65,9 @@
                 exit();
             }
         }
-        
+
         echo submitnew($username,$password,$status,$category,$url,$title,$content,$tags,$autovote);
-        
+
     }else if($fn == 'list' || $fn == 'cate' || $fn == 'category'){
         echo categorylist($username,$password);
     }else{
@@ -77,7 +77,7 @@
         else
             echo "Connection error!, <br>Try again <a href=\"".$_SERVER['PHP_SELF']."\">here</a>.";
     }
-    
+
     function curPageURL() {
          $pageURL = 'http';
          if ($_SERVER["HTTPS"] == "on") {$pageURL .= "s";}
@@ -113,7 +113,7 @@
         {
             $salt = substr($salt, 0, 9);
         }
-    
+
         return $salt . hash('sha512', $salt . $plainText);
     }
 
@@ -171,7 +171,7 @@
     function filterBadWords($str) {
       $badFlag = 0;
       $badWords = array("fuck","sex","anal","ass","asshole","boob","blowjobs","blowjob","bondage","boobs","cock","cum","cumshot","cumshots","dick","dicks","dildo","doggystyle","dogging","erotica","exhibtionism","facial","facials","fetish","fisting","flikker","footjob","foursome","foursomes","gangbang","gay","gloryhole","groupsex","gspot","handjob","handjobs","hardcore","homosexual","homosexuals","interracial","jackoff","lesbian","lesbians","lolita","milf","naked","nigger","nude","nudes","orgasm","orgasms","orgies","orgy","penis","porn","pussies","pussy","rape","raped","rapes","sadism","sadist","softcore","sperm","strap-on","suck","sucking","sucks","threesome","tit","tits","topless","tranny","transsexual","upskirt","vagina","vaginas","vibrator","xxx","adult","hentai");
-      
+
       foreach ($badWords as $badWord) {
         if(!$badWord) continue;
         else {
@@ -189,16 +189,16 @@
         $row = mysql_fetch_array($rs);
         $row[user_pass];
         if($row[user_pass] == '') return 0;
-        
+
         $saltedpass = generateHash($password,$row[user_pass]);
-        
+
         $sql = "select user_id from ".table_prefix."users where user_login = '$username' and user_pass = '".substr($saltedpass,-49)."'";
         $rs = mysql_query($sql) or die(mysql_error());
         $row2 = mysql_fetch_array($rs);
         if($row2[user_id] == '') return 0;
         else return $row2[user_id];
     }
-    
+
     function cutText($string, $length) {
         if($length<strlen($string)){
             while ($string{$length} != " ") {
@@ -207,14 +207,14 @@
             return substr($string, 0, $length);
         }else return $string;
     }
-        
+
     function submitnew($username,$password,$status,$category,$url,$title,$content,$tags,$autovote){
         $uid = authen($username,$password);
         if($uid == 0){
             echo "Login fail!";
             exit();
         }
-        
+
         $sql = "select link_id from ".table_prefix."links where link_url like '$url'";
         $rx = mysql_query($sql) or die(mysql_error());
         $n = mysql_num_rows($rx);
@@ -222,9 +222,9 @@
             echo "Duplicate Story!!!";
             exit();
         }
-        
+
         if($category == '') $category = 0; // all category
-        
+
         if($status == 1)
             $link_status = 'discard'; // do not show
         else if ($status == 2)
@@ -236,26 +236,26 @@
 
         $randkey = rand(10000,10000000);
         $dt = date('Y-m-d H:i:s',time());
-        
+
         $mtitle = ereg_replace("[^A-Za-z0-9 ]", "", $title);
         if($mtitle == ''){
             echo "Submit error!, English title only.";
             exit();
         }
-        
-        
+
+
         $mtitle = strtolower($mtitle);
         $mtitle = str_replace(" ","-",$mtitle);
-        
+
         $sql = "select link_id from ".table_prefix."links where link_title like '$title'";
         $rm = mysql_query($sql) or die(mysql_error());
         $m = mysql_num_rows($rm);
         if($m > 0){
             $mtitle = $mtitle."-".$m;
         }
-        
+
         $scontent = cutText($content,150);
-                
+
         $sql = "insert into ".table_prefix."links(link_author, link_status, link_randkey, link_votes, link_karma, link_modified, link_date, link_published_date, link_category, link_url, link_url_title, link_title, link_title_url, link_content, link_summary, link_tags) values($uid, '$link_status', $randkey, 1, 1, '$dt', '$dt', '1999-11-30 13:00:00', $category, '$url', '$title', '$title', '$mtitle', '$content', '$scontent', '$tags' )";
         $rs = mysql_query($sql) or die(mysql_error());
         if($rs){
@@ -270,53 +270,53 @@
             // update totals table
             $sql = "update ".table_prefix."totals set total = total + 1 where name = '".$link_status."'";
             mysql_query($sql) or die(mysql_error());
-            
+
             // Default Vote
             $dt = date('Y-m-d H:i:s',time());
             $ip = $_SERVER['REMOTE_ADDR'];
             $sql = "insert into ".table_prefix."votes(vote_date, vote_link_id, vote_user_id, vote_value, vote_ip) values('$dt', $lastid, $uid, 10, '$ip')";
             mysql_query($sql) or die(mysql_error());
-            
+
             // count links
             $sql = "select link_id from ".table_prefix."links";
             $rr = mysql_query($sql) or die(mysql_error());
             $num = mysql_num_rows($rr);
-            
+
             // Random Vote
             if($autovote && $num > 1){
                 while(1){
                     srand((double) microtime() * 1000000);
                     $lucky = rand(1,$num);
-                    
+
                     $sql = "select link_id from ".table_prefix."links where link_status <> 'discard' and link_id != $lastid and link_id = ".$lucky;
                     $ru = mysql_query($sql) or die(mysql_error());
                     $u = mysql_num_rows($ru);
                     if($u > 0)	break;
-                    
+
                 }
-                
+
                 $sql = "update ".table_prefix."links set link_votes = link_votes + 1 where link_status <> 'discard' and link_id = ".$lucky;
                 mysql_query($sql) or die(mysql_error());
-                
+
                 $dt = date('Y-m-d H:i:s',time());
                 //$ip = $_SERVER['REMOTE_ADDR'];
                 $sql = "insert into ".table_prefix."votes(vote_date, vote_link_id, vote_user_id, vote_value, vote_ip) values('$dt', $lucky, $uid, 10, '$ip')";
                 mysql_query($sql) or die(mysql_error());
             } // end auto vote
-            
+
             echo "Submit complete!<br>";
         }else{
             echo "Submit fail!<br>";
         }
     }
-    
+
     function categorylist($username, $password){
         if(authen($username, $password) == 0){
             echo "Login fail!";
             exit();
         }else{
             header("Content-type: text/xml");
-            
+
             $sql = "select category_id, category_safe_name from ".table_prefix."categories where category_enabled = 1";
             $rs = mysql_query($sql) or die(mysql_error());
             $xml_output  = "<?xml version=\"1.0\" encoding=\"UTF-8\" ?>\n";
@@ -328,7 +328,7 @@
             echo $xml_output;
         }
     }
-    
+
 REMOVE THIS LINE TO ACTIVATE */
 
 ?>

@@ -67,7 +67,7 @@ if($pligg_regfrom != ''){
     if(isset($user_codepostal)){$main_smarty->assign('reg_codepostal', htmlspecialchars($user_codepostal,ENT_QUOTES));}
     if(isset($user_ville)){$main_smarty->assign('reg_ville', htmlspecialchars($user_ville,ENT_QUOTES));}
     if(isset($user_pays)){$main_smarty->assign('reg_pays', htmlspecialchars($user_pays,ENT_QUOTES));}
-    
+
     $error = register_check_errors($username, $email, $password, $password2, $user_nom, $user_prenom, $user_datenaissance, $user_numerotel, $user_codepostal, $user_signature);
 
     if($error == false){
@@ -239,7 +239,7 @@ function register_add_user($username, $email, $password, $password2, $user_langu
     global $current_user;
 
     $user = new User();
-    
+
     $user->user_language = $user_language;
     $user->username = $username;
     $user->pass = $password;
@@ -251,12 +251,12 @@ function register_add_user($username, $email, $password, $password2, $user_langu
     $user->code_postal = $user_codepostal;
     $user->ville = $user_ville;
     $user->pays = $user_pays;
-    
-    
+
+
     if($user->Create()){
 
         $user->read('short');
-        
+
         $registration_details = array(
             'user_language' => $user_language,
             'username' => $username,
@@ -264,7 +264,7 @@ function register_add_user($username, $email, $password, $password2, $user_langu
             'email' => $email,
             'id' => $user->id
         );
-    
+
         check_actions('register_success_pre_redirect', $registration_details);
 
         $current_user->Authenticate($username, $password, false);

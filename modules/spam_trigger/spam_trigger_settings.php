@@ -8,14 +8,14 @@ define('spam_trigger_path', my_pligg_base . '/modules/spam_trigger/');
             $pos = strrpos($_SERVER["SCRIPT_NAME"], "/");
             $path = substr($_SERVER["SCRIPT_NAME"], 0, $pos);
             if ($path == "/"){$path = "";}
-            
+
             if($path != my_pligg_base){
                 define('lang_loc', '..');
             } else {
                 define('lang_loc', '.');
             }
     }
-    
+
 define('spam_trigger_lang_conf', lang_loc . '/modules/spam_trigger/lang.conf');
 define('spam_trigger_pligg_lang_conf', lang_loc . "/languages/lang_" . pligg_language . ".conf");
 

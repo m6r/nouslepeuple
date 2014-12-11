@@ -31,7 +31,7 @@ if(defined('mnminclude')){
         if(is_object($main_smarty))
             $main_smarty->assign("snippet_actions_tpl",(array)$snippet_actions_tpl);
     }
-    
+
     $include_in_pages = array('module');
     if( do_we_load_module() ) {
 
@@ -39,7 +39,7 @@ if(defined('mnminclude')){
 
         if($moduleName == 'admin_snippet'){
             module_add_action('module_page', 'admin_snippet_showpage', '');
-        
+
             include_once(mnmmodules . 'admin_snippet/admin_snippet_main.php');
         }
     }

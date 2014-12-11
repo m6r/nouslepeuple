@@ -66,7 +66,7 @@ function sanit($var){
 if ($my_base_url == ''){
 
     define('my_base_url', "http://" . $_SERVER["HTTP_HOST"]);
-    
+
     if(isset($_REQUEST['action'])){
         $action = sanit($_REQUEST['action']);
     } else {
@@ -75,7 +75,7 @@ if ($my_base_url == ''){
 
     $pos = strrpos($_SERVER["SCRIPT_NAME"], "/");
     $path = substr($_SERVER["SCRIPT_NAME"], 0, $pos);
-    
+
     if ($path == "/"){
         $path = "";
     }

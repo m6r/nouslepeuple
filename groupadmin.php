@@ -12,7 +12,7 @@ include(mnminclude.'smartyvariables.php');
 check_referrer();
 
 if(isset($_REQUEST["role"])){
-        
+
     $id = $_REQUEST["id"];
     $userid = $_REQUEST["userid"];
     if(!is_numeric($id) || !is_numeric($userid)){die();}
@@ -25,11 +25,11 @@ if(isset($_REQUEST["role"])){
     $db->query($sql);
     //page redirect
     $redirect = '';
-    
+
     $grup_sql="SELECT group_safename FROM " . table_groups . " WHERE group_id = $id";
     $group_details=$db->get_row($grup_sql);
-    
-    
+
+
     //echo $redirect = getmyurl("group_story", $id);
     $redirect =  getmyurl('group_story2', $group_details->group_safename, 'members');
     header("Location: $redirect");

@@ -114,19 +114,19 @@ class LangFiles implements Iterator {
 
 function admin_language_showpage(){
     global $main_smarty, $the_template;
-        
+
     include_once('config.php');
     include_once(mnminclude.'html1.php');
     include_once(mnminclude.'link.php');
     include_once(mnminclude.'tags.php');
     include_once(mnminclude.'smartyvariables.php');
-    
+
     $main_smarty = do_sidebar($main_smarty);
 
     force_authentication();
     $canIhaveAccess = 0;
     $canIhaveAccess = $canIhaveAccess + checklevel('admin');
-    
+
     if($canIhaveAccess == 1)
     {
         // Lines from all language files
@@ -201,10 +201,10 @@ function admin_language_showpage(){
             //Method for identifying modules rather than pagename
             define('modulename', 'admin_language');
             $main_smarty->assign('modulename', modulename);
-            
+
             define('pagename', 'admin_modifylanguage');
             $main_smarty->assign('pagename', pagename);
-            
+
                 $main_smarty->assign('editinplace_init', $editinplace_init);
 
             $main_smarty->assign('tpl_center', admin_language_tpl_path . 'admin_language_main');

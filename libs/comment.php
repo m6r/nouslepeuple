@@ -47,7 +47,7 @@ class Comment {
                 $sql = "INSERT IGNORE INTO " . table_comments . " (comment_parent, comment_user_id, comment_link_id, comment_karma, comment_date, comment_randkey, comment_content, comment_status) VALUES ($comment_parent, $comment_author, $comment_link, $comment_karma, FROM_UNIXTIME($comment_date), $comment_randkey, '$comment_content', '$comment_status')";
                 $db->query($sql);
                 $this->id = $db->insert_id;
-            
+
                 $link = new Link;
                 $link->id=$this->link;
                 $link->read();
@@ -59,7 +59,7 @@ class Comment {
                 check_actions('comment_post_save', $vars);
 
             }
-            
+
         } else {
             // if we're editing an existing comment
             $sql = "UPDATE " . table_comments . " set comment_votes=$comment_votes, comment_user_id=$comment_author, comment_link_id=$comment_link, comment_karma=$comment_karma, comment_date=FROM_UNIXTIME($comment_date), comment_randkey=$comment_randkey, comment_content='$comment_content', comment_status='$comment_status' WHERE comment_id=$comment_id";
@@ -70,7 +70,7 @@ class Comment {
         check_actions('comment_store_post_sql', $vars);
 
     }
-    
+
     function read($usecache = TRUE) {
         // read the comment from the database
         global $db, $current_user, $cached_comments;
@@ -132,10 +132,10 @@ class Comment {
 
         // if we can't read the comment, return
             if(!$this->read) return;
-        
+
         // counter
             $comment_counter++;
-        
+
         $smarty = $this->fill_smarty($smarty);
         $smarty->assign('rand', rand(1000000,100000000));
 
@@ -144,9 +144,9 @@ class Comment {
         } else {
             return $smarty->fetch($the_template . '/comment_show.tpl');
         }
-    
+
     }
-    
+
     function fill_smarty($smarty){
         global $current_user, $the_template, $comment_counter, $link, $ranklist, $db;
         if (!$ranklist)
@@ -195,15 +195,15 @@ class Comment {
         $smarty->assign('comment_votes', $this->votes);
         $smarty->assign('comment_parent', $this->parent);
         $smarty->assign('hide_comment_edit', $this->hideedit);
-        
+
         $this->user_vote_count = $this->votes($current_user->user_id);
         $smarty->assign('comment_user_vote_count', $this->user_vote_count);
         $smarty->assign('comment_shakebox_currentuser_votes', $this->votes($current_user->user_id, '>0'));
         $smarty->assign('comment_shakebox_currentuser_reports', $this->votes($current_user->user_id, '<0'));
-        
+
         // if the person logged in is the person viewing the comment, show 'you' instead of the name
         $smarty->assign('user_userlogin', $this->username);
-        
+
         // the url for the edit comment link
         $smarty->assign('edit_comment_url', getmyurl('editcomment', $this->id, $link->id));
         $smarty->assign('delete_comment_url', my_pligg_base.'/delete.php?comment_id='.$this->id);
@@ -219,7 +219,7 @@ class Comment {
         $canIhaveAccess = $canIhaveAccess + checklevel('admin');
         $canIhaveAccess = $canIhaveAccess + checklevel('moderator');
         if($canIhaveAccess == 1){$smarty->assign('isadmin', 1);}
-        
+
         // the link to upvote the comment
         $jslinky = "cvote($current_user->user_id,$this->id,$this->id," . "'" . md5($current_user->user_id.$this->randkey) . "',10,'" . my_base_url . my_pligg_base . "/')";
         $smarty->assign('link_shakebox_javascript_votey', $jslinky);
@@ -239,7 +239,7 @@ class Comment {
         $smarty->assign('my_base_url', my_base_url);
         $smarty->assign('my_pligg_base', my_pligg_base);
         $smarty->assign('Default_Gravatar_Small', Default_Gravatar_Small);
-        
+
         return $smarty;
     }
 
@@ -250,7 +250,7 @@ class Comment {
         $user = new User;
         $user->id = $this->author;
         $user->read();
-      
+
         $this->username = $user->username;
         $this->userkarma = $user->karma;
         $this->author_email = $user->email;
@@ -258,7 +258,7 @@ class Comment {
 
         return $this->username;
     }
-    
+
     function votes($user, $value="<> 0") {
         require_once(mnminclude.'votes.php');
 
@@ -268,7 +268,7 @@ class Comment {
         $vote->link=$this->id;
         return $vote->anycount($value);
     }
-    
+
     // DB 11/10/08
     function votes_from_ip($ip='', $value="<> 0") {
         require_once(mnminclude.'votes.php');
@@ -281,11 +281,11 @@ class Comment {
         return $vote->anycount($value);
     }
     /////
-    
+
     function remove_vote($user=0, $value=10) {
         require_once(mnminclude.'votes.php');
         if(!is_numeric($this->id)){return false;}
-    
+
         $vote = new Vote;
         $vote->type='comments';
         $vote->user=$user;
@@ -298,7 +298,7 @@ class Comment {
         $vote->link=$this->id;
         $this->votes=$vote->count()-$vote->count('<0');
     }
-    
+
     function insert_vote($user=0, $value=10) {
         global $anon_karma;
         require_once(mnminclude.'votes.php');

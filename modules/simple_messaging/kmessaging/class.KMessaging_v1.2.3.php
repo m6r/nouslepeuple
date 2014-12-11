@@ -122,7 +122,7 @@ var $DBHost = EZSQL_DB_HOST;
                 return 4;
         }
     }
-    
+
     /**
     * @return Int 0		Message sent succesfully
     * @return Int 1		No title
@@ -176,7 +176,7 @@ var $DBHost = EZSQL_DB_HOST;
         $row = mysql_fetch_object($result);
         return $row->title;
     }
-    
+
     /**
     * @return int 1		When msgId equal to 0
     * @return int 2		When no Message in database with that msgId
@@ -270,7 +270,7 @@ var $DBHost = EZSQL_DB_HOST;
         $message['date'] = $row->date;
         return $message;
     }
-    
+
     /**
     * @return Int 0		Marked Read succesfully
     * @return Int 1		When msgId equal to 0
@@ -288,7 +288,7 @@ var $DBHost = EZSQL_DB_HOST;
         else
             return 2;
     }
-    
+
     /**
     * @return Int 1			Error while gathering info on database
     * @return Int 2			No messages with this settings
@@ -348,13 +348,13 @@ var $DBHost = EZSQL_DB_HOST;
 
         if(strlen($receiver) > 0 && strlen($sender) > 0)
             $where = ' AND ';
-        
+
         $where = ((strlen($receiver) > 0)?'readed&4=0 AND receiver=' . $receiver:'') . $where . ((strlen($sender) > 0)?'readed&2=0 AND sender=' . $sender:'');
-        
+
         $sql = "SELECT * FROM ".$this->tblName." WHERE $where ORDER BY $order";
         //echo $sql;
         $result = @mysql_query($sql);
-        
+
         if( !$result )
             return 1;
         $num = mysql_num_rows($result);
@@ -374,8 +374,8 @@ var $DBHost = EZSQL_DB_HOST;
         if( !is_array($message) )
             return 2;
         return $message;
-            
-        
+
+
     }
 
 
@@ -405,6 +405,6 @@ var $DBHost = EZSQL_DB_HOST;
             return 2;
     }
 
-    
+
 }
 ?>

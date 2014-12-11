@@ -7,7 +7,7 @@ $widget['name'] = 'Akismet';
 $widget['desc'] = 'Akismet Anti-Spam Module';
 $widget['homepage_url'] = '';
 $widget['version'] = 0.1;
-    
+
 $wordpress_key = get_misc_data('wordpress_key');
 if ($_REQUEST['widget']=='akismet')
 {

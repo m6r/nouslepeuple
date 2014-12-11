@@ -22,9 +22,9 @@
         $main_smarty->assign('users_extra_fields_field', $users_extra_fields_field);
         $main_smarty->assign('users_extra_fields_submitter', $link->username);
     }
-        
-    
-    
+
+
+
     function users_extra_fields_admin_users_save(){
         global $userdata, $users_extra_fields_field;
 
@@ -62,8 +62,8 @@
         }
         $main_smarty->assign('users_extra_fields_field', $users_extra_fields_field);
     }
-    
-    
+
+
     function users_extra_fields_profile_save(){
         global $user, $users_extra_fields_field;
 

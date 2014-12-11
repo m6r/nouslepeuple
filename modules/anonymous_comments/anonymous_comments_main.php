@@ -28,7 +28,7 @@ function insert_anonymous_comment(&$vars)
     $a_username = $vars['a_username'];
     $a_email = $vars['a_email'];
     $a_website = $vars['a_website'];
-    
+
     $sql = "INSERT INTO " . table_comments . " (comment_user_id, comment_link_id, comment_date, comment_randkey, comment_content,`comment_anonymous_username`, `comment_anonymous_email`, `comment_anonymous_website` ) VALUES ($user_id, $link_id, NOW(), $randkey, '$comment_content', '$a_username','$a_email', '$a_website')";
     $result = $db->query($sql);
 

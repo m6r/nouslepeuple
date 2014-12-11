@@ -37,10 +37,10 @@ class PliggMailer{
 
         if(isset($to) && !is_array($to)){$to[] = $to;}
         $this->to = $to;
-            
+
         if(isset($cc) && $cc != '' && !is_array($cc)){$cc[] = $cc;}
         $this->cc = $cc;
-        
+
         if(isset($bcc) && $bcc != '' &&  !is_array($bcc)){$bcc[] = $bcc;}
         $this->bcc = $bcc;
 

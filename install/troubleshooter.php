@@ -74,7 +74,7 @@ $percent = percent($tally,$required);
 if ($tally < $required ){
     echo '<div class="alert alert-warning">
 		<p><strong>Warning:</strong> Your server has only met <strong>'.$tally.'</strong> of  the <strong>'.$required.'</strong> requirements to run Pligg CMS. While not all of the items on this page are required to run Pligg, we suggest that you try to comply with the suggestions made on this page. Please see the list below to discover what issues need to be addressed.</p><br />';
-        
+
         echo '<div class="progress" style="margin-bottom: 9px;">
 				<div class="progress-bar progress-bar-danger" role="progressbar" aria-valuenow="'.$percent.'" aria-valuemin="0" aria-valuemax="100" style="width: '.$percent.'%;">
 					<span class="sr-only">'.$percent.'% Complete</span>
@@ -83,7 +83,7 @@ if ($tally < $required ){
 } else {
     echo '<div class="alert alert-success">
 		<p>Your server met all of the requirements needed to run Pligg CMS. See the information below for a detailed report.</p><br />';
-    
+
         echo '<div class="progress" style="margin-bottom: 9px;">
 				<div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="'.$percent.'" aria-valuemin="0" aria-valuemax="100" style="width: '.$percent.'%;">
 					<span class="sr-only">'.$percent.'% Complete</span>
@@ -261,13 +261,13 @@ echo '<tr><td>', function_exists('fopen') ? '<i class="fa fa-check"></i></td>' :
 
 echo '<tr><td>', function_exists('fwrite') ? '<i class="fa fa-check"></i></td>' : '<i class="fa fa-times"></i></td>';
     echo '<td><a id="fwritewarning" data-trigger="hover" data-content="The fwrite function is used in conjunction with the fopen function. It allows PHP to write to an opened file." rel="popover" href="http://www.w3schools.com/php/func_filesystem_fwrite.asp" data-original-title="fwrite PHP Function">fwrite</td></tr>';
-    
+
 echo '<tr><td>', file_get_contents(__FILE__) ? '<i class="fa fa-check"></i></td>' : '<i class="fa fa-times"></i></td>';
     echo '<td><a id="fgetwarning" data-trigger="hover" data-content="The file_get_contents() function for PHP reads a file into a string." rel="popover" href="http://www.w3schools.com/php/func_filesystem_file_get_contents.asp" data-original-title="fgetwarning PHP Function">file_get_contents</a></td></tr>';
-    
+
 echo '<tr><td>', function_exists('gd_info') ? '<i class="fa fa-check"></i></td>' : '<i class="fa fa-times"></i></td>';
     echo '<td><a id="gdwarning" data-trigger="hover" data-content="The GD Graphics Library is a graphics software library for dynamically manipulating images. Any images handled by Pligg, like user avatar or group images, use GD to manipulate the file." rel="popover" href="http://php.net/manual/en/book.image.php" data-original-title="GD Graphics Library">GD Graphics Library</a></td></tr>';
-    
+
 echo '</tbody></table>';
 
 echo '<div class="jumbotron" style="padding:25px 10px;"><p style="text-align:center">Please continue to the <a href="./install.php">Installation Page</a>, the <a href="./upgrade.php">Upgrade Page</a>, or the <a href="../readme.html">Pligg Readme</a>.</p></div>';

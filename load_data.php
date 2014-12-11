@@ -14,7 +14,7 @@ include(mnminclude.'smartyvariables.php');
 $search=new Search();
 
 // check for some get/post
- 
+
 $page_name=$_REQUEST['pname'];
 
 
@@ -65,75 +65,75 @@ $search->doSearch();
 
 
 if($page_name=='group_story'){
-    
+
     if ($catID)
         $from_where=gen_query_forCatId($catID);
 
-    
-    
+
+
     if ($view == 'new'){
             $from_where .= " AND link_votes < $group_vote AND link_status='new'";
             $sql = "SELECT SQL_CALC_FOUND_ROWS * FROM " . table_links . " WHERE link_group_id = $groupid AND link_group_status!='discard' $from_where GROUP BY link_id ORDER BY link_published_date DESC, link_date DESC LIMIT $start_up, $page_size";
-    
+
      $load_page=1;
     }elseif($view== 'published'){
             $from_where .= " AND ((link_votes >= $group_vote AND link_status = 'new') OR link_status = 'published')";
-    
+
             $sql = "SELECT SQL_CALC_FOUND_ROWS * FROM " . table_links . " WHERE link_group_id = $groupid AND link_group_status!='discard' $from_where GROUP BY link_id ORDER BY link_published_date DESC, link_date DESC LIMIT $start_up, $page_size";
-            
+
             $load_page=1;
-    
+
     }elseif($view=="shared"){
         $sql="SELECT SQL_CALC_FOUND_ROWS b.* FROM " . table_group_shared . " a
 						LEFT JOIN " . table_links . " b ON link_id=share_link_id
 						WHERE share_group_id = $groupid AND !ISNULL(link_id) $from_where
 						GROUP BY link_id
 						ORDER BY link_published_date DESC, link_date DESC  LIMIT $start_up, $page_size";
-                        
-        
+
+
         $load_page=1;
     }
      if ($catID)
          $sql = str_replace("WHERE", " LEFT JOIN ".table_additional_categories. " ON ac_link_id=link_id WHERE", $sql);
-         
+
      $linksum_sql=$sql;
-    
-    
+
+
 
 } elseif($page_name=='user'){
-    
+
     switch($view){
-        
+
         case 'history':
         $sql="SELECT * FROM " . table_links . " WHERE link_author=$userid AND (link_status='published' OR link_status='new') ORDER BY link_date DESC LIMIT $start_up,$page_size";
         $load_page=1;
         break;
-        
+
         case 'published':
         $sql="SELECT * FROM " . table_links . " WHERE link_author=$userid AND link_status='published'  ORDER BY link_published_date DESC, link_date DESC LIMIT $start_up,$page_size";
         $load_page=1;
         break;
-        
+
         case 'new':
         $sql="SELECT * FROM " . table_links . " WHERE link_author=$userid AND link_status='new' ORDER BY link_date DESC LIMIT $start_up,$page_size";
         $load_page=1;
         break;
-        
+
         case 'commented':
         $sql="SELECT DISTINCT * FROM " . table_links . ", " . table_comments . " WHERE comment_status='published' AND comment_user_id=$userid AND comment_link_id=link_id AND (link_status='published' OR link_status='new')  ORDER BY link_comments DESC LIMIT $start_up, $page_size";
         $load_page=1;
         break;
-        
+
         case 'voted':
         $sql="SELECT DISTINCT * FROM " . table_links . ", " . table_votes . " WHERE vote_user_id=$userid AND vote_link_id=link_id AND vote_value > 0  AND (link_status='published' OR link_status='new') ORDER BY link_date DESC LIMIT $start_up, $page_size";
         $load_page=1;
         break;
-        
+
         case 'upvoted':
         $sql="SELECT DISTINCT * FROM " . table_links . ", " . table_votes . " WHERE vote_user_id=$userid AND vote_link_id=link_id AND vote_value > 0  AND (link_status='published' OR link_status='new') ORDER BY link_votes DESC LIMIT $start_up, $page_size";
         $load_page=1;
         break;
-        
+
         case 'downvoted':
         $sql="SELECT DISTINCT * FROM " . table_links . ", " . table_votes . " WHERE vote_user_id=$userid AND vote_link_id=link_id AND vote_value < 0  AND (link_status='published' OR link_status='new') ORDER BY link_votes ASC LIMIT $start_up, $page_size";
         $load_page=1;
@@ -167,7 +167,7 @@ if($page_name=='group_story'){
     }
 
     $linksum_sql = $sql;
-    
+
 } else if($page_name=="index" || $page_name == "new" || $page_name == "published"){
     $linksum_sql = $search->sql;
     $load_page = 1;
@@ -182,7 +182,7 @@ if($load_page==1){
 }
 
 function gen_query_forCatId($catId){
-    
+
     if ($catId)
     {
         $child_cats = '';
@@ -203,10 +203,10 @@ function gen_query_forCatId($catId){
         }
         if (Multiple_Categories)
             $child_cat_sql .= " OR ac_cat_id = $catId ";
-            
+
         $from_where = " AND (link_category=$catId " . $child_cat_sql . ")";
         }
-        
+
      return $from_where    ;
 }
 ?>

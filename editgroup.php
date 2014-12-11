@@ -50,7 +50,7 @@ if($_POST["avatar"] == "uploaded")
         {
             $error['Type'] = 'Only these file types are allowed : jpeg, gif, png';
         }
-     
+
         if(empty($error))
         {
             $imagesize = getimagesize($mytmpfile);
@@ -109,7 +109,7 @@ elseif(isset($_POST["action"]))
     $group_safename = makeUrlFriendly($group_title, true);
     if(isset($_POST['group_privacy']))
         $group_privacy = $db->escape(sanitize($_POST['group_privacy'],3));
-    
+
     if (!$group_title) $errors = $main_smarty->get_config_vars('PLIGG_Visual_Group_Empty_Title');
     elseif ($group_vote_to_publish<=0) $errors = $main_smarty->get_config_vars('PLIGG_Visual_Group_Empty_Votes');
     else

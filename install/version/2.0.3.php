@@ -12,7 +12,7 @@ $pligg_version = $db->get_var($sql);
 if (version_compare($pligg_version, '2.0.2') <= 0) {
 
     echo '<li>Performing one-time Pligg 2.0.3 Upgrade<ul>';
-    
+
     $sql = "UPDATE ".table_config."
 			SET `var_title` = 'Negative Votes Story Discard'
 			WHERE `var_name` = 'buries_to_spam';";
@@ -26,15 +26,15 @@ if (version_compare($pligg_version, '2.0.2') <= 0) {
 			WHERE `var_name` = 'buries_to_spam';";
     $db->query($sql);
     echo '<li>Updated the title and description for the "Negative Votes Story Discard" feature</li>';
-    
+
     // Update version number
     $sql = "UPDATE `" . table_misc_data . "` SET `data` = '2.0.3' WHERE `name` = 'pligg_version';";
     $db->query($sql);
     echo '<li>Updated version number to 2.0.3</li>';
-        
+
     // Finished 2.0.3 upgrade
     echo'</ul></li>';
 }
 
-    
+
 ?>

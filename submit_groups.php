@@ -50,14 +50,14 @@ if(enable_group == "true" && (group_submit_level == $current_user_level || group
     $group_published_date = 943941600;
     $group_name = $group_title;
     $group_description = $group_description;
-    
+
 //	$group_safename = str_replace(' ', '-', $group_title);
     $group_safename = makeUrlFriendly($group_title, true);
-    
+
     /*if(isset($_POST['group_privacy']))
         $group_privacy = $db->escape(sanitize($_POST['group_privacy'],3));*/
     $group_privacy = 'public';
-    
+
     if(auto_approve_group == 'true')
         $group_status = 'enable';
     else
@@ -84,15 +84,15 @@ if(enable_group == "true" && (group_submit_level == $current_user_level || group
         //to insert a group
         $insert_group = "INSERT IGNORE INTO " . table_groups . " (group_creator, group_status, group_members, group_date, group_safename, group_name, group_description, group_privacy, group_vote_to_publish, group_notify_email) VALUES ($group_author, '$group_status', $group_members,FROM_UNIXTIME($group_date),'$group_safename','$group_name', '$group_description', '$group_privacy', '$group_vote_to_publish', '$group_notify_email')";
         $result = $db->query($insert_group);
-        
+
         //get linkid inserted above
         $in_id = $db->get_var("select max(group_id) as group_id from ".table_groups." ");
         //echo 'sdgfdsgds'.$in_id;
-        
+
         //to make group creator a member
         $insert_member = "INSERT IGNORE INTO ". table_group_member ." (`member_user_id` , `member_group_id`, `member_role`) VALUES (".$group_author.", ".$in_id.",'moderator' )";
         $db->query($insert_member);
-        
+
         if(isset($_POST['group_mailer']))
         {
             if(phpnum() == 4) {
@@ -106,15 +106,15 @@ if(enable_group == "true" && (group_submit_level == $current_user_level || group
                 $names = $_POST['group_mailer'];
                 $v1 = explode (",", $names);
                 $name = "";
-                
+
                 $user = new User;
                 $user->id = $current_user->user_id;
                 $user->read();
-                
+
                 $author_email = $user->email;
                 $username = $user->username;
-                
-                
+
+
                 foreach ($v1 as $t)
                 {
                     //echo $t;
@@ -122,11 +122,11 @@ if(enable_group == "true" && (group_submit_level == $current_user_level || group
                     $from = "email@example.com";
                     $subject = $main_smarty->get_config_vars('PLIGG_InvitationEmail_Subject');
                     $to = $t;
-                    
+
                     $message = sprintf($main_smarty->get_config_vars('PLIGG_InvitationEmail_Message'),"<a href='".my_base_url.my_pligg_base."/group_story.php?id=".$in_id."'>".$group_name."</a>","<a href='".my_base_url.my_pligg_base."/user.php?login=".$username."'>".$username."</a>");
-                    
+
                     //echo $to.":".$site_mail.":".$subject."$message<br/>";
-                    
+
                     $mail = new PHPMailer();
                     $mail->From = $site_mail;
                     $mail->FromName = $main_smarty->get_config_vars('PLIGG_PassEmail_Name');
@@ -151,7 +151,7 @@ if(enable_group == "true" && (group_submit_level == $current_user_level || group
         }
     }
         $CSRF->create('submit_group', true, true);
-    
+
     //echo $sql;
 }
 

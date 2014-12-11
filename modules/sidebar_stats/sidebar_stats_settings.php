@@ -12,7 +12,7 @@ define('sidebar_stats_plugins_path', 'modules/sidebar_stats/plugins');
             $pos = strrpos($_SERVER["SCRIPT_NAME"], "/");
             $path = substr($_SERVER["SCRIPT_NAME"], 0, $pos);
             if ($path == "/"){$path = "";}
-            
+
             if($path != my_pligg_base){
                 define('lang_loc', '..');
             } else {

@@ -155,7 +155,7 @@
                 return FALSE;
             }
         }
-        
+
         /**
         * Function to implement HELO cmd
         */
@@ -172,7 +172,7 @@
                 return FALSE;
             }
         }
-        
+
         /**
         * Function to implement EHLO cmd
         */
@@ -189,7 +189,7 @@
                 return FALSE;
             }
         }
-        
+
         /**
         * Function to implement RSET cmd
         */
@@ -206,7 +206,7 @@
                 return FALSE;
             }
         }
-        
+
         /**
         * Function to implement QUIT cmd
         */
@@ -225,7 +225,7 @@
                 return FALSE;
             }
         }
-        
+
         /**
         * Function to implement AUTH cmd
         */
@@ -251,7 +251,7 @@
         /**
         * Function that handles the MAIL FROM: cmd
         */
-        
+
         function mail($from){
 
             if($this->is_connected()
@@ -267,7 +267,7 @@
         /**
         * Function that handles the RCPT TO: cmd
         */
-        
+
         function rcpt($to){
 
             if($this->is_connected()
@@ -291,7 +291,7 @@
             if($this->is_connected()
                 AND $this->send_data('DATA')
                 AND substr(trim($error = $this->get_data()), 0, 3) === '354' ){
- 
+
                 return TRUE;
 
             }else{
@@ -318,7 +318,7 @@
 
             if(is_resource($this->connection)){
                 return fwrite($this->connection, $data.CRLF, strlen($data)+2);
-                
+
             }else
                 return FALSE;
         }
@@ -348,7 +348,7 @@
         /**
         * Sets a variable
         */
-        
+
         function set($var, $value){
 
             $this->$var = $value;

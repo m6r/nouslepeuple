@@ -5,8 +5,8 @@
     $template_info['support'] = 'http://pligg.com/';
     $template_info['version'] = '3.0.2.1';
     $template_info['designed_for_pligg_version'] = '2.0.2';
-    
+
 //	$template_info['homepage_url'] = 'http://pligg.com/downloads/template/bootstrap/';
 //	$template_info['update_url'] = 'http://pligg.com/downloads/template/bootstrap/version/';
-    
+
 ?>

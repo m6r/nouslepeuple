@@ -32,7 +32,7 @@ if($language == 'arabic'){
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<meta name="Robots" content="none" />
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-	
+
 	<link href="../templates/admin/css/bootstrap.no-icons.min.css" rel="stylesheet">
 	<link href="../templates/admin/css/font-awesome.min.css" rel="stylesheet">
 	<link rel="stylesheet" type="text/css" href="../templates/admin/css/style.css" media="screen" />
@@ -45,9 +45,9 @@ if($language == 'arabic'){
 		background-position: 0 46px;
 	}
 	</style>
-	
+
 	<title>Pligg CMS <?php $lang['installer'] ?></title>
-		
+
 </head>
 <body>
 <?php

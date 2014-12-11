@@ -4,19 +4,19 @@
 //
 function spam_trigger_showpage(){
     global $db, $main_smarty, $the_template;
-        
+
     include_once('config.php');
     include_once(mnminclude.'html1.php');
     include_once(mnminclude.'link.php');
     include_once(mnminclude.'tags.php');
     include_once(mnminclude.'smartyvariables.php');
-    
+
     $main_smarty = do_sidebar($main_smarty);
 
     force_authentication();
     $canIhaveAccess = 0;
     $canIhaveAccess = $canIhaveAccess + checklevel('admin');
-    
+
     if($canIhaveAccess == 1)
     {
         // Save settings
@@ -39,7 +39,7 @@ function spam_trigger_showpage(){
 
         define('modulename', 'spam_trigger');
         $main_smarty->assign('modulename', modulename);
-        
+
         define('pagename', 'admin_modifyspam_trigger');
         $main_smarty->assign('pagename', pagename);
         $main_smarty->assign('settings', str_replace('"','&#034;',get_spam_trigger_settings()));

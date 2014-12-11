@@ -4,19 +4,19 @@
 //
 function upload_showpage(){
     global $db, $main_smarty, $the_template;
-        
+
     include_once('config.php');
     include_once(mnminclude.'html1.php');
     include_once(mnminclude.'link.php');
     include_once(mnminclude.'tags.php');
     include_once(mnminclude.'smartyvariables.php');
-    
+
     $main_smarty = do_sidebar($main_smarty);
 
     force_authentication();
     $canIhaveAccess = 0;
     $canIhaveAccess = $canIhaveAccess + checklevel('admin');
-    
+
     if($canIhaveAccess == 1)
     {
         // Save settings
@@ -125,7 +125,7 @@ function upload_showpage(){
         // breadcrumbs
         define('modulename', 'upload');
         $main_smarty->assign('modulename', modulename);
-        
+
         define('pagename', 'admin_modifyupload');
         $main_smarty->assign('pagename', pagename);
         $main_smarty->assign('settings', str_replace('"','&#034;',get_upload_settings()));
@@ -217,7 +217,7 @@ function upload_save_files()
             {
                 while (file_exists("$upload_dir/$name$i.$ext")) $i++;
                 $name .= $i;
-    
+
                     if (@move_uploaded_file($tmp_name, "$upload_dir/$name.$ext"))
                 {
                 $db->query("INSERT INTO ".table_prefix."files
@@ -279,7 +279,7 @@ function upload_save_files()
 function generate_thumbs($fname,$link_id,$settings,$orig_id,$only_size='')
 {
     global $db, $current_user;
-    
+
     try
     {
         if (!($str = @file_get_contents($fname)))   throw new Exception("Can't read file $fname");
@@ -336,13 +336,13 @@ function generate_thumbs($fname,$link_id,$settings,$orig_id,$only_size='')
 
     // create a new temporary image
           $tmp_img = imagecreatetruecolor( $new_width, $new_height );
-    
+
           // copy and resize old image into new image
         while (file_exists("$thumb_dir/$name$i.jpg")) $i++;
     $name = "$name$i.jpg";
 
           imagecopyresized( $tmp_img, $img, 0, 0, 0, 0, $new_width, $new_height, $width, $height );
-    
+
           if (!imagejpeg( $tmp_img, "$thumb_dir/$name",$settings['quality'] ))
         $error .= "Can't create thumbnail $thumb_dir/$name";
     else

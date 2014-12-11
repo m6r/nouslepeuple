@@ -14,7 +14,7 @@ if(defined('mnminclude')){
         $moduleName = $_REQUEST['module'];
         if($moduleName == 'spam_trigger'){
             module_add_action('module_page', 'spam_trigger_showpage', '');
-        
+
             include_once(mnmmodules . 'spam_trigger/spam_trigger_main.php');
         }
     }

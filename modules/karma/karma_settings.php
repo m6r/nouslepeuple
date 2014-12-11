@@ -14,7 +14,7 @@ if(!defined('lang_loc')){
         define('lang_loc', '.');
     }
 }
-    
+
 define('karma_lang_conf', lang_loc . '/modules/karma/lang.conf');
 define('karma_pligg_lang_conf', lang_loc . "/languages/lang_" . pligg_language . ".conf");
 

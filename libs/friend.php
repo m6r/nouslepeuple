@@ -18,17 +18,17 @@ class Friend {
         if ($friend_status == 'following'){die("there was an error");}
         header('Location: ' .my_base_url.my_pligg_base. '/user.php?login='.$user_login);
     }
-    
+
     function add($friend)
     {
         global $db, $current_user;
         if (!is_numeric($friend)) die();
-        
+
         if ($current_user->user_id == 0) {
         echo "<span class='success' style='border:solid1px#269900;padding:2px2px2px2px'>Please <a href=" .my_base_url.my_pligg_base. "/login.php?return=/user.php?view=addfriend>login</a></span><br/>";
         return;
         }
-        
+
         $friend_status = $this->get_friend_status($friend);
         if ($friend_status == '' || $friend_status == 'follower'){
             //echo "INSERT INTO " . table_friends . " (friend_from, friend_to) values ($current_user->user_id, $friend);";
@@ -39,7 +39,7 @@ class Friend {
             header('Location: ' .my_base_url.my_pligg_base. '/user.php?login='.$user_login);
         }
     }
-    
+
     function get_friend_list($user_id)
     {
         // returns an array of people you've added as a friend
@@ -102,7 +102,7 @@ class Friend {
         }
         //echo $friends;
         return $friends;
-        
+
         // returns friend user_id if a friend
         // returns null if not
     }

@@ -32,7 +32,7 @@ if($requestID > 0 && enable_friendly_urls == true){
 
     Header( "HTTP/1.1 301 Moved Permanently" );
     Header( "Location: " . $url );
-    
+
     die();
 }
 
@@ -58,10 +58,10 @@ if(is_numeric($requestID)) {
     }
     if(isset($_POST['process']) && sanitize($_POST['process'], 3) != ''){
         if (sanitize($_POST['process'], 3)=='newcomment') {
-        
+
             $vars = array('user_id' => $link->author,'link_id' => $link->id);
             check_actions('comment_subscription', $vars);
-            
+
             /*if(comment_mail == true){
                 $authormail = $db->get_var("SELECT user_email FROM ".table_users." WHERE `user_id` = '$link->author';");
                 $subject= 'there is a new comment in your story';
@@ -75,7 +75,7 @@ if(is_numeric($requestID)) {
     }
 
     require_once(mnminclude.'check_behind_proxy.php');
-    
+
     // Set globals
     $globals['link_id']=$link->id;
     $globals['category_id']=$link->category;
@@ -119,7 +119,7 @@ if(is_numeric($requestID)) {
     // meta tags
     $main_smarty->assign('meta_description', strip_tags($link->truncate_content()));
     $main_smarty->assign('meta_keywords', $link->tags);
-    
+
     //sidebar
     $main_smarty = do_sidebar($main_smarty);
 
@@ -138,7 +138,7 @@ if(is_numeric($requestID)) {
     // check for redirects
     include(mnminclude.'redirector.php');
     $x = new redirector($_SERVER['REQUEST_URI']);
-    
+
     $main_smarty->assign('tpl_center', 'error_404_center');
     $main_smarty->display($the_template . '/pligg.tpl');
     die();
@@ -146,7 +146,7 @@ if(is_numeric($requestID)) {
 
 function get_comments ($fetch = false){
     Global $db, $main_smarty, $current_user, $CommentOrder, $link;
-    
+
     //Set comment order to 1 if it's not set in the admin panel
     if(!isset($CommentOrder)){$CommentOrder = 1;}
     If ($CommentOrder == 1){$CommentOrderBy = "comment_votes DESC, comment_date DESC";}
@@ -165,7 +165,7 @@ function get_comments ($fetch = false){
             $comment->id=$comment_id;
             $comment->read();
             $output .= $comment->print_summary($link, true);
-    
+
             // get all child comments
             $comments2 = $db->get_col("SELECT comment_id FROM " . table_comments . " WHERE comment_parent=$comment_id ORDER BY " . $CommentOrderBy);
             if ($comments2) {
@@ -179,7 +179,7 @@ function get_comments ($fetch = false){
                 }
                 $output .= "</div>\n";
             }
-    
+
         }
         if($fetch == false){
             echo $output;
@@ -197,7 +197,7 @@ function insert_comment () {
     $comment = new Comment;
 
     $cancontinue = false;
-    
+
     if(sanitize($_POST['link_id'], 3) == $link->id && $current_user->authenticated && sanitize($_POST['user_id'], 3) == $current_user->user_id &&    sanitize($_POST['randkey'], 3) > 0) {
         if(sanitize($_POST['comment_content'], 4) != ''){
             $comment->content=sanitize($_POST['comment_content'], 4);

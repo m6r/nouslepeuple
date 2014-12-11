@@ -30,7 +30,7 @@ if(!$user->read()) {
     die;
 }
 
-    
+
 $rows = isset($_GET['rows']) && is_numeric($_GET['rows']) ? $_GET['rows'] : 40;
 
 $time = isset($_GET['time']) && is_numeric($_GET['time']) ? $_GET['time'] : 0;
@@ -55,9 +55,9 @@ if($time > 0) {
     $search = $tmpsearch->get_search_clause();
     // The link_status to search
     $status = isset($_GET['status']) && sanitize($_GET['status'], 3) != '' ? sanitize($_GET['status'], 3) : 'submitted';
-    
+
     switch ($status) {
-        
+
         case 'published':
             $title = $main_smarty->get_config_vars("PLIGG_Visual_Published_News");
             $order_field = 'link_published_date';
@@ -138,7 +138,7 @@ if($time > 0) {
             die();
             break;
     }
-    
+
     $cat = isset($_GET['category']) && is_numeric($_GET['category']) ? $_GET['category'] : 0;
     if($cat > 0) {
         $child_cats = '';
@@ -167,14 +167,14 @@ if($time > 0) {
         $category_name = $db->get_var("SELECT category_name FROM " . table_categories . " WHERE category_id = $cat AND category_lang='$dblang'");
         $title .= " | ".$category_name;
     }
-    
+
     //This doesn't seem to work -kb
     if($search) {
         $from_where .= $search;
         $title = htmlspecialchars(sanitize($_GET['search'], 3));
     }
-    
-    
+
+
     $order_by = " ORDER BY $order_field DESC ";
     $last_modified = $db->get_var("SELECT UNIX_TIMESTAMP(max($order_field)) links $from_where");
     $sql = "SELECT DISTINCT * $from_where GROUP BY link_id $order_by LIMIT $rows";
@@ -197,7 +197,7 @@ if ($links) {
         $link->content = str_replace("—", "-", $link->content);
         $link->content = str_replace("“", "\"", $link->content);
         $link->content = str_replace("”", "\"", $link->content);
-        
+
         echo "<item>\n";
         echo "	<title><![CDATA[". $link->title ."]]></title>\n";
         echo "	<link>".getmyFullurl("storyURL", $link->category_safe_names($link->category), $link->title_url, $link->id)."</link>\n";

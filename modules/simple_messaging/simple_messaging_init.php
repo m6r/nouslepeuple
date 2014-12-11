@@ -7,7 +7,7 @@ if(defined('mnminclude')){
     // index.php becomes 'index' and new.php becomes 'new'
     $include_in_pages = array('all');
     $do_not_include_in_pages = array();
-        
+
     if( do_we_load_module() ) {
 
         module_add_action('all_pages_top', 'get_new_messages', '');
@@ -21,7 +21,7 @@ if(defined('mnminclude')){
             module_add_action('module_page', 'simple_messaging_showpage', '');
             module_add_action_tpl('tpl_pligg_breadcrumb_end', simple_messaging_tpl_path . 'breadcrumb.tpl');
         }
-    
+
         include_once(mnmmodules . 'simple_messaging/simple_messaging_main.php');
     }
 }

@@ -27,9 +27,9 @@ if($canIhaveAccess == 0){
 function delete_comment($key) {
     global $db;
     if (!is_numeric($key)) return;
-   
+
     $link_id = $db->get_var("SELECT comment_link_id FROM `" . table_comments . "` WHERE `comment_id` = ".$key.";");
-    
+
     $vars = array('comment_id' => $key);
     check_actions('comment_deleted', $vars);
 

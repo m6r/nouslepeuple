@@ -4,7 +4,7 @@
         global $main_smarty, $the_template;
         if(!isset($_SESSION)){session_start();}
         $_SESSION['captcha_math_answer'] == '';
-    
+
         $q_1_low = (get_misc_data('captcha_math_q1low') == '') ? 1 : get_misc_data('captcha_math_q1low');
         $q_1_high = (get_misc_data('captcha_math_q1high') == '') ? 5 : get_misc_data('captcha_math_q1high');
         $q_2_low = (get_misc_data('captcha_math_q2low') == '') ? 1 : get_misc_data('captcha_math_q2low');
@@ -39,7 +39,7 @@
 
             return true;
         }
-    
+
     }
 
     function captcha_configure(){

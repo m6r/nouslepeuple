@@ -115,13 +115,13 @@ function _adcopy_http_post($host, $path, $data, $port = 80) {
  */
 function solvemedia_get_html ($pubkey, $error = null, $use_ssl = false)
 {
-    
+
     if ($pubkey == 'KLoj-jfX2UP0GEYOmYX.NOWL0ReUhErZ' || $pubkey == '' || $pubkey == null ){
-        
+
         $pubkey = 'KLoj-jfX2UP0GEYOmYX.NOWL0ReUhErZ'; // Redeclare default key in case of null value
-    
+
         $page_file = basename($_SERVER['PHP_SELF']); // Get the file generating the page to figure out what key to assign it
-        
+
         if ($page_file == "register.php"){ // Register CAPTCHA
             $pubkey = 'Ql92.ORmU5DjtPyAdAW4i6OghCHVPtsq';
         } elseif ($page_file == "story.php"){ // Comment CAPTCHA
@@ -130,7 +130,7 @@ function solvemedia_get_html ($pubkey, $error = null, $use_ssl = false)
             $pubkey = 'h5HLnVA0W5kRZWIlPf7mEixB5A6koX4p';
         }
     }
-    
+
     if ($use_ssl) {
                 $server = ADCOPY_API_SECURE_SERVER;
         } else {
@@ -175,11 +175,11 @@ function solvemedia_check_answer ($privkey, $remoteip, $challenge, $response, $h
 {
 
     if ($privkey == 'Dm.c-mjmNP7Fhz-hKOpNz8l.NAMGp0wO' || $privkey == '' || $privkey == null ){
-        
+
         // Re-declare the default private key and hash in case of null value
         $privkey = 'Dm.c-mjmNP7Fhz-hKOpNz8l.NAMGp0wO';
         $hashkey = 'nePptHN4rt.-UVLPFScpSuddqdtFdu2N';
-        
+
         $page_file = basename($_SERVER['PHP_SELF']); // Get the file generating the page to figure out what key to assign it
         if ($page_file == "register.php"){
             $privkey = 'RfinGw00jddSv9eqIEo.LDUcZSbSEU6S';

@@ -122,10 +122,10 @@ function do_submit0() {
     $main_smarty->assign('submit_rand', rand(10000,10000000));
     $main_smarty->assign('Submit_Show_URL_Input', Submit_Show_URL_Input);
     $main_smarty->assign('Submit_Require_A_URL', Submit_Require_A_URL);
-    
+
     define('pagename', 'submit');
     $main_smarty->assign('pagename', pagename);
-    
+
     $main_smarty->assign('tpl_center', $the_template . '/submit_step_1_center');
     $vars = '';
     check_actions('do_submit0', $vars);
@@ -139,11 +139,11 @@ function do_submit1() {
     $url = htmlspecialchars(sanitize($_POST['url'], 3));
     $url = str_replace('&amp;', '&', $url);
     $url = html_entity_decode($url);
-    
+
     if (strpos($url,'http')!==0){
         $url = "http://$url";
     }
-    
+
     $linkres=new Link;
     $linkres->randkey = sanitize($_POST['randkey'], 3);
 
@@ -155,7 +155,7 @@ function do_submit1() {
     if($url == "http://" || $url == ""){
         $Submit_Show_URL_Input = false;
     }
-    
+
     $edit = false;
     if (is_numeric($_GET['id']))
     {
@@ -199,7 +199,7 @@ function do_submit1() {
 #	$pattern = '/^(([\w]+:)?\/\/)?(([\d\w]|%[a-fA-f\d]{2,2})+(:([\d\w]|%[a-fA-f\d]{2,2})+)?@)?(\d\w?)+[\w]{2,4}(:[\d]+)?(([\/#!+-~.,\d\w]+|%[a-fA-f\d]{2,2}))(\??(&?([-+~.,\d\w]|%[a-fA-f\d]{2,2})=?))?(#([-+_~.,\/\d\w]|%[a-fA-f\d]{2,2}))?$/';
 
     $isLink = preg_match($pattern, $url); // Returns true if a link
-    
+
     if($url == "http://" || $url == ""){
         if(Submit_Require_A_URL == false){
             $linkres->valid = true;}
@@ -210,27 +210,27 @@ function do_submit1() {
     } elseif ($isLink == false){
         $linkres->valid = false;
     }
-    
+
     $vars = array("url" => $url,'linkres'=>$linkres);
     check_actions('submit_validating_url', $vars);
     $linkres = $vars['linkres'];
-    
+
     if(!$linkres->valid) {
         $main_smarty->assign('submit_error', 'invalidurl');
         $main_smarty->assign('tpl_center', $the_template . '/submit_errors_center');
         $main_smarty->display($the_template . '/pligg.tpl');
         return;
     }
-    
+
     if(Submit_Require_A_URL == true || ($url != "http://" && $url != "")){
         if(!is_numeric($_GET['id']) && $linkres->duplicates($url) > 0) {
             $main_smarty->assign('submit_search', getmyurl("search_url", htmlentities($url)));
             $main_smarty->assign('submit_error', 'dupeurl');
             $main_smarty->assign('tpl_center', $the_template . '/submit_errors_center');
-            
+
             define('pagename', 'submit');
                  $main_smarty->assign('pagename', pagename);
-            
+
             $main_smarty->display($the_template . '/pligg.tpl');
             return;
         }
@@ -238,7 +238,7 @@ function do_submit1() {
 
     $vars = array("url" => $url);
     check_actions('submit_validating_url', $vars);
-    
+
     totals_adjust_count('discard', 1);
     //echo 'id'.$current_user->user_id;
     $linkres->status='discard';
@@ -295,7 +295,7 @@ function do_submit1() {
     $group_arr = get_groupdetail_user();
     //echo "group".print_r($group_arr);
     $main_smarty->assign('submit_group_array', get_groupdetail_user());*/
-    
+
     //to display group drop down
     if(enable_group == "true")
     {
@@ -306,7 +306,7 @@ function do_submit1() {
 				AND member_status='active'
 				AND (member_role != 'banned' && member_role != 'flagged')
 			ORDER BY group_name ASC");
-        
+
         if ($group_membered)
         {
             $output .= "<select name='link_group_id' tabindex='3' class='form-control submit_group_select'>";
@@ -323,13 +323,13 @@ function do_submit1() {
         $vars = '';
         check_actions('register_showform', $vars);
     }
-    
+
     $main_smarty->assign('tpl_extra_fields', $the_template . '/submit_extra_fields');
     $main_smarty->assign('tpl_center', $the_template . '/submit_step_2_center');
-    
+
     define('pagename', 'submit');
     $main_smarty->assign('pagename', pagename);
-    
+
     $vars = '';
     check_actions('do_submit1', $vars);
     $_SESSION['step'] = 1;
@@ -351,20 +351,20 @@ function do_submit2() {
         $vars = array('username' => $current_user->user_login);
         check_actions('register_check_errors', $vars);
     }
-    
+
     check_actions('submit2_check_errors', $vars);
-    
+
     if($vars['error'] == true){
         // No action
     }
 
     $linkres=new Link;
     $linkres->id = sanitize($_POST['id'], 3);
-    
+
     if($_SESSION['step']!=1)die('Wrong step');
     if(!is_numeric($linkres->id))die();
     if(!$linkres->verify_ownership($current_user->user_id))    die($main_smarty->get_config_vars('PLIGG_Visual_Submit2Errors_NoAccess'));
-        
+
     $linkres->read(FALSE);
 
     if($linkres->votes($current_user->user_id) == 0 && auto_vote == true) {
@@ -372,7 +372,7 @@ function do_submit2() {
         $linkres->store_basic();
         $linkres->read(FALSE);
     }
-    
+
     if (is_array($_POST['category']))
     {
         $linkres->category=sanitize($_POST['category'][0], 3);
@@ -380,7 +380,7 @@ function do_submit2() {
     } else {
         $linkres->category=sanitize($_POST['category'], 3);
     }
-    
+
     $thecat = get_cached_category_data('category_id', $linkres->category);
     $main_smarty->assign('request_category_name', $thecat->category_name);
 
@@ -418,7 +418,7 @@ function do_submit2() {
             //$linkres->link_summary = close_tags(str_replace("\n", "<br />", $linkres->link_summary));
         }
     }
-    
+
     //get link_group_id
     if((isset($_REQUEST['link_group_id']))&&($_REQUEST['link_group_id']!='')){
         $linkres->link_group_id = intval($_REQUEST['link_group_id']);
@@ -436,11 +436,11 @@ function do_submit2() {
     //comment subscription
     if(isset($_POST['comment_subscription']))
     {
-        
+
         $vars = array('link_id' => $linkres->id);
         check_actions('comment_subscription_insert_function', $vars);
     }
-    
+
     //comment subscription
     if(isset($_POST['timestamp_date_day']))
     {
@@ -460,11 +460,11 @@ function do_submit2() {
 
     $vars = '';
     check_actions('submit_step_3_after_first_store', $vars);
-    
+
     if ($vars['error'] == true && link_catcha_errors('captcha_error')){
         return;
     }
-    
+
     $linkres->read(FALSE);
     $edit = true;
     $link_title = $linkres->title;
@@ -472,7 +472,7 @@ function do_submit2() {
     $link_title = stripslashes(sanitize($_POST['title'], 3));
     $main_smarty->assign('the_story', $linkres->print_summary('full', true));
     $main_smarty->assign('tags', $linkres->tags);
-    
+
     if (!empty($linkres->tags)) {
         $tags_words = str_replace(",", ", ", $linkres->tags);
         $tags_url = urlencode($linkres->tags);
@@ -485,7 +485,7 @@ function do_submit2() {
     } else {
         $main_smarty->assign('submit_url', '');
     }
-    
+
     $data = parse_url($linkres->url);
     $main_smarty->assign('url_short', $data['host']);
     $main_smarty->assign('submit_url_title', $linkres->url_title);
@@ -493,16 +493,16 @@ function do_submit2() {
     $main_smarty->assign('submit_type', $linkres->type());
     $main_smarty->assign('submit_title', str_replace('"',"&#034;",$link_title));
     $main_smarty->assign('submit_content', $link_content);
-    
+
     if(isset($trackback)){
         $main_smarty->assign('submit_trackback', $trackback);
     } else {
         $main_smarty->assign('submit_trackback', '');
     }
-    
+
     $main_smarty->assign('tpl_extra_fields', $the_template . '/submit_extra_fields');
     $main_smarty->assign('tpl_center', $the_template . '/submit_step_3_center');
-    
+
 
     $vars = '';
     check_actions('do_submit2', $vars);
@@ -520,10 +520,10 @@ function do_submit3() {
 
     $linkres=new Link;
     $linkres->id = sanitize($_POST['id'], 3);
-    
+
     if(!is_numeric($linkres->id))die();
     if(!Submit_Complete_Step2 && $_SESSION['step']!=2)die('Wrong step');
-    
+
     $linkres->read();
 
     totals_adjust_count($linkres->status, -1);
@@ -544,13 +544,13 @@ function do_submit3() {
         $vars = array('link_id' => $linkres->id);
         check_actions('story_spam', $vars);
     }
-    
+
 
     $linkres->store_basic();
     $linkres->check_should_publish();
 
     tags_insert_string($linkres->id, $dblang, $linkres->tags);
-    
+
     if(isset($_POST['trackback']) && sanitize($_POST['trackback'], 3) != '') {
         require_once(mnminclude.'trackback.php');
         $trackres = new Trackback;
@@ -603,17 +603,17 @@ function link_errors($linkres)
         $main_smarty->assign('submit_error', 'long_content');
         $error = true;
     }
-    
+
     if(utf8_strlen($linkres->tags) < minTagsLength && $linkres->tags!="" ) {
         $main_smarty->assign('submit_error', 'short_tags');
         $error = true;
     }
-    
+
     if(utf8_strlen($linkres->tags) > maxTagsLength) {
         $main_smarty->assign('submit_error', 'long_tags');
         $error = true;
     }
-    
+
     if (utf8_strlen($linkres->summary) > maxSummaryLength ) {
         $main_smarty->assign('submit_error', 'long_summary');
         $error = true;
@@ -632,14 +632,14 @@ function link_errors($linkres)
             $error = true;
         }
     }
-    
+
     if($error == true){
         $main_smarty->assign('link_id', $linkres->id);
         $main_smarty->assign('tpl_center', $the_template . '/submit_errors_center');
         $main_smarty->display($the_template . '/pligg.tpl');
         die();
     }
-    
+
     return $error;
 }
 // assign any errors found during captch checking

@@ -13,7 +13,7 @@ if(!defined('lang_loc')){
     $pos = strrpos($_SERVER["SCRIPT_NAME"], "/");
     $path = substr($_SERVER["SCRIPT_NAME"], 0, $pos);
     if ($path == "/"){$path = "";}
-    
+
     if($path != my_pligg_base){
         define('lang_loc', '..');
     } else {
@@ -179,11 +179,11 @@ if($pligg_category != ''){
     $main_smarty->assign('index_url_month', getmyurl('index_sort', 'month', $pligg_category));
     $main_smarty->assign('index_url_year', getmyurl('index_sort', 'year', $pligg_category));
     $main_smarty->assign('index_url_alltime', getmyurl('index_sort', 'alltime', $pligg_category));
-    
+
     $main_smarty->assign('index_url_upvoted', getmyurl('index_sort', 'upvoted', $pligg_category));
     $main_smarty->assign('index_url_downvoted', getmyurl('index_sort', 'downvoted', $pligg_category));
     $main_smarty->assign('index_url_commented', getmyurl('index_sort', 'commented', $pligg_category));
-    
+
     $main_smarty->assign('cat_url', getmyurl("maincategory"));
 }
 else {
@@ -194,7 +194,7 @@ else {
     $main_smarty->assign('index_url_month', getmyurl('index_sort', 'month'));
     $main_smarty->assign('index_url_year', getmyurl('index_sort', 'year'));
     $main_smarty->assign('index_url_alltime', getmyurl('index_sort', 'alltime'));
-    
+
     $main_smarty->assign('index_url_upvoted', getmyurl('index_sort', 'upvoted'));
     $main_smarty->assign('index_url_downvoted', getmyurl('index_sort', 'downvoted'));
     $main_smarty->assign('index_url_commented', getmyurl('index_sort', 'commented'));

@@ -81,9 +81,9 @@ $users_table = '';
 
 //echo "<pre>";
 if ($users) {
-    
+
     foreach($users as $dbuser) {
-    
+
         $user->id=$dbuser->user_id;
         $user->read();
         $user->all_stats();
@@ -108,7 +108,7 @@ if ($users) {
         $main_smarty->assign('user_karma', $user->karma);
         $main_smarty->assign('user_rank', $ranklist[$user->karma]);
         $main_smarty->assign('user_avatar', get_avatar('small', "", $user->username, $user->email));
-        
+
         $users_table .= $main_smarty->fetch(The_Template . "/topusers_data.tpl");
 
     }
@@ -130,7 +130,7 @@ $main_smarty->assign('total_row_for_topusers', $rows);
 //For Infinit scrolling and continue reading option
 if(Auto_scroll==2 || Auto_scroll==3){
    $main_smarty->assign("scrollpageSize", $page_size);
- 
+
 }else
     $main_smarty->assign('topusers_pagination', do_pages($rows, $top_users_size, "topusers", true));
 

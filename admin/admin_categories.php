@@ -62,7 +62,7 @@ if($canIhaveAccess == 1)
     // pagename
     define('pagename', 'admin_categories');
     $main_smarty->assign('pagename', pagename);
-    
+
     // read the mysql database to get the pligg version
     $sql = "SELECT data FROM " . table_misc_data . " WHERE name = 'pligg_version'";
     $pligg_version = $db->get_var($sql);
@@ -74,7 +74,7 @@ if($canIhaveAccess == 1)
 // put the category tree into an array for use in the qeip dropdown
 
     $action = isset($_REQUEST['action']) && sanitize($_REQUEST['action'], 3) != '' ? sanitize($_REQUEST['action'], 3) : "view";
-    
+
     if($action == "htaccess"){
         $htaccess = '../.htaccess';
         if (file_exists($htaccess)) {
@@ -84,7 +84,7 @@ if($canIhaveAccess == 1)
             echo "We have renamed htaccess.default to .htaccess for you. You still need to manually add the special category structure for it to fully work.";
         }
     }
-    
+
     if($action == "save"){
         $CSRF->check_expired('category_manager');
         if ($CSRF->check_valid(sanitize($_POST['token'], 3), 'category_manager')){
@@ -106,7 +106,7 @@ if($canIhaveAccess == 1)
             $parent = sanitize($_POST['parent'], 3);
             if (!is_numeric($id)) die();
             if (!is_numeric($parent)) die();
-            
+
             children_id_to_array($array, table_categories, $id);
             if(is_array($array)){
                 if(in_array($parent, $array)){
@@ -114,7 +114,7 @@ if($canIhaveAccess == 1)
                 }
             }
             if($id == $parent) {header("Location: admin_categories.php");die();}
-    
+
             $db->query("UPDATE `" . table_categories . "` SET category_name='".mysql_real_escape_string(sanitize($_POST['name'],4))."',
 								  category_safe_name='".mysql_real_escape_string(sanitize($_POST['safename'],4))."',
 								  category_parent='".mysql_real_escape_string(sanitize($_POST['parent'],4))."',
@@ -165,7 +165,7 @@ if($canIhaveAccess == 1)
         $sql = "insert into `" . table_categories . "` (`category_name`) VALUES ('new category');";
         $db->query($sql);
         $last_IDsql = $db->get_var("SELECT category__auto_id from " . table_categories . " where category_name = 'new category';");
-        
+
         rebuild_the_tree();
         ordernew();
         Cat_Safe_Names();
@@ -185,7 +185,7 @@ if($canIhaveAccess == 1)
         $color = sanitize($_REQUEST['color'], 3);
         $color = utf8_str_replace('#', '', $color);
         if (!is_numeric($id)) die();
-    
+
         $sql = "update ".table_categories." set category_color = '" . $color . "' where category__auto_id=" . $id . ";";
         echo $sql;
         $db->query($sql);
@@ -232,14 +232,14 @@ if($canIhaveAccess == 1)
         $id = utf8_substr(sanitize($_REQUEST['id'], 3), 9, 100);
         $parent = utf8_substr(sanitize($_REQUEST['parent'], 3), 9, 100);
         if (!is_numeric($id)) die();
-        
+
         children_id_to_array($array, table_categories, $id);
         if(is_array($array)){
             if(in_array($parent, $array)){
                 die('You cannot move a category into it\'s own subcategory. Click <a href = "admin_categories.php">here</a> to reload.');
             }
         }
-        
+
         if($id == $parent) {header("Location: admin_categories.php");die();}
 
         $sql = "update ".table_categories." set category_parent = " . $parent . " where category__auto_id=" . $id . ";";
@@ -267,7 +267,7 @@ if($canIhaveAccess == 1)
                 $sql = "Select * from ".table_categories." where category__auto_id=" . $move_id . ";";
                 $results = $db->get_row($sql);
                 $move_sort = $results->category_order;
-                
+
                 $sql = "update ".table_categories." set category_parent = ".$results->category_parent.", category_order = " . ($move_sort - 1) . " where category__auto_id=" . $id . ";";
                 $db->query($sql);
                 rebuild_the_tree();
@@ -280,7 +280,7 @@ if($canIhaveAccess == 1)
             $sql = "Select * from ".table_categories." where category__auto_id=" . $move_id . ";";
             $results = $db->get_row($sql);
             $move_sort = $results->category_order;
-            
+
             $sql = "update ".table_categories." set category_parent = ".$results->category_parent.", category_order = " . ($move_sort - 1) . " where category__auto_id=" . $id . ";";
             $db->query($sql);
             rebuild_the_tree();
@@ -293,7 +293,7 @@ if($canIhaveAccess == 1)
         $move_id = utf8_substr(sanitize($_REQUEST['movebelow_id'], 3), 6, 100);
         if (!is_numeric($id)) die();
         if (!is_numeric($move_id)) die();
-        
+
         if($id == $move_id) {header("Location: admin_categories.php");die();}
 
         $array = "";
@@ -304,7 +304,7 @@ if($canIhaveAccess == 1)
                 $sql = "Select * from ".table_categories." where category__auto_id=" . $move_id . ";";
                 $results = $db->get_row($sql);
                 $move_sort = $results->category_order;
-                
+
                 $sql = "update ".table_categories." set category_parent = ".$results->category_parent.", category_order = " . ($move_sort + 1) . " where category__auto_id=" . $id . ";";
                 $db->query($sql);
                 rebuild_the_tree();
@@ -317,7 +317,7 @@ if($canIhaveAccess == 1)
             $sql = "Select * from ".table_categories." where category__auto_id=" . $move_id . ";";
             $results = $db->get_row($sql);
             $move_sort = $results->category_order;
-            
+
             $sql = "update ".table_categories." set category_parent = ".$results->category_parent.", category_order = " . ($move_sort + 1) . " where category__auto_id=" . $id . ";";
             $db->query($sql);
             rebuild_the_tree();
@@ -327,7 +327,7 @@ if($canIhaveAccess == 1)
     }
     elseif($action == "view"){
         $CSRF->create('category_manager', true, true);
-    
+
         $array = tree_to_array(0, table_categories, true);
 #print_r($array);exit;
         $main_smarty->assign('cat_count', count($array));
@@ -345,14 +345,14 @@ function makeCategoryFriendly($output) {
     if(function_exists('utils_makeUrlFriendly')) {
         $output = utils_makeUrlFriendly($output);
     }
-    
+
     return $output;
 }
 
 function Cat_Safe_Names(){
     // this was moved out of dbtree.php because it's only needed when changing
     // category information
-    
+
     global $db;
     $db->query("UPDATE `" . table_categories . "` SET category_id = category__auto_id");
 /*	$cats = $db->get_col("Select category_name from " . table_categories . ";");

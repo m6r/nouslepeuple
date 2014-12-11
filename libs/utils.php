@@ -150,7 +150,7 @@ function txt_time_diff($from, $now=0){
 
     if (empty($from))
             return "No date provided";
-    
+
     $txt = '';
     if($now==0) $now = time();
 
@@ -172,13 +172,13 @@ function txt_time_diff($from, $now=0){
     if($days < 2){
         if($hours>1) $txt .= " $hours ".$main_smarty->get_config_vars('PLIGG_Visual_Story_Times_Hours');
         else if ($hours==1) $txt  .= " $hours ".$main_smarty->get_config_vars('PLIGG_Visual_Story_Times_Hour');
-    
+
         if($hours < 3){
             if($minutes>1) $txt .= " $minutes ".$main_smarty->get_config_vars('PLIGG_Visual_Story_Times_Minutes');
             else if ($minutes==1) $txt  .= " $minutes ".$main_smarty->get_config_vars('PLIGG_Visual_Story_Times_Minute');
         }
     }
-    
+
     if($txt=='') $txt = ' '. $main_smarty->get_config_vars('PLIGG_Visual_Story_Times_FewSeconds') . ' ';
     return $txt;
 }
@@ -239,16 +239,16 @@ function get_date($epoch) {
 function get_base_url($url){
     // get base of URL. For example, get_base_url will return www.pligg.com if the URL was www.pligg.com/support/
    $req = $url;
-  
+
    $pos = strpos($req, '://');
    $protocol = strtolower(substr($req, 0, $pos));
-  
+
    $req = substr($req, $pos+3);
    $pos = strpos($req, '/');
    if($pos === false)
        $pos = strlen($req);
    $host = substr($req, 0, $pos);
-    
+
     return $host;
 }
 
@@ -279,7 +279,7 @@ function makeUrlFriendly($output, $isPage=false) {
         $output = utils_makeUrlFriendly($output);
     }
     if ($isPage===true) return $output;
-   
+
     // check to see if the story title already exists. If so, add an integer to the end of the title
     $n = $db->get_var("SELECT COUNT(*) FROM " . table_links . " WHERE link_title_url like '$output%'" .
                 ($isPage > 0 ? " AND link_id!=$isPage" : ''));
@@ -302,7 +302,7 @@ function utils_makeUrlFriendly($output)
               $translations = parse_ini_file(mnmpath.'languages/translit.txt');
         $output = strtr($output, $translations);
     }
-        
+
     $output = preg_replace("/\s/e" , "_" , $output);    // Replace spaces with underscores
     $output = str_replace("_", "-", $output);
     $output = str_replace("&amp;", "", $output);

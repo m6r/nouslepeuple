@@ -70,7 +70,7 @@ if( (isset($_POST["processlogin"]) && is_numeric($_POST["processlogin"])) || (is
                 } else {
                     $return =  my_pligg_base.'/admin/admin_index.php';
                 }
-                
+
                 define('logindetails', $username . ";" . $password . ";" . $return);
 
                 $vars = '';
@@ -100,7 +100,7 @@ if($canIhaveAccess == 0){
     // show the template
     $main_smarty->assign('tpl_center', '/admin/login');
     $main_smarty->display($template_dir . '/admin/admin.tpl');
-    
+
 } else {
     // Send you to the admin panel
     $return =  my_pligg_base.'/admin/admin_index.php';

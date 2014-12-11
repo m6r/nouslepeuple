@@ -36,9 +36,9 @@ check_actions('index_top', $vars);
 
 // find the name of the current category
 if(isset($_REQUEST['category'])){
-    
+
     $thecat = get_cached_category_data('category_safe_name', sanitize($_REQUEST['category'], 1));
-    
+
     $main_smarty->assign('request_category_name', $thecat->category_name);
     $catID = $thecat->category_id;
     $thecat = $thecat->category_name;
@@ -171,7 +171,7 @@ include('./libs/link_summary.php'); // this is the code that show the links / st
 //For Infinit scrolling and continue reading option
 if(Auto_scroll==2 || Auto_scroll==3){
    $main_smarty->assign("scrollpageSize", $page_size);
- 
+
 }else
    $main_smarty->assign('link_pagination', do_pages($rows, $page_size, "published", true));
 

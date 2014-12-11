@@ -16,7 +16,7 @@ if(!defined('mnminclude')){header('Location: ../error_404.php');die();}
     $usersql = $db->get_results('SELECT var_name, var_value, var_method, var_enclosein FROM ' . table_prefix . 'config');
 
     if(!$usersql){die('Error. The ' . table_prefix . 'config table is empty or does not exist');}
-    
+
     foreach($usersql as $row) {
         $value = $row->var_value;
         if ($row->var_method == "normal"){

@@ -13,11 +13,11 @@ check_referrer();
 $post_id = sanitize($_POST['id'], 3);
 
 if(is_numeric($post_id) && $post_id > 0){
-    
+
     $link = new Link;
     $link->id=$post_id;
     $link->read_basic();
-    
+
     if ($current_user->user_id == 0 && !anonymous_vote) {
         error($main_smarty->get_config_vars('PLIGG_Visual_Vote_NoAnon'));
     }

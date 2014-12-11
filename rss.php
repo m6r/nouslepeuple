@@ -109,7 +109,7 @@ if($time > 0) {
         $where .= " AND link_group_id = '$group' ";
         }
     }
-    
+
     // This doesn't seem to work -kb
     if($search) {
         $where .= $search;
@@ -146,7 +146,7 @@ if ($links) {
         $link->link_summary = str_replace("â€”", "-", $link->link_summary);
         $link->link_summary = str_replace("â€œ", "\"", $link->link_summary);
         $link->link_summary = str_replace("â€", "\"", $link->link_summary);
-        
+
         echo "<item>\n";
         echo "	<title>". htmlspecialchars($link->title) . "</title>\n";
         echo "	<link>".getmyFullurl("storyURL", $link->category_safe_names($link->category), urlencode($link->title_url), $link->id)."</link>\n";

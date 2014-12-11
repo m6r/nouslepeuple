@@ -43,13 +43,13 @@ $view = sanitize(sanitize($_REQUEST["view"],1),3);
 if($requestID > 0)
 {
     //For Infinit scrolling and continue reading option
-    
+
     if (($privacy!='private' || isMemberActive($requestID)=='active'))
     {
          $main_smarty->assign('group_shared_rows', group_shared($requestID,$catID,1));
          $main_smarty->assign('group_published_rows', group_stories($requestID,$catID,'published',1));
          $main_smarty->assign('group_new_rows', group_stories($requestID,$catID,'new',1));
-        
+
         switch ($view) {
             case 'shared':
                 group_shared($requestID,$catID);
@@ -57,17 +57,17 @@ if($requestID > 0)
              case 'published':
                 group_stories($requestID,$catID,'published');
                 break;
-            
+
              case 'new':
                 group_stories($requestID,$catID,'new');
                 break;
-                    
+
             case 'members':
                 member_display($requestID);
                 break;
             default:
                 group_stories($requestID,$catID,$view);
-                
+
         }
     }
     else
@@ -99,7 +99,7 @@ if(Auto_scroll==2 || Auto_scroll==3){
         $main_smarty->assign('groupID', $requestID);
         $main_smarty->assign('viewtype', $view);
     }
-    
+
 
 if ($view == 'new')
     $main_smarty->assign('URL_rss_page', getmyurl('rssgroup', $requestTitle, 'new'));
@@ -142,7 +142,7 @@ if($_POST["avatar"] == "uploaded")
     {
         $error['Type'] = 'Only these file types are allowed : jpeg, gif, png';
     }
- 
+
     if(empty($error))
     {
         $imagesize = getimagesize($mytmpfile);

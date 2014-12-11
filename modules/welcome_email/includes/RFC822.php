@@ -85,7 +85,7 @@ class Mail_RFC822
      * @var boolean $mailRFC822
      */
     var $mailRFC822 = true;
-    
+
     /**
     * A limit after which processing stops
     * @var int $limit
@@ -149,7 +149,7 @@ class Mail_RFC822
         while ($this->address = $this->_splitAddresses($this->address)) {
             continue;
         }
-        
+
         if ($this->address === false || isset($this->error)) {
             return false;
         }
@@ -165,7 +165,7 @@ class Mail_RFC822
                 || isset($this->error)) {
                 return false;
             }
-            
+
             if (!$this->nestGroups) {
                 $this->structure = array_merge($this->structure, $return);
             } else {
@@ -371,7 +371,7 @@ class Mail_RFC822
             if (isset($parts[$i + 1]))
                 $parts[$i + 1] = $parts[$i] . $char . $parts[$i + 1];
         }
-        
+
         return $num;
     }
 
@@ -796,7 +796,7 @@ class Mail_RFC822
 
         if (($local_part = $this->_validateLocalPart($local_part)) === false) return false;
         if (($domain     = $this->_validateDomain($domain)) === false) return false;
-        
+
         // Got here so return successful.
         return array('local_part' => $local_part, 'domain' => $domain);
     }
@@ -844,7 +844,7 @@ class Mail_RFC822
     {
         return count(preg_split('/(?<!\\\\),/', $data));
     }
-    
+
     /**
     * This is a email validating function seperate to the rest
     * of the class. It simply validates whether an email is of

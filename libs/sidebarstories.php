@@ -11,7 +11,7 @@ class SidebarStories {
   var $template = ""; // The template to use, including folder
   var $category = "";
   var $TitleLengthLimit = '';
-  
+
     function show($fetch = false) {
         global $main_smarty, $db, $cached_links, $current_user;
         include_once(mnminclude.'search.php');
@@ -26,15 +26,15 @@ class SidebarStories {
             $search->category = $thecat->category_id;
         }
         $search->doSearch();
-    
+
         $linksum_sql = $search->sql;
-    
+
         $link = new Link;
         $links = $db->get_col($linksum_sql);
-    
-    
+
+
         $the_results = $links;
-        
+
         if($the_results){
             // find out if the logged in user voted / reported each of
             // the stories that the search found and cache the results
@@ -52,7 +52,7 @@ class SidebarStories {
                     // so when we foreach the links we don't have to
                     // run 1 extra query for each story to determine
                     // current user votes
-      
+
             // setup the link cache
             $i = 0;
             // if this query changes also change it in the read() function in /libs/link.php
@@ -65,14 +65,14 @@ class SidebarStories {
                     $i = $i + 1;
                 }
             }
-            
+
             // if $i = 0 then all the links are already cached
             // so don't touch the db
             // if $i > 0 then there is at least 1 link to get
             // so get the SQL and add results to the cache
             if ($i > 0){
                 $results = $db->get_results($sql);
-    
+
                 // add the results to the cache
                 foreach ($results as $row){
                     $cached_links[$row->link_id] = $row;
@@ -90,11 +90,11 @@ class SidebarStories {
                 $link->get_author_info = false;
                 $link->check_friends = false;
                 $link->read();
-                
+
                 if(is_numeric($this->TitleLengthLimit) && strlen($link->title) > $this->TitleLengthLimit){
                     $link->title = utf8_substr($link->title, 0, $this->TitleLengthLimit) . '...';
                 }
-                
+
                 $main_smarty = $link->fill_smarty($main_smarty);
                 $ssLinks .= $main_smarty->fetch($this->template);
              }

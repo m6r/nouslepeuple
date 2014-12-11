@@ -11,14 +11,14 @@ class redirector {
 
     var $old_url = '';
     var $new_url = '';
-    
+
     function redirector($old_url){
         $this->check_old($old_url);
     }
 
     function check_old($old_url){
         global $db;
-        
+
         // check for redirects
         // DB 08/04/08
         $url = sanitize($old_url,4);
@@ -27,12 +27,12 @@ class redirector {
         $sql = 'SELECT * FROM `' . table_redirects . '` WHERE `redirect_old` = "' . $url . '" LIMIT 1;';
         //echo $sql;
         $redirs = $db->get_row($sql);
-        
+
         if($redirs){
             header( "HTTP/1.1 301 Moved Permanently" );
             header('Location: ' . my_pligg_base . $redirs->redirect_new);
         }
-    
+
     }
 
 }

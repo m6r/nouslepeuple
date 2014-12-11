@@ -32,19 +32,19 @@ function links_settings()
 //
 function links_showpage(){
     global $db, $main_smarty, $the_template;
-        
+
     include_once('config.php');
     include_once(mnminclude.'html1.php');
     include_once(mnminclude.'link.php');
     include_once(mnminclude.'tags.php');
     include_once(mnminclude.'smartyvariables.php');
-    
+
     $main_smarty = do_sidebar($main_smarty);
 
     force_authentication();
     $canIhaveAccess = 0;
     $canIhaveAccess = $canIhaveAccess + checklevel('admin');
-    
+
     if($canIhaveAccess == 1)
     {
         if ($_POST['submit'])
@@ -62,7 +62,7 @@ function links_showpage(){
         // breadcrumbs
         define('modulename', 'links');
         $main_smarty->assign('modulename', modulename);
-        
+
         define('pagename', 'admin_modifylinks');
         $main_smarty->assign('pagename', pagename);
 

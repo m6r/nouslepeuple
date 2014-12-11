@@ -17,10 +17,10 @@ if (version_compare($pligg_version, '2.0.1') <= 0) {
     $sql = "UPDATE `" . table_misc_data . "` SET `data` = '2.0.2' WHERE `name` = 'pligg_version';";
     $db->query($sql);
     echo '<li>Updated version number to 2.0.2</li>';
-    
+
     // Finished 2.0.2 upgrade
     echo'</ul></li>';
 }
 
-    
+
 ?>

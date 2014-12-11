@@ -10,13 +10,13 @@ function akismet_save_profile(&$x){
 
     if(phpnum()>=5){
         include akismet_lib_path . 'Akismet.class_5.php';
-            
+
         $akismet = new Akismet(my_base_url . my_pligg_base, get_misc_data('wordpress_key'));
         $akismet->setCommentAuthor($user->username);
         $akismet->setCommentAuthorEmail($user->email);
         $akismet->setCommentContent($text);
         $akismet->setPermalink(my_base_url.getmyurl('user', $user->username));
-            
+
         if($akismet->isCommentSpam()){
             $x['error'] = 'Spam';
         } else {
@@ -54,18 +54,18 @@ function akismet_save_profile(&$x){
 function akismet_save_comment(&$x){
     if(phpnum()>=5){
         include akismet_lib_path . 'Akismet.class_5.php';
-            
+
         $comment = $x['comment'];
         $user = new User;
         $user->id = $comment->author;
         $user->read();
-            
+
         $akismet = new Akismet(my_base_url . my_pligg_base, get_misc_data('wordpress_key'));
         $akismet->setCommentAuthor($user->username);
         $akismet->setCommentAuthorEmail($user->email);
         $akismet->setCommentContent($comment->content);
         $akismet->setPermalink(my_base_url.getmyurl('story', $comment->link));
-            
+
         if($akismet->isCommentSpam()){
             $x['comment']->canSave = false;
 #			$x['comment']->status = 'spam';
@@ -79,7 +79,7 @@ function akismet_save_comment(&$x){
         include akismet_lib_path . 'Akismet.class_4.php';
 // echo "this is version 4";
         $comment = $x['comment'];
-        
+
 // print_r($comment);
         $user = new User;
         $user->id = $comment->author;
@@ -122,7 +122,7 @@ function akismet_check_submit(&$vars){
         $user = new User;
         $user->id = $vars['linkres']->author;
         $user->read();
-    
+
         $akismet = new Akismet(my_base_url . my_pligg_base, get_misc_data('wordpress_key'));
         $akismet->setCommentAuthor($user->username);
         $akismet->setCommentAuthorEmail($user->email);
@@ -212,7 +212,7 @@ function akismet_showpage(){
 
         define('pagename', 'akismet');
         $main_smarty->assign('pagename', pagename);
-        
+
         define('modulename', 'akismet');
         $main_smarty->assign('modulename', modulename);
 
@@ -224,7 +224,7 @@ function akismet_showpage(){
 
             $main_smarty->assign('spam_links_count', akismet_get_link_count());
             $main_smarty->assign('spam_comments_count', akismet_get_comment_count());
-            
+
             $main_smarty = do_sidebar($main_smarty, $navwhere);
             $main_smarty->assign('posttitle', " / " . $main_smarty->get_config_vars('PLIGG_Visual_Header_AdminPanel'));
 
@@ -235,7 +235,7 @@ function akismet_showpage(){
         if($view == 'updateKey'){
             if($_REQUEST['key']){
                 $wordpress_key = sanitize($_REQUEST['key'], 3);
-    
+
                 // Verify key before save
                 if(phpnum()>=5){
                 include akismet_lib_path . 'Akismet.class_5.php';
@@ -247,7 +247,7 @@ function akismet_showpage(){
                     misc_data_update('wordpress_key', $wordpress_key);
                 } else {
                 include akismet_lib_path . 'Akismet.class_4.php';
-                
+
                 $akismet = new Akismet(my_base_url . my_pligg_base, $wordpress_key);
                 if (!$akismet->_isValidApiKey($wordpress_key))
                     $main_smarty->assign('error', 1);
@@ -325,10 +325,10 @@ function akismet_showpage(){
                     $user_cmt->id=$spam_cmts->userid;
                     $user_cmt->read();
                     $user_name = $user_cmt->username;
-                            
+
                     $user_cmt_link->id=$spam_cmts->linkid;
                     $user_cmt_link->read();
-                            
+
                     $spam_output .="<tr>";
                     $spam_output .= "	<td>".$user_name."</td>";
                     $spam_output .= "	<td><a href='story.php?id=".$user_cmt_link->id=$spam_cmts->linkid."'>".save_text_to_html($spam_cmts->cmt_content)."</a></td>";
@@ -339,7 +339,7 @@ function akismet_showpage(){
                 $spam_output .="</tbody></table>";
                 $spam_output .='<p align="right" style="margin-top:10px;"><input type="submit" name="submit" value="Apply Changes" class="btn btn-default" /></p>';
                 $spam_output .="</form>";
-                    
+
                 $main_smarty->assign('spam_output', $spam_output);
                 $main_smarty->assign('link_data', object_2_array($link_data));
             } else {
@@ -353,7 +353,7 @@ function akismet_showpage(){
             $main_smarty->assign('tpl_center', akismet_tpl_path . 'manageSpamcomments');
             $main_smarty->display($template_dir . '/admin/admin.tpl');
         }
-        
+
         if(phpnum()>=5)
             include_once akismet_lib_path . 'Akismet.class_5.php';
         else
@@ -405,7 +405,7 @@ function akismet_showpage(){
                         elseif ($value == "notspam") {
                             $link->status = 'new';
                             $link->store();
-                            
+
                             $akismet->submitHam();
 
                         }
@@ -416,7 +416,7 @@ function akismet_showpage(){
             header('Location: ' . URL_akismet . '&view=manageSpam');
             die();
         }
-        
+
         if($view == 'isSpamcomment'){
             if ($_GET['action'] == "bulkmod")
             {
@@ -436,7 +436,7 @@ function akismet_showpage(){
                         $link = new Link;
                         $link->id = $result->linkid;
                         $link->read();
-                                    
+
                         $user = new User;
                         $user->id = $result->userid;
                         $user->read();
@@ -464,7 +464,7 @@ function akismet_showpage(){
                         elseif ($value == "notspamcomment")
                         {
                             $akismet->submitHam();
-                                    
+
                             $sql = "INSERT INTO " . table_comments . " (comment_parent, comment_user_id, comment_link_id , comment_date, comment_randkey, comment_content) VALUES ('{$result->cmt_parent}', '{$result->userid}', '{$result->linkid}', now(), '{$result->cmt_rand}', '{$result->cmt_content}')";
                             $db->query($sql);
 #print $sql;
@@ -474,7 +474,7 @@ function akismet_showpage(){
                         $link->store();
                         $db->query(' Delete from '.table_prefix . 'spam_comments where auto_id='.$link_id);
                     }
-                    
+
                 }
                 header('Location: ' . URL_akismet . '&view=manageSpamcomments');
                 die();

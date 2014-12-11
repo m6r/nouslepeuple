@@ -65,7 +65,7 @@ class UserAuth {
     function Authenticate($username, $pass, $remember=false, $already_salted_pass='') {
         global $db;
         $dbusername=sanitize($db->escape($username),4);
-        
+
         check_actions('login_start', $vars);
         $user=$db->get_row("SELECT * FROM " . table_users . " WHERE user_login = '$dbusername' or user_email= '$dbusername' ");
 
@@ -97,7 +97,7 @@ class UserAuth {
 
     function Logout($url='./') {
         global $main_smarty;
-        
+
         $this->user_login = "";
         $this->authenticated = FALSE;
         $this->SetIDCookie (0, '');
@@ -112,7 +112,7 @@ class UserAuth {
             if(!$user->all_stats() || $user->total_links+$user->total_comments==0)
                 $url = my_pligg_base.'/';
         }
-            
+
 
         header("Cache-Control: no-cache, must-revalidate");
         if(!strpos($_SERVER['SERVER_SOFTWARE'], "IIS") && !strpos(php_sapi_name(), "cgi") >= 0){

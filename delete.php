@@ -75,32 +75,32 @@ if(isset($_REQUEST['link_id'])){
     //echo $linkres->status;
     totals_adjust_count($linkres->status, -1);
     //$linkres->store_basic();
-    
+
     // module system hook
     $vars = array('link_id' => $linkres->id);
     check_actions('admin_story_delete', $vars);
-    
+
     /*********find out the page slug dynamically ***********/
     $linkslugvalue =  $db->get_results("SELECT ".table_links.".link_category, ".table_categories.".category_safe_name FROM ".table_categories." LEFT JOIN ".table_links. " ON ".table_links.".link_category = ".table_categories.".category__auto_id WHERE ".table_links.".link_id = '".$link_id."' LIMIT 0,1");
-    
-    
+
+
     $linkslug = '';
     foreach($linkslugvalue as $slug)
         $linkslug = $slug->category_safe_name;
 
     if($linkslug != ''){
-        
+
         $redirectUrl = $linkslug;
     }
     if(isset($_REQUEST['pnme']) and $_REQUEST['pnme'] != 'story' and $_REQUEST['pnme'] != 'published'){
-        
+
         $arr = explode("/", substr($_SERVER['HTTP_REFERER'],0, -1));
-        
+
         if(end($arr) != ''){
             $secndlnk = end($arr);
             array_pop($arr);
             $firstlnk = end($arr);
-            
+
             if($secndlnk != ''){
                 $redirectUrl = $firstlnk."/".$secndlnk;
             } else{
@@ -109,7 +109,7 @@ if(isset($_REQUEST['link_id'])){
         }
     }
     if(isset($_REQUEST['pnme']) and $_REQUEST['pnme'] != 'story' and $_REQUEST['pnme'] != 'published' and $_REQUEST['pnme'] != 'group_story'){
-        
+
         $redirectUrl = $_REQUEST['pnme'].'/'.$linkslug;
     }
     if(isset($_REQUEST['pnme']) and $_REQUEST['pnme'] == 'index'){
@@ -131,12 +131,12 @@ if(isset($_REQUEST['link_id'])){
     $db->query("DELETE FROM ".table_additional_categories." WHERE ac_link_id =".$linkres->id);
 
     $db->query("DELETE FROM ".table_tag_cache);
-    
+
     # Redwine - Sidebar tag cache fix
     $db->query($sql="INSERT INTO ".table_tag_cache." select tag_words, count(DISTINCT link_id) as count FROM ".table_tags.", ".table_links." WHERE tag_lang='en' and link_id = tag_link_id and (link_status='published' OR link_status='new') GROUP BY tag_words order by count desc");
 
     if ($_SERVER['HTTP_REFERER'] && strpos($_SERVER['HTTP_REFERER'], $my_base_url.$my_pligg_base) === 0){
-        
+
         header('Location: '.$my_pligg_base.'/'.$redirectUrl);
     }
     else{
@@ -151,10 +151,10 @@ if(isset($_REQUEST['comment_id'])){
     $comment_id = $_REQUEST['comment_id'];
     if(!is_numeric($comment_id)){die();}
     $link_id = $db->get_var("SELECT comment_link_id FROM `" . table_comments . "` WHERE `comment_id` = $comment_id");
-    
+
     $vars = array('comment_id' => $comment_id);
     check_actions('comment_deleted', $vars);
-    
+
     $db->query('DELETE FROM `' . table_comments . '` WHERE `comment_id` = "'.$comment_id.'"');
     $comments = $db->get_results($sql="SELECT comment_id FROM " . table_comments . " WHERE `comment_parent` = '$comment_id'");
     foreach($comments as $comment)
@@ -169,7 +169,7 @@ if(isset($_REQUEST['comment_id'])){
     $link->recalc_comments();
     $link->store();
     $link='';
-    
+
     if ($_SERVER['HTTP_REFERER'] && strpos($_SERVER['HTTP_REFERER'], $my_base_url.$my_pligg_base)===0)
         header('Location: '.$_SERVER['HTTP_REFERER']);
     else

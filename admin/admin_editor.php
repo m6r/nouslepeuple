@@ -99,7 +99,7 @@ elseif ($_POST["save"])
 $main_smarty->assign('tpl_center', '/admin/template_editor');
 $main_smarty->display($template_dir . '/admin/admin.tpl');
 
-    
+
 function directoryToArray($directory, $recursive) {
 $me = basename($_SERVER['PHP_SELF']);
 $array_items = array();

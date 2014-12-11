@@ -7,7 +7,7 @@ if(defined('mnminclude')){
     // index.php becomes 'index' and new.php becomes 'new'
     $include_in_pages = array('all');
     $do_not_include_in_pages = array();
-        
+
     if( do_we_load_module() ) {
 
 /*		module_add_action('all_pages_top', 'akismet_top', '');
@@ -31,7 +31,7 @@ if(defined('mnminclude')){
 
         if($moduleName == 'akismet'){
             module_add_action('module_page', 'akismet_showpage', '');
-        
+
         }
 
         include_once(mnmmodules . 'akismet/akismet_main.php');

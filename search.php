@@ -2,7 +2,7 @@
 
     include_once('internal/Smarty.class.php');
     $main_smarty = new Smarty;
-    
+
     include('config.php');
     include(mnminclude.'html1.php');
     include(mnminclude.'link.php');
@@ -17,7 +17,7 @@
         $_GET['search'] = $_REQUEST['search'] = $post[0];
         for ($i=1; $i+1<sizeof($post); $i+=2)
         $_GET[$post[$i]] = $_REQUEST[$post[$i]] = $post[$i+1];
-    
+
         $get = array();
         foreach ($_GET as $k => $v)
         $get[$k] = stripslashes(htmlentities(strip_tags($v),ENT_QUOTES,'UTF-8'));
@@ -29,11 +29,11 @@
     #$_GET['search'] = $_REQUEST['search'] = sanitize(str_replace(array(':\\',':\\','|'),array('://',':/','/'),$_REQUEST['search']),2);
     if ($_REQUEST['search'] == '-')
         $_GET['search'] = $_REQUEST['search'] = '';
-    
+
     // module system hook
     $vars = '';
     check_actions('search_top', $vars);
-    
+
     $search = new Search();
 
     if(isset($_REQUEST['from'])){
@@ -95,7 +95,7 @@ if( isset( $_REQUEST['adv'] ) && $_REQUEST['adv'] == 1 ){
     $search->s_cat = sanitize($_REQUEST['scategory'],2);
     $search->s_comments = sanitize($_REQUEST['scomments'],2);
     $search->s_date = sanitize($_REQUEST['date'],2);
-    
+
     if( intval( $_REQUEST['sgroup'] ) > 0 )
         $display_grouplinks = true;
 }
@@ -127,7 +127,7 @@ else
 
     $linksum_count = $search->countsql;
     $linksum_sql = $search->sql;
-    
+
     $main_smarty->assign('sql', $linksum_sql);
     // pagename
     define('pagename', 'search');
@@ -140,17 +140,17 @@ else
         $main_smarty->assign('posttitle', $main_smarty->get_config_vars('PLIGG_Visual_Search_NoResults') . ' ' . stripslashes($search->searchTerm) . stripslashes($search->url));
         $main_smarty->assign('pagename', 'noresults');
     }
-    
+
     $pages = do_pages($rows, $page_size, "search", true);
 
     if($_REQUEST['tag'])
         $pages = str_replace('/search/','/tag/',$pages);
-        
+
     if(Auto_scroll==2 || Auto_scroll==3){
        $main_smarty->assign("scrollpageSize", $page_size);
     }else
         $main_smarty->assign('search_pagination', $pages);
-        
+
     $main_smarty->assign('total_row_for_search', $rows);
 }
 

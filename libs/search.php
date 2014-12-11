@@ -17,7 +17,7 @@ class Search {
     var $search_extra_fields = true; // search the extra_fields (if enabled)
     var $url = '';
     var $sticky = false;
-    
+
     //extra params for advance search
     var $adv = false;
     var $s_story = 0;
@@ -28,10 +28,10 @@ class Search {
     var $s_cat = 0;
     var $s_comments = 0;
     var $s_date = 0;
-    
-  
+
+
     function doSearch($limit) {
-        
+
         global $db, $current_user, $main_smarty;
         $search_clause = $this->get_search_clause();
 
@@ -42,7 +42,7 @@ class Search {
         } else {
             $main_smarty->assign('searchtext', '');
         }
-    
+
         $from_where = "FROM " . $this->searchTable . " WHERE ";
 
         if ($this->filterToStatus == 'all') {$from_where .= " link_status IN ('published','new','sticky','supersticky') ";}
@@ -67,8 +67,8 @@ class Search {
             $orSticky = '';
         }
         if ($this->filterToStatus == 'published') {
-        
-            
+
+
             if ($this->filterToTimeFrame == 'today')
                 $from_where .= " AND (link_published_date > DATE_SUB(NOW(),INTERVAL 1 DAY) $orSticky )";
             elseif ($this->filterToTimeFrame == 'yesterday')
@@ -80,7 +80,7 @@ class Search {
             elseif ($this->filterToTimeFrame == 'year')
                 $from_where .= " AND (link_published_date > DATE_SUB(NOW(),INTERVAL 1 YEAR) $orSticky )";
             else if($this->filterToTimeFrame == 'upvoted'){
-                
+
                 $this->searchTerm = "upvoted";
             }
             else if($this->filterToTimeFrame == 'downvoted'){
@@ -88,12 +88,12 @@ class Search {
                 $this->searchTerm = "downvoted";
             }
             else if($this->filterToTimeFrame == 'commented'){
-                
+
                 $this->searchTerm = "commented";
             }
-                
+
         } else {
-            
+
             if ($this->filterToTimeFrame == 'today')
                 $from_where .= " AND (link_date > DATE_SUB(NOW(),INTERVAL 1 DAY) $orSticky )";
             elseif ($this->filterToTimeFrame == 'yesterday')
@@ -105,7 +105,7 @@ class Search {
             elseif ($this->filterToTimeFrame == 'year')
                 $from_where .= " AND (link_date > DATE_SUB(NOW(),INTERVAL 1 YEAR) $orSticky )";
             else if($this->filterToTimeFrame == 'upvoted'){
-                
+
                 $this->searchTerm = "upvoted";
             }
             else if($this->filterToTimeFrame == 'downvoted'){
@@ -113,7 +113,7 @@ class Search {
                 $this->searchTerm = "downvoted";
             }
             else if($this->filterToTimeFrame == 'commented'){
-                
+
                 $this->searchTerm = "commented";
             }
         }
@@ -158,7 +158,7 @@ class Search {
                 $from_where .= " AND (link_category=$catId " . $child_cat_sql . ")";
             }
         }
-        
+
         if(isset($this->orderBy)){
             $this->orderBy = str_replace('ORDER BY', '', $this->orderBy);
             if($this->sticky) {
@@ -203,10 +203,10 @@ class Search {
             $group_list = '';
             $from_where .= " AND (".table_groups.".group_privacy!='private' OR ISNULL(".table_groups.".group_privacy))";
         }
-        
+
         if(intval($limit) <= 0)
             $limit = $this->pagesize;
-        
+
         if($this->searchTerm == "" && $this->url == ""){
             // like when on the index or new pages.
             $this->sql = "SELECT link_id, link_votes, link_karma, link_comments $from_where $search_clause GROUP BY link_id $this->orderBy LIMIT $this->offset, $limit";
@@ -238,7 +238,7 @@ class Search {
         else{
             $this->sql = "SELECT link_id, link_date, link_published_date, link_votes, link_karma, link_comments $from_where $search_clause {$this->orderBy}";
         }
-        
+
         ###### START Advanced Search ######
         if($this->adv){
             $from_where = table_links;
@@ -253,7 +253,7 @@ class Search {
                 $search_AND_params[] = " (".table_groups.".group_privacy!='private' OR ISNULL(".table_groups.".group_privacy) OR ".table_groups.".group_id IN($group_list)) ";
             else
                 $search_AND_params[] = " (".table_groups.".group_privacy!='private' OR ISNULL(".table_groups.".group_privacy))";
-            
+
             //check if it is a literal search
             $buffKeyword = $this->searchTerm;
             $keywords = array();
@@ -267,7 +267,7 @@ class Search {
                 $keywords = explode( ' ', $this->searchTerm );
             }
             $bufferOrig = $this->searchTerm;
-                
+
             //search category
             if( $this->s_cat != 0 ){
                 $catId = $this->s_cat;
@@ -282,7 +282,7 @@ class Search {
                             // build the sql
                             foreach($child_array as $child_cat_id) {
                                 $mult_sql .= " OR `link_category` = " . $child_cat_id . " ";
-                                
+
                                 if (Multiple_Categories)
                                     $mult_sql .= " OR ac_cat_id = " . $child_cat_id . " ";
                             }
@@ -293,7 +293,7 @@ class Search {
                     $search_AND_params[] = "( ".table_links.".link_category = '".$db->escape($this->s_cat)."' $mult_sql)";
                 }
             }
-                        
+
             //search tags
             if( $this->s_tags != 0 && $this->searchTerm){
                 foreach( $keywords as $key ){
@@ -302,7 +302,7 @@ class Search {
                 }
                 $this->searchTerm = $bufferOrig;
             }
-            
+
             //search links
             if( $this->s_story != 0 && $this->searchTerm){
                 foreach( $keywords as $key ){
@@ -318,7 +318,7 @@ class Search {
                 }
                 $this->searchTerm = $bufferOrig;
             }
-            
+
             //search author
             if( $this->s_user != 0 && $this->searchTerm){
                     $from_where .= " INNER JOIN ".table_users." ON ".table_links.".link_author = ".table_users.".user_id ";
@@ -328,7 +328,7 @@ class Search {
                     }
                     $this->searchTerm = $bufferOrig;
             }
-            
+
             //search group
             if( $this->s_group != 0 && $this->searchTerm){
                 foreach( $keywords as $key ){
@@ -344,7 +344,7 @@ class Search {
                 }
                 $this->searchTerm = $bufferOrig;
             }
-            
+
             //search comments
             if( $this->s_comments != 0 && $this->searchTerm){
                 $from_where .= " LEFT JOIN ".table_comments." ON ".table_links.".link_id = ".table_comments.".comment_link_id ";
@@ -365,7 +365,7 @@ class Search {
 
             if(Voting_Method == 2)
                 $from_where .= " LEFT JOIN " . table_votes . " ON vote_type='links' AND vote_link_id=link_id AND vote_value>0";
-                
+
             // Search on additional categories
             if (Multiple_Categories)
                     $from_where .= " LEFT JOIN ".table_additional_categories. " ON ac_link_id=link_id";
@@ -373,7 +373,7 @@ class Search {
             if( $this->status != '' && $this->status != 'all' ){
                 $search_params[] = " ".table_links.".link_status = '{$this->status}' ";
             }
-            
+
             if (sizeof($search_params))
                 $search_clause = '('.implode( ' OR ', $search_params ).' ) ';
             else
@@ -386,8 +386,8 @@ class Search {
 
         #echo $this->sql."<br><br>";
         ###### END Advanced Search ######
-        
-        
+
+
         //  if this query changes be sure to make sure to update link_summary
         //  just look for $linksum_count near the top
         $this->countsql = "SELECT count(DISTINCT link_id) $from_where $search_clause ";
@@ -399,8 +399,8 @@ class Search {
         // do various searches and put the results in the $foundlinks array
         // if isTag == true then Just search JUST tags
         // if !== true, then search normal (title, desc,etc) AND tags
-        
-        
+
+
         global $db;
 
         if(!isset($this->searchTerm)){return false;}
@@ -427,7 +427,7 @@ class Search {
                 }
             }
         }
-        
+
         // search tags
         $this->isTag = true;
         $this->doSearch();
@@ -459,7 +459,7 @@ class Search {
                 }
             }
         }
-        
+
         if($newfoundlinks){
             if (Voting_Method == 3)
                 $rating_column = 'link_karma';
@@ -473,7 +473,7 @@ class Search {
                           'upvoted' => $rating_column . ' DESC',
                           'downvoted' => $rating_column . ' ASC'
                             );
-            
+
             if ( array_key_exists ($ords, $order_clauses) )
                 $orderBy = $order_clauses[$ords];
             else
@@ -490,7 +490,7 @@ class Search {
             $x = 0;
             $aa = $this->offset;
             $ab = $aa + $this->pagesize;
-            
+
             foreach($sortarray as $theitemaa=>$theitemab) {
                 if($x >= $aa && $x < $ab){
                     $results[] = $theitemaa;
@@ -498,15 +498,15 @@ class Search {
                 $x++;
             }
         }
-        
+
         $returnme['rows'] = $results;
         $returnme['count'] = count($sortarray);
-        
+
         return $returnme;
     }
 
     function get_search_clause($option='') {
-    
+
         global $db;
         if(!empty($this->searchTerm)) {
             // make sure there is a search term
@@ -516,7 +516,7 @@ class Search {
             if($this->isTag == true){
                 // search the tags table
                 $this->searchTable = table_tags . " INNER JOIN " . table_links . " ON " . table_tags . ".tag_link_id = " . table_links . ".link_id";
-                
+
                 // thanks to jalso for this code
                     $x = explode(",",$words);
                     $sq = "(";
@@ -530,7 +530,7 @@ class Search {
                     else
                         $where = " AND ".$sq." GROUP BY " . table_links . ".link_id, `link_votes` ORDER BY `link_votes` DESC";
                 // ---
-                
+
             } else {
                 // search the links table
                 $this->searchTable = table_links;
@@ -592,7 +592,7 @@ class Search {
                             if(Enable_Extra_Field_15 == true && Field_15_Searchable == true){$matchfields .= " or `link_field15` like '%$words%' ";}
                         }
                     }
-                    
+
                     $where = " AND ((";
                     $where .= $this->explode_search('link_url', $words) . ")  OR (";
                     $where .= $this->explode_search('link_url_title', $words) . " ) OR (";
@@ -600,7 +600,7 @@ class Search {
                     $where .= $this->explode_search('link_content', $words) . " ) OR (";
                     $where .= $this->explode_search('link_tags', $words);
                     $where .= ") $matchfields) ";
-                    
+
                 }
             }
             return $where;
@@ -664,7 +664,7 @@ class Search {
 
     function do_setmek() {
         if(isset($this->setmek)){$setmek = $this->setmek;}else{$setmek = '';}
-        
+
         if (Voting_Method == 2)
             $rating_column = 'avg(vote_value)';
         elseif (Voting_Method == 3)
@@ -677,7 +677,7 @@ class Search {
                           'mostpopular' => $rating_column . ' DESC',
                           'leastpopular' => $rating_column . ' ASC'
                         );
-        
+
         if ($this->filterToStatus == "new") {
             $ords = $this->ords;
             if ( array_key_exists ($ords, $order_clauses) )
@@ -685,14 +685,14 @@ class Search {
             else
                 $this->orderBy = $order_clauses['newest'];
         }
-        
+
         $timeFrames = array ('today', 'yesterday', 'week', 'month', 'year', 'alltime','upvoted', 'downvoted', 'commented');
         if ( in_array ($setmek, $timeFrames) ) {
             if ($setmek == 'alltime')
                 $this->filterToTimeFrame = '';
             else
                 $this->filterToTimeFrame = $setmek;
-                
+
             $this->orderBy = $order_clauses['mostpopular'];
         }
     }

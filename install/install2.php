@@ -52,7 +52,7 @@ $output='
 <form class="form-horizontal" id="form1" name="form1" action="install.php" method="post">
 	<fieldset>
 		<p>' . $lang['EnterMySQL'] . '</p>
-		
+
 		<div class="control-group">
 			<label for="input01" class="control-label">' . $lang['DatabaseName'] . '</label>
 			<div class="controls">
@@ -66,14 +66,14 @@ $output='
 				<input class="form-control" name="dbuser" type="text" value="" />
 			</div>
 		</div>
-		  
+
 		<div class="control-group">
 			<label for="input01" class="control-label">' . $lang['DatabasePassword'] . '</label>
 			<div class="controls">
 				<input class="form-control" name="dbpass" type="password" value="" />
 			</div>
 		</div>
-		
+
 		<div class="control-group">
 			<label for="input01" class="control-label">' . $lang['DatabaseServer'] . '</label>
 			<div class="controls">
@@ -88,12 +88,12 @@ $output='
 				<p class="help-block">' . $lang['PrefixExample'] . '</p>
 			</div>
 		</div>
-		
+
 		<div class="form-actions">
 			<input type="submit" class="btn btn-primary" name="Submit" value="' . $lang['CheckSettings'] . '" />
 			<button class="btn btn-default" onclick="history.go(-1)">Back</button>
 		</div>
-		
+
 		<input type="hidden" name="language" value="' . addslashes(strip_tags($_REQUEST['language'])) . '">
 		<input type="hidden" name="step" value="3">
 	</fieldset>

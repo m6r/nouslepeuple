@@ -77,9 +77,9 @@ if ($link) {
                     $body = $body . strtolower(strtok($_SERVER['SERVER_PROTOCOL'], '/')).'://'.$_SERVER['HTTP_HOST'] . getmyurl('story', sanitize($_POST['id'], 3)) . "\r\n\r\n";
                     if ($linkres->category != sanitize($_POST["category"], 3)){$body = $body . $main_smarty->get_config_vars('PLIGG_Visual_Submit2_Category') . " change\r\n\r\n" . $main_smarty->get_config_vars('PLIGG_Visual_EditStory_Email_PreviousText') . ": " . GetCatName($linkres->category) . "\r\n\r\n" . $main_smarty->get_config_vars('PLIGG_Visual_EditStory_Email_NewText') . ": " . GetCatName(sanitize($_POST["category"], 3)) . "\r\n\r\n";}
                     if ($linkres->title != sanitize($_POST["title"], 4, $Story_Content_Tags_To_Allow)){$body = $body . $main_smarty->get_config_vars('PLIGG_Visual_Submit2_Title') . " change\r\n\r\n" . $main_smarty->get_config_vars('PLIGG_Visual_EditStory_Email_PreviousText') . ": " . $linkres->title . "\r\n\r\n" . $main_smarty->get_config_vars('PLIGG_Visual_EditStory_Email_NewText') . ": " . sanitize($_POST["title"], 3) . "\r\n\r\n";}
-                    
-                    
-                    
+
+
+
                     if ($linkres->content != close_tags(sanitize($_POST["bodytext"], 4, $Story_Content_Tags_To_Allow))){$body = $body . $main_smarty->get_config_vars('PLIGG_Visual_Submit2_Description') . " change\r\n\r\n" . $main_smarty->get_config_vars('PLIGG_Visual_EditStory_Email_PreviousText') . ": " . $linkres->content . "\r\n\r\n" . $main_smarty->get_config_vars('PLIGG_Visual_EditStory_Email_NewText') . ": " . close_tags(sanitize($_POST["bodytext"], 3)) . "\r\n\r\n";}
                     if ($linkres->tags != tags_normalize_string(sanitize($_POST['tags'], 3))){$body = $body . $main_smarty->get_config_vars('PLIGG_Visual_Submit2_Tags') . " change\r\n\r\n" . $main_smarty->get_config_vars('PLIGG_Visual_EditStory_Email_PreviousText') . ": " . $linkres->tags . "\r\n\r\n" . $main_smarty->get_config_vars('PLIGG_Visual_EditStory_Email_NewText') . ": " . tags_normalize_string(sanitize($_POST['tags'], 3)) . "\r\n\r\n";}
                     $body = $body . $main_smarty->get_config_vars('PLIGG_Visual_EditStory_Email_ReasonText') . ": ";
@@ -101,7 +101,7 @@ if ($link) {
 
             if ($linkres->author != sanitize($_POST["author"],3) && !empty($_POST["author"]))
               $linkres->author = sanitize($_POST["author"],3);
-             
+
             if($canIhaveAccess == 1)
             {
                 $url = htmlspecialchars(sanitize($_POST['url'], 3));
@@ -125,7 +125,7 @@ if ($link) {
                 $linkres->title = stripslashes(sanitize($_POST['title'], 3));
                 $linkres->title_url = makeUrlFriendly($linkres->title, $linkres->id);
             }
-            
+
             $linkres->content = close_tags(sanitize($_POST['bodytext'], 4, $Story_Content_Tags_To_Allow));
             $linkres->tags = tags_normalize_string(stripslashes(sanitize($_POST['tags'], 3)));
             if(sanitize($_POST['summarytext'], 3) == ""){
@@ -158,7 +158,7 @@ if ($link) {
             $linkres->link_field14 = sanitize($_POST['link_field14'], 4, $Story_Content_Tags_To_Allow);
             $linkres->link_field15 = sanitize($_POST['link_field15'], 4, $Story_Content_Tags_To_Allow);
             // Steef 2k7-07 security fix end --------------------------------------------------------------
-            
+
             // $linkres->content = str_replace("\n", "<br />", $linkres->content);
 
             if (link_errors($linkres)) {
@@ -167,7 +167,7 @@ if ($link) {
 
             tags_insert_string($linkres->id, $dblang, $linkres->tags);
             $linkres->store();
-            
+
             $story_url = $linkres->get_internal_url();
 
             header('Location: ' . $story_url);
@@ -192,17 +192,17 @@ if ($link) {
             $link_category=$linkres->category;
             $link_summary = $linkres->link_summary;
             //$link_summary = str_replace("<br />", "\n", $link_summary);
-            
+
             // Get the username
             $link_author = $db->get_col("SELECT link_author FROM " . table_links . " WHERE link_id=".$theid.";");
             $user = $db->get_row("SELECT * FROM " . table_users . " WHERE user_id=".$link_author[0].";");
             $main_smarty->assign('author', $user->user_id);
-            
+
             $usersql = mysql_query("SELECT user_id, user_login FROM " . table_users . " WHERE user_enabled=1 and user_login!='' ORDER BY user_login");
             $userdata = array();
             while ($rows = mysql_fetch_array ($usersql, MYSQL_ASSOC)) array_push ($userdata, $rows);
             //$userdata = $db->get_results("SELECT user_id, user_login FROM " . table_users . " WHERE user_enabled=1");
-            
+
             //echo "<pre>";
             //print_r($userdata);
             $main_smarty->assign('userdata', $userdata);
@@ -263,11 +263,11 @@ if ($link) {
             }
 
             $CSRF->create('edit_link', true, true);
-            
+
             // pagename
             define('pagename', 'editlink');
                 $main_smarty->assign('pagename', pagename);
-            
+
             // sidebar
             $main_smarty = do_sidebar($main_smarty);
 
@@ -294,7 +294,7 @@ function link_errors($linkres)
 {
     global $main_smarty, $the_template, $cached_categories;
     $error = false;
-    
+
 
     if(Submit_Require_A_URL && ($linkres->url == "http://" || $linkres->url == "")){
         $main_smarty->assign('submit_error', 'invalidurl');
@@ -343,11 +343,11 @@ function link_errors($linkres)
     {
         $main_smarty->assign('tpl_center', $the_template . '/submit_errors_center');
         $main_smarty->assign('link_id', $_GET['id']);
-        
+
         // pagename
         define('pagename', 'editlink');
         $main_smarty->assign('pagename', pagename);
-        
+
         // show the template
         $main_smarty->display($the_template . '/pligg.tpl');
     }

@@ -5,7 +5,7 @@
     $module_info['settings_url'] = '../module.php?module=status';
     $module_info['homepage_url'] = 'http://pligg.com/downloads/module/status-update-module/';
     $module_info['update_url'] = 'http://pligg.com/downloads/module/status-update-module/version/';
-    
+
     // Add new columns
     $module_info['db_sql'][] = "ALTER TABLE ".table_users." ADD  `status_switch` TINYINT(1) DEFAULT '1'";
     $module_info['db_sql'][] = "ALTER TABLE ".table_users." ADD  `status_friends` TINYINT(1) DEFAULT '1'";
@@ -36,7 +36,7 @@
 	  PRIMARY KEY  (`update_id`),
 	  FULLTEXT KEY `update_text` (`update_text`)
 	) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci");
-    
+
     $module_info['db_add_table'][]=array(
     'name' => table_prefix . "likes",
     'sql' => "CREATE TABLE `".table_prefix . "likes` (
@@ -44,7 +44,7 @@
 	  `like_user_id` int(11) NOT NULL,
 	  PRIMARY KEY  (`like_update_id`, `like_user_id`)
 	) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci");
-    
+
     // Set default module settings
     if (get_misc_data('status_switch')=='')
     {

@@ -11,12 +11,12 @@ if(isset($_POST['id'])){
     include(mnminclude.'smartyvariables.php');
 
     check_referrer();
-    
+
     $comment = new Comment;
     $comment->id=sanitize($_POST['id'], 3);
     if(!is_numeric($comment->id)){die();}
     $comment->read();
-    
+
     if ($current_user->user_id == 0 && !anonnymous_vote) {
         error($main_smarty->get_config_vars('PLIGG_Visual_Vote_NoAnon'));
     }
@@ -40,7 +40,7 @@ if(isset($_POST['id'])){
            /////
             error($main_smarty->get_config_vars('PLIGG_Visual_Vote_AlreadyVoted'));
         }
-        
+
         if($value < -10 || $value > 10){
             error('Invalid vote value');
         }

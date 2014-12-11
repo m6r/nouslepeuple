@@ -43,11 +43,11 @@ if (!$_POST['adminlogin'] || !$_POST['adminpassword'] || !$_POST['adminemail']) 
 } elseif ($_POST['adminpassword'] != $_POST['adminpassword2']) {
     $errors[] = $lang['Error5-2'];
 }
-    
+
 if (!$errors) {
     include_once( '../config.php' );
     include_once( '../libs/admin_config.php' );
-    
+
 //	echo "Adding the Admin user account...<br />";
     $userip=$db->escape($_SERVER['REMOTE_ADDR']);
     $saltedpass=generateHash($_POST['adminpassword']);
@@ -63,7 +63,7 @@ if (!$errors) {
                 $filedata = file_get_contents($filename);
                 $filedata = preg_replace('/PLIGG_Visual_Name = \"(.*)\"/iu',$replacement,$filedata);
                 // print $filedata;
-                
+
                 // Write the changes to the language files
                 $lang_file = fopen($filename, "w");
                 fwrite($lang_file, $filedata);
@@ -71,7 +71,7 @@ if (!$errors) {
             }
         }
     }
-    
+
     // Add user IP address to approved IP list, so they are never blocked for bad logins
     function get_ip_address() {
         foreach (array('HTTP_CLIENT_IP', 'HTTP_X_FORWARDED_FOR', 'HTTP_X_FORWARDED', 'HTTP_X_CLUSTER_CLIENT_IP', 'HTTP_FORWARDED_FOR', 'HTTP_FORWARDED', 'REMOTE_ADDR') as $key) {
@@ -91,31 +91,31 @@ if (!$errors) {
             $filedata = "$user_ip \n";
             // print $filedata;
             // echo 'IP: '.get_ip_address();
-            
+
             // Write to the approvedips log file
             $ip_file = fopen($approvedips, "w");
             fwrite($ip_file, $filedata);
             fclose($ip_file);
-            
+
         }
     }
-    
-    
+
+
     // Output success message
     $output = '<div class="jumbotron" style="padding:14px 25px;">
 		<h2>' . $lang['InstallSuccess'] . '</h2>
 		<p style="font-size:1.2em;">' . $lang['InstallSuccessMessage'] . '</p>
 	</div>';
-    
+
     $output .='<p><strong></strong></p>
 	<br /><legend>' . $lang['WhatToDo'] . '</legend>
 	<div class="donext"><ol>
 		' . $lang['WhatToDoList'] . '
 	</ol></div>';
-    
+
     if ($_POST['sitetitle'] != ''){
         // Change the site title (PLIGG_Visual_Name) in the language file
-        
+
     }
 }
 

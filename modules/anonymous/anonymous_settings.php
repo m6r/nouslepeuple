@@ -9,7 +9,7 @@ define('anonymous_path', my_pligg_base . '/modules/anonymous/');
             $pos = strrpos($_SERVER["SCRIPT_NAME"], "/");
             $path = substr($_SERVER["SCRIPT_NAME"], 0, $pos);
             if ($path == "/"){$path = "";}
-            
+
             if($path != my_pligg_base){
                 define('lang_loc', '..');
             } else {

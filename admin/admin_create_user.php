@@ -70,5 +70,5 @@ if (isset($_REQUEST["mode"]) && sanitize($_REQUEST["mode"], 3) == "newuser"){
         exit;
         }
     }
-    
+
     ?>

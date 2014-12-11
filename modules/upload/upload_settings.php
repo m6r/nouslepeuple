@@ -8,14 +8,14 @@ define('upload_path', my_pligg_base . '/modules/upload/');
             $pos = strrpos($_SERVER["SCRIPT_NAME"], "/");
             $path = substr($_SERVER["SCRIPT_NAME"], 0, $pos);
             if ($path == "/"){$path = "";}
-            
+
             if($path != my_pligg_base){
                 define('lang_loc', '..');
             } else {
                 define('lang_loc', '.');
             }
     }
-    
+
 define('upload_lang_conf', lang_loc . '/modules/upload/lang.conf');
 define('upload_pligg_lang_conf', lang_loc . "/languages/lang_" . pligg_language . ".conf");
 

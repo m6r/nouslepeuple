@@ -33,7 +33,7 @@ if(defined('mnminclude')){
         $moduleName = $_REQUEST['module'];
         if($moduleName == 'karma'){
             module_add_action('module_page', 'karma_showpage', '');
-        
+
             include_once(mnmmodules . 'karma/karma_main.php');
         }
     }

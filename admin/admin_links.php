@@ -47,10 +47,10 @@ if($canIhaveAccess == 1) {
     $pagesize = get_misc_data('pagesize');
     if ($pagesize <= 0) $pagesize = 30;
     $main_smarty->assign('pagesize', $pagesize);
-    
+
     // figure out what "page" of the results we're on
     $offset=(get_current_page()-1)*$pagesize;
-    
+
     // if user is searching
     $temp = '';
     if($_GET["keyword"] && $_GET["keyword"]!= $main_smarty->get_config_vars('PLIGG_Visual_Search_SearchDefaultText')){
@@ -64,7 +64,7 @@ if($canIhaveAccess == 1) {
         $user_sql = " AND link_author='".$user['user_id']."'";
     }
 
-    
+
     // if admin uses the filter
     if(isset($_GET["filter"])) {
         switch (sanitize($_GET["filter"], 3)) {
@@ -135,23 +135,23 @@ if($canIhaveAccess == 1) {
     $navwhere['text2'] = $main_smarty->get_config_vars('PLIGG_Visual_Header_AdminPanel_Links');
     $main_smarty->assign('navbar_where', $navwhere);
     $main_smarty->assign('posttitle', " / " . $main_smarty->get_config_vars('PLIGG_Visual_Header_AdminPanel'));
-    
+
     // if admin changes the link status
     if (isset($_GET['action']) && sanitize($_GET['action'], 3) == "bulkmod" && isset($_POST['admin_acction'])) {
-        
+
         $CSRF->check_expired('admin_links_edit');
         if ($CSRF->check_valid(sanitize($_POST['token'], 3), 'admin_links_edit')){
             $comment = array();
-            
-            
+
+
             $admin_acction=$_POST['admin_acction'];
-                    
+
             foreach ($_POST["link"] as $key => $v) {
-                
+
                 if($admin_acction=="published" || $admin_acction=="new" || $admin_acction=="discard" || $admin_acction=="spam"){
                     $link_status=$db->get_var('select link_status from ' . table_links . '  WHERE link_id = "'.$key.'"');
                     if($link_status!=$admin_acction){
-                                
+
                         if ($admin_acction == "published") {
                             $db->query('UPDATE `' . table_links . '` SET `link_status` = "published", link_published_date = now() WHERE `link_id` = "'.$key.'"');
                             $vars = array('link_id' => $key);
@@ -162,13 +162,13 @@ if($canIhaveAccess == 1) {
                         }
                         elseif ($admin_acction == "discard") {
                             $db->query('UPDATE `' . table_links . '` SET `link_status` = "discard" WHERE `link_id` = "'.$key.'"');
-        
+
                             $vars = array('link_id' => $key);
                             check_actions('story_discard', $vars);
                         }
                         elseif ($admin_acction == "spam") {
-                            
-                            
+
+
                             $user_id = $db->get_var($sql="SELECT link_author FROM `" . table_links . "` WHERE `link_id` = ".$key.";");
                             $db->query('UPDATE `' . table_links . '` SET `link_status` = "spam" WHERE `link_id` = "'.$key.'"');
                             $vars = array('link_id' => $key);
@@ -176,21 +176,21 @@ if($canIhaveAccess == 1) {
                             $user = new User;
                             $user->id = $user_id;
                             $user->read();
-                            
+
                             if ($user->level!='admin' && $user->level!="Spammer")
                             {
                                 killspam($user_id);
                                 $killspammed[$user_id] = 1;
                                 }
                             }
-                    
-                                
+
+
                         }
-                    
+
                 }
-                
+
             }
-            
+
             totals_regenerate();
             //header("Location: ".my_pligg_base."/admin/admin_links.php?page=".sanitize($_GET['page'],3));
             $redirect_url=$_SERVER['HTTP_REFERER'];
@@ -207,12 +207,12 @@ if($canIhaveAccess == 1) {
     // pagename
     define('pagename', 'admin_links');
     $main_smarty->assign('pagename', pagename);
-    
+
     // read the mysql database to get the pligg version
     $sql = "SELECT data FROM " . table_misc_data . " WHERE name = 'pligg_version'";
     $pligg_version = $db->get_var($sql);
     $main_smarty->assign('version_number', $pligg_version);
-    
+
     // show the template
     $main_smarty->assign('tpl_center', '/admin/submissions');
     if ($is_moderator == '1'){

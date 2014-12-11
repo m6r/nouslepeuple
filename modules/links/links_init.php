@@ -25,7 +25,7 @@ if(defined('mnminclude')){
 
         if($moduleName == 'links'){
             module_add_action('module_page', 'links_showpage', '');
-        
+
             include_once(mnmmodules . 'links/links_main.php');
         }
     }

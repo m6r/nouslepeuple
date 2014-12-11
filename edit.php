@@ -126,7 +126,7 @@ function insert_comment () {
         if($vars['comment']->status)
             $comment->status = $vars['comment']->status;
         $comment->store();
-        
+
         header('Location: ' . getmyurl('story', sanitize($_POST['link_id'], 3)));
         die;
     }

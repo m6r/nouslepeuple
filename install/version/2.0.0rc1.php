@@ -12,13 +12,13 @@ $pligg_version = $db->get_var($sql);
 if ($pligg_version == '1.2.2') {
 
     echo '<li>Performing one-time Pligg 2.0.0rc1 Upgrade<ul>';
-    
+
     // Add option to search comment content
     $result = $db->get_results("select * from `" . table_config . "` where `var_name` = 'Search_Comments';");
     if (count($result) == 0) {
         $db->query("INSERT INTO `" . table_config . "` VALUES (NULL, 'Comments', 'Search_Comments', 'false', 'false', 'true / false', 'Search Comments', 'Use comment data when providing search results', 'define', NULL)");
     }
-    
+
     // Renamed "Upcoming" and "Queued" to "New" in 2.0.0 Needs to be reflected in database.
     $sql = "ALTER TABLE ".table_links."
 			CHANGE link_status link_status ENUM('discard','new','published','abuse','duplicate','page','spam','moderated');";
@@ -69,18 +69,18 @@ if ($pligg_version == '1.2.2') {
     $db->query("INSERT INTO `" . table_config . "`
 				VALUES (NULL, 'AntiSpam', '\$FRIENDLY_DOMAINS', 'logs/domain-whitelist.log', 'logs/domain-whitelist.log', 'Text file', 'Local Domain Whitelist File', 'File containing a list of domains that cannot be banned.', 'normal', '\"')");
     echo '<li>Changed log file locations</li>';
-    
+
     $sql = "ALTER TABLE `" . table_modules . "` ADD  `weight` INT NOT NULL";
     $db->query($sql);
     echo '<li>Order modules via the Admin Panel</li>';
-    
+
     // Change the template value to Bootstrap
     $sql = "UPDATE `" . table_config . "`
 			SET `var_value` = 'bootstrap'
 			WHERE `var_name` = '$thetemp';";
     $db->query($sql);
     echo '<li>Changed template to Bootstrap</li>';
-    
+
     // Change default captcha to SolveMedia
     $sql = "UPDATE `" . table_misc_data . "`
 			SET `data` = 'solvemedia'
@@ -102,7 +102,7 @@ if ($pligg_version == '1.2.2') {
 			VALUES ('adcopy_hashkey', 'nePptHN4rt.-UVLPFScpSuddqdtFdu2N');";
     $db->query($sql);
     echo '<li>Changed default CAPTCHA to Solve Media</li>';
-    
+
     // Change some user profile fields
     $sql = "ALTER TABLE ".table_users." CHANGE `user_aim` `user_facebook` VARCHAR( 64 ) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL;";
     $db->query($sql);
@@ -130,7 +130,7 @@ if ($pligg_version == '1.2.2') {
 			SET user_pinterest='';";
     $db->query($sql);
     echo '<li>Changed user profile fields to match new social media sites</li>';
-    
+
     // Change default avatar to new larger png files
     $sql = "UPDATE ".table_config."
 			SET var_defaultvalue='/avatars/Avatar_100.png'
@@ -168,7 +168,7 @@ if ($pligg_version == '1.2.2') {
     $db->query($sql);
     // We need to regenerate avatars to the new size here
     echo '<li>Changed default avatars to larger format .png files</li>';
-    
+
     // Update group avatar height/width sizes to 100
     $sql = "UPDATE ".table_config."
 			SET var_value='100'
@@ -230,13 +230,13 @@ if ($pligg_version == '1.2.2') {
 			WHERE user_level='god';";
     $db->query($sql);
     echo '<li>Changed God user level to Admin</li>';
-    
+
     // Remove the Spell Checker from Admin Config
     $sql = "DELETE FROM " . table_config . "
 			WHERE var_name='Spell_Checker'";
     $db->query($sql);
     echo '<li>Removed Spell Checker</li>';
-    
+
     // Add a new FAQ Page
     $sql = "INSERT INTO `" . table_links . "`  (`link_id`, `link_author`, `link_status`, `link_randkey`, `link_votes`, `link_reports`, `link_comments`, `link_karma`, `link_modified`, `link_date`, `link_published_date`, `link_category`, `link_lang`, `link_url`, `link_url_title`, `link_title`, `link_title_url`, `link_content`, `link_summary`, `link_tags`, `link_field1`, `link_field2`, `link_field3`, `link_field4`, `link_field5`, `link_field6`, `link_field7`, `link_field8`, `link_field9`, `link_field10`, `link_field11`, `link_field12`, `link_field13`, `link_field14`, `link_field15`, `link_group_id`, `link_out`) VALUES (NULL, 1, 'page', 0, 0, 0, 0, '0.00', '2012-07-23 00:00:00', '2012-07-23 00:00:00', '0000-00-00 00:00:00', 0, 1, '', NULL, 'Frequently Asked Questions', 'faq', '<a name\"top\" style=\"text-decoration:none;color:#000;text-transform:uppercase;\"><h1>Frequently Asked Questions</h1></a>
 <p>Welcome to the Frequently Asked Questions (FAQ) page. This page explains many of the features that are offered by this site to our members.</p>
@@ -308,7 +308,7 @@ if ($pligg_version == '1.2.2') {
 	<li>Next, navigate to the <a href=\"{$URL_submit}\">Submission Page</a></li>
 	<li>Copy the URL of a story that you would like to submit and paste that into the News Source input field and click on the continue button.</li>
 	<li>Enter a title, category, tags, and description for your submission.</li>
-	
+
 	<li>Submit, and you''re done!</li>
 </ul>
 <hr />
@@ -327,10 +327,10 @@ if ($pligg_version == '1.2.2') {
     $sql = "UPDATE `" . table_misc_data . "` SET `data` = '2.0.0rc1' WHERE `name` = 'pligg_version';";
     $db->query($sql);
     echo '<li>Updated version number to 2.0.0rc1</li>';
-        
+
     // Finished 2.0.0rc1 upgrade
     echo'</ul></li>';
 }
 
-    
+
 ?>

@@ -22,7 +22,7 @@ $include='header.php';
 // Sanitize and set $language
 if ($_GET['language'])
     $language = addslashes(strip_tags($_GET['language']));
-    
+
 // Set connect $language to install language file
 if($language == 'arabic'){
     include_once('./languages/lang_arabic.php');
@@ -61,7 +61,7 @@ if($language == '' && $_POST['submit'] == ''){
     }
 
     include ('footer.php');
-    
+
     die();
 
 } else {
