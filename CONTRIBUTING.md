@@ -94,12 +94,14 @@ travailler entre crochets (``[template]``, ``[traduction]``,
 ### Respectez les standards de code
 
 Le code de Nous le Peuple essaie de respecter un certain nombre de standards de
-code afin de faciliter la participation de chacun. Tout le code proposer doit
-passer les fixers de [php-cs-fixer](http://cs.sensiolabs.org/) tels que configuré
-dans le fichier .php_cs à la racine du projet. Vous êtes encouragé-e à
-installer et utiliser [php-cs-fixer](http://cs.sensiolabs.org/). Grâce au fichier
-.php_cs situer à la racine du projet, il vous suffit d'utiliser la commande pour
-faire se conformer votre code aux standards :
+code afin de faciliter la participation de chacun. Tout le code proposé doit
+passer les fixers de [php-cs-fixer](http://cs.sensiolabs.org/) tels que
+configurés dans le fichier
+[.php_cs](https://github.com/m6r/nouslepeuple/blob/master/.php_cs) à la racine
+du projet. Vous êtes encouragé-e à installer et utiliser [php-cs-
+fixer](http://cs.sensiolabs.org/). Grâce au fichier .php_cs situer à la racine
+du projet, il vous suffit d'utiliser la commande pour faire se conformer votre
+code aux standards :
 
     $ php php-cs-fixer.phar fix
 
