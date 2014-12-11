@@ -10,7 +10,6 @@ $pligg_version = $db->get_var($sql);
 
 // Check if you need to run the one time upgrade to Pligg 2.0.0rc1
 if ($pligg_version == '1.2.2') {
-
     echo '<li>Performing one-time Pligg 2.0.0rc1 Upgrade<ul>';
 
     // Add option to search comment content

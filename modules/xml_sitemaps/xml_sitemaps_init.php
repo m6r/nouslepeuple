@@ -17,19 +17,19 @@
     with this program; if not, write to the Free Software Foundation, Inc.,
     51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 */
-if(defined('mnminclude')){
+if (defined('mnminclude')) {
     include_once('xml_sitemaps_settings.php');
 
     $include_in_pages = array('all');
     $do_not_include_in_pages = array();
 
-    if( do_we_load_module() ) {
-                if($moduleName == 'xml_sitemaps_show_sitemap'){
-                        module_add_action('module_page', 'xml_sitemaps_show_sitemap', '');
-                        include_once(mnmmodules . 'xml_sitemaps/xml_sitemaps_main.php');
-                }
-               module_add_action('do_submit3', 'xml_sitemaps_sites_ping', '');
-                include_once(mnmmodules . 'xml_sitemaps/xml_sitemaps_main.php');
+    if ( do_we_load_module() ) {
+        if ($moduleName == 'xml_sitemaps_show_sitemap') {
+            module_add_action('module_page', 'xml_sitemaps_show_sitemap', '');
+            include_once(mnmmodules . 'xml_sitemaps/xml_sitemaps_main.php');
+        }
+        module_add_action('do_submit3', 'xml_sitemaps_sites_ping', '');
+        include_once(mnmmodules . 'xml_sitemaps/xml_sitemaps_main.php');
     }
 }
 ?>

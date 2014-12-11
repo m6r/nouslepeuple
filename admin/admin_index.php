@@ -24,35 +24,40 @@ $canIhaveAccess = $canIhaveAccess + checklevel('admin');
 $canIhaveAccess = $canIhaveAccess + checklevel('moderator');
 
 $is_moderator = checklevel('moderator'); // Moderators have a value of '1' for the variable $is_moderator
-if ($is_moderator == '1'){
+if ($is_moderator == '1') {
     header("Location: ./admin_links.php"); // Redirect moderators to the submissions page, since they can't use the admin homepage widgets
     die();
 }
 
-if($canIhaveAccess == 0){
-//	$main_smarty->assign('tpl_center', '/admin/access_denied');
+if ($canIhaveAccess == 0) {
+    //	$main_smarty->assign('tpl_center', '/admin/access_denied');
 //	$main_smarty->display($template_dir . '/admin/admin.tpl');
     header("Location: " . getmyurl('admin_login', $_SERVER['REQUEST_URI']));
     die();
 }
 
-if ($_GET['action']=='move')
-{
+if ($_GET['action']=='move') {
     $column = $_GET['left']<600 ? 'left' : 'right';
-    if (!is_numeric($_GET['id'])) die("Wrong parameter 'id'");
-    if (!is_numeric($_GET['top'])) die("Wrong parameter 'top'");
+    if (!is_numeric($_GET['id'])) {
+        die("Wrong parameter 'id'");
+    }
+    if (!is_numeric($_GET['top'])) {
+        die("Wrong parameter 'top'");
+    }
 
     $list = split(',',$_GET['list']);
-    foreach ($list as $item)
-        if ($item && is_numeric($item))
-        $db->query($sql="UPDATE ".table_widgets." SET `position`=".(++$i)." WHERE id=$item");
+    foreach ($list as $item) {
+        if ($item && is_numeric($item)) {
+            $db->query($sql="UPDATE ".table_widgets." SET `position`=".(++$i)." WHERE id=$item");
+        }
+    }
 
     $db->query($sql="UPDATE ".table_widgets." SET `column`='$column' WHERE id={$_GET['id']}");
     exit;
-}
-elseif ($_GET['action']=='minimize')
-{
-    if (!is_numeric($_GET['id'])) die("Wrong parameter 'id'");
+} elseif ($_GET['action']=='minimize') {
+    if (!is_numeric($_GET['id'])) {
+        die("Wrong parameter 'id'");
+    }
 
     $db->query($sql="UPDATE ".table_widgets." SET `display`='".$db->escape($_GET['display'])."' WHERE id={$_GET['id']}");
     exit;
@@ -122,25 +127,24 @@ $main_smarty->assign('pagename', pagename);
 $widgets = $db->get_results($sql='SELECT * from ' . table_widgets . ' where enabled=1 ORDER BY position',ARRAY_A);
 $main_smarty->assign('pligg_lang_conf',lang_loc . "/languages/lang_" . pligg_language . ".conf");
 #$db->cache_queries = false;
-if($widgets){
+if ($widgets) {
     // for each module...
-    for($i=0; $i<sizeof($widgets); $i++)
-    {
+    for ($i=0; $i<sizeof($widgets); $i++) {
         $file = '../widgets/' . $widgets[$i]['folder'] . '/' . 'init.php';
         $widget = array();
-        if (file_exists($file))
-        {
+        if (file_exists($file)) {
             include_once($file);
             $widgets[$i]['settings'] = '../widgets/'.$widgets[$i]['folder'].'/templates/settings.tpl';
             $widgets[$i]['main'] = '../widgets/'.$widgets[$i]['folder'].'/templates/widget.tpl';
-            if (file_exists('../widgets/'.$widgets[$i]['folder'].'/lang_' . pligg_language . '.conf'))
+            if (file_exists('../widgets/'.$widgets[$i]['folder'].'/lang_' . pligg_language . '.conf')) {
                 $widgets[$i]['lang_conf'] = '../widgets/'.$widgets[$i]['folder'].'/lang_' . pligg_language . '.conf';
-            elseif (file_exists('../widgets/'.$widgets[$i]['folder'].'/lang.conf'))
+            } elseif (file_exists('../widgets/'.$widgets[$i]['folder'].'/lang.conf')) {
                 $widgets[$i]['lang_conf'] = '../widgets/'.$widgets[$i]['folder'].'/lang.conf';
+            }
             $widgets[$i] = array_merge($widgets[$i],$widget);
-        }
-        else
+        } else {
             array_splice($widgets,$i--,1);
+        }
     }
     $main_smarty->assign('widgets',$widgets);
 }

@@ -1,13 +1,17 @@
 <?php
-if(!defined('mnminclude')){header('Location: ../../error_404.php');die();}
+if (!defined('mnminclude')) {
+    header('Location: ../../error_404.php');
+    die();
+}
 
 function module_add_action($location, $the_function, $variables, $weight = array ('weight' => 0) )
 {
     global $script_name, $module_actions, $include_in_pages, $do_not_include_in_pages;
-    if(is_array($include_in_pages)){
+    if (is_array($include_in_pages)) {
         if (in_array($script_name, $include_in_pages) || in_array('all', $include_in_pages)) {
-            if(is_array($do_not_include_in_pages) && in_array($script_name, $do_not_include_in_pages))
+            if (is_array($do_not_include_in_pages) && in_array($script_name, $do_not_include_in_pages)) {
                 return;
+            }
             $module_actions[$location][$the_function] = $weight;
         }
     }
@@ -26,12 +30,12 @@ function module_remove_action($location, $the_function)
 
 function module_add_action_tpl($location, $the_tpl, $weight = array ('weight' => 0) )
 {
-
     global $script_name, $module_actions_tpl, $include_in_pages, $do_not_include_in_pages;
-    if(is_array($include_in_pages)){
+    if (is_array($include_in_pages)) {
         if (in_array($script_name, $include_in_pages) || in_array('all', $include_in_pages)) {
-            if(is_array($do_not_include_in_pages) && in_array($script_name, $do_not_include_in_pages))
+            if (is_array($do_not_include_in_pages) && in_array($script_name, $do_not_include_in_pages)) {
                 return;
+            }
             $module_actions_tpl[$location][$the_tpl] = get_module_weight($the_tpl,$weight);
         }
     }
@@ -40,30 +44,30 @@ function module_add_action_tpl($location, $the_tpl, $weight = array ('weight' =>
 
 
 
-function get_module_weight($the_tpl,$weight){
+function get_module_weight($the_tpl,$weight)
+{
     global $db;
-    if($weight['weight']==0){
+    if ($weight['weight']==0) {
         $folder_array=explode("/",$the_tpl);
-        if($folder_array[2]!=""){
-        $mysql="SELECT weight from " .table_modules . " where folder='".$folder_array[2]."' and enabled=1 ";
-        $mod_weight = $db->get_var($mysql);
-        $weight['weight']=$mod_weight;
+        if ($folder_array[2]!="") {
+            $mysql="SELECT weight from " .table_modules . " where folder='".$folder_array[2]."' and enabled=1 ";
+            $mod_weight = $db->get_var($mysql);
+            $weight['weight']=$mod_weight;
         }
-
     }
 
 
     return $weight;
-
 }
 
 function module_add_css($the_css, $weight = array ('weight' => 0) )
 {
     global $script_name, $module_css, $include_in_pages, $do_not_include_in_pages;
-    if(is_array($include_in_pages)){
+    if (is_array($include_in_pages)) {
         if (in_array($script_name, $include_in_pages) || in_array('all', $include_in_pages)) {
-            if(is_array($do_not_include_in_pages) && in_array($script_name, $do_not_include_in_pages))
+            if (is_array($do_not_include_in_pages) && in_array($script_name, $do_not_include_in_pages)) {
                 return;
+            }
             $module_css[$the_css] = $weight;
         }
     }
@@ -72,10 +76,11 @@ function module_add_css($the_css, $weight = array ('weight' => 0) )
 function module_add_js($the_js, $weight = array ('weight' => 0) )
 {
     global $script_name, $module_js, $include_in_pages, $do_not_include_in_pages;
-    if(is_array($include_in_pages)){
+    if (is_array($include_in_pages)) {
         if (in_array($script_name, $include_in_pages) || in_array('all', $include_in_pages)) {
-            if(is_array($do_not_include_in_pages) && in_array($script_name, $do_not_include_in_pages))
+            if (is_array($do_not_include_in_pages) && in_array($script_name, $do_not_include_in_pages)) {
                 return;
+            }
             $module_js[$the_js] = $weight;
         }
     }
@@ -84,9 +89,9 @@ function module_add_js($the_js, $weight = array ('weight' => 0) )
 function check_for_js()
 {
     global $module_js, $include_in_pages;
-    if( $module_js ){
+    if ( $module_js ) {
         uasort($module_js, 'actioncmp');
-        foreach ( $module_js as $k => $v){
+        foreach ( $module_js as $k => $v) {
             echo '<script src="' . $k . '" type="text/javascript"></script>';
         }
     }
@@ -95,9 +100,9 @@ function check_for_js()
 function check_for_css()
 {
     global $module_css, $include_in_pages;
-    if( $module_css ){
+    if ( $module_css ) {
         uasort($module_css, 'actioncmp');
-        foreach ( $module_css as $k => $v){
+        foreach ( $module_css as $k => $v) {
             echo '<link rel="stylesheet" type="text/css" href="' . $k . '" media="screen" />';
         }
     }
@@ -107,7 +112,7 @@ function check_actions($location, &$vars)
 {
     global $module_actions;
     $vars['location'] = $location;
-    if($module_actions[$location]){
+    if ($module_actions[$location]) {
         uasort($module_actions[$location], 'actioncmp');
         foreach ( $module_actions[$location] as $kk => $vv ) {
             call_user_func_array($kk, array(&$vars));
@@ -117,7 +122,6 @@ function check_actions($location, &$vars)
 
 function actioncmp($a, $b)
 {
-
     if ($a['weight'] == $b['weight']) {
         return 0;
     }
@@ -126,10 +130,10 @@ function actioncmp($a, $b)
 
 function check_actions_tpl($location,&$smarty)
 {
-        global $module_actions_tpl, $main_smarty, $thetemp;
+    global $module_actions_tpl, $main_smarty, $thetemp;
 
-        $smarty->assign("location",$location);
-    if($module_actions_tpl[$location]){
+    $smarty->assign("location",$location);
+    if ($module_actions_tpl[$location]) {
         uasort($module_actions_tpl[$location], 'actioncmp');
         //$weight=sort_cloumn($module_actions_tpl[$location]);
         //array_multisort($weight, SORT_ASC,  $module_actions_tpl[$location]);
@@ -138,32 +142,34 @@ function check_actions_tpl($location,&$smarty)
         $path = 'templates/' . $thetemp . '/';
         foreach ( $module_actions_tpl[$location] as $kk => $vv ) {
             $file = $path . str_replace(array('../','templates/'),'',$kk);
-            if (file_exists($file))
-                    $smarty->display($file);
-            else
-                    $smarty->display($kk);
+            if (file_exists($file)) {
+                $smarty->display($file);
+            } else {
+                $smarty->display($kk);
+            }
         }
     }
 }
 
-function sort_cloumn($myArray){
+function sort_cloumn($myArray)
+{
     $sort_numcie=array();
-    foreach($myArray as $c=>$key) {
+    foreach ($myArray as $c=>$key) {
         $sort_numcie[] = $key['weight'];
-       }
+    }
 
-       return $sort_numcie;
+    return $sort_numcie;
 }
 
 function check_for_enabled_module($name, $version)
 {
     global $db;
 
-    if($name == 'PHP'){
-        if(phpnum() == $version) {
+    if ($name == 'PHP') {
+        if (phpnum() == $version) {
             return $version;
         }
-    }else{
+    } else {
         $sql = 'SELECT `id` FROM ' . table_modules . ' where `folder` = "' . $name . '" and `version` >= ' . $version . ' and `enabled` = 1;';
         //echo $sql;
         $theId = $db->get_var($sql);
@@ -173,9 +179,9 @@ function check_for_enabled_module($name, $version)
 
 function check_module_requirements($requires)
 {
-    if(is_array($requires)){
-        foreach($requires as $requirement){
-            if(!check_for_enabled_module($requirement[0], $requirement[1])){
+    if (is_array($requires)) {
+        foreach ($requires as $requirement) {
+            if (!check_for_enabled_module($requirement[0], $requirement[1])) {
                 die('This module requires <a href="' . $requirement[2] . '">' . $requirement[0] . '</a> version ' . $requirement[1] . ' or greater');
             }
         }
@@ -184,8 +190,7 @@ function check_module_requirements($requires)
 
 function include_module_settings($module)
 {
-    if(file_exists(mnmmodules . $module . '/' . $module . '_install.php'))
-    {
+    if (file_exists(mnmmodules . $module . '/' . $module . '_install.php')) {
         include(mnmmodules . $module . '/' . $module . '_install.php');
         return $module_info;
     } else {
@@ -193,28 +198,31 @@ function include_module_settings($module)
     }
 }
 
-function process_db_requirements($module_info){
+function process_db_requirements($module_info)
+{
     global $db;
 
     $db_add_table = $module_info['db_add_table'];
-    if(is_array($db_add_table))    {
-        foreach($db_add_table as $table_to_add){
+    if (is_array($db_add_table)) {
+        foreach ($db_add_table as $table_to_add) {
             //print_r($field_to_add);
-            if(!check_if_table_exists($table_to_add['name'])){$db->query($table_to_add['sql']);}
+            if (!check_if_table_exists($table_to_add['name'])) {
+                $db->query($table_to_add['sql']);
+            }
         }
     }
 
     $db_add_field = $module_info['db_add_field'];
-    if(is_array($db_add_field))    {
-        foreach($db_add_field as $field_to_add){
+    if (is_array($db_add_field)) {
+        foreach ($db_add_field as $field_to_add) {
             //print_r($field_to_add);
             module_db_add_field($field_to_add[0], $field_to_add[1], $field_to_add[2], $field_to_add[3], $field_to_add[4], $field_to_add[5], $field_to_add[6]);
         }
     }
 
     $db_SQL = $module_info['db_sql'];
-    if(is_array($db_SQL))    {
-        foreach($db_SQL as $sql){
+    if (is_array($db_SQL)) {
+        foreach ($db_SQL as $sql) {
             //print_r($field_to_add);
             //echo $sql;
             $db->query($sql);
@@ -225,7 +233,8 @@ function process_db_requirements($module_info){
 
 // for module installation
 
-function module_db_add_field($field_table, $field_name, $field_type,  $field_length, $field_attributes, $field_null, $field_default){
+function module_db_add_field($field_table, $field_name, $field_type,  $field_length, $field_attributes, $field_null, $field_default)
+{
     //field_table = the table the field will go into, without the prefix, users, comments, votes etc
     //field_name = the name of the field
     //field_type = varchar, text, int etc...
@@ -236,23 +245,34 @@ function module_db_add_field($field_table, $field_name, $field_type,  $field_len
 
     global $db;
 
-    if($field_table == 'users'){$field_table = table_users;}
+    if ($field_table == 'users') {
+        $field_table = table_users;
+    }
 
     $fieldexists = checkforfield($field_name, $field_table);
     if (!$fieldexists) {
         $sql = 'ALTER TABLE `' . $field_table . '` ADD `' . $field_name . '` ' . $field_type;
-        if($field_length != '') {$sql .= '(' . $field_length . ')';}
+        if ($field_length != '') {
+            $sql .= '(' . $field_length . ')';
+        }
 
-        if($field_attributes != '') {$sql .= ' ' . $field_attributes;}
-        if($field_null == 0) {$sql .= ' not null';}else{$sql .= ' null';}
+        if ($field_attributes != '') {
+            $sql .= ' ' . $field_attributes;
+        }
+        if ($field_null == 0) {
+            $sql .= ' not null';
+        } else {
+            $sql .= ' null';
+        }
 
-        if($field_default != '') {$sql .= " default '" . $field_default . "'";}
+        if ($field_default != '') {
+            $sql .= " default '" . $field_default . "'";
+        }
 
 
         //echo $sql . '<br>';
         $db->query($sql);
     }
-
 }
 
 ?>

@@ -6,9 +6,7 @@ function welcome_email_send(&$registration_details)
     include_once(mnminclude.'user.php');
 
     // Check User ID != 0
-    if ($registration_details['id'] > 0)
-    {
-
+    if ($registration_details['id'] > 0) {
         $username = $registration_details['username'];
         $password = $registration_details['password'];
         $email = $registration_details['email'];
@@ -18,8 +16,7 @@ function welcome_email_send(&$registration_details)
         $user->id = $id;
 
         // Check User Data
-        if ($user->read())
-        {
+        if ($user->read()) {
             include_once(mnmmodules . 'welcome_email/includes/htmlMimeMail.php');
 
             // Current Date/Time of Server
@@ -65,9 +62,7 @@ function welcome_email_send(&$registration_details)
 
             // Send Mail
             $mail->send(array($thisUserEmail));
-
         } else {
-
             // Unable to find user data
             echo "Module Error #2";
             die;
@@ -76,7 +71,6 @@ function welcome_email_send(&$registration_details)
             // remove the above ELSE statement this comment is within.
         }
     } else {
-
         // Unable to find User ID
         echo "Module Error #1";
         die;

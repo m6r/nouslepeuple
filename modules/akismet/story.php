@@ -11,18 +11,22 @@ include_once(mnminclude.'user.php');
 
 $requestID = isset($_GET['id']) && is_numeric($_GET['id']) ? $_GET['id'] : 0;
 
-if(isset($_GET['title']) && sanitize($_GET['title'], 3) != ''){$requestTitle = sanitize($_GET['title'], 3);}
+if (isset($_GET['title']) && sanitize($_GET['title'], 3) != '') {
+    $requestTitle = sanitize($_GET['title'], 3);
+}
 // if we're using "Friendly URL's for categories"
-if(isset($_GET['category']) && sanitize($_GET['category'], 3) != ''){$thecat = $db->get_var("SELECT category_name FROM " . table_categories . " WHERE `category_safe_name` = '".urlencode(sanitize($_GET['category'], 3))."';");}
+if (isset($_GET['category']) && sanitize($_GET['category'], 3) != '') {
+    $thecat = $db->get_var("SELECT category_name FROM " . table_categories . " WHERE `category_safe_name` = '".urlencode(sanitize($_GET['category'], 3))."';");
+}
 
-if($requestID > 0 && enable_friendly_urls == true){
+if ($requestID > 0 && enable_friendly_urls == true) {
     // if we're using friendly urls, don't call /story.php?id=XX  or /story/XX/
     // this is to prevent google from thinking it's spam
     // more work needs to be done on this
 
     $link = new Link;
     $link->id=$requestID;
-    if($link->read() == false){
+    if ($link->read() == false) {
         $main_smarty->assign('tpl_center', 'error_404_center');
         $main_smarty->display($the_template . '/pligg.tpl');
         die();
@@ -40,14 +44,15 @@ if($requestID > 0 && enable_friendly_urls == true){
 // DB 08/01/08
 $requestTitle = sanitize($requestTitle,4);
 /////
-if(isset($requestTitle)){$requestID = $db->get_var("SELECT link_id FROM " . table_links . " WHERE `link_title_url` = '$requestTitle';");}
+if (isset($requestTitle)) {
+    $requestID = $db->get_var("SELECT link_id FROM " . table_links . " WHERE `link_title_url` = '$requestTitle';");
+}
 
-if(is_numeric($requestID)) {
+if (is_numeric($requestID)) {
     $id = $requestID;
     $link = new Link;
     $link->id=$requestID;
-    if(!$link->read()){
-
+    if (!$link->read()) {
         // check for redirects
         include(mnminclude.'redirector.php');
         $x = new redirector($_SERVER['REQUEST_URI']);
@@ -56,9 +61,8 @@ if(is_numeric($requestID)) {
         $main_smarty->display($the_template . '/pligg.tpl');
         die();
     }
-    if(isset($_POST['process']) && sanitize($_POST['process'], 3) != ''){
+    if (isset($_POST['process']) && sanitize($_POST['process'], 3) != '') {
         if (sanitize($_POST['process'], 3)=='newcomment') {
-
             $vars = array('user_id' => $link->author,'link_id' => $link->id);
             check_actions('comment_subscription', $vars);
 
@@ -134,7 +138,6 @@ if(is_numeric($requestID)) {
     $main_smarty->assign('tpl_center', $the_template . '/story_center');
     $main_smarty->display($the_template . '/pligg.tpl');
 } else {
-
     // check for redirects
     include(mnminclude.'redirector.php');
     $x = new redirector($_SERVER['REQUEST_URI']);
@@ -144,15 +147,26 @@ if(is_numeric($requestID)) {
     die();
 }
 
-function get_comments ($fetch = false){
+function get_comments ($fetch = false)
+{
     Global $db, $main_smarty, $current_user, $CommentOrder, $link;
 
     //Set comment order to 1 if it's not set in the admin panel
-    if(!isset($CommentOrder)){$CommentOrder = 1;}
-    If ($CommentOrder == 1){$CommentOrderBy = "comment_votes DESC, comment_date DESC";}
-    If ($CommentOrder == 2){$CommentOrderBy = "comment_date DESC";}
-    If ($CommentOrder == 3){$CommentOrderBy = "comment_votes ASC, comment_date DESC";}
-    If ($CommentOrder == 4){$CommentOrderBy = "comment_date ASC";}
+    if (!isset($CommentOrder)) {
+        $CommentOrder = 1;
+    }
+    If ($CommentOrder == 1) {
+        $CommentOrderBy = "comment_votes DESC, comment_date DESC";
+    }
+    If ($CommentOrder == 2) {
+        $CommentOrderBy = "comment_date DESC";
+    }
+    If ($CommentOrder == 3) {
+        $CommentOrderBy = "comment_votes ASC, comment_date DESC";
+    }
+    If ($CommentOrder == 4) {
+        $CommentOrderBy = "comment_date ASC";
+    }
 
     $output = '';
 
@@ -161,7 +175,7 @@ function get_comments ($fetch = false){
     if ($comments) {
         require_once(mnminclude.'comment.php');
         $comment = new Comment;
-        foreach($comments as $comment_id) {
+        foreach ($comments as $comment_id) {
             $comment->id=$comment_id;
             $comment->read();
             $output .= $comment->print_summary($link, true);
@@ -172,16 +186,15 @@ function get_comments ($fetch = false){
                 $output .= '<div style="margin-left:40px">';
                 require_once(mnminclude.'comment.php');
                 $comment2 = new Comment;
-                foreach($comments2 as $comment_id) {
+                foreach ($comments2 as $comment_id) {
                     $comment2->id=$comment_id;
                     $comment2->read();
                     $output .= $comment2->print_summary($link, true);
                 }
                 $output .= "</div>\n";
             }
-
         }
-        if($fetch == false){
+        if ($fetch == false) {
             echo $output;
         } else {
             return $output;
@@ -190,7 +203,8 @@ function get_comments ($fetch = false){
 }
 
 
-function insert_comment () {
+function insert_comment ()
+{
     global $link, $db, $current_user;
 
     require_once(mnminclude.'comment.php');
@@ -198,8 +212,8 @@ function insert_comment () {
 
     $cancontinue = false;
 
-    if(sanitize($_POST['link_id'], 3) == $link->id && $current_user->authenticated && sanitize($_POST['user_id'], 3) == $current_user->user_id &&    sanitize($_POST['randkey'], 3) > 0) {
-        if(sanitize($_POST['comment_content'], 4) != ''){
+    if (sanitize($_POST['link_id'], 3) == $link->id && $current_user->authenticated && sanitize($_POST['user_id'], 3) == $current_user->user_id &&    sanitize($_POST['randkey'], 3) > 0) {
+        if (sanitize($_POST['comment_content'], 4) != '') {
             $comment->content=sanitize($_POST['comment_content'], 4);
             $cancontinue = true;
             // this is a normal new comment
@@ -208,14 +222,14 @@ function insert_comment () {
         $comment_parent_id = isset($_POST['comment_parent_id']) ? sanitize($_POST['comment_parent_id'], 3) : 0;
         $reply_content = isset($_POST['reply_comment_content-'.$comment_parent_id]) ? sanitize($_POST['reply_comment_content-'.$comment_parent_id], 4) : '';
 
-        if($reply_content != ''){
+        if ($reply_content != '') {
             $comment->content = $reply_content;
             $comment->parent= $comment_parent_id;
             $cancontinue = true;
             // this is a reply to an existing comment
         }
 
-        if($cancontinue == true){
+        if ($cancontinue == true) {
             $comment->link=$link->id;
             $comment->randkey=sanitize($_POST['randkey'], 3);
             $comment->author=sanitize($_POST['user_id'], 3);

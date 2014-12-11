@@ -16,9 +16,8 @@
     $list_savedlinks = $db->get_results($res);
     $html = "";
 
-    if($list_savedlinks)
-    {
-        foreach($list_savedlinks as $row){
+    if ($list_savedlinks) {
+        foreach ($list_savedlinks as $row) {
             $story_url = getmyurl("story", $row->link_id);
             $html .= "<li><a class='switchurl' href='".$story_url."'>".$row->link_title."</a></li>";
         }

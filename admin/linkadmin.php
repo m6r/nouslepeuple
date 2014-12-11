@@ -17,16 +17,16 @@ $canIhaveAccess = 0;
 $canIhaveAccess = $canIhaveAccess + checklevel('admin');
 $canIhaveAccess = $canIhaveAccess + checklevel('moderator');
 
-if($canIhaveAccess == 1)
-{
-    if(isset($_REQUEST["action"])){
-
+if ($canIhaveAccess == 1) {
+    if (isset($_REQUEST["action"])) {
         $id = sanitize($_REQUEST["id"], 3);
         $action = sanitize($_REQUEST["action"], 3);
-        if (!is_numeric($id)) die();
+        if (!is_numeric($id)) {
+            die();
+        }
 
-        if ($action == "main"){
-            if(($link = $db->get_row("SELECT * FROM " . table_links . " WHERE link_id = $id"))) {
+        if ($action == "main") {
+            if (($link = $db->get_row("SELECT * FROM " . table_links . " WHERE link_id = $id"))) {
                 $author = $db->get_row("Select * from " . table_users . " where user_id = $link->link_author");
 
                 //misc smarty
@@ -51,15 +51,13 @@ if($canIhaveAccess == 1)
                 // show the template
                 $main_smarty->assign('tpl_center', '/admin/submission_view');
                 $main_smarty->display($template_dir . '/admin/admin.tpl');
-            }
-            else
-            {
+            } else {
                 echo 'Error: link not found';
             }
         }
 
-        if ($action == "published" or $action == "new" or $action == "discard" or $action == "sticky" or $action == "supersticky"){
-            if(($link = $db->get_row("SELECT * FROM " . table_links . " WHERE link_id = $id"))) {
+        if ($action == "published" or $action == "new" or $action == "discard" or $action == "sticky" or $action == "supersticky") {
+            if (($link = $db->get_row("SELECT * FROM " . table_links . " WHERE link_id = $id"))) {
                 $author = $db->get_row("Select * from " . table_users . " where user_id = $link->link_author");
 
                 //misc smarty
@@ -76,51 +74,47 @@ if($canIhaveAccess == 1)
 
                 // pagename
                 define('pagename', 'linkadmin');
-              $main_smarty->assign('pagename', pagename);
+                $main_smarty->assign('pagename', pagename);
 
                 //show the template
                 $main_smarty->assign('tpl_center', '/admin/submission_status');
                 $main_smarty->display($template_dir . '/admin/admin.tpl');
-
-            }
-            else
-            {
+            } else {
                 echo 'Error: link not found';
             }
         }
 
-        if ($action == "dodiscard" or $action == "dopublished" or $action == "donew" or $action == "dosticky" or $action == "dosupersticky"){
-            if(($link = $db->get_row("SELECT * FROM " . table_links . " WHERE link_id = $id"))) {
-            $xaction = substr($action, 2, 100);
-            $link = new Link;
-            $link->id=$id;
-            $link->read();
-            $link->published_date = time();
-            $link->status = $xaction;
-            $link->store_basic();
-            $main_smarty->assign('action',$xaction);
-            $main_smarty->assign('story_url',getmyurl('story', $id));
-            $main_smarty->assign('admin_modify_url',getmyurl('admin_modify', $id));
-            $db->query("UPDATE " . table_links . " set link_status='".$xaction."' WHERE link_id=$id");
-            totals_regenerate();
+        if ($action == "dodiscard" or $action == "dopublished" or $action == "donew" or $action == "dosticky" or $action == "dosupersticky") {
+            if (($link = $db->get_row("SELECT * FROM " . table_links . " WHERE link_id = $id"))) {
+                $xaction = substr($action, 2, 100);
+                $link = new Link;
+                $link->id=$id;
+                $link->read();
+                $link->published_date = time();
+                $link->status = $xaction;
+                $link->store_basic();
+                $main_smarty->assign('action',$xaction);
+                $main_smarty->assign('story_url',getmyurl('story', $id));
+                $main_smarty->assign('admin_modify_url',getmyurl('admin_modify', $id));
+                $db->query("UPDATE " . table_links . " set link_status='".$xaction."' WHERE link_id=$id");
+                totals_regenerate();
 
             // pagename
             define('pagename', 'linkadmin');
-            $main_smarty->assign('pagename', pagename);
+                $main_smarty->assign('pagename', pagename);
 
             // show the template
             $main_smarty->assign('tpl_center', '/admin/submission_update');
-            $main_smarty->display($template_dir . '/admin/admin.tpl');
-            }else{
+                $main_smarty->display($template_dir . '/admin/admin.tpl');
+            } else {
                 echo 'Error: link not found';
             }
         }
-    }else{
-            //no request
+    } else {
+        //no request
     }
-}
-else{
-//	echo "<br />We're sorry, but you do not have administrative privileges on this site.<br />If you wish to be promoted, please contact the site administrator.<br />";
+} else {
+    //	echo "<br />We're sorry, but you do not have administrative privileges on this site.<br />If you wish to be promoted, please contact the site administrator.<br />";
     header("Location: " . getmyurl('admin_login', $_SERVER['REQUEST_URI']));
 }
 

@@ -7,7 +7,7 @@ include('config.php');
 include(mnminclude.'html1.php');
 include(mnminclude.'smartyvariables.php');
 
-if(!Enable_Live) {
+if (!Enable_Live) {
     header("Location: $my_pligg_base/error_404.php");
     die();
 }

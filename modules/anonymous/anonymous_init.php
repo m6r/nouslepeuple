@@ -1,5 +1,5 @@
 <?php
-if(defined('mnminclude')){
+if (defined('mnminclude')) {
     include_once('anonymous_settings.php');
 
     // tell pligg what pages this modules should be included in
@@ -9,8 +9,7 @@ if(defined('mnminclude')){
     $do_not_include_in_pages = array();
 
 
-    if( do_we_load_module() ) {
-
+    if ( do_we_load_module() ) {
     }
 }
 ?>

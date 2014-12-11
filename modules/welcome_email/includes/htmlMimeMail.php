@@ -165,7 +165,6 @@ class htmlMimeMail
             }
             fclose($fp);
             return $return;
-
         } else {
             return false;
         }
@@ -190,12 +189,24 @@ class htmlMimeMail
 */
     function setSMTPParams($host = null, $port = null, $helo = null, $auth = null, $user = null, $pass = null)
     {
-        if (!is_null($host)) $this->smtp_params['host'] = $host;
-        if (!is_null($port)) $this->smtp_params['port'] = $port;
-        if (!is_null($helo)) $this->smtp_params['helo'] = $helo;
-        if (!is_null($auth)) $this->smtp_params['auth'] = $auth;
-        if (!is_null($user)) $this->smtp_params['user'] = $user;
-        if (!is_null($pass)) $this->smtp_params['pass'] = $pass;
+        if (!is_null($host)) {
+            $this->smtp_params['host'] = $host;
+        }
+        if (!is_null($port)) {
+            $this->smtp_params['port'] = $port;
+        }
+        if (!is_null($helo)) {
+            $this->smtp_params['helo'] = $helo;
+        }
+        if (!is_null($auth)) {
+            $this->smtp_params['auth'] = $auth;
+        }
+        if (!is_null($user)) {
+            $this->smtp_params['user'] = $user;
+        }
+        if (!is_null($pass)) {
+            $this->smtp_params['pass'] = $pass;
+        }
     }
 
 /**
@@ -346,7 +357,6 @@ class htmlMimeMail
         }
 
         if (!empty($html_images)) {
-
             // If duplicate images are embedded, they may show up as attachments, so remove them.
             $html_images = array_unique($html_images);
             sort($html_images);

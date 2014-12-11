@@ -27,23 +27,24 @@ if (get_magic_quotes_gpc()) {
     $_GET = array_map('stripslashes_deep', $_GET);
     $_COOKIE = array_map('stripslashes_deep', $_COOKIE);
     $_REQUEST = array_map('stripslashes_deep', $_REQUEST);
-
 }
 
 // Sanitize GET variables used in templates
-if ($main_smarty)
-{
+if ($main_smarty) {
     $get = array();
-    foreach ($_GET as $k => $v)
-    $get[$k] = stripslashes(htmlentities(strip_tags($v),ENT_QUOTES,'UTF-8'));
+    foreach ($_GET as $k => $v) {
+        $get[$k] = stripslashes(htmlentities(strip_tags($v),ENT_QUOTES,'UTF-8'));
+    }
     $get['return'] = addslashes($get['return']);
     $main_smarty->assign('get',$get);
 }
 
 // CSFR/XSFR protection
-if(!isset($_SESSION)) @session_start();
+if (!isset($_SESSION)) {
+    @session_start();
+}
 
-if ($_SESSION['xsfr']){
+if ($_SESSION['xsfr']) {
     $xsfr_first_page = 0;
 } else {
     $xsfr_first_page = 1;
@@ -59,15 +60,15 @@ define("mnmmodules", dirname(__FILE__).'/modules/');
 include_once mnminclude . 'pre_install_check.php';
 include_once 'settings.php';
 
-function sanit($var){
+function sanit($var)
+{
     return addslashes(htmlentities(strip_tags($var),ENT_QUOTES,'UTF-8'));
 }
 
-if ($my_base_url == ''){
-
+if ($my_base_url == '') {
     define('my_base_url', "http://" . $_SERVER["HTTP_HOST"]);
 
-    if(isset($_REQUEST['action'])){
+    if (isset($_REQUEST['action'])) {
         $action = sanit($_REQUEST['action']);
     } else {
         $action="";
@@ -76,13 +77,12 @@ if ($my_base_url == ''){
     $pos = strrpos($_SERVER["SCRIPT_NAME"], "/");
     $path = substr($_SERVER["SCRIPT_NAME"], 0, $pos);
 
-    if ($path == "/"){
+    if ($path == "/") {
         $path = "";
     }
 
     define('my_pligg_base', $path);
     $my_pligg_base = $path;
-
 } else {
     define('my_base_url', $my_base_url);
     define('my_pligg_base', $my_pligg_base);
@@ -90,7 +90,7 @@ if ($my_base_url == ''){
 
 define('urlmethod', $URLMethod);
 
-if(isset($_COOKIE['template'])){
+if (isset($_COOKIE['template'])) {
     $thetemp = str_replace('..','',sanit($_COOKIE['template']));
 }
 
@@ -114,16 +114,15 @@ if (isset($errors)) {
         $output.="<p><b>Error:</b> $error</p>\n";
     }
 
-    if (strpos($_SERVER['SCRIPT_NAME'], "admin_config.php") == 0 && strpos($_SERVER['SCRIPT_NAME'], "login.php") == 0){
+    if (strpos($_SERVER['SCRIPT_NAME'], "admin_config.php") == 0 && strpos($_SERVER['SCRIPT_NAME'], "login.php") == 0) {
         echo "<p><b>Error:</b> $error</p>\n";
         die();
     }
-
 }
 
 define('The_Template', $thetemp);
 
-if(Enable_Extra_Fields){
+if (Enable_Extra_Fields) {
     include mnminclude.'extra_fields.php';
 }
 
@@ -143,7 +142,7 @@ include_once mnminclude.'define_tables.php';
     //	function category_safe_name() {
     // cache the data if caching is enabled
 
-    if(caching == 1){
+    if (caching == 1) {
         $db->cache_dir = mnmpath.'cache';
         $db->use_disk_cache = true;
         $db->cache_queries = true;
@@ -178,7 +177,7 @@ include mnminclude.'utils.php';
 // Defining the settings.php language setting as it's own variable
 $settings_language = $language;
 
-if(!isset($include_login) || $include_login !== false){
+if (!isset($include_login) || $include_login !== false) {
     // if $include_login is set to false (like in jspath.php and xmlhttp.php), then we don't
     // include login, because login will run a query right away to check user credentials
     // and these two files don't require that.
@@ -204,12 +203,13 @@ include mnminclude.'utf8/utf8.php';
 include_once(mnminclude.'dbtree.php');
 
 
-function loadCategoriesForCache($clear_cache = false) {
-
+function loadCategoriesForCache($clear_cache = false)
+{
     global $db;
     $sql = "select * from ".table_categories." ORDER BY lft ASC;";
-    if ($clear_cache)
-    $db->un_cache($sql);
+    if ($clear_cache) {
+        $db->un_cache($sql);
+    }
     return $db->get_results($sql);
 }
 

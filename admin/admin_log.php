@@ -16,13 +16,12 @@ force_authentication();
 $canIhaveAccess = 0;
 $canIhaveAccess = $canIhaveAccess + checklevel('admin');
 
-if($canIhaveAccess == 0){
+if ($canIhaveAccess == 0) {
     header("Location: " . getmyurl('admin_login', $_SERVER['REQUEST_URI']));
     die();
 }
 
-if ($_GET['clear'])
-{
+if ($_GET['clear']) {
     $fp = fopen('../'.LOG_FILE, "a");
     ftruncate($fp,0);
     fclose($fp);

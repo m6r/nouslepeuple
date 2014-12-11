@@ -11,13 +11,12 @@
 
     $search = new Search();
 
-    if(isset($_REQUEST['start_up']) and $_REQUEST['start_up']!= '' and $_REQUEST['pagesize'] != ''){
-
+    if (isset($_REQUEST['start_up']) and $_REQUEST['start_up']!= '' and $_REQUEST['pagesize'] != '') {
         $pagesize = $_REQUEST['pagesize'];
         $start_up = $_REQUEST['start_up'];
         $limit = " LIMIT $start_up, $pagesize";
     }
-    if(isset($_REQUEST['sql']) and $_REQUEST['sql']!= ''){
+    if (isset($_REQUEST['sql']) and $_REQUEST['sql']!= '') {
         $sql = $_REQUEST['sql'];
         $search->sql = $sql.$limit;
     }

@@ -15,10 +15,8 @@
 
     $group = $db->get_results("SELECT * FROM " . table_groups . " WHERE group_status='Enable' ORDER BY group_status, group_date  DESC LIMIT $start_up, $page_size");
 
-    if ($group)
-    {
-        foreach($group as $groupid)
-        {
+    if ($group) {
+        foreach ($group as $groupid) {
             $group_display .= group_print_summary($groupid->group_id);
         }
         echo $group_display;

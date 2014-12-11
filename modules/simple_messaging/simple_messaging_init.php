@@ -1,5 +1,5 @@
 <?php
-if(defined('mnminclude')){
+if (defined('mnminclude')) {
     include_once('simple_messaging_settings.php');
 
     // tell pligg what pages this modules should be included in
@@ -8,16 +8,19 @@ if(defined('mnminclude')){
     $include_in_pages = array('all');
     $do_not_include_in_pages = array();
 
-    if( do_we_load_module() ) {
-
+    if ( do_we_load_module() ) {
         module_add_action('all_pages_top', 'get_new_messages', '');
 
         // show the inbox link in the menus on the top
         module_add_action_tpl('tpl_pligg_navbar_end', simple_messaging_tpl_path . 'inbox_link_in_menu.tpl');
 
-        if(isset($_REQUEST['module'])){$moduleName = $_REQUEST['module'];}else{$moduleName = '';}
+        if (isset($_REQUEST['module'])) {
+            $moduleName = $_REQUEST['module'];
+        } else {
+            $moduleName = '';
+        }
 
-        if($moduleName == 'simple_messaging'){
+        if ($moduleName == 'simple_messaging') {
             module_add_action('module_page', 'simple_messaging_showpage', '');
             module_add_action_tpl('tpl_pligg_breadcrumb_end', simple_messaging_tpl_path . 'breadcrumb.tpl');
         }

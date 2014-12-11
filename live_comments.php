@@ -11,7 +11,7 @@ include(mnminclude.'user.php');
 include(mnminclude.'comment.php');
 include(mnminclude.'smartyvariables.php');
 
-if(!Enable_Live) {
+if (!Enable_Live) {
     header("Location: $my_pligg_base/error_404.php");
     die();
 }
@@ -44,9 +44,9 @@ $comments = $db->get_results("$select $from_where $order_by LIMIT $offset,$top_u
 //$comment = new Comment;
 //$user = new User;
 $link = new Link;
-if($comments) {
-    foreach($comments as $dbcomment) {
-//		$comment->id = $dbcomment->comment_id;
+if ($comments) {
+    foreach ($comments as $dbcomment) {
+        //		$comment->id = $dbcomment->comment_id;
 //		$comment->read();
         $live_item['comment_content'] = $dbcomment->comment_content;
 //		$user->id = $comment->author;

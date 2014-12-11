@@ -26,7 +26,7 @@ $main_smarty->assign('pagename', pagename);
 // if not logged in, redirect to the index page
     $login = isset($_COOKIE['mnm_user'] ) ? sanitize($_COOKIE['mnm_user'] , 3) : '';
     //$login = isset($_GET['login']) ? sanitize($_GET['login'], 3) : '';
-    if($login === ''){
+    if ($login === '') {
         if ($current_user->user_id > 0) {
             $login = $current_user->user_login;
         } else {
@@ -35,15 +35,14 @@ $main_smarty->assign('pagename', pagename);
         }
     }
 
-if (Allow_User_Change_Templates && file_exists("./templates/".$_POST['template']."/header.tpl"))
-{
+if (Allow_User_Change_Templates && file_exists("./templates/".$_POST['template']."/header.tpl")) {
     $domain = $_SERVER['HTTP_HOST']=='localhost' ? '' : preg_replace('/^www/','',$_SERVER['HTTP_HOST']);
     setcookie("template", $_POST['template'], time()+60*60*24*30,'/',$domain);
 }
 
 $CSRF->check_expired('user_settings');
-if (!$CSRF->check_valid(sanitize($_POST['token'], 3), 'user_settings')){
-        $CSRF->show_invalid_error(1);
+if (!$CSRF->check_valid(sanitize($_POST['token'], 3), 'user_settings')) {
+    $CSRF->show_invalid_error(1);
     exit;
 }
 
@@ -55,19 +54,23 @@ $select_check = $_POST['chack'];
         $url = strtolower(end(explode('/', $geturl)));
         $vowels = array($url);
         $Get_URL = str_replace($vowels, "", $geturl); */
-if ($_SERVER['HTTP_REFERER'] && strpos($_SERVER['HTTP_REFERER'],$my_base_url.$my_pligg_base)===0)
+if ($_SERVER['HTTP_REFERER'] && strpos($_SERVER['HTTP_REFERER'],$my_base_url.$my_pligg_base)===0) {
     $geturl = $_SERVER['HTTP_REFERER'];
-else
+} else {
     $geturl = sanitize($_SERVER['HTTP_REFERER'],3);
+}
 $url = strtolower(end(explode('/', $geturl)));
 
     $sqlGetiCategory = "SELECT category__auto_id from " . table_categories . " where category__auto_id!= 0;";
     $sqlGetiCategoryQ = mysql_query($sqlGetiCategory);
     $arr = array();
-    while ($row = mysql_fetch_array($sqlGetiCategoryQ, MYSQL_NUM))
+    while ($row = mysql_fetch_array($sqlGetiCategoryQ, MYSQL_NUM)) {
         $arr[] = $row[0];
+    }
 
-    if (!$select_check) $select_check = array();
+    if (!$select_check) {
+        $select_check = array();
+    }
     $diff = array_diff($arr,$select_check);
 
     $select_checked = $db->escape(implode(",",$diff));

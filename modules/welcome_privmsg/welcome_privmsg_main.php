@@ -21,8 +21,7 @@ function welcome_privmsg_send(&$registration_details)
     define('welcome_privmsg_body', 'Thanks for registering on our site!');
 
     // Check User ID != 0
-    if ($registration_details['id'] > 0)
-    {
+    if ($registration_details['id'] > 0) {
         $msg_subject = sanitize(welcome_privmsg_subject, 2);
         $msg_body = welcome_privmsg_body;
         $msg_to_ID = $registration_details['id'];
@@ -34,9 +33,7 @@ function welcome_privmsg_send(&$registration_details)
         if ($msg_result != 0) {
             echo "Module Error #".$msg_result;
         }
-
     } else {
-
         // Unable to find User ID
         echo "Module Error #1";
         die;

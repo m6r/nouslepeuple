@@ -1,11 +1,14 @@
 <?php
 
-if(!defined('mnminclude')){header('Location: ../error_404.php');die();}
+if (!defined('mnminclude')) {
+    header('Location: ../error_404.php');
+    die();
+}
 
-if(!defined('table_prefix')){
+if (!defined('table_prefix')) {
     define('table_prefix','');
 }
-if(!defined('tables_defined')){
+if (!defined('tables_defined')) {
     define('table_categories', table_prefix . "categories" );
     define('table_comments', table_prefix . "comments" );
     define('table_friends', table_prefix . "friends" );

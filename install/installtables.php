@@ -1,10 +1,12 @@
 <?php
 include_once (dirname(__FILE__) . '/../libs/db.php');
 
-if (!isset($dblang)) { $dblang='en'; }
+if (!isset($dblang)) {
+    $dblang='en';
+}
 
-function pligg_createtables($conn) {
-
+function pligg_createtables($conn)
+{
     global $dblang;
 
     $sql = 'DROP TABLE IF EXISTS `' . table_categories . '`;';
@@ -355,7 +357,7 @@ function pligg_createtables($conn) {
     //group table
     $sql = 'DROP TABLE IF EXISTS `' . table_groups . '`;';
     mysql_query( $sql, $conn );
-        $sql = "CREATE TABLE `".table_groups."` (
+    $sql = "CREATE TABLE `".table_groups."` (
 	  `group_id` int(20) NOT NULL auto_increment,
 	  `group_creator` int(20) NOT NULL,
 	  `group_status` enum('Enable','disable') collate utf8_general_ci NOT NULL,
@@ -474,8 +476,9 @@ function pligg_createtables($conn) {
 
     //register validation//
     $randkey = '';
-    for ($i=0; $i<32; $i++)
+    for ($i=0; $i<32; $i++) {
         $randkey .= chr(rand(48,200));
+    }
 
     $sql = "INSERT INTO `" . table_misc_data . "` ( `name` , `data` ) VALUES ('hash', '$randkey');";
     mysql_query( $sql, $conn );
@@ -719,20 +722,18 @@ function pligg_createtables($conn) {
 
     $stmts = explode("\n", $stmts);
 
-    foreach($stmts as $stmt) {
-      $stmt = str_replace("`pligg_", "`".table_prefix, $stmt);
-      mysql_query($stmt);
+    foreach ($stmts as $stmt) {
+        $stmt = str_replace("`pligg_", "`".table_prefix, $stmt);
+        mysql_query($stmt);
     }
 
     $stmts = explode("\n", file_get_contents(dirname(__FILE__) . '/install_config_table.sql'));
-    foreach($stmts as $stmt) {
-        if (trim($stmt))
-        {
+    foreach ($stmts as $stmt) {
+        if (trim($stmt)) {
             $stmt = str_replace("INSERT INTO `config`", "INSERT INTO `".table_config."`", $stmt);
             $stmt = str_replace("'table_prefix', 'pligg_'", "'table_prefix', '" . table_prefix . "'", $stmt);
             mysql_query($stmt);
-            if (mysql_error())
-            {
+            if (mysql_error()) {
                 print htmlentities($stmt);
                 print mysql_error();
                 exit;

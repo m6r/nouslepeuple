@@ -1,9 +1,12 @@
 <?php
 
-if(!defined('mnminclude')){header('Location: ../error_404.php');die();}
+if (!defined('mnminclude')) {
+    header('Location: ../error_404.php');
+    die();
+}
 
-class redirector {
-
+class redirector
+{
     // this class handles redirects
     // this is for things like renaming a story
     // renaming will change the URL structure
@@ -12,11 +15,13 @@ class redirector {
     var $old_url = '';
     var $new_url = '';
 
-    function redirector($old_url){
+    function redirector($old_url)
+    {
         $this->check_old($old_url);
     }
 
-    function check_old($old_url){
+    function check_old($old_url)
+    {
         global $db;
 
         // check for redirects
@@ -28,12 +33,10 @@ class redirector {
         //echo $sql;
         $redirs = $db->get_row($sql);
 
-        if($redirs){
+        if ($redirs) {
             header( "HTTP/1.1 301 Moved Permanently" );
             header('Location: ' . my_pligg_base . $redirs->redirect_new);
         }
-
     }
-
 }
 ?>

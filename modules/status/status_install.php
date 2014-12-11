@@ -46,8 +46,7 @@
 	) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci");
 
     // Set default module settings
-    if (get_misc_data('status_switch')=='')
-    {
+    if (get_misc_data('status_switch')=='') {
         misc_data_update('status_switch', '0');
         misc_data_update('status_show_permalin', '1');
         misc_data_update('status_permalinks', '1');

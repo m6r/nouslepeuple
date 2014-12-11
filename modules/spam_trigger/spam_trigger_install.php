@@ -8,13 +8,15 @@
 
     global $db;
     $fields = $db->get_results("DESCRIBE ".table_links);
-    if ($fields)
-        foreach ($fields as $field)
-        if ($field->Field == 'link_status' && !strstr($field->Type,"'moderated'"))
-            $db->query("ALTER TABLE `".table_links."` CHANGE  `link_status`  `link_status` ".str_replace(')',",'moderated')",$field->Type)." DEFAULT  'discard'");
+    if ($fields) {
+        foreach ($fields as $field) {
+            if ($field->Field == 'link_status' && !strstr($field->Type,"'moderated'")) {
+                $db->query("ALTER TABLE `".table_links."` CHANGE  `link_status`  `link_status` ".str_replace(')',",'moderated')",$field->Type)." DEFAULT  'discard'");
+            }
+        }
+    }
 
-    if (get_misc_data('spam_trigger_light')=='')
-    {
+    if (get_misc_data('spam_trigger_light')=='') {
         misc_data_update('spam_trigger_light', 'arsehole
 ass-pirate
 ass pirate

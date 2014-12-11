@@ -15,13 +15,12 @@ $vars = '';
 check_actions('new_top', $vars);
 
 // find the name of the current category
-if(isset($_REQUEST['category'])){
+if (isset($_REQUEST['category'])) {
     $thecat = get_cached_category_data('category_safe_name', sanitize($_REQUEST['category'], 1));
     $main_smarty->assign('request_category_name', $thecat->category_name);
     $catID = $thecat->category_id;
     $thecat = $thecat->category_name;
-    if (!$thecat)
-    {
+    if (!$thecat) {
         header("Location: $my_pligg_base/error_404.php");
 //		header("Location: error_404.php");
 //		$main_smarty->assign('tpl_center', 'error_404_center');
@@ -47,18 +46,24 @@ $search->pagesize = $page_size;
 $search->filterToStatus = "all";
 
 // this is for the tabs on the top that filter
-if(isset($_GET['part'])){$search->setmek = $db->escape($_GET['part']);}
-if(isset($_GET['order'])){$search->ords = $db->escape($_GET['order']);}
+if (isset($_GET['part'])) {
+    $search->setmek = $db->escape($_GET['part']);
+}
+if (isset($_GET['order'])) {
+    $search->ords = $db->escape($_GET['order']);
+}
 $search->do_setmek();
 
 // filter to just the category we're looking at
-if(isset($thecat)){$search->category = $catID;}
+if (isset($thecat)) {
+    $search->category = $catID;
+}
 
 // do the search
 $search->doSearch();
 
 // setup the links
-if(isset($_GET['category'])){
+if (isset($_GET['category'])) {
     $main_smarty->assign('index_url_recent', getmyurl('newcategory', sanitize($_GET['category'],2)));
     $main_smarty->assign('index_url_today', getmyurl('new_sort', 'today', sanitize($_GET['category'],2)));
     $main_smarty->assign('index_url_yesterday', getmyurl('new_sort', 'yesterday', sanitize($_GET['category'],2)));
@@ -86,8 +91,7 @@ $linksum_count = $search->countsql;
 $linksum_sql = $search->sql;
 
 
-if(isset($_REQUEST['category'])) {
-
+if (isset($_REQUEST['category'])) {
     $category_data = get_cached_category_data('category_safe_name', sanitize($_REQUEST['category'], 1));
     $main_smarty->assign('meta_description', $category_data->category_desc);
     $main_smarty->assign('meta_keywords', $category_data->category_keywords);
@@ -101,8 +105,7 @@ if(isset($_REQUEST['category'])) {
     $main_smarty->assign('pretitle', $thecat );
     $main_smarty->assign('posttitle', $main_smarty->get_config_vars('PLIGG_Visual_Pligg_Queued'));
     $main_smarty->assign('page_header', $thecat . $main_smarty->get_config_vars('PLIGG_Visual_Pligg_Queued'));
-}
-else {
+} else {
     $navwhere['text1'] = $main_smarty->get_config_vars('PLIGG_Visual_Breadcrumb_Queued');
     $navwhere['link1'] = getmyurl('new', '');
     $main_smarty->assign('navbar_where', $navwhere);
@@ -120,16 +123,22 @@ define('pagename', 'new');
 $main_smarty->assign('pagename', pagename);
 
 // misc smarty
-if(isset($search->setmek)){$main_smarty->assign('setmeka', $search->setmek);}else{$main_smarty->assign('setmeka', '');}
-if(isset($search->ords)){$main_smarty->assign('paorder', $search->ords);}
+if (isset($search->setmek)) {
+    $main_smarty->assign('setmeka', $search->setmek);
+} else {
+    $main_smarty->assign('setmeka', '');
+}
+if (isset($search->ords)) {
+    $main_smarty->assign('paorder', $search->ords);
+}
 
 $fetch_link_summary = true;
 include('./libs/link_summary.php'); // this is the code that show the links / stories
 
 //For Infinite scrolling and continue reading option
-if(Auto_scroll==2 || Auto_scroll==3){
+if (Auto_scroll==2 || Auto_scroll==3) {
     $main_smarty->assign("scrollpageSize",$page_size);
-}else{
+} else {
     $main_smarty->assign('link_pagination', do_pages($rows, $page_size, "new", true));
 }
 

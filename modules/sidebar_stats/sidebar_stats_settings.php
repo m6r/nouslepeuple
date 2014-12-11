@@ -7,17 +7,19 @@ define('sidebar_stats_tpl_path', '../modules/sidebar_stats/templates/');
 // the path for smarty / template lite plugins
 define('sidebar_stats_plugins_path', 'modules/sidebar_stats/plugins');
 // the language path for the module
-    if(!defined('lang_loc')){
+    if (!defined('lang_loc')) {
         // determine if we're in root or another folder like admin
             $pos = strrpos($_SERVER["SCRIPT_NAME"], "/");
-            $path = substr($_SERVER["SCRIPT_NAME"], 0, $pos);
-            if ($path == "/"){$path = "";}
+        $path = substr($_SERVER["SCRIPT_NAME"], 0, $pos);
+        if ($path == "/") {
+            $path = "";
+        }
 
-            if($path != my_pligg_base){
-                define('lang_loc', '..');
-            } else {
-                define('lang_loc', '.');
-            }
+        if ($path != my_pligg_base) {
+            define('lang_loc', '..');
+        } else {
+            define('lang_loc', '.');
+        }
     }
 
 define('sidebar_stats_lang_conf', lang_loc . '/modules/sidebar_stats/lang.conf');
@@ -25,7 +27,7 @@ define('sidebar_stats_pligg_lang_conf', lang_loc . "/languages/lang_" . pligg_la
 
 // don't touch anything past this line.
 
-if(is_object($main_smarty)){
+if (is_object($main_smarty)) {
     $sql = "SELECT user_login FROM " . table_users . " WHERE user_enabled = '1' ORDER BY user_id DESC LIMIT 1";
     $last_user = $db->get_var($sql);
     $main_smarty->assign('sidebar_stats_last_user', $last_user);

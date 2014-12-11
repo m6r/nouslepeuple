@@ -43,7 +43,8 @@ define("AKISMET_INVALID_KEY",        2);
 
 
 // Base class to assist in error handling between Akismet classes
-class AkismetObject {
+class AkismetObject
+{
     var $errors = array();
 
 
@@ -55,7 +56,8 @@ class AkismetObject {
      * @return void
      */
     // Set an error in the object
-    function setError($name, $message) {
+    function setError($name, $message)
+    {
         $this->errors[$name] = $message;
     }
 
@@ -66,8 +68,9 @@ class AkismetObject {
      * @param	String	$name	The name of the error you want
      * @return mixed	Returns a String if the error exists, a false boolean if it does not exist
      */
-    function getError($name) {
-        if($this->isError($name)) {
+    function getError($name)
+    {
+        if ($this->isError($name)) {
             return $this->errors[$name];
         } else {
             return false;
@@ -80,7 +83,8 @@ class AkismetObject {
      *
      * @return String[]
      */
-    function getErrors() {
+    function getErrors()
+    {
         return (array)$this->errors;
     }
 
@@ -91,7 +95,8 @@ class AkismetObject {
      * @param	String	$name	The name of the error you want
      * @return boolean
      */
-    function isError($name) {
+    function isError($name)
+    {
         return isset($this->errors[$name]);
     }
 
@@ -101,11 +106,10 @@ class AkismetObject {
      *
      * @return boolean
      */
-    function errorsExist() {
+    function errorsExist()
+    {
         return (count($this->errors) > 0);
     }
-
-
 }
 
 
@@ -113,7 +117,8 @@ class AkismetObject {
 
 
 // Used by the Akismet class to communicate with the Akismet service
-class AkismetHttpClient extends AkismetObject {
+class AkismetHttpClient extends AkismetObject
+{
     var $akismetVersion = '1.1';
     var $con;
     var $host;
@@ -124,7 +129,8 @@ class AkismetHttpClient extends AkismetObject {
 
 
     // Constructor
-    function AkismetHttpClient($host, $blogUrl, $apiKey, $port = 80) {
+    function AkismetHttpClient($host, $blogUrl, $apiKey, $port = 80)
+    {
         $this->host = $host;
         $this->port = $port;
         $this->blogUrl = $blogUrl;
@@ -133,10 +139,11 @@ class AkismetHttpClient extends AkismetObject {
 
 
     // Use the connection active in $con to get a response from the server and return that response
-    function getResponse($request, $path, $type = "post", $responseLength = 1160) {
+    function getResponse($request, $path, $type = "post", $responseLength = 1160)
+    {
         $this->_connect();
 
-        if($this->con && !$this->isError(AKISMET_SERVER_NOT_FOUND)) {
+        if ($this->con && !$this->isError(AKISMET_SERVER_NOT_FOUND)) {
             $request  =
                     strToUpper($type)." /{$this->akismetVersion}/$path HTTP/1.0\r\n" .
                     "Host: ".((!empty($this->apiKey)) ? $this->apiKey."." : null)."{$this->host}\r\n" .
@@ -150,7 +157,7 @@ class AkismetHttpClient extends AkismetObject {
 
             @fwrite($this->con, $request);
 
-            while(!feof($this->con)) {
+            while (!feof($this->con)) {
                 $response .= @fgets($this->con, $responseLength);
             }
 
@@ -165,19 +172,19 @@ class AkismetHttpClient extends AkismetObject {
 
 
     // Connect to the Akismet server and store that connection in the instance variable $con
-    function _connect() {
-        if(!($this->con = @fsockopen($this->host, $this->port))) {
+    function _connect()
+    {
+        if (!($this->con = @fsockopen($this->host, $this->port))) {
             $this->setError(AKISMET_SERVER_NOT_FOUND, "Could not connect to akismet server.");
         }
     }
 
 
     // Close the connection to the Akismet server
-    function _disconnect() {
+    function _disconnect()
+    {
         @fclose($this->con);
     }
-
-
 }
 
 
@@ -186,7 +193,8 @@ class AkismetHttpClient extends AkismetObject {
 
 // The controlling class. This is the ONLY class the user should instantiate in
 // order to use the Akismet service!
-class Akismet extends AkismetObject {
+class Akismet extends AkismetObject
+{
     var $apiPort = 80;
     var $akismetServer = 'rest.akismet.com';
     var $akismetVersion = '1.1';
@@ -222,7 +230,8 @@ class Akismet extends AkismetObject {
      * @param 	String	$apiKey		Your wordpress API key
      * @param 	String[]	$comment	A formatted comment array to be examined by the Akismet service
      */
-    function Akismet($blogUrl, $apiKey, $comment) {
+    function Akismet($blogUrl, $apiKey, $comment)
+    {
         $this->blogUrl = $blogUrl;
         $this->apiKey  = $apiKey;
 
@@ -230,25 +239,25 @@ class Akismet extends AkismetObject {
         $this->comment = $comment;
         $this->_formatCommentArray();
 
-        if(!isset($this->comment['user_ip'])) {
+        if (!isset($this->comment['user_ip'])) {
             $this->comment['user_ip'] = ($_SERVER['REMOTE_ADDR'] != getenv('SERVER_ADDR')) ? $_SERVER['REMOTE_ADDR'] : getenv('HTTP_X_FORWARDED_FOR');
         }
-        if(!isset($this->comment['user_agent'])) {
+        if (!isset($this->comment['user_agent'])) {
             $this->comment['user_agent'] = $_SERVER['HTTP_USER_AGENT'];
         }
-        if(!isset($this->comment['referrer'])) {
+        if (!isset($this->comment['referrer'])) {
             $this->comment['referrer'] = $_SERVER['HTTP_REFERER'];
         }
         $this->comment['blog'] = $blogUrl;
 
         // Connect to the Akismet server and populate errors if they exist
         $this->http = new AkismetHttpClient($this->akismetServer, $blogUrl, $apiKey);
-        if($this->http->errorsExist()) {
+        if ($this->http->errorsExist()) {
             $this->errors = array_merge($this->errors, $this->http->getErrors());
         }
 
         // Check if the API key is valid
-        if(!$this->_isValidApiKey($apiKey)) {
+        if (!$this->_isValidApiKey($apiKey)) {
             $this->setError(AKISMET_INVALID_KEY, "Your Akismet API key is not valid.");
         }
     }
@@ -259,7 +268,8 @@ class Akismet extends AkismetObject {
      *
      * @return	boolean
      */
-    function isSpam() {
+    function isSpam()
+    {
         $response = $this->http->getResponse($this->_getQueryString(), 'comment-check');
 
         return ($response == "true");
@@ -271,7 +281,8 @@ class Akismet extends AkismetObject {
      *
      * @return	void
      */
-    function submitSpam() {
+    function submitSpam()
+    {
         $this->http->getResponse($this->_getQueryString(), 'submit-spam');
     }
 
@@ -281,7 +292,8 @@ class Akismet extends AkismetObject {
      *
      * @return	void
      */
-    function submitHam() {
+    function submitHam()
+    {
         $this->http->getResponse($this->_getQueryString(), 'submit-ham');
     }
 
@@ -293,7 +305,8 @@ class Akismet extends AkismetObject {
      * @param	String	$key	The Wordpress API key passed from the constructor argument
      * @return	boolean
      */
-    function _isValidApiKey($key) {
+    function _isValidApiKey($key)
+    {
         $keyCheck = $this->http->getResponse("key=".$this->apiKey."&blog=".$this->blogUrl, 'verify-key');
 
         return ($keyCheck == "valid");
@@ -306,7 +319,8 @@ class Akismet extends AkismetObject {
      * @access	Protected
      * @return	void
      */
-    function _formatCommentArray() {
+    function _formatCommentArray()
+    {
         $format = array(
                 'type' => 'comment_type',
                 'author' => 'comment_author',
@@ -315,8 +329,8 @@ class Akismet extends AkismetObject {
                 'body' => 'comment_content'
             );
 
-        foreach($format as $short => $long) {
-            if(isset($this->comment[$short])) {
+        foreach ($format as $short => $long) {
+            if (isset($this->comment[$short])) {
                 $this->comment[$long] = $this->comment[$short];
                 unset($this->comment[$short]);
             }
@@ -330,10 +344,11 @@ class Akismet extends AkismetObject {
      * @access	Protected
      * @return	String
      */
-    function _getQueryString() {
-        foreach($_SERVER as $key => $value) {
-            if(!in_array($key, $this->ignore)) {
-                if($key == 'REMOTE_ADDR') {
+    function _getQueryString()
+    {
+        foreach ($_SERVER as $key => $value) {
+            if (!in_array($key, $this->ignore)) {
+                if ($key == 'REMOTE_ADDR') {
                     $this->comment[$key] = $this->comment['user_ip'];
                 } else {
                     $this->comment[$key] = $value;
@@ -343,13 +358,11 @@ class Akismet extends AkismetObject {
 
         $query_string = '';
 
-        foreach($this->comment as $key => $data) {
+        foreach ($this->comment as $key => $data) {
             $query_string .= $key . '=' . urlencode(stripslashes($data)) . '&';
         }
 
         return $query_string;
     }
-
-
 }
 ?>

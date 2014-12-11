@@ -14,7 +14,7 @@ force_authentication();
 $canIhaveAccess = 0;
 $canIhaveAccess = $canIhaveAccess + checklevel('admin');
 
-if($canIhaveAccess == 0){
+if ($canIhaveAccess == 0) {
     header("Location: " . getmyurl('admin_login', $_SERVER['REQUEST_URI']));
     die();
 }
@@ -39,10 +39,9 @@ $main_smarty->assign('posttitle', " / " . $main_smarty->get_config_vars('PLIGG_V
 $main_smarty = do_sidebar($main_smarty);
 
 
-if($canIhaveAccess == 1){
+if ($canIhaveAccess == 1) {
     if ($_POST["enabled"]) {
-        foreach($_POST["enabled"] as $id => $value)
-        {
+        foreach ($_POST["enabled"] as $id => $value) {
             $sql = "UPDATE " . table_widgets . " set enabled = $value where id=$id";
             $db->query($sql);
         }
@@ -50,7 +49,7 @@ if($canIhaveAccess == 1){
         exit;
     }
 
-    if($_GET['action'] == 'disable'){
+    if ($_GET['action'] == 'disable') {
         $module = $db->escape(sanitize($_REQUEST['module'],3));
         $sql = "UPDATE " . table_widgets . " set enabled = 0 where `name` = '" . $module . "';";
         //echo $sql;
@@ -61,7 +60,7 @@ if($canIhaveAccess == 1){
         header('Location: admin_widgets.php');
         die();
     }
-    if($_GET['action'] == 'enable'){
+    if ($_GET['action'] == 'enable') {
         $module = $db->escape(sanitize($_REQUEST['module'],3));
         $sql = "UPDATE " . table_widgets . " set enabled = 1 where `name` = '" . $module . "';";
         //echo $sql;
@@ -72,42 +71,40 @@ if($canIhaveAccess == 1){
         header('Location: admin_widgets.php');
         die();
     }
-if($_GET['action'] == 'install'){
-    $widget = $db->escape(sanitize($_REQUEST['widget'],3));
+    if ($_GET['action'] == 'install') {
+        $widget = $db->escape(sanitize($_REQUEST['widget'],3));
 
-    if($widget_info = include_widget_settings($widget))
-    {
-        $version = $widget_info['version'];
-        $name = $widget_info['name'];
+        if ($widget_info = include_widget_settings($widget)) {
+            $version = $widget_info['version'];
+            $name = $widget_info['name'];
 #		$requires = $widget_info['requires'];
 #		check_widget_requirements($requires);
 #		process_db_requirements($widget_info);
+        } else {
+            die('no init.php file exists');
+        }
 
-    } else {
-        die('no init.php file exists');
+        $db->query("INSERT IGNORE INTO " . table_widgets . " (`name`, `version`, `folder`, `enabled`) values ('".$name."', '" . $version . "', '".$widget."', 1);");
+
+        clear_widget_cache();
+
+        header('Location: admin_widgets.php?status=uninstalled');
+        die();
     }
+    if ($_GET['action'] == 'remove') {
+        $widget = $db->escape(sanitize($_REQUEST['widget'],3));
+        $sql = "SELECT * FROM " . table_widgets . " WHERE `name` = '" . $widget . "';";
+        $row = $db->get_row($sql);
 
-    $db->query("INSERT IGNORE INTO " . table_widgets . " (`name`, `version`, `folder`, `enabled`) values ('".$name."', '" . $version . "', '".$widget."', 1);");
-
-    clear_widget_cache();
-
-    header('Location: admin_widgets.php?status=uninstalled');
-    die();
-}
-if($_GET['action'] == 'remove'){
-    $widget = $db->escape(sanitize($_REQUEST['widget'],3));
-    $sql = "SELECT * FROM " . table_widgets . " WHERE `name` = '" . $widget . "';";
-    $row = $db->get_row($sql);
-
-    $sql = "Delete from " . table_widgets . " where `name` = '" . $widget . "';";
+        $sql = "Delete from " . table_widgets . " where `name` = '" . $widget . "';";
     //echo $sql;
     $db->query($sql);
 
-    clear_widget_cache();
+        clear_widget_cache();
 
-    header('Location: admin_widgets.php?status=uninstalled');
-    die();
-}
+        header('Location: admin_widgets.php?status=uninstalled');
+        die();
+    }
 
 
 
@@ -120,12 +117,12 @@ if($_GET['action'] == 'remove'){
     } else {
         echo $output;
     }
-
 }
 
-function clear_widget_cache () {
+function clear_widget_cache ()
+{
     global $db;
-    if(caching == 1){
+    if (caching == 1) {
         // this is to clear the cache and reload it for settings_from_db.php
         $db->cache_dir = mnmpath.'cache';
         $db->use_disk_cache = true;
@@ -139,8 +136,7 @@ function clear_widget_cache () {
 
 function include_widget_settings($name)
 {
-    if(file_exists(mnmpath . '/widgets/'. $name . '/' . 'init.php'))
-    {
+    if (file_exists(mnmpath . '/widgets/'. $name . '/' . 'init.php')) {
         include_once(mnmpath . '/widgets/' . $name . '/' . 'init.php');
 
         return $widget;

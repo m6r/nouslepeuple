@@ -1,23 +1,27 @@
 <?php
-if (!$step) { header('Location: ./install.php'); die(); }
+if (!$step) {
+    header('Location: ./install.php');
+    die();
+}
 
-if ($_POST['language'])
+if ($_POST['language']) {
     $language = addslashes(strip_tags($_POST['language']));
-if($language == 'arabic'){
+}
+if ($language == 'arabic') {
     include_once('./languages/lang_arabic.php');
-}elseif($language == 'catalan'){
+} elseif ($language == 'catalan') {
     include_once('./languages/lang_catalan.php');
-}elseif($language == 'chinese_simplified'){
+} elseif ($language == 'chinese_simplified') {
     include_once('./languages/lang_chinese_simplified.php');
-}elseif($language == 'french'){
+} elseif ($language == 'french') {
     include_once('./languages/lang_french.php');
-}elseif($language == 'german'){
+} elseif ($language == 'german') {
     include_once('./languages/lang_german.php');
-}elseif($language == 'italian'){
+} elseif ($language == 'italian') {
     include_once('./languages/lang_italian.php');
-}elseif($language == 'russian'){
+} elseif ($language == 'russian') {
     include_once('./languages/lang_russian.php');
-}elseif($language == 'thai'){
+} elseif ($language == 'thai') {
     include_once('./languages/lang_thai.php');
 } else {
     include_once('./languages/lang_english.php');
@@ -25,13 +29,20 @@ if($language == 'arabic'){
 
 echo '<div class="instructions">';
 $file='../config.php';
-if (!file_exists($file)) { $errors[]="$file " . $lang['NotFound'] ; }
-elseif (filesize($file) <= 0) { $errors[]="$file " . $lang['ZeroBytes'] ; }
+if (!file_exists($file)) {
+    $errors[]="$file " . $lang['NotFound'] ;
+} elseif (filesize($file) <= 0) {
+    $errors[]="$file " . $lang['ZeroBytes'] ;
+}
 
 $file='../settings.php';
-if (!file_exists($file)) { $errors[]="$file " . $lang['SettingsNotFound'] ; }
-elseif (filesize($file) <= 0) { $errors[]="$file " . $lang['ZeroBytes'] ; }
-elseif (!is_writable($file)) { $errors[]="$file " . $lang['NotEditable'] ; }
+if (!file_exists($file)) {
+    $errors[]="$file " . $lang['SettingsNotFound'] ;
+} elseif (filesize($file) <= 0) {
+    $errors[]="$file " . $lang['ZeroBytes'] ;
+} elseif (!is_writable($file)) {
+    $errors[]="$file " . $lang['NotEditable'] ;
+}
 
 define("mnminclude", dirname(__FILE__).'/../libs/');
 include_once mnminclude.'db.php';
@@ -55,7 +66,7 @@ if (!$errors) {
     $db->query( $sql );
 
     // If user specified a site title, change language files.
-    if (isset($_POST['sitetitle']) && $_POST['sitetitle'] != ''){
+    if (isset($_POST['sitetitle']) && $_POST['sitetitle'] != '') {
         // Change the value for PLIGG_Visual_Name in the language files
         $replacement = 'PLIGG_Visual_Name = "'.strip_tags($_POST['sitetitle']).'"';
         if (glob("../languages/*.conf")) {
@@ -73,7 +84,8 @@ if (!$errors) {
     }
 
     // Add user IP address to approved IP list, so they are never blocked for bad logins
-    function get_ip_address() {
+    function get_ip_address()
+    {
         foreach (array('HTTP_CLIENT_IP', 'HTTP_X_FORWARDED_FOR', 'HTTP_X_FORWARDED', 'HTTP_X_CLUSTER_CLIENT_IP', 'HTTP_FORWARDED_FOR', 'HTTP_FORWARDED', 'REMOTE_ADDR') as $key) {
             if (array_key_exists($key, $_SERVER) === true) {
                 foreach (explode(',', $_SERVER[$key]) as $ip) {
@@ -87,7 +99,7 @@ if (!$errors) {
     $approvedips = '../logs/approvedips.log';
     if (file_exists($approvedips)) {
         $user_ip = get_ip_address();
-        if ($user_ip){
+        if ($user_ip) {
             $filedata = "$user_ip \n";
             // print $filedata;
             // echo 'IP: '.get_ip_address();
@@ -96,7 +108,6 @@ if (!$errors) {
             $ip_file = fopen($approvedips, "w");
             fwrite($ip_file, $filedata);
             fclose($ip_file);
-
         }
     }
 
@@ -113,9 +124,8 @@ if (!$errors) {
 		' . $lang['WhatToDoList'] . '
 	</ol></div>';
 
-    if ($_POST['sitetitle'] != ''){
+    if ($_POST['sitetitle'] != '') {
         // Change the site title (PLIGG_Visual_Name) in the language file
-
     }
 }
 

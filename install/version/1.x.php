@@ -14,7 +14,6 @@ $new_version = '122';
 
 // Check if you need to run the one time 1.x upgrade
 if ($old_version < $new_version) {
-
     //echo $lang['UpgradingTables'] . '<br />';
     echo '<li>Performing one-time Pligg 1.X Upgrade</li><ul>';
 
@@ -93,7 +92,8 @@ if ($old_version < $new_version) {
 
     $result = $db->get_results("select * from `" . table_config . "` where `var_name` = 'group_avatar_size_width';");
     if (count($result) == 0) {
-        $db->query("INSERT INTO `" . table_config . "` ( `var_id` , `var_page` , `var_name` , `var_value` , `var_defaultvalue` , `var_optiontext` , `var_title` , `var_desc` , `var_method` , `var_enclosein` )VALUES (NULL , 'Groups', 'group_avatar_size_width', '90', '90', 'number', 'Width of Group Avatar', 'Width in pixels for the group avatar', 'define', 'NULL');");    }
+        $db->query("INSERT INTO `" . table_config . "` ( `var_id` , `var_page` , `var_name` , `var_value` , `var_defaultvalue` , `var_optiontext` , `var_title` , `var_desc` , `var_method` , `var_enclosein` )VALUES (NULL , 'Groups', 'group_avatar_size_width', '90', '90', 'number', 'Width of Group Avatar', 'Width in pixels for the group avatar', 'define', 'NULL');");
+    }
 
     $result = $db->get_results("select * from `" . table_config . "` where `var_name` = 'group_avatar_size_height';");
     if (count($result) == 0) {
@@ -173,12 +173,12 @@ if ($old_version < $new_version) {
     }
 
     $result = $db->get_results("select * from `" . table_links . "` where (ISNULL(link_title_url) OR link_title_url='') AND link_status='page'");
-    if ($results)
-        foreach ($results as $result)
-        {
-        $page_url=makeUrlFriendly($db->escape(trim($result->link_title)), true);
-        $db->query("UPDATE ".table_links." SET link_title_url='$page_url', link_modified=link_modified WHERE id={$result->link_id}");
+    if ($results) {
+        foreach ($results as $result) {
+            $page_url=makeUrlFriendly($db->escape(trim($result->link_title)), true);
+            $db->query("UPDATE ".table_links." SET link_title_url='$page_url', link_modified=link_modified WHERE id={$result->link_id}");
         }
+    }
 
 
     $fieldexists = checkforfield('vote_karma', table_votes);
@@ -216,54 +216,65 @@ if ($old_version < $new_version) {
 
     // Disable Multibox Module (replaced by Colorbox)
     $result = $db->get_results("select * from `" . table_modules . "` where `folder` = 'multibox_admin';");
-    if (count($result) == 0)
+    if (count($result) == 0) {
         $db->query("insert into `" . table_modules . "` (`id`, `name`, `version`, `latest_version`, `folder`, `enabled`) VALUES (97, 'Multibox Admin', 0.1, 0, 'multibox_admin', 0);");
+    }
 
     // Install Hello World Module
     $result = $db->get_results("select * from `" . table_modules . "` where `folder` = 'hello_world';");
-    if (count($result) == 0)
+    if (count($result) == 0) {
         $db->query("insert into `" . table_modules . "` (`id`, `name`, `version`, `latest_version`, `folder`, `enabled`) VALUES (99, 'Hello World', 0.3, 0, 'hello_world', 1);");
+    }
 
     // Voting method 3
     $sql = "UPDATE `" . table_config . "` set  var_optiontext='1-3', var_desc='<b>1</b> = the digg method. <b>2</b> = 5 star rating method. <b>3</b> = Karma method' WHERE `var_name` = 'Voting_Method';";
     $db->query($sql);
 
     $result = $db->get_results("select * from `" . table_config . "` where `var_name` = 'karma_to_publish';");
-    if (count($result) == 0)
+    if (count($result) == 0) {
         $db->query("INSERT INTO `" . table_config . "` VALUES (NULL, 'Voting', 'karma_to_publish', '100', '100', 'number', 'Karma to publish', 'Minimum karma value before story is sent to the front page.', 'define', NULL)");
+    }
 
 
     // 3 levels for html tags
     $sql = "UPDATE `" . table_config . "` set  var_title='HTML tags to allow for Normal users' WHERE `var_id` = 20;";
     $db->query($sql);
     $result = $db->get_results("select * from `" . table_config . "` where `var_name` = 'Story_Content_Tags_To_Allow_Admin';");
-    if (count($result) == 0)
+    if (count($result) == 0) {
         $db->query("INSERT INTO `" . table_config . "` VALUES (91, 'Submit', 'Story_Content_Tags_To_Allow_Admin', '', '', 'HTML tags', 'HTML tags to allow for Moderators', 'leave blank to not allow tags. Examples are \"&lt;strong>&lt;br>&lt;font>&lt;img>&lt;p>\"', 'define', '''')");
+    }
     $result = $db->get_results("select * from `" . table_config . "` where `var_name` = 'Story_Content_Tags_To_Allow_God';");
-    if (count($result) == 0)
+    if (count($result) == 0) {
         $db->query("INSERT INTO `" . table_config . "` VALUES (92, 'Submit', 'Story_Content_Tags_To_Allow_God', '', '', 'HTML tags', 'HTML tags to allow for Admins', 'leave blank to not allow tags. Examples are \"&lt;strong>&lt;br>&lt;font>&lt;img>&lt;p>\"', 'define', '''')");
+    }
     $db->query("UPDATE `" . table_config . "` SET var_name='Story_Content_Tags_To_Allow_Normal' WHERE var_name='Story_Content_Tags_To_Allow'");
 
     $result = $db->get_results("select * from `" . table_config . "` where `var_name` = 'maxTitleLength';");
-    if (count($result) == 0)
+    if (count($result) == 0) {
         $db->query("INSERT INTO `" . table_config . "` VALUES (NULL, 'Submit', 'maxTitleLength', '120', '120', 'number', 'Maximum Title Length', 'Maximum number of characters for the story title.', 'define', NULL)");
+    }
     $result = $db->get_results("select * from `" . table_config . "` where `var_name` = 'maxTagsLength';");
-    if (count($result) == 0)
+    if (count($result) == 0) {
         $db->query("INSERT INTO `" . table_config . "` VALUES (NULL, 'Submit', 'maxTagsLength', '40', '40', 'number', 'Maximum Tag Line Length', 'Maximum number of characters for the story tags.', 'define', NULL)");
+    }
 
     $result = $db->get_results("select * from `" . table_config . "` where `var_name` = 'minTagsLength';");
-    if (count($result) == 0)
+    if (count($result) == 0) {
         $db->query("INSERT INTO `" . table_config . "` VALUES (NULL, 'Submit', 'minTagsLength', '3', '3', 'number', 'Minimum Tag Character Length', 'Minimum number of characters allowed for story tags. Should be at least 3 to be searchable.', 'define', NULL)");
+    }
 
     $result = $db->get_results("select * from `" . table_config . "` where `var_name` = 'maxStoryLength';");
-    if (count($result) == 0)
+    if (count($result) == 0) {
         $db->query("INSERT INTO `" . table_config . "` VALUES (NULL, 'Submit', 'maxStoryLength', '1000', '1000', 'number', 'Maximum Story Length', 'Maximum number of characters for the story description.', 'define', NULL)");
+    }
     $result = $db->get_results("select * from `" . table_config . "` where `var_name` = 'maxSummaryLength';");
-    if (count($result) == 0)
+    if (count($result) == 0) {
         $db->query("INSERT INTO `" . table_config . "` VALUES (NULL, 'Submit', 'maxSummaryLength', '400', '400', 'number', 'Maximum Summary Length', 'Maximum number of characters for the story summary.', 'define', NULL)");
+    }
     $result = $db->get_results("select * from `" . table_config . "` where `var_name` = 'maxCommentLength';");
-    if (count($result) == 0)
+    if (count($result) == 0) {
         $db->query("INSERT INTO `" . table_config . "` VALUES (NULL, 'Comments', 'maxCommentLength', '1200', '1200', 'number', 'Maximum Comment Length', 'Maximum number of characters for the comment.', 'define', NULL)");
+    }
 
     $tableexists = checkfortable(table_widgets);
     if (!$tableexists) {
@@ -286,12 +297,11 @@ if ($old_version < $new_version) {
         $db->query("INSERT INTO `".table_widgets."` VALUES (4, 'Pligg CMS', 0.1, 0, 'pligg_cms', 1, 'right', 5, '')");
         $db->query("INSERT INTO `".table_widgets."` VALUES (5, 'Pligg News', 0.1, 0, 'pligg_news', 1, 'right', 6, '')");
         $db->query("INSERT INTO `".table_widgets."` VALUES (6, 'New products', 0.1, 0, 'new_products', 1, 'left', 2, '')");
-    }
-    else
-    {
+    } else {
         $fieldexists = checkforindex('folder', table_widgets);
-        if (!$fieldexists)
+        if (!$fieldexists) {
             $db->query("ALTER TABLE `".table_widgets."` ADD UNIQUE (`folder`)");
+        }
     }
 
     $tableexists = checkfortable(table_old_urls);
@@ -343,8 +353,8 @@ if ($old_version < $new_version) {
 
     $fieldexists = checkforfield('link_blog', table_links);
     if ($fieldexists) {
-             $sql = "ALTER TABLE `" . table_links . "` drop column `link_blog`";
-             $db->query($sql);
+        $sql = "ALTER TABLE `" . table_links . "` drop column `link_blog`";
+        $db->query($sql);
     }
     /* modification for page cms*/
     $fieldexists = checkforfield('link_status', table_links);
@@ -353,18 +363,24 @@ if ($old_version < $new_version) {
         $db->query($sql);
     }
     $fields = $db->get_results("DESCRIBE ".table_users);
-    if ($fields)
-        foreach ($fields as $field)
-        if ($field->Field == 'user_level' && !strstr($field->Type,"'Spammer'"))
-            $db->query($sql="ALTER TABLE `".table_users."` CHANGE  `user_level`  `user_level` ".str_replace(')',",'Spammer')",$field->Type)." DEFAULT  'normal'");
+    if ($fields) {
+        foreach ($fields as $field) {
+            if ($field->Field == 'user_level' && !strstr($field->Type,"'Spammer'")) {
+                $db->query($sql="ALTER TABLE `".table_users."` CHANGE  `user_level`  `user_level` ".str_replace(')',",'Spammer')",$field->Type)." DEFAULT  'normal'");
+            }
+        }
+    }
     $db->query("UPDATE ".table_users." SET user_level='Spammer', user_email=REPLACE(user_email,'-killspam','') WHERE user_email LIKE '%-killspam%'");
 
     // DB 05/07/09
     $fields = $db->get_results("DESCRIBE ".table_links);
-    if ($fields)
-        foreach ($fields as $field)
-        if ($field->Field == 'link_status' && !strstr($field->Type,"'page'"))
-            $db->query("ALTER TABLE `".table_links."` CHANGE  `link_status`  `link_status` ".str_replace(')',",'page')",$field->Type)." DEFAULT  'discard'");
+    if ($fields) {
+        foreach ($fields as $field) {
+            if ($field->Field == 'link_status' && !strstr($field->Type,"'page'")) {
+                $db->query("ALTER TABLE `".table_links."` CHANGE  `link_status`  `link_status` ".str_replace(')',",'page')",$field->Type)." DEFAULT  'discard'");
+            }
+        }
+    }
     /////
     $fieldexists = checkforfield('user_lang', table_users);
     if ($fieldexists) {
@@ -425,14 +441,14 @@ if ($old_version < $new_version) {
 			KEY `group_creator` (`group_creator`, `group_status`)
 			);";
         $db->query($sql);
-    }else{
+    } else {
         $db->query("ALTER TABLE  `".table_groups."` CHANGE  `group_date`  `group_date` DATETIME");
     }
 
     //group member table
     $tableexists = checkfortable(table_group_member);
     if (!$tableexists) {
-    $sql = "CREATE TABLE `".table_group_member."` (
+        $sql = "CREATE TABLE `".table_group_member."` (
 		`member_id` INT( 20 ) NOT NULL auto_increment,
 		`member_user_id` INT( 20 ) NOT NULL ,
         `member_group_id` INT( 20 ) NOT NULL ,
@@ -442,21 +458,21 @@ if ($old_version < $new_version) {
 		KEY `user_group` (`member_group_id`, `member_user_id`)
 		);";
         $db->query($sql);
-           }
+    }
     echo '<li>Creating table: \'group_member\'</li>';
 
     //group shared table
     $tableexists = checkfortable(table_group_shared);
     if (!$tableexists) {
-    $sql = "CREATE TABLE `".table_group_shared."` (
+        $sql = "CREATE TABLE `".table_group_shared."` (
 		`share_id` INT( 20 ) NOT NULL AUTO_INCREMENT PRIMARY KEY ,
 		`share_link_id` INT( 20 ) NOT NULL ,
 		`share_group_id` INT( 20 ) NOT NULL ,
 		`share_user_id` INT( 20 ) NOT NULL,
 		UNIQUE KEY `share_group_id` (`share_group_id`,`share_link_id`)
 		);";
-            $db->query($sql);
-        }
+        $db->query($sql);
+    }
     echo '<li>Creating table: \'group_shared\'</li>';
 
     $fieldexists = checkforindex('tag_words', table_tags);
@@ -534,7 +550,7 @@ if ($old_version < $new_version) {
 	  	`total` int(11) NOT NULL,
 	  	PRIMARY KEY  (`name`)
 			) ENGINE = MyISAM;";
-            $db->query($sql);
+        $db->query($sql);
 
         $db->query("insert into `" . table_totals . "` (`name`, `total`) values ('published', 0);");
         $db->query("insert into `" . table_totals . "` (`name`, `total`) values ('new', 0);");
@@ -552,7 +568,7 @@ if ($old_version < $new_version) {
 
     // Captcha upgrade
     $captcha_result=$db->get_results("select * from " . table_misc_data . " where name = 'captcha_method'");
-    if(count($captcha_result)==0){
+    if (count($captcha_result)==0) {
         $sql = "INSERT INTO `" . table_misc_data . "` ( `name` , `data` ) VALUES ('captcha_method', 'solvemedia');";
         $db->query($sql);
         $sql = "INSERT INTO `" . table_misc_data . "` ( `name` , `data` ) VALUES ('reCaptcha_pubkey', '6LfwKQQAAAAAAPFCNozXDIaf8GobTb7LCKQw54EA');";
@@ -563,10 +579,11 @@ if ($old_version < $new_version) {
 
     // Random hash used for encrypting data
     $randkey = '';
-    for ($i=0; $i<32; $i++)
+    for ($i=0; $i<32; $i++) {
         $randkey .= chr(rand(48,200));
-           misc_data_update('hash', $randkey);
-        misc_data_update('validate', 0);
+    }
+    misc_data_update('hash', $randkey);
+    misc_data_update('validate', 0);
 
     // Sub-category organization
     $fieldexists = checkforfield('rgt', table_categories);
@@ -608,9 +625,11 @@ if ($old_version < $new_version) {
         // DB 04/13/09
         $categories = $db->get_results("SELECT category_id FROM `".table_categories."` WHERE category_id>0",ARRAY_A);
         $cats = array();
-        if ($categories)
-            foreach ($categories as $cat)
-            $cats[] = $cat['category_id'];
+        if ($categories) {
+            foreach ($categories as $cat) {
+                $cats[] = $cat['category_id'];
+            }
+        }
 
         $sql = "ALTER TABLE `" . table_users . "` ADD `user_categories` VARCHAR(255) NOT NULL default '' AFTER `user_occupation`;";
         $db->query($sql);
@@ -618,17 +637,16 @@ if ($old_version < $new_version) {
     } else {
         $sql = "CHANGE  `user_categories`  `user_categories` VARCHAR( 255 ) DEFAULT  ''";
         $db->query($sql);
-        if (get_misc_data('user_cat')=='' && $db->get_var("SELECT user_categories FROM ".table_users." WHERE user_level='admin' LIMIT 1"))
-        {
+        if (get_misc_data('user_cat')=='' && $db->get_var("SELECT user_categories FROM ".table_users." WHERE user_level='admin' LIMIT 1")) {
             $sqlGetiCategory = "SELECT category__auto_id from " . table_categories . " where category__auto_id!= 0;";
             $sqlGetiCategoryQ = mysql_query($sqlGetiCategory);
             $arr = array();
-            while ($row = mysql_fetch_array($sqlGetiCategoryQ, MYSQL_NUM))
+            while ($row = mysql_fetch_array($sqlGetiCategoryQ, MYSQL_NUM)) {
                 $arr[] = $row[0];
+            }
 
             $result = mysql_query("SELECT * FROM ".table_users);
-            while ($row = mysql_fetch_array($result))
-            {
+            while ($row = mysql_fetch_array($result)) {
                 $cats = split(',',$row['user_categories']);
                 $diff = array_diff($arr,$cats);
                 mysql_query($sql="UPDATE ".table_users." SET user_categories='".join(',',$diff)."' WHERE user_id='{$row['user_id']}'");
@@ -661,7 +679,7 @@ if ($old_version < $new_version) {
     $db->show_errors = $show_errors;
 
     $tableexists = checkfortable(table_formulas);
-        if (!$tableexists) {
+    if (!$tableexists) {
         $sql = "CREATE TABLE `" . table_formulas . "` (
 			  `id` int(11) NOT NULL auto_increment,
 			  `type` varchar(10) NOT NULL,
@@ -678,7 +696,7 @@ if ($old_version < $new_version) {
 
     $tableexists = checkfortable(table_redirects);
     if (!$tableexists) {
-            $sql = "CREATE TABLE `" . table_redirects . "` (
+        $sql = "CREATE TABLE `" . table_redirects . "` (
 			  `redirect_id` int(11) NOT NULL auto_increment,
 			  `redirect_old` varchar(255) NOT NULL,
 			  `redirect_new` varchar(255) NOT NULL,
@@ -724,7 +742,7 @@ if ($old_version < $new_version) {
     // Delete Pageviews and Captcha
     $sql = "DELETE FROM `" . table_config . "` WHERE `var_name` = 'PageViews';";
     $db->query($sql);
-        $sql = "DELETE FROM `" . table_config . "` WHERE `var_page` = 'Captcha';";
+    $sql = "DELETE FROM `" . table_config . "` WHERE `var_page` = 'Captcha';";
     $db->query($sql);
 
     // Change config categories for 1.0

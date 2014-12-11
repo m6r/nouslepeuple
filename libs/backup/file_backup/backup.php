@@ -1,15 +1,17 @@
 <?php
 
-class FileBackup {
+class FileBackup
+{
     var $Success = 0;
 
-    function MakeBackup() {
-
+    function MakeBackup()
+    {
         include ('zip.php');
 
         $xlist = array();
         $files = $this->filelist("../",1,0); // call the function
-        foreach ($files as $list) {//print array
+        foreach ($files as $list) {
+            //print array
            //echo "Directory: " . $list['dir'] . " => Level: " . $list['level'] . " => Name: " . $list['name'] . " => Path: " . $list['path'] ."<br>";
            // If the entry is just the name of a directory, don't include it
            // because the ZIP will take EVERYTHING inside of that subfolder
@@ -22,8 +24,8 @@ class FileBackup {
            // exclude the dbconnect.php file because it stores our passwords.
            // exclude avatars (we just want a code backup)
            // avatars are backed up seperately
-           if($list['dir'] == 0 && $list['path'] != "./backup/" && $list['path'] != "./avatars/" && $list['path'] != "./avatars/user_uploaded/" && $list['name'] != "dbconnect.php"){
-                //echo $list['path'] . $list['name'] . "<BR>";
+           if ($list['dir'] == 0 && $list['path'] != "./backup/" && $list['path'] != "./avatars/" && $list['path'] != "./avatars/user_uploaded/" && $list['name'] != "dbconnect.php") {
+               //echo $list['path'] . $list['name'] . "<BR>";
                 $xlist[] = $list['path'] . $list['name'];
            }
         }
@@ -40,11 +42,11 @@ class FileBackup {
 
         echo 'Zip file created -- <a href = "' . './backup/' . $zipname . '">'.$zipname.'</a>';
         $this->success = 1;
-
     }
 
 
-    function MakeAvatarBackup() {
+    function MakeAvatarBackup()
+    {
         include ('zip.php');
         $xlist = array();
         //echo mnmpath;
@@ -56,9 +58,10 @@ class FileBackup {
         //echo "<pre>";
         //print_r($files);
 
-        foreach ($files as $list) {//print array
-           if($list['dir'] == 0){
-                $xlist[] = $list['path'] . $list['name'];
+        foreach ($files as $list) {
+            //print array
+           if ($list['dir'] == 0) {
+               $xlist[] = $list['path'] . $list['name'];
            }
         }
 
@@ -88,21 +91,22 @@ class FileBackup {
     $maxlevel => "all" or a number; specifes the number of directories down that you want to search
     $level => integer; directory level that the function is currently searching
     */
-    function filelist ($startdir="./", $searchSubdirs=1, $directoriesonly=0, $maxlevel="all", $level=1) {
-       //list the directory/file names that you want to ignore
+    function filelist ($startdir="./", $searchSubdirs=1, $directoriesonly=0, $maxlevel="all", $level=1)
+    {
+        //list the directory/file names that you want to ignore
       // echo $startdir;
 
        $ignoredDirectory[] = ".";
-       $ignoredDirectory[] = "..";
-       $ignoredDirectory[] = "_vti_cnf";
-       $ignoredDirectory[] = ".svn";
-       $ignoredDirectory[] = "cache";
-       global $directorylist;    //initialize global array
+        $ignoredDirectory[] = "..";
+        $ignoredDirectory[] = "_vti_cnf";
+        $ignoredDirectory[] = ".svn";
+        $ignoredDirectory[] = "cache";
+        global $directorylist;    //initialize global array
        if (is_dir($startdir)) {
            if ($dh = opendir($startdir)) {
                while (($file = readdir($dh)) !== false) {
                    if (!(array_search($file,$ignoredDirectory) > -1)) {
-                     if (filetype($startdir . $file) == "dir") {
+                       if (filetype($startdir . $file) == "dir") {
                            //build your directory array however you choose;
                            //add other file details that you want.
                            $directorylist[$startdir . $file]['level'] = $level;
@@ -119,14 +123,17 @@ class FileBackup {
                                //if you want to include files; build your file array
                                //however you choose; add other file details that you want.
                              $directorylist[$startdir . $file]['level'] = $level;
-                             $directorylist[$startdir . $file]['dir'] = 0;
-                             $directorylist[$startdir . $file]['name'] = $file;
-                             $directorylist[$startdir . $file]['path'] = $startdir;
-         }}}}
+                               $directorylist[$startdir . $file]['dir'] = 0;
+                               $directorylist[$startdir . $file]['name'] = $file;
+                               $directorylist[$startdir . $file]['path'] = $startdir;
+                           }
+                       }
+                   }
+               }
                closedir($dh);
-    }}
-    return($directorylist);
+           }
+       }
+        return($directorylist);
     }
-
 }
 ?>

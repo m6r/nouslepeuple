@@ -27,12 +27,13 @@ $canIhaveAccess = $canIhaveAccess + checklevel('admin');
 $canIhaveAccess = $canIhaveAccess + checklevel('moderator');
 
 // If not logged in, redirect to the index page
-if ($_GET['login'] && $canIhaveAccess)
+if ($_GET['login'] && $canIhaveAccess) {
     $login=$_GET['login'];
-elseif ($current_user->user_id > 0 && $current_user->authenticated) {
+} elseif ($current_user->user_id > 0 && $current_user->authenticated) {
     $login = $current_user->user_login;
-    if ($_GET['avatar'] != 'edit')
+    if ($_GET['avatar'] != 'edit') {
         header("Location: $my_base_url$my_pligg_base/user/$login/edit/");
+    }
 } else {
     //header('Location: '.$my_base_url.$my_pligg_base);
     //die;
@@ -52,7 +53,7 @@ $main_smarty->assign('posttitle', $main_smarty->get_config_vars('PLIGG_Visual_Pr
 // read the users information from the database
 $user=new User();
 $user->username = $login;
-if(!$user->read()) {
+if (!$user->read()) {
     header('Location: '.$my_base_url.$my_pligg_base);
     die;
 }
@@ -80,9 +81,8 @@ $main_smarty->assign('user_followers', $user->getFollowersCount());
 $main_smarty->assign('user_following', $user->getFollowingCount());
 
     // uploading avatar
-    if(isset($_POST["avatar"]) && sanitize($_POST["avatar"], 3) == "uploaded" && Enable_User_Upload_Avatar == true){
-        if ($CSRF->check_valid(sanitize($_POST['token'], 3), 'profile_change')){
-
+    if (isset($_POST["avatar"]) && sanitize($_POST["avatar"], 3) == "uploaded" && Enable_User_Upload_Avatar == true) {
+        if ($CSRF->check_valid(sanitize($_POST['token'], 3), 'profile_change')) {
             $user_image_path = "avatars/user_uploaded" . "/";
             $user_image_apath = "/" . $user_image_path;
             $allowedFileTypes = array("image/jpeg","image/gif","image/png",'image/x-png','image/pjpeg');
@@ -93,11 +93,11 @@ $main_smarty->assign('user_following', $user->getFollowingCount());
 
             $mytmpfile = $_FILES['image_file']['tmp_name'];
 
-            if(!in_array($_FILES['image_file']['type'],$allowedFileTypes)){
+            if (!in_array($_FILES['image_file']['type'],$allowedFileTypes)) {
                 $error['Type'] = 'Only these file types are allowed : jpeg, gif, png';
             }
 
-            if(empty($error)){
+            if (empty($error)) {
                 $imagesize = getimagesize($mytmpfile);
                 $width = $imagesize[0];
                 $height = $imagesize[1];
@@ -107,8 +107,9 @@ $main_smarty->assign('user_following', $user->getFollowingCount());
                 $newimage = $user_image_path . $imagename ;
 
                 $result = move_uploaded_file($_FILES['image_file']['tmp_name'], $newimage);
-                if(empty($result))
+                if (empty($result)) {
                     $error["result"] = "There was an error moving the uploaded file.";
+                }
             }
 
             // create large avatar
@@ -133,31 +134,29 @@ $main_smarty->assign('user_following', $user->getFollowingCount());
         } else {
             echo 'An error occured while uploading your avatar.';
         }
-
     }
 
-    if(isset($error) && is_array($error)) {
-        while(list($key, $val) = each($error)) {
+    if (isset($error) && is_array($error)) {
+        while (list($key, $val) = each($error)) {
             echo $val;
             echo "<br>";
         }
     }
 
 // Save changes
-if(isset($_POST['email'])){
-
+if (isset($_POST['email'])) {
     $savemsg = save_profile();
 
-    if (is_string($savemsg)){
+    if (is_string($savemsg)) {
         $main_smarty->assign('savemsg', $savemsg);
-
-    }else
-    {
+    } else {
         $save_message_text=$main_smarty->get_config_vars("PLIGG_Visual_Profile_DataUpdated");
-        if($savemsg['username']==1)
-         $save_message_text.="<br/>".$main_smarty->get_config_vars("PLIGG_Visual_Profile_UsernameUpdated");
-        if($savemsg['pass']==1)
-         $save_message_text.="<br/>".$main_smarty->get_config_vars("PLIGG_Visual_Profile_PassUpdated");
+        if ($savemsg['username']==1) {
+            $save_message_text.="<br/>".$main_smarty->get_config_vars("PLIGG_Visual_Profile_UsernameUpdated");
+        }
+        if ($savemsg['pass']==1) {
+            $save_message_text.="<br/>".$main_smarty->get_config_vars("PLIGG_Visual_Profile_PassUpdated");
+        }
 
         // Reload the page if no error
         $_SESSION['savemsg'] = $save_message_text;
@@ -173,7 +172,8 @@ if(isset($_POST['email'])){
 // display profile
 show_profile();
 
-function show_profile() {
+function show_profile()
+{
     global $user, $main_smarty, $the_template, $CSRF, $db;
 
     $CSRF->create('profile_change', true, true);
@@ -221,9 +221,11 @@ function show_profile() {
 
     $languages = array();
     $files = glob("languages/*.conf");
-    foreach ($files as $file)
-        if (preg_match('/lang_(.+?)\.conf/',$file,$m))
-        $languages[] = $m[1];
+    foreach ($files as $file) {
+        if (preg_match('/lang_(.+?)\.conf/',$file,$m)) {
+            $languages[] = $m[1];
+        }
+    }
     $main_smarty->assign('languages', $languages);
 
     // pagename
@@ -239,8 +241,9 @@ function show_profile() {
     $results = $db->get_results($categorysql);
     $results = object_2_array($results);
     $category = array();
-    foreach($results as $key => $val)
+    foreach ($results as $key => $val) {
         $category[] = $val['category_name'];
+    }
 
 #	$sor = $_GET['err'];
 #	if($sor == 1)
@@ -253,13 +256,14 @@ function show_profile() {
     $main_smarty->assign('user_category', $user_categories);
     $main_smarty->assign('view_href', 'submitted');
 
-    if (Allow_User_Change_Templates)
-    {
+    if (Allow_User_Change_Templates) {
         $dir = "templates";
         $templates = array();
-        foreach (scandir($dir) as $file)
-            if (strstr($file,".")!==0 && file_exists("$dir/$file/header.tpl"))
-            $templates[] = $file;
+        foreach (scandir($dir) as $file) {
+            if (strstr($file,".")!==0 && file_exists("$dir/$file/header.tpl")) {
+                $templates[] = $file;
+            }
+        }
         $main_smarty->assign('templates', $templates);
         $main_smarty->assign('current_template', sanitize($_COOKIE['template'],3));
         $main_smarty->assign('Allow_User_Change_Templates', Allow_User_Change_Templates);
@@ -270,62 +274,62 @@ function show_profile() {
     $main_smarty->display($the_template . '/pligg.tpl');
 }
 
-function save_profile() {
+function save_profile()
+{
     global $user, $current_user, $db, $main_smarty, $CSRF, $canIhaveAccess, $language;
 
 
 
-    if ($CSRF->check_valid(sanitize($_POST['token'], 3), 'profile_change')){
+    if ($CSRF->check_valid(sanitize($_POST['token'], 3), 'profile_change')) {
+        if (!isset($_POST['save_profile']) || !$_POST['process'] || (!$canIhaveAccess && sanitize($_POST['user_id'], 3) != $current_user->user_id)) {
+            return;
+        }
 
-        if(!isset($_POST['save_profile']) || !$_POST['process'] || (!$canIhaveAccess && sanitize($_POST['user_id'], 3) != $current_user->user_id)) return;
-
-        if ($user->email!=sanitize($_POST['email'], 3))
-        {
-            if(!check_email(sanitize($_POST['email'], 3))) {
-            $savemsg = $main_smarty->get_config_vars("PLIGG_Visual_Profile_BadEmail");
-            return $savemsg;
-            }
-            elseif(email_exists(trim(sanitize($_POST['email'], 3)))) { // if email already exists
+        if ($user->email!=sanitize($_POST['email'], 3)) {
+            if (!check_email(sanitize($_POST['email'], 3))) {
+                $savemsg = $main_smarty->get_config_vars("PLIGG_Visual_Profile_BadEmail");
+                return $savemsg;
+            } elseif (email_exists(trim(sanitize($_POST['email'], 3)))) { // if email already exists
             $savemsg = $main_smarty->get_config_vars("PLIGG_Visual_Register_Error_EmailExists");
-            return $savemsg;
-            }
-            else {
-            if(pligg_validate()){
-                $encode=md5($_POST['email'] . $user->karma .  $user->username. pligg_hash().$main_smarty->get_config_vars('PLIGG_Visual_Name'));
+                return $savemsg;
+            } else {
+                if (pligg_validate()) {
+                    $encode=md5($_POST['email'] . $user->karma .  $user->username. pligg_hash().$main_smarty->get_config_vars('PLIGG_Visual_Name'));
 
-                $domain = $main_smarty->get_config_vars('PLIGG_Visual_Name');
-                $validation = my_base_url . my_pligg_base . "/validation.php?code=$encode&uid=".urlencode($user->username)."&email=".urlencode($_POST['email']);
-                $str = $main_smarty->get_config_vars('PLIGG_PassEmail_verification_message');
-                eval('$str = "'.str_replace('"','\"',$str).'";');
-                $message = "$str";
+                    $domain = $main_smarty->get_config_vars('PLIGG_Visual_Name');
+                    $validation = my_base_url . my_pligg_base . "/validation.php?code=$encode&uid=".urlencode($user->username)."&email=".urlencode($_POST['email']);
+                    $str = $main_smarty->get_config_vars('PLIGG_PassEmail_verification_message');
+                    eval('$str = "'.str_replace('"','\"',$str).'";');
+                    $message = "$str";
 
-                if(phpnum()>=5)
-                    require("libs/class.phpmailer5.php");
-                else
-                    require("libs/class.phpmailer4.php");
-                $mail = new PHPMailer();
-                $mail->From = $main_smarty->get_config_vars('PLIGG_PassEmail_From');
-                $mail->FromName = $main_smarty->get_config_vars('PLIGG_PassEmail_Name');
-                $mail->AddAddress($_POST['email']);
-                $mail->AddReplyTo($main_smarty->get_config_vars('PLIGG_PassEmail_From'));
-                $mail->IsHTML(false);
-                $mail->Subject = $main_smarty->get_config_vars('PLIGG_PassEmail_Subject_verification');
-                $mail->Body = $message;
-                $mail->CharSet = 'utf-8';
+                    if (phpnum()>=5) {
+                        require("libs/class.phpmailer5.php");
+                    } else {
+                        require("libs/class.phpmailer4.php");
+                    }
+                    $mail = new PHPMailer();
+                    $mail->From = $main_smarty->get_config_vars('PLIGG_PassEmail_From');
+                    $mail->FromName = $main_smarty->get_config_vars('PLIGG_PassEmail_Name');
+                    $mail->AddAddress($_POST['email']);
+                    $mail->AddReplyTo($main_smarty->get_config_vars('PLIGG_PassEmail_From'));
+                    $mail->IsHTML(false);
+                    $mail->Subject = $main_smarty->get_config_vars('PLIGG_PassEmail_Subject_verification');
+                    $mail->Body = $message;
+                    $mail->CharSet = 'utf-8';
 
 #print_r($mail);
-                if(!$mail->Send())
+                if (!$mail->Send()) {
                     return false;
-                $savemsg = $main_smarty->get_config_vars("PLIGG_Visual_Register_Noemail").' '.sprintf($main_smarty->get_config_vars("PLIGG_Visual_Register_ToDo"),$main_smarty->get_config_vars('PLIGG_PassEmail_From'));
-            }
-            else
-                $user->email=sanitize($_POST['email'], 2);
+                }
+                    $savemsg = $main_smarty->get_config_vars("PLIGG_Visual_Register_Noemail").' '.sprintf($main_smarty->get_config_vars("PLIGG_Visual_Register_ToDo"),$main_smarty->get_config_vars('PLIGG_PassEmail_From'));
+                } else {
+                    $user->email=sanitize($_POST['email'], 2);
+                }
             }
         }
 
         // User settings
-        if (Allow_User_Change_Templates && file_exists("./templates/".$_POST['template']."/header.tpl"))
-        {
+        if (Allow_User_Change_Templates && file_exists("./templates/".$_POST['template']."/header.tpl")) {
             $domain = $_SERVER['HTTP_HOST']=='localhost' ? '' : preg_replace('/^www/','',$_SERVER['HTTP_HOST']);
             setcookie("template", $_POST['template'], time()+60*60*24*30,'/',$domain);
         }
@@ -333,11 +337,14 @@ function save_profile() {
         $sqlGetiCategory = "SELECT category__auto_id from " . table_categories . " where category__auto_id!= 0;";
         $sqlGetiCategoryQ = mysql_query($sqlGetiCategory);
         $arr = array();
-        while ($row = mysql_fetch_array($sqlGetiCategoryQ, MYSQL_NUM))
+        while ($row = mysql_fetch_array($sqlGetiCategoryQ, MYSQL_NUM)) {
             $arr[] = $row[0];
+        }
 
         $select_check = $_POST['chack'];
-        if (!$select_check) $select_check = array();
+        if (!$select_check) {
+            $select_check = array();
+        }
         $diff = array_diff($arr,$select_check);
         $select_checked = $db->escape(implode(",",$diff));
 
@@ -357,34 +364,34 @@ function save_profile() {
         $user->skype=sanitize($_POST['skype'], 2);
         $user->pinterest=sanitize($_POST['pinterest'], 2);
         $user->names=sanitize($_POST['names'], 2);
-        if (user_language){
+        if (user_language) {
             $user->language=sanitize($_POST['language'], 2);
         }
 
         // Convert user input social URLs to username values
         $facebookUrl = $user->facebook;
         preg_match("/https?:\/\/(www\.)?facebook\.com\/([^\/]*)/", $facebookUrl, $matches);
-        if ($matches){
+        if ($matches) {
             $user->facebook = $matches[2];
         }
         $twitterUrl = $user->twitter;
         preg_match("/https?:\/\/(www\.)?twitter\.com\/(#!\/)?@?([^\/]*)/", $twitterUrl, $matches);
-        if ($matches){
+        if ($matches) {
             $user->twitter = $matches[3];
         }
         $linkedinUrl = $user->linkedin;
         preg_match("/https?:\/\/(www\.)?linkedin\.com\/in\/([^\/]*)/", $linkedinUrl, $matches);
-        if ($matches){
+        if ($matches) {
             $user->linkedin = $matches[2];
         }
         $googleplusUrl = $user->googleplus;
         preg_match("/https?:\/\/plus\.google\.com\/([^\/]*)/", $googleplusUrl, $matches);
-        if ($matches){
+        if ($matches) {
             $user->googleplus = $matches[1];
         }
         $pinterestUrl = $user->pinterest;
         preg_match("/https?:\/\/(www\.)?pinterest\.com\/([^\/]*)/", $pinterestUrl, $matches);
-        if ($matches){
+        if ($matches) {
             $user->pinterest = $matches[2];
         }
 
@@ -399,43 +406,40 @@ function save_profile() {
         }
         $user->avatar_source=$avatar_source;
 */
-      if($user->level=="admin" || $user->level=="moderator"){
-          if ($user->username!=sanitize($_POST['user_login'], 3))
-            {
-             $user_login=sanitize($_POST['user_login'], 2);
+      if ($user->level=="admin" || $user->level=="moderator") {
+          if ($user->username!=sanitize($_POST['user_login'], 3)) {
+              $user_login=sanitize($_POST['user_login'], 2);
 
-            if (preg_match('/\pL/u', 'a')) {    // Check if PCRE was compiled with UTF-8 support
+              if (preg_match('/\pL/u', 'a')) {    // Check if PCRE was compiled with UTF-8 support
             if (!preg_match('/^[_\-\d\p{L}\p{M}]+$/iu',$user_login)) { // if username contains invalid characters
             $savemsg = $main_smarty->get_config_vars('PLIGG_Visual_Register_Error_UserInvalid');
-            return $savemsg;
+                return $savemsg;
             }
-            } else {
-                if (!preg_match('/^[^~`@%&=\\/;:\\.,<>!"\\\'\\^\\.\\[\\]\\$\\(\\)\\|\\*\\+\\-\\?\\{\\}\\\\]+$/', $user_login)) {
-                $savemsg = $main_smarty->get_config_vars('PLIGG_Visual_Register_Error_UserInvalid');
-                 return $savemsg;
-                }
-            }
-
-
-            if(user_exists(trim($user_login)) ) {
-              $savemsg = $main_smarty->get_config_vars("PLIGG_Visual_Register_Error_UserExists");
-              $user->username= $user_login;
-              return $savemsg;
-
-             }else{
-              $user->username=$user_login;
-              $saved['username']=1;
+              } else {
+                  if (!preg_match('/^[^~`@%&=\\/;:\\.,<>!"\\\'\\^\\.\\[\\]\\$\\(\\)\\|\\*\\+\\-\\?\\{\\}\\\\]+$/', $user_login)) {
+                      $savemsg = $main_smarty->get_config_vars('PLIGG_Visual_Register_Error_UserInvalid');
+                      return $savemsg;
+                  }
               }
 
-            }
-        }
 
-        if(!empty($_POST['newpassword']) || !empty($_POST['newpassword2'])) {
+              if (user_exists(trim($user_login)) ) {
+                  $savemsg = $main_smarty->get_config_vars("PLIGG_Visual_Register_Error_UserExists");
+                  $user->username= $user_login;
+                  return $savemsg;
+              } else {
+                  $user->username=$user_login;
+                  $saved['username']=1;
+              }
+          }
+      }
+
+        if (!empty($_POST['newpassword']) || !empty($_POST['newpassword2'])) {
             $oldpass = sanitize($_POST['oldpassword'], 2);
             $userX=$db->get_row("SELECT user_id, user_pass, user_login FROM " . table_users . " WHERE user_login = '".$user->username."'");
             $saltedpass=generateHash($oldpass, substr($userX->user_pass, 0, SALT_LENGTH));
-            if($userX->user_pass == $saltedpass){
-                if(sanitize($_POST['newpassword'], 3) !== sanitize($_POST['newpassword2'], 3)) {
+            if ($userX->user_pass == $saltedpass) {
+                if (sanitize($_POST['newpassword'], 3) !== sanitize($_POST['newpassword2'], 3)) {
                     $savemsg = $main_smarty->get_config_vars("PLIGG_Visual_Profile_BadPass");
                     return $savemsg;
                 } else {
@@ -449,15 +453,15 @@ function save_profile() {
             }
         }
 
-                $user->biographie = sanitize($_POST['newbiographie'], 3);
+        $user->biographie = sanitize($_POST['newbiographie'], 3);
 
         $user->store();
         $user->read();
-        if($saved['pass']==1 || $saved['username']==1)
-         $current_user->Authenticate($user->username, $user->pass, false, $user->pass);
-        else{
-         $current_user->Authenticate($user->username, $user->pass);
-         $saved['profile']=1;
+        if ($saved['pass']==1 || $saved['username']==1) {
+            $current_user->Authenticate($user->username, $user->pass, false, $user->pass);
+        } else {
+            $current_user->Authenticate($user->username, $user->pass);
+            $saved['profile']=1;
         }
         return $saved;
     } else {

@@ -8,7 +8,7 @@ define('welcome_email_lang_conf', '/modules/welcome_email/lang.conf');
 
 // don't touch anything past this line.
 
-if(is_object($main_smarty)){
+if (is_object($main_smarty)) {
     $main_smarty->assign('welcome_email_path', welcome_email_path);
     $main_smarty->assign('welcome_email_conf', welcome_email_lang_conf);
     $main_smarty->assign('welcome_email_tpl_path', welcome_email_tpl_path);

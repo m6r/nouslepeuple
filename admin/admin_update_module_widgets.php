@@ -14,7 +14,7 @@ force_authentication();
 $canIhaveAccess = 0;
 $canIhaveAccess = $canIhaveAccess + checklevel('admin');
 
-if($canIhaveAccess == 0){
+if ($canIhaveAccess == 0) {
     header("Location: " . getmyurl('admin_login', $_SERVER['REQUEST_URI']));
     die();
 }
@@ -38,10 +38,10 @@ $main_smarty->assign('posttitle', " / " . $main_smarty->get_config_vars('PLIGG_V
 // sidebar
 $main_smarty = do_sidebar($main_smarty);
 
-if($canIhaveAccess == 1){
+if ($canIhaveAccess == 1) {
     $action                = mysql_real_escape_string($_POST['action']);
     $updateRecordsArray    = $_POST['recordsArray'];
-    if ($action == "updateRecordsListings"){
+    if ($action == "updateRecordsListings") {
         $listingCounter = 1;
         foreach ($updateRecordsArray as $recordIDValue) {
             $query = "UPDATE " .table_modules. " SET weight = " . $listingCounter . " WHERE id = " . $recordIDValue;
@@ -49,7 +49,6 @@ if($canIhaveAccess == 1){
             $listingCounter = $listingCounter + 1;
         }
     }
-
 }
 
 ?>

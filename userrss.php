@@ -15,7 +15,7 @@ include_once(mnminclude.'smartyvariables.php');
     //user = x 		// the users name
     //time = x 		// how far back in time (seconds) to go
 
-if(isset($_GET['user']) && sanitize($_GET['user'], 3) != ''){
+if (isset($_GET['user']) && sanitize($_GET['user'], 3) != '') {
     $login = sanitize($_GET['user'], 3);
 } else {
     header("Location: $my_pligg_base/error_404.php");
@@ -23,7 +23,7 @@ if(isset($_GET['user']) && sanitize($_GET['user'], 3) != ''){
 }
 $user=new User();
 $user->username = $login;
-if(!$user->read()) {
+if (!$user->read()) {
     //echo "error: user does not exist";
     header("Location: $my_pligg_base/error_404.php");
 //	header('Location: error_404.php');
@@ -34,7 +34,7 @@ if(!$user->read()) {
 $rows = isset($_GET['rows']) && is_numeric($_GET['rows']) ? $_GET['rows'] : 40;
 
 $time = isset($_GET['time']) && is_numeric($_GET['time']) ? $_GET['time'] : 0;
-if($time > 0) {
+if ($time > 0) {
     // Prepare for times
     $sql = "SELECT *, count(*) as votes FROM " . table_votes . ", " . table_links . "
 			LEFT JOIN " . table_users . " ON link_author=user_id
@@ -48,7 +48,6 @@ if($time > 0) {
     $last_modified = time();
     $title = $main_smarty->get_config_vars("PLIGG_Visual_RSS_Recent") . ' ' . txt_time_diff($from);
     $link_date = "";
-
 } else {
     // All the others
     $tmpsearch = new Search;
@@ -140,25 +139,25 @@ if($time > 0) {
     }
 
     $cat = isset($_GET['category']) && is_numeric($_GET['category']) ? $_GET['category'] : 0;
-    if($cat > 0) {
+    if ($cat > 0) {
         $child_cats = '';
         // do we also search the subcategories?
-        if( Independent_Subcategories == true){
+        if ( Independent_Subcategories == true) {
             $child_array = '';
 
             // get a list of all children and put them in $child_array.
             children_id_to_array($child_array, table_categories, $cat);
             if ($child_array != '') {
                 // build the sql
-                foreach($child_array as $child_cat_id) {
+                foreach ($child_array as $child_cat_id) {
                     $child_cat_sql .= ' OR `link_category` = ' . $child_cat_id . ' ';
-                    if (Multiple_Categories)
+                    if (Multiple_Categories) {
                         $child_cat_sql .= ' OR ac_cat_id = ' . $child_cat_id . ' ';
+                    }
                 }
             }
         }
-        if (Multiple_Categories)
-            {
+        if (Multiple_Categories) {
             $from_where = str_replace("WHERE", " LEFT JOIN ".table_additional_categories. " ON ac_link_id=link_id WHERE", $from_where);
             $child_cat_sql .= " OR ac_cat_id = $cat ";
         }
@@ -169,7 +168,7 @@ if($time > 0) {
     }
 
     //This doesn't seem to work -kb
-    if($search) {
+    if ($search) {
         $from_where .= $search;
         $title = htmlspecialchars(sanitize($_GET['search'], 3));
     }
@@ -185,7 +184,7 @@ do_rss_header($title);
 $link = new Link;
 $links = $db->get_results($sql);
 if ($links) {
-    foreach($links as $dblink) {
+    foreach ($links as $dblink) {
         $link->id=$dblink->link_id;
         $cached_links[$dblink->link_id] = $dblink;
         $link->read();
@@ -205,10 +204,11 @@ if ($links) {
         check_actions('rss_add_data', $vars);
         echo '	<source url="'.getmyFullurl("storyURL", $link->category_safe_names($link->category), $link->title_url, $link->id).'"><![CDATA['. $link->title .']]></source>';
         echo "\n	<description><![CDATA[" . $link->content . " ]]></description>\n";
-        if (!empty($link_date))
+        if (!empty($link_date)) {
             echo "	<pubDate>".date("r", $link->$link_date-misc_timezone*3600)."</pubDate>\n";
-        else
+        } else {
             echo "	<pubDate>".date("r", time()-misc_timezone*3600)."</pubDate>\n";
+        }
         echo "	<author>" . $dblink->user_login . "</author>\n";
         echo "	<category>" . htmlspecialchars($category_name) . "</category>\n";
         echo "	<votes>".$link->votes."</votes>\n";
@@ -219,7 +219,8 @@ if ($links) {
 
 do_rss_footer();
 
-function do_rss_header($title) {
+function do_rss_header($title)
+{
     global $last_modified, $dblang, $login, $main_smarty;
     header('Content-type: text/xml; charset=utf-8', true);
     echo '<?phpxml version="1.0" encoding="utf-8"?'.'>' . "\n";
@@ -236,20 +237,23 @@ function do_rss_header($title) {
     echo '<language>'.$dblang.'</language>'."\n";
 }
 
-function do_rss_footer() {
+function do_rss_footer()
+{
     echo "</channel>\n</rss>\n";
 }
 
-function onlyreadables($string) {
-  for ($i=0;$i<strlen($string);$i++) {
-   $chr = $string{$i};
-   $ord = ord($chr);
-   if ($ord<32 or $ord>126) {
-     $chr = "~";
-     $string{$i} = $chr;
-   }
-  }
-  return str_replace("~", "", $string);
+function onlyreadables($string)
+{
+    for ($i=0;$i<strlen($string);$i++) {
+        $chr = $string{$i};
+        $ord = ord($chr);
+        if ($ord<32 or $ord>126) {
+            $chr = "~";
+            $string{$i}
+            = $chr;
+        }
+    }
+    return str_replace("~", "", $string);
 }
 
 ?>

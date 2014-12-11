@@ -2,8 +2,7 @@
 function get_anonymous_story_user_id(&$vars)
 {
     global $db,$main_smarty,$the_template, $current_user;
-    if($anonymous = $db->get_row("SELECT * FROM " . table_users . " WHERE `user_login` = 'anonymous'"))
-    {
+    if ($anonymous = $db->get_row("SELECT * FROM " . table_users . " WHERE `user_login` = 'anonymous'")) {
         $anonymous_user_id = $anonymous->user_id;
         $main_smarty->assign('anonymous_user_id', $anonymous_user_id);
         /*

@@ -1,5 +1,5 @@
 <?php
-if(defined('mnminclude')){
+if (defined('mnminclude')) {
     include_once('akismet_settings.php');
 
     // tell pligg what pages this modules should be included in
@@ -8,9 +8,8 @@ if(defined('mnminclude')){
     $include_in_pages = array('all');
     $do_not_include_in_pages = array();
 
-    if( do_we_load_module() ) {
-
-/*		module_add_action('all_pages_top', 'akismet_top', '');
+    if ( do_we_load_module() ) {
+        /*		module_add_action('all_pages_top', 'akismet_top', '');
 
         $canIhaveAccess = 0;
         $canIhaveAccess = $canIhaveAccess + checklevel('admin');
@@ -27,11 +26,14 @@ if(defined('mnminclude')){
         module_add_action('comment_save', 'akismet_save_comment', '');
         module_add_action('profile_save', 'akismet_save_profile', '');
 
-        if(isset($_REQUEST['module'])){$moduleName = $_REQUEST['module'];}else{$moduleName = '';}
+        if (isset($_REQUEST['module'])) {
+            $moduleName = $_REQUEST['module'];
+        } else {
+            $moduleName = '';
+        }
 
-        if($moduleName == 'akismet'){
+        if ($moduleName == 'akismet') {
             module_add_action('module_page', 'akismet_showpage', '');
-
         }
 
         include_once(mnmmodules . 'akismet/akismet_main.php');

@@ -30,8 +30,7 @@
     $module_info['db_add_field'][]=array(table_prefix . 'files', 'file_hide_file', 'TINYINT',  1, "UNSIGNED", 0, '0');
     $module_info['db_add_field'][]=array(table_prefix . 'files', 'file_comment_id', 'INT',  11, '', 0, '0');
 
-    if (get_misc_data('upload_thumb')=='')
-    {
+    if (get_misc_data('upload_thumb')=='') {
         misc_data_update('upload_thumb', '1');
         misc_data_update('upload_sizes', 'a:1:{i:0;s:7:"200x200";}');
         misc_data_update('upload_display', 'a:1:{s:7:"150x150";s:1:"1";}');

@@ -24,7 +24,7 @@ $query = "SELECT *
 		  ORDER BY category_name";
 $result = mysql_query( $query );
 
-while( $row = mysql_fetch_array( $result ) ){
+while ( $row = mysql_fetch_array( $result ) ) {
     $category_option .= '<option value="'.$row['category_id'].'">'.ucfirst( $row['category_name'] ).'</option>'."\n";
 }
 

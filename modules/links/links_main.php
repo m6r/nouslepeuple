@@ -1,18 +1,22 @@
 <?php
 function links_show_comment_content(&$vars)
 {
-    if (get_misc_data('links_comments'))
+    if (get_misc_data('links_comments')) {
         $vars['comment_text'] = text_to_html($vars['comment_text']);
-    if (get_misc_data('links_nofollow'))
+    }
+    if (get_misc_data('links_nofollow')) {
         $vars['comment_text'] = preg_replace('/<a ([^>]+)>/i','<a rel="nofollow" $1>',$vars['comment_text']);
+    }
 }
 
 function links_summary_fill_smarty(&$vars)
 {
-    if (get_misc_data('links_stories'))
+    if (get_misc_data('links_stories')) {
         $vars['smarty']->_vars['story_content'] = text_to_html($vars['smarty']->_vars['story_content']);
-    if (get_misc_data('links_nofollow'))
+    }
+    if (get_misc_data('links_nofollow')) {
         $vars['smarty']->_vars['story_content'] = preg_replace('/<a ([^>]+)>/i','<a rel="nofollow" $1>',$vars['smarty']->_vars['story_content']);
+    }
 }
 
 //
@@ -30,7 +34,8 @@ function links_settings()
 //
 // Settings page
 //
-function links_showpage(){
+function links_showpage()
+{
     global $db, $main_smarty, $the_template;
 
     include_once('config.php');
@@ -45,10 +50,8 @@ function links_showpage(){
     $canIhaveAccess = 0;
     $canIhaveAccess = $canIhaveAccess + checklevel('admin');
 
-    if($canIhaveAccess == 1)
-    {
-        if ($_POST['submit'])
-        {
+    if ($canIhaveAccess == 1) {
+        if ($_POST['submit']) {
             misc_data_update('links_comments', sanitize($_REQUEST['links_comments'], 3));
             misc_data_update('links_stories', sanitize($_REQUEST['links_stories'], 3));
             misc_data_update('links_nofollow', sanitize($_REQUEST['links_nofollow'], 3));
@@ -69,9 +72,7 @@ function links_showpage(){
         $main_smarty->assign('settings', links_settings());
         $main_smarty->assign('tpl_center', links_tpl_path . 'links_main');
         $main_smarty->display($template_dir . '/admin/admin.tpl');
-    }
-    else
-    {
+    } else {
         header("Location: " . getmyurl('login', $_SERVER['REQUEST_URI']));
     }
 }

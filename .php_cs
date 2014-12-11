@@ -29,7 +29,8 @@ return Symfony\CS\Config\Config::create()
         'trailing_spaces',
         'eof_ending',
         'indentation',
-        'whitespacy_lines')
-    )
+        'whitespacy_lines',
+        'braces',
+    ))
     ->finder($finder)
 ;

@@ -12,20 +12,23 @@ include_once(mnminclude.'user.php');
 
 $requestID = isset($_GET['id']) && is_numeric($_GET['id']) ? $_GET['id'] : 0;
 
-if(isset($_GET['title']) && sanitize($_GET['title'], 3) != ''){$requestTitle = sanitize($_GET['title'], 3);}
+if (isset($_GET['title']) && sanitize($_GET['title'], 3) != '') {
+    $requestTitle = sanitize($_GET['title'], 3);
+}
 // if we're using "Friendly URL's for categories"
-if(isset($_GET['category']) && sanitize($_GET['category'], 3) != '')
-{
+if (isset($_GET['category']) && sanitize($_GET['category'], 3) != '') {
     // One or multiple categories in the URL
     $thecat = explode(',',$_GET['category']);
-    if (sizeof($thecat)<=1)
+    if (sizeof($thecat)<=1) {
         $thecat[0] = $db->get_var("SELECT category_id FROM " . table_categories . " WHERE `category_safe_name` = '".$db->escape(urlencode(sanitize($_GET['category'], 3)))."';");
-    else
-    foreach ($thecat as &$cat)
+    } else {
+        foreach ($thecat as &$cat) {
             $cat = $db->get_var("SELECT category_id FROM " . table_categories . " WHERE `category_safe_name` = '".$db->escape(urlencode(sanitize($cat, 3)))."';");
+        }
+    }
 }
 
-if($requestID > 0 && enable_friendly_urls == true){
+if ($requestID > 0 && enable_friendly_urls == true) {
     // if we're using friendly urls, don't call /story.php?id=XX  or /story/XX/
     // this is to prevent google from thinking it's spam
     // more work needs to be done on this
@@ -34,8 +37,7 @@ if($requestID > 0 && enable_friendly_urls == true){
     $link->id=$requestID;
     if ($link->read() == false || (sizeof($thecat)>0 &&
                       (array_diff($thecat, $link->additional_cats, array($link->category)) ||
-                       sizeof($thecat)!=sizeof($link->additional_cats)+1)))
-    {
+                       sizeof($thecat)!=sizeof($link->additional_cats)+1))) {
         header("Location: $my_pligg_base/error_404.php");
         die();
     }
@@ -49,22 +51,22 @@ if($requestID > 0 && enable_friendly_urls == true){
 }
 
 // if we're using "Friendly URL's for stories"
-if(isset($requestTitle)){
+if (isset($requestTitle)) {
     $requestID = $db->get_var($sql="SELECT link_id FROM " . table_links . " WHERE `link_title_url` = '".$db->escape(sanitize($requestTitle,4))."';");
     // Search in old urls if not found
-    if (!is_numeric($requestID))
+    if (!is_numeric($requestID)) {
         $requestID = $db->get_var($sql="SELECT old_link_id FROM " . table_old_urls . " WHERE `old_title_url` = '".$db->escape(sanitize($requestTitle,4))."';");
+    }
 }
 
-if(is_numeric($requestID)) {
+if (is_numeric($requestID)) {
     $id = $requestID;
     $link = new Link;
     $link->id=$requestID;
     if ($link->read() == false || (sizeof($thecat)>0 &&
                       (array_diff($thecat, $link->additional_cats, array($link->category)) ||
                        sizeof($thecat)!=sizeof($link->additional_cats)+1)) ||
-                      (($link->status=='spam' || $link->status=='discard') && !checklevel('admin') && !checklevel('moderator'))){
-
+                      (($link->status=='spam' || $link->status=='discard') && !checklevel('admin') && !checklevel('moderator'))) {
         // check for redirects
         include(mnminclude.'redirector.php');
         $x = new redirector($_SERVER['REQUEST_URI']);
@@ -74,16 +76,14 @@ if(is_numeric($requestID)) {
     }
 
     // Hide private group stories
-    if ($link->link_group_id)
-    {
+    if ($link->link_group_id) {
         $privacy = $db->get_var("SELECT group_privacy FROM " . table_groups . " WHERE group_id = {$link->link_group_id}");
-        if ($privacy == 'private' && !isMember($link->link_group_id))
-        {
-        die('Access denied');
+        if ($privacy == 'private' && !isMember($link->link_group_id)) {
+            die('Access denied');
         }
     }
 
-    if(isset($_POST['process']) && sanitize($_POST['process'], 3) != ''){
+    if (isset($_POST['process']) && sanitize($_POST['process'], 3) != '') {
         if (sanitize($_POST['process'], 3)=='newcomment') {
             check_referrer();
 
@@ -122,7 +122,7 @@ if(is_numeric($requestID)) {
     $main_smarty->assign('user_id', $current_user->user_id);
     $main_smarty->assign('randmd5', md5($current_user->user_id.$randkey));
 
-    if(!$current_user->authenticated){
+    if (!$current_user->authenticated) {
         $vars = '';
         check_actions('anonymous_user_id', $vars);
     }
@@ -155,7 +155,7 @@ if(is_numeric($requestID)) {
     define('pagename', 'story');
     $main_smarty->assign('pagename', pagename);
 
-    if($current_user->authenticated != TRUE){
+    if ($current_user->authenticated != TRUE) {
         $vars = '';
         check_actions('register_showform', $vars);
     }
@@ -166,13 +166,13 @@ if(is_numeric($requestID)) {
 
     $parent_comment_id=sanitize($_GET['comment_id'], 3);
 
-    if(isset($_GET['reply']) && !empty($parent_comment_id)){
+    if (isset($_GET['reply']) && !empty($parent_comment_id)) {
         $main_smarty->assign('the_comments', get_comments(true,0,$_GET['comment_id']));
         $main_smarty->assign('parrent_comment_id',$parent_comment_id);
-    }elseif(!empty($parent_comment_id)){
+    } elseif (!empty($parent_comment_id)) {
         $main_smarty->assign('the_comments', get_comments(true,$parent_comment_id,0,1));
         $main_smarty->assign('parrent_comment_id',$parent_comment_id);
-    }else{
+    } else {
         $main_smarty->assign('the_comments', get_comments(true));
         $main_smarty->assign('parrent_comment_id',0);
     }
@@ -186,7 +186,6 @@ if(is_numeric($requestID)) {
     $main_smarty->assign('tpl_center', $the_template . '/story_center');
     $main_smarty->display($the_template . '/pligg.tpl');
 } else {
-
     // check for redirects
     include(mnminclude.'redirector.php');
     $x = new redirector($_SERVER['REQUEST_URI']);
@@ -197,42 +196,55 @@ if(is_numeric($requestID)) {
     die();
 }
 
-function get_comments ($fetch = false, $parent = 0, $comment_id=0, $show_parent=0){
+function get_comments ($fetch = false, $parent = 0, $comment_id=0, $show_parent=0)
+{
     Global $db, $main_smarty, $current_user, $CommentOrder, $link, $cached_comments;
 
     //Set comment order to 1 if it's not set in the admin panel
-    if (isset($_GET['comment_sort'])) setcookie('CommentOrder', $CommentOrder = $_GET['comment_sort'], time()+60*60*24*180);
-    elseif (isset($_COOKIE['CommentOrder'])) $CommentOrder = $_COOKIE['CommentOrder'];
+    if (isset($_GET['comment_sort'])) {
+        setcookie('CommentOrder', $CommentOrder = $_GET['comment_sort'], time()+60*60*24*180);
+    } elseif (isset($_COOKIE['CommentOrder'])) {
+        $CommentOrder = $_COOKIE['CommentOrder'];
+    }
 
-    if (!isset($CommentOrder)) $CommentOrder = 1;
-    If ($CommentOrder == 1){$CommentOrderBy = "comment_votes DESC, comment_date DESC";}
-    If ($CommentOrder == 2){$CommentOrderBy = "comment_date DESC";}
-    If ($CommentOrder == 3){$CommentOrderBy = "comment_votes ASC, comment_date DESC";}
-    If ($CommentOrder == 4){$CommentOrderBy = "comment_date ASC";}
+    if (!isset($CommentOrder)) {
+        $CommentOrder = 1;
+    }
+    If ($CommentOrder == 1) {
+        $CommentOrderBy = "comment_votes DESC, comment_date DESC";
+    }
+    If ($CommentOrder == 2) {
+        $CommentOrderBy = "comment_date DESC";
+    }
+    If ($CommentOrder == 3) {
+        $CommentOrderBy = "comment_votes ASC, comment_date DESC";
+    }
+    If ($CommentOrder == 4) {
+        $CommentOrderBy = "comment_date ASC";
+    }
 
     $output = '';
 
-    if (checklevel('admin') || checklevel('moderator'))
+    if (checklevel('admin') || checklevel('moderator')) {
         $status_sql = " OR comment_status='moderated'";
+    }
 
     // get all parent comments
 
-    if($comment_id!=0){
-
-    $comments = $db->get_results("SELECT *
+    if ($comment_id!=0) {
+        $comments = $db->get_results("SELECT *
 	                                    FROM " . table_comments . "
 	                                    WHERE (comment_status='published' $status_sql) AND
 	                                           comment_link_id=$link->id AND comment_id = $comment_id
 	                                    ORDER BY " . $CommentOrderBy);
-
-    }elseif($show_parent==1){
-    $comments = $db->get_results("SELECT *
+    } elseif ($show_parent==1) {
+        $comments = $db->get_results("SELECT *
 	                                    FROM " . table_comments . "
 	                                    WHERE (comment_status='published' $status_sql) AND
 	                                           comment_link_id=$link->id AND comment_id = $parent
 	                                    ORDER BY " . $CommentOrderBy);
-    }else{
-    $comments = $db->get_results("SELECT *
+    } else {
+        $comments = $db->get_results("SELECT *
 	                                    FROM " . table_comments . "
 	                                    WHERE (comment_status='published' $status_sql) AND
 	                                           comment_link_id=$link->id AND comment_parent = $parent
@@ -241,20 +253,20 @@ function get_comments ($fetch = false, $parent = 0, $comment_id=0, $show_parent=
     if ($comments) {
         require_once(mnminclude.'comment.php');
         $comment = new Comment;
-        foreach($comments as $dbcomment) {
+        foreach ($comments as $dbcomment) {
             $comment->id=$dbcomment->comment_id;
             $cached_comments[$dbcomment->comment_id] = $dbcomment;
             $comment->read();
             $output .= $comment->print_summary($link, true);
 
             $output .= "<div class='child-comment'>\n";
-            if($comment_id==0)
-            $output .= get_comments(true, $dbcomment->comment_id);
+            if ($comment_id==0) {
+                $output .= get_comments(true, $dbcomment->comment_id);
+            }
             $output .= "</div>\n";
-
         }
 
-        if($fetch == false){
+        if ($fetch == false) {
             echo $output;
         } else {
             return $output;
@@ -263,13 +275,14 @@ function get_comments ($fetch = false, $parent = 0, $comment_id=0, $show_parent=
 }
 
 
-function insert_comment () {
+function insert_comment ()
+{
     global $link, $db, $current_user, $main_smarty, $the_template, $story_url;
 
 
-        $main_smarty->assign('TheComment',$_POST['comment_content']);
+    $main_smarty->assign('TheComment',$_POST['comment_content']);
 
-    if($vars['error'] == true){
+    if ($vars['error'] == true) {
         $error = true;
         return;
     }
@@ -283,41 +296,34 @@ function insert_comment () {
     $anon = $_POST['anon'];
 
     $comment->content=sanitize($_POST['comment_content'], 4);
-    if (strlen($comment->content) > maxCommentLength)
-    {
+    if (strlen($comment->content) > maxCommentLength) {
         $main_smarty->assign('url', $_SERVER['REQUEST_URI']);
         $main_smarty->assign('tpl_center', $the_template . '/comment_errors');
         $main_smarty->display($the_template . '/pligg.tpl');
         exit;
     }
 
-    if(sanitize($_POST['link_id'], 3) == $link->id && $current_user->authenticated && sanitize($_POST['user_id'], 3) == $current_user->user_id &&    sanitize($_POST['randkey'], 3) > 0)
-    {
-        if(sanitize($_POST['comment_content'], 4) != '')
-            // this is a normal new comment
+    if (sanitize($_POST['link_id'], 3) == $link->id && $current_user->authenticated && sanitize($_POST['user_id'], 3) == $current_user->user_id &&    sanitize($_POST['randkey'], 3) > 0) {
+        if (sanitize($_POST['comment_content'], 4) != '') {// this is a normal new comment
             $cancontinue = true;
-        if (is_array($_POST['reply_comment_content']))
-        {
-            // comment replies
-            foreach ($_POST['reply_comment_content'] as $id => $value)
-                if ($id > 0 && $value)
-                {
-                $comment->content = sanitize($value, 4);
-                $comment->parent= $id;
-                $cancontinue = true;
-                break;
-                }
         }
-    }
-    elseif($_POST['link_id'] == $link->id && $_POST['randkey'] > 0 && $anon == 1)
-    {
-        if(strlen($_POST['comment_content']) > 0)
-        {
+        if (is_array($_POST['reply_comment_content'])) {
+            // comment replies
+            foreach ($_POST['reply_comment_content'] as $id => $value) {
+                if ($id > 0 && $value) {
+                    $comment->content = sanitize($value, 4);
+                    $comment->parent= $id;
+                    $cancontinue = true;
+                    break;
+                }
+            }
+        }
+    } elseif ($_POST['link_id'] == $link->id && $_POST['randkey'] > 0 && $anon == 1) {
+        if (strlen($_POST['comment_content']) > 0) {
             check_actions('register_check_errors', $vars);
-            if($vars['error'] == true)
+            if ($vars['error'] == true) {
                 $error = true;
-            elseif(!$current_user->authenticated)
-            {
+            } elseif (!$current_user->authenticated) {
                 $vars = array('link_id' => $link->id,'randkey' => $_POST['randkey'],'user_id' => $_POST['user_id'],'a_email' => $_POST['a_email'],'a_username' => $_POST['a_username'],'a_website' => $_POST['a_website'],'comment_content' => sanitize($_POST['comment_content'],4));
                 check_actions('anonymous_comment', $vars);
             }
@@ -325,20 +331,21 @@ function insert_comment () {
     }
 
     $parrent_comment_id=sanitize($_POST['parrent_comment_id'], 3);
-    if($cancontinue == true)
-    {
+    if ($cancontinue == true) {
         $comment->link=$link->id;
-        if($parrent_comment_id!=0)
-        $comment->parent= $parrent_comment_id;
-        else
-        $comment->parent=0;
+        if ($parrent_comment_id!=0) {
+            $comment->parent= $parrent_comment_id;
+        } else {
+            $comment->parent=0;
+        }
 
         $comment->randkey=sanitize($_POST['randkey'], 3);
         $comment->author=sanitize($_POST['user_id'], 3);
         $vars = array('comment'=>&$comment);
         check_actions('story_insert_comment',$vars);
-        if($vars['comment']->status)
+        if ($vars['comment']->status) {
             $comment->status = $vars['comment']->status;
+        }
         $comment->store();
         $vars['comment'] = $comment->id;
         check_actions( 'after_comment_submit', $vars ) ;

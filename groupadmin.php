@@ -11,14 +11,17 @@ include(mnminclude.'smartyvariables.php');
 
 check_referrer();
 
-if(isset($_REQUEST["role"])){
-
+if (isset($_REQUEST["role"])) {
     $id = $_REQUEST["id"];
     $userid = $_REQUEST["userid"];
-    if(!is_numeric($id) || !is_numeric($userid)){die();}
+    if (!is_numeric($id) || !is_numeric($userid)) {
+        die();
+    }
     $role = $db->escape($_REQUEST["role"]);
 
-    if ($userid == $current_user->user_id) die();
+    if ($userid == $current_user->user_id) {
+        die();
+    }
 
     $sql = "UPDATE " . table_group_member . " set member_role='".$role."' WHERE member_user_id 	=".$userid." and member_group_id =".$id."";
     //echo $sql;

@@ -1,8 +1,12 @@
 <?php
 
-if(!defined('mnminclude')){header('Location: ../error_404.php');die();}
+if (!defined('mnminclude')) {
+    header('Location: ../error_404.php');
+    die();
+}
 
-class Trackback {
+class Trackback
+{
     var $id = 0;
     var $author = 0;
     var $link = 0;
@@ -15,11 +19,16 @@ class Trackback {
     var $content = '';
     var $read = false;
 
-    function store() {
+    function store()
+    {
         global $db, $current_user;
 
-        if(!is_numeric($this->id)) die();
-        if(!$this->date) $this->date=time();
+        if (!is_numeric($this->id)) {
+            die();
+        }
+        if (!$this->date) {
+            $this->date=time();
+        }
         $trackback_date=$this->date;
         $trackback_author = $this->author;
         $trackback_link = $this->link;
@@ -28,7 +37,7 @@ class Trackback {
         $trackback_url = $db->escape(trim($this->url));
         $trackback_title = $db->escape(trim($this->title));
         $trackback_content = $db->escape(trim($this->content));
-        if($this->id===0) {
+        if ($this->id===0) {
             $db->query("INSERT IGNORE INTO " . table_trackbacks . " (trackback_user_id, trackback_link_id, trackback_type, trackback_date, trackback_status, trackback_url, trackback_title, trackback_content) VALUES ($trackback_author, $trackback_link, '$trackback_type', FROM_UNIXTIME($trackback_date), '$trackback_status', '$trackback_url', '$trackback_title', '$trackback_content')");
             $this->id = $db->insert_id;
         } else {
@@ -36,20 +45,26 @@ class Trackback {
         }
     }
 
-    function read() {
+    function read()
+    {
         global $db, $current_user;
 
         // DB 08/01/08
-        if(!is_numeric($this->id)) die();
-        if(!is_numeric($this->link)) die();
+        if (!is_numeric($this->id)) {
+            die();
+        }
+        if (!is_numeric($this->link)) {
+            die();
+        }
         //$this->link = sanitize($this->link,4);
         /////
-        if($this->id == 0 && !empty($this->url) && $this->link > 0)
+        if ($this->id == 0 && !empty($this->url) && $this->link > 0) {
             $cond = "trackback_type = '$this->type' AND trackback_link_id = $this->link AND trackback_url = '$this->url'";
+        } else {
+            $cond = "trackback_id = $this->id";
+        }
 
-        else $cond = "trackback_id = $this->id";
-
-        if(($link = $db->get_row("SELECT * FROM " . table_trackbacks . " WHERE $cond"))) {
+        if (($link = $db->get_row("SELECT * FROM " . table_trackbacks . " WHERE $cond"))) {
             $this->id=$link->trackback_id;
             $this->author=$link->trackback_user_id;
             $this->link=$link->trackback_link_id;
@@ -74,10 +89,12 @@ class Trackback {
     }
 
 // Send a Trackback
-    function send() {
+    function send()
+    {
         global $trackbackURL;
-        if (empty($this->url))
-                return;
+        if (empty($this->url)) {
+            return;
+        }
 
         $title = urlencode($this->title);
         $excerpt = urlencode($this->content);
@@ -93,11 +110,12 @@ class Trackback {
         $http_request .= "User-Agent: PLG (http://pligg.com) ";
         $http_request .= "\r\n\r\n";
         $http_request .= $query_string;
-        if ( '' == $trackback_url['port'] )
-                $trackback_url['port'] = 80;
+        if ( '' == $trackback_url['port'] ) {
+            $trackback_url['port'] = 80;
+        }
         $fs = @fsockopen($trackback_url['host'], $trackback_url['port'], $errno, $errstr, 5);
-        if($fs && ($res=@fputs($fs, $http_request)) ) {
-          @fclose($fs);
+        if ($fs && ($res=@fputs($fs, $http_request)) ) {
+            @fclose($fs);
             $this->status='ok';
             $this->store();
             return true;

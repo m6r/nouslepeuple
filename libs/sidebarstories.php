@@ -1,18 +1,23 @@
 <?php
 
-if(!defined('mnminclude')){header('Location: ../error_404.php');die();}
+if (!defined('mnminclude')) {
+    header('Location: ../error_404.php');
+    die();
+}
 
-class SidebarStories {
-  var $pagesize = 5; // The number of items to show
+class SidebarStories
+{
+    var $pagesize = 5; // The number of items to show
   var $orderBy = ""; // The sorting order
   var $filterToStatus = "all"; // Filter to "all" or just "published" or "new"
   var $filterToTimeFrame = ""; // Filter to "all" or just "published" or "new"
   var $header = ""; // The text to show at the top
   var $template = ""; // The template to use, including folder
   var $category = "";
-  var $TitleLengthLimit = '';
+    var $TitleLengthLimit = '';
 
-    function show($fetch = false) {
+    function show($fetch = false)
+    {
         global $main_smarty, $db, $cached_links, $current_user;
         include_once(mnminclude.'search.php');
         $search=new Search();
@@ -20,8 +25,7 @@ class SidebarStories {
         $search->pagesize = $this->pagesize;
         $search->filterToStatus = $this->filterToStatus;
         $search->filterToTimeFrame = $this->filterToTimeFrame;
-        if ($this->category)
-        {
+        if ($this->category) {
             $thecat = get_cached_category_data('category_safe_name', $this->category);
             $search->category = $thecat->category_id;
         }
@@ -35,7 +39,7 @@ class SidebarStories {
 
         $the_results = $links;
 
-        if($the_results){
+        if ($the_results) {
             // find out if the logged in user voted / reported each of
             // the stories that the search found and cache the results
             require_once(mnminclude.'votes.php');
@@ -57,10 +61,12 @@ class SidebarStories {
             $i = 0;
             // if this query changes also change it in the read() function in /libs/link.php
             $sql = "SELECT " . table_links . ".* FROM " . table_links . " WHERE ";
-            foreach($the_results as $link_id) {
+            foreach ($the_results as $link_id) {
                 // first make sure we don't already have it cached
-                if(!isset($cached_links[$link_id])){
-                    if ($i > 0){$sql .= ' OR ';}
+                if (!isset($cached_links[$link_id])) {
+                    if ($i > 0) {
+                        $sql .= ' OR ';
+                    }
                     $sql .= " link_id = $link_id ";
                     $i = $i + 1;
                 }
@@ -70,11 +76,11 @@ class SidebarStories {
             // so don't touch the db
             // if $i > 0 then there is at least 1 link to get
             // so get the SQL and add results to the cache
-            if ($i > 0){
+            if ($i > 0) {
                 $results = $db->get_results($sql);
 
                 // add the results to the cache
-                foreach ($results as $row){
+                foreach ($results as $row) {
                     $cached_links[$row->link_id] = $row;
                 }
             }
@@ -84,22 +90,22 @@ class SidebarStories {
         $ssLinks = '';
 
         if ($links) {
-            foreach($links as $link_id) {
+            foreach ($links as $link_id) {
                 $link->id=$link_id;
                 $link->check_saved = false;
                 $link->get_author_info = false;
                 $link->check_friends = false;
                 $link->read();
 
-                if(is_numeric($this->TitleLengthLimit) && strlen($link->title) > $this->TitleLengthLimit){
+                if (is_numeric($this->TitleLengthLimit) && strlen($link->title) > $this->TitleLengthLimit) {
                     $link->title = utf8_substr($link->title, 0, $this->TitleLengthLimit) . '...';
                 }
 
                 $main_smarty = $link->fill_smarty($main_smarty);
                 $ssLinks .= $main_smarty->fetch($this->template);
-             }
+            }
         }
-        if($fetch == true){
+        if ($fetch == true) {
             return $ssLinks;
         } else {
             echo $ssLinks;

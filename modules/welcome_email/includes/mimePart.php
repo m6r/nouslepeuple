@@ -75,9 +75,9 @@
 * @package Mail
 */
 
-class Mail_mimePart {
-
-   /**
+class Mail_mimePart
+{
+    /**
     * The encoding type of this part
     * @var string
     */
@@ -219,7 +219,6 @@ class Mail_mimePart {
             $encoded['body'] = '--' . $boundary . MAIL_MIMEPART_CRLF .
                                implode('--' . $boundary . MAIL_MIMEPART_CRLF, $subparts) .
                                '--' . $boundary.'--' . MAIL_MIMEPART_CRLF;
-
         } else {
             $encoded['body'] = $this->_getEncodedData($this->_body, $this->_encoding) . MAIL_MIMEPART_CRLF;
         }
@@ -300,8 +299,7 @@ class Mail_mimePart {
         $escape = '=';
         $output = '';
 
-        while(list(, $line) = each($lines)){
-
+        while (list(, $line) = each($lines)) {
             $linlen     = strlen($line);
             $newline = '';
 
@@ -309,12 +307,11 @@ class Mail_mimePart {
                 $char = substr($line, $i, 1);
                 $dec  = ord($char);
 
-                if (($dec == 32) AND ($i == ($linlen - 1))){    // convert space at eol only
+                if (($dec == 32) AND ($i == ($linlen - 1))) {    // convert space at eol only
                     $char = '=20';
-
-                } elseif($dec == 9) {
+                } elseif ($dec == 9) {
                     ; // Do nothing if a tab.
-                } elseif(($dec == 61) OR ($dec < 32 ) OR ($dec > 126)) {
+                } elseif (($dec == 61) OR ($dec < 32 ) OR ($dec > 126)) {
                     $char = $escape . strtoupper(sprintf('%02s', dechex($dec)));
                 }
 

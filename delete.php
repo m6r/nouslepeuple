@@ -23,36 +23,35 @@ force_authentication();
 // restrict access to admins
 $canIhaveAccess = 0;
 $canIhaveAccess = $canIhaveAccess + checklevel('admin');
-if($canIhaveAccess == 0){
-//	$main_smarty->assign('tpl_center', '/templates/admin/admin_access_denied');
+if ($canIhaveAccess == 0) {
+    //	$main_smarty->assign('tpl_center', '/templates/admin/admin_access_denied');
 //	$main_smarty->display($template_dir . '/admin/admin.tpl');
     header("Location: " . getmyurl('login', $_SERVER['REQUEST_URI']));
     die();
 }
 
 
-function dowork(){
-
+function dowork()
+{
     $canIhaveAccess = 0;
     $canIhaveAccess = $canIhaveAccess + checklevel('admin');
-    if($canIhaveAccess == 1)
-    {
-        if(is_writable('settings.php') == 0){
+    if ($canIhaveAccess == 1) {
+        if (is_writable('settings.php') == 0) {
             die("Error: settings.php is not writeable.");
         }
-        if(isset($_REQUEST['action'])){
+        if (isset($_REQUEST['action'])) {
             $action = $_REQUEST['action'];
         } else {
             $action = "view";
         }
-        if($action == "view"){
+        if ($action == "view") {
             $config = new pliggconfig;
-            if(isset($_REQUEST['page'])){
+            if (isset($_REQUEST['page'])) {
                 $config->var_page = $_REQUEST['page'];
                 $config->showpage();
             }
         }
-        if($action == "save"){
+        if ($action == "save") {
             $config = new pliggconfig;
             $config->var_id = substr($_REQUEST['var_id'], 6, 10);
             $config->var_value = $_REQUEST['var_value'];
@@ -64,11 +63,12 @@ function dowork(){
 // pagename
 define('pagename', 'delete');
 $main_smarty->assign('pagename', pagename);
-if(isset($_REQUEST['link_id'])){
-
+if (isset($_REQUEST['link_id'])) {
     global $db;
     $link_id = $_REQUEST['link_id'];
-    if(!is_numeric($link_id)){die();}
+    if (!is_numeric($link_id)) {
+        die();
+    }
     $linkres = new Link;
     $linkres->id = $link_id;
     $linkres->read();
@@ -85,34 +85,32 @@ if(isset($_REQUEST['link_id'])){
 
 
     $linkslug = '';
-    foreach($linkslugvalue as $slug)
+    foreach ($linkslugvalue as $slug) {
         $linkslug = $slug->category_safe_name;
+    }
 
-    if($linkslug != ''){
-
+    if ($linkslug != '') {
         $redirectUrl = $linkslug;
     }
-    if(isset($_REQUEST['pnme']) and $_REQUEST['pnme'] != 'story' and $_REQUEST['pnme'] != 'published'){
-
+    if (isset($_REQUEST['pnme']) and $_REQUEST['pnme'] != 'story' and $_REQUEST['pnme'] != 'published') {
         $arr = explode("/", substr($_SERVER['HTTP_REFERER'],0, -1));
 
-        if(end($arr) != ''){
+        if (end($arr) != '') {
             $secndlnk = end($arr);
             array_pop($arr);
             $firstlnk = end($arr);
 
-            if($secndlnk != ''){
+            if ($secndlnk != '') {
                 $redirectUrl = $firstlnk."/".$secndlnk;
-            } else{
+            } else {
                 $redirectUrl = $firstlnk;
             }
         }
     }
-    if(isset($_REQUEST['pnme']) and $_REQUEST['pnme'] != 'story' and $_REQUEST['pnme'] != 'published' and $_REQUEST['pnme'] != 'group_story'){
-
+    if (isset($_REQUEST['pnme']) and $_REQUEST['pnme'] != 'story' and $_REQUEST['pnme'] != 'published' and $_REQUEST['pnme'] != 'group_story') {
         $redirectUrl = $_REQUEST['pnme'].'/'.$linkslug;
     }
-    if(isset($_REQUEST['pnme']) and $_REQUEST['pnme'] == 'index'){
+    if (isset($_REQUEST['pnme']) and $_REQUEST['pnme'] == 'index') {
         $redirectUrl = $linkslug;
     }
     $link_delete = $db->query(" Delete from ".table_links." where link_id =".$linkres->id);
@@ -135,21 +133,20 @@ if(isset($_REQUEST['link_id'])){
     # Redwine - Sidebar tag cache fix
     $db->query($sql="INSERT INTO ".table_tag_cache." select tag_words, count(DISTINCT link_id) as count FROM ".table_tags.", ".table_links." WHERE tag_lang='en' and link_id = tag_link_id and (link_status='published' OR link_status='new') GROUP BY tag_words order by count desc");
 
-    if ($_SERVER['HTTP_REFERER'] && strpos($_SERVER['HTTP_REFERER'], $my_base_url.$my_pligg_base) === 0){
-
+    if ($_SERVER['HTTP_REFERER'] && strpos($_SERVER['HTTP_REFERER'], $my_base_url.$my_pligg_base) === 0) {
         header('Location: '.$my_pligg_base.'/'.$redirectUrl);
-    }
-    else{
+    } else {
         header('Location: '.$my_pligg_base.'/'.$redirectUrl);
     }
 }
 
 
-if(isset($_REQUEST['comment_id'])){
-
+if (isset($_REQUEST['comment_id'])) {
     global $db;
     $comment_id = $_REQUEST['comment_id'];
-    if(!is_numeric($comment_id)){die();}
+    if (!is_numeric($comment_id)) {
+        die();
+    }
     $link_id = $db->get_var("SELECT comment_link_id FROM `" . table_comments . "` WHERE `comment_id` = $comment_id");
 
     $vars = array('comment_id' => $comment_id);
@@ -157,8 +154,7 @@ if(isset($_REQUEST['comment_id'])){
 
     $db->query('DELETE FROM `' . table_comments . '` WHERE `comment_id` = "'.$comment_id.'"');
     $comments = $db->get_results($sql="SELECT comment_id FROM " . table_comments . " WHERE `comment_parent` = '$comment_id'");
-    foreach($comments as $comment)
-    {
+    foreach ($comments as $comment) {
         $vars = array('comment_id' => $comment->comment_id);
         check_actions('comment_deleted', $vars);
     }
@@ -170,9 +166,10 @@ if(isset($_REQUEST['comment_id'])){
     $link->store();
     $link='';
 
-    if ($_SERVER['HTTP_REFERER'] && strpos($_SERVER['HTTP_REFERER'], $my_base_url.$my_pligg_base)===0)
+    if ($_SERVER['HTTP_REFERER'] && strpos($_SERVER['HTTP_REFERER'], $my_base_url.$my_pligg_base)===0) {
         header('Location: '.$_SERVER['HTTP_REFERER']);
-    else
+    } else {
         header('Location: '.$my_base_url.$my_pligg_base);
+    }
 }
 ?>

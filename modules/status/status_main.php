@@ -8,15 +8,16 @@ function status_is_allowed($user)
     array_walk($users, 'status_trim_value');
     array_walk($groups, 'status_trim_value');
 
-        if (!strstr($settings['level'],$user->level) &&
+    if (!strstr($settings['level'],$user->level) &&
         !in_array($user->username,$users) &&
         (!$settings['groups'] ||
          !$db->get_row($sql="SELECT group_id FROM ".table_groups."
 					INNER JOIN ".table_group_member." ON member_group_id=group_id AND member_user_id='{$user->id}' AND member_status='active'
-					WHERE group_name IN ('".join("','",$groups)."')")))
+					WHERE group_name IN ('".join("','",$groups)."')"))) {
         return false;
-        else
+    } else {
         return true;
+    }
 }
 
 function status_trim_value(&$value)
@@ -28,25 +29,31 @@ function status_comment_submit($vars)
 {
     global $db, $main_smarty;
 
-    if (get_misc_data('status_switch')!='1') return;
+    if (get_misc_data('status_switch')!='1') {
+        return;
+    }
 
     $comment = $vars['comment'];
-    if (!$comment->id) return;
+    if (!$comment->id) {
+        return;
+    }
 
 
     $user=new User();
     $user->id = $comment->author;
     $linkres=new Link;
     $linkres->id = $comment->link;
-    if($user->read() && $linkres->read())
-    {
-        if (!status_is_allowed($user) || !$user->extra_field['status_switch'] || !$user->extra_field['status_comment']) return;
+    if ($user->read() && $linkres->read()) {
+        if (!status_is_allowed($user) || !$user->extra_field['status_switch'] || !$user->extra_field['status_comment']) {
+            return;
+        }
 
         $main_smarty->config_load(status_lang_conf);
         $text = $main_smarty->get_config_vars('PLIGG_Status_Comment_Update');
         $limit = get_misc_data('status_max_chars');
-        if ($limit>0 && strlen($text)+strlen($user->username)+strlen($linkres->title)-4 > $limit)
+        if ($limit>0 && strlen($text)+strlen($user->username)+strlen($linkres->title)-4 > $limit) {
             $linkres->title = substr($linkres->title,0,max($limit+4-strlen($text)-strlen($user->username)-3,10)).'...';
+        }
         $text = sprintf( $text, $user->username, '<a href="'.$linkres->get_internal_url().'">'.$linkres->title.'</a>' );
         $db->query($sql="INSERT INTO ".table_prefix."updates SET update_time=UNIX_TIMESTAMP(),
 							    update_type='c',
@@ -61,22 +68,28 @@ function status_story_submit($vars)
 {
     global $db, $main_smarty;
 
-    if (get_misc_data('status_switch')!='1') return;
+    if (get_misc_data('status_switch')!='1') {
+        return;
+    }
 
     $linkres = $vars['linkres'];
-    if (!$linkres->id) return;
+    if (!$linkres->id) {
+        return;
+    }
 
     $user=new User();
     $user->id = $linkres->author;
-    if($user->read())
-    {
-        if (!status_is_allowed($user) || !$user->extra_field['status_switch'] || !$user->extra_field['status_story']) return;
+    if ($user->read()) {
+        if (!status_is_allowed($user) || !$user->extra_field['status_switch'] || !$user->extra_field['status_story']) {
+            return;
+        }
 
         $main_smarty->config_load(status_lang_conf);
         $text = $main_smarty->get_config_vars('PLIGG_Status_Story_Update');
         $limit = get_misc_data('status_max_chars');
-        if ($limit>0 && strlen($text)+strlen($user->username)+strlen($linkres->title)-4 > $limit)
+        if ($limit>0 && strlen($text)+strlen($user->username)+strlen($linkres->title)-4 > $limit) {
             $linkres->title = substr($linkres->title,0,max($limit+4-strlen($text)-strlen($user->username)-3,10)).'...';
+        }
         $text = sprintf( $text, $user->username, '<a href="'.$linkres->get_internal_url().'">'.$linkres->title.'</a>' );
         $db->query($sql="INSERT INTO ".table_prefix."updates SET update_time=UNIX_TIMESTAMP(),
 							    update_type='s',
@@ -90,7 +103,8 @@ function status_story_submit($vars)
 //
 // Settings page
 //
-function status_showpage(){
+function status_showpage()
+{
     global $db, $main_smarty, $the_template;
 
     include_once('config.php');
@@ -105,14 +119,14 @@ function status_showpage(){
     $canIhaveAccess = 0;
     $canIhaveAccess = $canIhaveAccess + checklevel('admin');
 
-    if($canIhaveAccess == 1)
-    {
-        if ($_POST['submit'])
-        {
-            if ($_REQUEST['status_level'])
+    if ($canIhaveAccess == 1) {
+        if ($_POST['submit']) {
+            if ($_REQUEST['status_level']) {
                 $level = join(',',$_REQUEST['status_level']);
-            if ($_REQUEST['status_profile_level'])
+            }
+            if ($_REQUEST['status_profile_level']) {
                 $level1 = join(',',$_REQUEST['status_profile_level']);
+            }
 
             $_REQUEST = str_replace('"',"'",$_REQUEST);
             misc_data_update('status_level', mysql_real_escape_string($level));
@@ -171,9 +185,7 @@ function status_showpage(){
         $main_smarty->assign('settings', get_status_settings());
         $main_smarty->assign('tpl_center', status_tpl_path . 'status_main');
         $main_smarty->display($template_dir . '/admin/admin.tpl');
-    }
-    else
-    {
+    } else {
         header("Location: " . getmyurl('login', $_SERVER['REQUEST_URI']));
     }
 }
@@ -220,7 +232,8 @@ function get_status_settings()
         );
 }
 
-function status_profile_save(){
+function status_profile_save()
+{
     global $user, $users_extra_fields_field;
 
     $user->extra['status_switch']=sanitize($_POST['status_switch']);
@@ -233,7 +246,8 @@ function status_profile_save(){
     $user->extra['status_email']=sanitize($_POST['status_email']);
 }
 
-function status_profile_show(){
+function status_profile_show()
+{
     global $main_smarty, $user, $users_extra_fields_field;
     $main_smarty->assign('status_switch', $user->extra_field['status_switch']);
     $main_smarty->assign('status_friends', $user->extra_field['status_friends']);

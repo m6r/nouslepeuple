@@ -10,7 +10,7 @@ include(mnminclude.'tags.php');
 include(mnminclude.'user.php');
 include(mnminclude.'smartyvariables.php');
 
-if(!Enable_Live) {
+if (!Enable_Live) {
     header("Location: $my_pligg_base/error_404.php");
     die();
 }
@@ -29,16 +29,14 @@ $offset = (get_current_page() - 1) * $top_users_size;
 // always check groups (to hide private groups)
 $from = " LEFT JOIN ".table_groups." ON ".table_links.".link_group_id = ".table_groups.".group_id ";
 $groups = $db->get_results("SELECT * FROM " . table_group_member . " WHERE member_user_id = {$current_user->user_id} and member_status = 'active'");
-if($groups)
-{
+if ($groups) {
     $group_ids = array();
-    foreach($groups as $group)
-    $group_ids[] = $group->member_group_id;
+    foreach ($groups as $group) {
+        $group_ids[] = $group->member_group_id;
+    }
     $group_list = join(",",$group_ids);
     $where = " AND (".table_groups.".group_privacy!='private' OR ISNULL(".table_groups.".group_privacy) OR ".table_groups.".group_id IN($group_list)) ";
-}
-else
-{
+} else {
     $group_list = '';
     $where = " AND (".table_groups.".group_privacy!='private' OR ISNULL(".table_groups.".group_privacy))";
 }
@@ -60,23 +58,23 @@ $stories = $db->get_results("$select $from_where $order_by LIMIT $offset,$top_us
 
 $link = new Link;
 //$user = new User;
-if($stories) {
-    foreach($stories as $story) {
-    $link->id = $story->link_id;
-    $cached_links[$story->link_id] = $story;
-    $link->read();
-    $live_item['link_date'] = txt_time_diff($link->published_date);
-    $live_item['link_title'] = $link->title;
-    if(Voting_Method == 2) {
-        $live_item['link_votes'] = $link->rating($link->id)/2;
-    } else {
-        $live_item['link_votes'] = $link->votes;
-    }
-    $live_item['link_username'] = $story->user_login;
-    $live_item['link_category'] = GetCatName($link->category);
-    $live_item['link_category_url'] = getmyurl("maincategory",$link->category_safe_name());
-    $live_item['link_url'] = $link->get_internal_url();
-    $live_items[] = $live_item;
+if ($stories) {
+    foreach ($stories as $story) {
+        $link->id = $story->link_id;
+        $cached_links[$story->link_id] = $story;
+        $link->read();
+        $live_item['link_date'] = txt_time_diff($link->published_date);
+        $live_item['link_title'] = $link->title;
+        if (Voting_Method == 2) {
+            $live_item['link_votes'] = $link->rating($link->id)/2;
+        } else {
+            $live_item['link_votes'] = $link->votes;
+        }
+        $live_item['link_username'] = $story->user_login;
+        $live_item['link_category'] = GetCatName($link->category);
+        $live_item['link_category_url'] = getmyurl("maincategory",$link->category_safe_name());
+        $live_item['link_url'] = $link->get_internal_url();
+        $live_items[] = $live_item;
     }
     $main_smarty->assign('live_items', $live_items);
 }

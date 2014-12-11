@@ -1,5 +1,5 @@
 <?php
-if(defined('mnminclude')){
+if (defined('mnminclude')) {
     include_once('karma_settings.php');
 
     // tell pligg what pages this modules should be included in
@@ -8,7 +8,7 @@ if(defined('mnminclude')){
     $do_not_include_in_pages = array();
 
     $include_in_pages = array('all');
-    if( do_we_load_module() ) {
+    if ( do_we_load_module() ) {
         module_add_action_tpl('tpl_header_admin_main_links', karma_tpl_path . 'karma_admin_main_link.tpl');
 
         module_add_action('do_submit3', 'karma_do_submit3','');
@@ -28,10 +28,9 @@ if(defined('mnminclude')){
     }
 
     $include_in_pages = array('module');
-    if( do_we_load_module() ) {
-
+    if ( do_we_load_module() ) {
         $moduleName = $_REQUEST['module'];
-        if($moduleName == 'karma'){
+        if ($moduleName == 'karma') {
             module_add_action('module_page', 'karma_showpage', '');
 
             include_once(mnmmodules . 'karma/karma_main.php');

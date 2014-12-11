@@ -1,5 +1,5 @@
 <?php
-if(defined('mnminclude')){
+if (defined('mnminclude')) {
     include_once('hc_settings.php');
 
     // tell pligg what pages this modules should be included in
@@ -8,8 +8,7 @@ if(defined('mnminclude')){
     $include_in_pages = array('all');
     $do_not_include_in_pages = array();
 
-    if( do_we_load_module() ) {
-
+    if ( do_we_load_module() ) {
         module_add_action('do_submit1', 'hc_register', '');
         module_add_action('submit2_check_errors', 'hc_register_check_errors', '');
 

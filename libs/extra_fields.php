@@ -1,5 +1,8 @@
 <?php
-if(!defined('mnminclude')){header('Location: ../error_404.php');die();}
+if (!defined('mnminclude')) {
+    header('Location: ../error_404.php');
+    die();
+}
 
 //Extra fields
 

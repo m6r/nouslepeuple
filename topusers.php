@@ -66,12 +66,12 @@ $users = $db->get_results("SELECT user_karma, COUNT(*) FROM " . table_users . " 
 
 $ranklist = array();
 $rank = 1;
-if ($users)
-    foreach ($users as $dbuser)
-    {
+if ($users) {
+    foreach ($users as $dbuser) {
         $ranklist[$dbuser[0]] = $rank;
         $rank += $dbuser[1];
     }
+}
 
 $user = new User;
 $rows = $db->get_var("select count(DISTINCT user_id) as count $from_where $order_by");
@@ -81,9 +81,7 @@ $users_table = '';
 
 //echo "<pre>";
 if ($users) {
-
-    foreach($users as $dbuser) {
-
+    foreach ($users as $dbuser) {
         $user->id=$dbuser->user_id;
         $user->read();
         $user->all_stats();
@@ -94,23 +92,24 @@ if ($users) {
         $main_smarty->assign('user_username', $user->username);
         $main_smarty->assign('user_total_links', $user->total_links);
         $main_smarty->assign('user_published_links', $user->published_links);
-        if($user->total_links>0)
+        if ($user->total_links>0) {
             $main_smarty->assign('user_published_links_percent', intval($user->published_links/$user->total_links*100));
-        else
+        } else {
             $main_smarty->assign('user_published_links_percent', '');
+        }
         $main_smarty->assign('user_total_comments', $user->total_comments);
         $main_smarty->assign('user_total_votes', $user->total_votes);
         $main_smarty->assign('user_published_votes', $user->published_votes);
-        if($user->total_votes>0)
+        if ($user->total_votes>0) {
             $main_smarty->assign('user_published_votes_percent', intval($user->published_votes/$user->total_votes*100));
-        else
+        } else {
             $main_smarty->assign('user_published_votes_percent', '');
+        }
         $main_smarty->assign('user_karma', $user->karma);
         $main_smarty->assign('user_rank', $ranklist[$user->karma]);
         $main_smarty->assign('user_avatar', get_avatar('small', "", $user->username, $user->email));
 
         $users_table .= $main_smarty->fetch(The_Template . "/topusers_data.tpl");
-
     }
 }
 
@@ -128,11 +127,11 @@ $main_smarty->assign('total_row_for_topusers', $rows);
 
 
 //For Infinit scrolling and continue reading option
-if(Auto_scroll==2 || Auto_scroll==3){
-   $main_smarty->assign("scrollpageSize", $page_size);
-
-}else
+if (Auto_scroll==2 || Auto_scroll==3) {
+    $main_smarty->assign("scrollpageSize", $page_size);
+} else {
     $main_smarty->assign('topusers_pagination', do_pages($rows, $top_users_size, "topusers", true));
+}
 
 // show the template
 $main_smarty->assign('tpl_center', $the_template . '/topusers_center');

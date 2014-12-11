@@ -9,7 +9,8 @@ include(mnminclude.'link.php');
 include(mnminclude.'html1.php');
 include(mnminclude.'smartyvariables.php');
 
-function trackback_response($error = 0, $error_message = '') {
+function trackback_response($error = 0, $error_message = '')
+{
     header('Content-Type: text/xml; charset=UTF-8');
     if ($error) {
         echo '<?phpxml version="1.0" encoding="utf-8"?'.">\n";
@@ -34,12 +35,13 @@ $blog_name = strip_tags($_POST['blog_name']);
 $charset   = strip_tags($_POST['charset']);
 
 // DB 08/01/08
-if (!preg_match("/^[hf]t[t]?p[s]?:\/\//",$tb_url))
+if (!preg_match("/^[hf]t[t]?p[s]?:\/\//",$tb_url)) {
     $tb_url = "";
+}
 /////
 
 
-if(!empty($charset)) {
+if (!empty($charset)) {
     $title = @iconv($charset, 'UTF-8//IGNORE', $title);
     $excerpt = @iconv($charset, 'UTF-8//IGNORE', $excerpt);
     $blog_name = @iconv($charset, 'UTF-8//IGNORE', $blog_name);
@@ -47,8 +49,9 @@ if(!empty($charset)) {
 
 $tb_id = strip_tags($_GET['id']);
 
-if ( !is_numeric( $tb_id ) )
+if ( !is_numeric( $tb_id ) ) {
     trackback_response(1, 'I really need an ID for this to work.');
+}
 
 if (empty($title) && empty($tb_url) && empty($blog_name)) {
     // If it doesn't look like a trackback at all...
@@ -69,19 +72,22 @@ if ( !empty($tb_url) && !empty($title) && !empty($tb_url) ) {
     $trackres->type='in';
     $trackres->url = $tb_url;
     $dupe = $trackres->read();
-    if ( $dupe )
+    if ( $dupe ) {
         trackback_response(1, $main_smarty->get_config_vars('PLIGG_Visual_Trackback_AlreadyPing'));
+    }
 
     $contents=@file_get_contents($tb_url);
-    if(!$contents)
+    if (!$contents) {
         trackback_response(1, $main_smarty->get_config_vars('PLIGG_Visual_Trackback_BadURL'));
+    }
 
 
     $permalink=get_permalink($tb_id);
-  $permalink_q=preg_quote($permalink,'/');
+    $permalink_q=preg_quote($permalink,'/');
     $pattern="/<\s*a.*href\s*=[\"'\s]*".$permalink_q."[\"'\s]*.*>.*<\s*\/\s*a\s*>/i";
-    if(!preg_match($pattern,$contents))
+    if (!preg_match($pattern,$contents)) {
         trackback_response(1, $main_smarty->get_config_vars('PLIGG_Visual_Trackback_NoReturnLink'));
+    }
 
     $trackres->title=$title;
     $trackres->content=$excerpt;

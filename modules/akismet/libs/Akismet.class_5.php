@@ -62,7 +62,7 @@
  *  @link		http://www.achingbrain.net/
  */
 class Akismet
-    {
+{
     private $version = '0.4';
     private $wordPressAPIKey;
     private $blogURL;
@@ -89,7 +89,8 @@ class Akismet
      *	@param	string	$blogURL			The URL of your blog.
      *	@param	string	$wordPressAPIKey	WordPress API key.
      */
-    public function __construct($blogURL, $wordPressAPIKey) {
+    public function __construct($blogURL, $wordPressAPIKey)
+    {
         $this->blogURL = $blogURL;
         $this->wordPressAPIKey = $wordPressAPIKey;
 
@@ -102,7 +103,7 @@ class Akismet
         $this->comment['blog'] = $blogURL;
         $this->comment['user_agent'] = $_SERVER['HTTP_USER_AGENT'];
 
-        if(isset($_SERVER['HTTP_REFERER'])) {
+        if (isset($_SERVER['HTTP_REFERER'])) {
             $this->comment['referrer'] = $_SERVER['HTTP_REFERER'];
         }
 
@@ -124,14 +125,16 @@ class Akismet
      *
      * @return bool	True is if the key is valid, false if not.
      */
-    public function isKeyValid() {
+    public function isKeyValid()
+    {
         // Check to see if the key is valid
         $response = $this->sendRequest('key=' . $this->wordPressAPIKey . '&blog=' . $this->blogURL, $this->akismetServer, '/' . $this->akismetVersion . '/verify-key');
         return $response[1] == 'valid';
     }
 
     // makes a request to the Akismet service
-    private function sendRequest($request, $host, $path) {
+    private function sendRequest($request, $host, $path)
+    {
         $http_request  = "POST " . $path . " HTTP/1.0\r\n";
         $http_request .= "Host: " . $host . "\r\n";
         $http_request .= "Content-Type: application/x-www-form-urlencoded; charset=utf-8\r\n";
@@ -147,10 +150,11 @@ class Akismet
     }
 
     // Formats the data for transmission
-    private function getQueryString() {
-        foreach($_SERVER as $key => $value) {
-            if(!in_array($key, $this->ignore)) {
-                if($key == 'REMOTE_ADDR') {
+    private function getQueryString()
+    {
+        foreach ($_SERVER as $key => $value) {
+            if (!in_array($key, $this->ignore)) {
+                if ($key == 'REMOTE_ADDR') {
                     $this->comment[$key] = $this->comment['user_ip'];
                 } else {
                     $this->comment[$key] = $value;
@@ -160,8 +164,8 @@ class Akismet
 
         $query_string = '';
 
-        foreach($this->comment as $key => $data) {
-            if(!is_array($data)) {
+        foreach ($this->comment as $key => $data) {
+            if (!is_array($data)) {
                 $query_string .= $key . '=' . urlencode(stripslashes($data)) . '&';
             }
         }
@@ -177,10 +181,11 @@ class Akismet
      *	@return		bool	True if the comment is spam, false if not
      *  @throws		Will throw an exception if the API key passed to the constructor is invalid.
      */
-    public function isCommentSpam() {
+    public function isCommentSpam()
+    {
         $response = $this->sendRequest($this->getQueryString(), $this->wordPressAPIKey . '.rest.akismet.com', '/' . $this->akismetVersion . '/comment-check');
 
-        if($response[1] == 'invalid' && !$this->isKeyValid()) {
+        if ($response[1] == 'invalid' && !$this->isKeyValid()) {
             throw new exception('The Wordpress API key passed to the Akismet constructor is invalid.  Please obtain a valid one from http://wordpress.com/api-keys/');
         }
 
@@ -192,7 +197,8 @@ class Akismet
      *
      *	Using this function will make you a good citizen as it helps Akismet to learn from its mistakes.  This will improve the service for everybody.
      */
-    public function submitSpam() {
+    public function submitSpam()
+    {
         $this->sendRequest($this->getQueryString(), $this->wordPressAPIKey . '.' . $this->akismetServer, '/' . $this->akismetVersion . '/submit-spam');
     }
 
@@ -201,7 +207,8 @@ class Akismet
      *
      *	Using this function will make you a good citizen as it helps Akismet to learn from its mistakes.  This will improve the service for everybody.
      */
-    public function submitHam() {
+    public function submitHam()
+    {
         $this->sendRequest($this->getQueryString(), $this->wordPressAPIKey . '.' . $this->akismetServer, '/' . $this->akismetVersion . '/submit-ham');
     }
 
@@ -210,7 +217,8 @@ class Akismet
      *
      *	@param string $userip	An IP address.  Optional.
      */
-    public function setUserIP($userip) {
+    public function setUserIP($userip)
+    {
         $this->comment['user_ip'] = $userip;
     }
 
@@ -219,7 +227,8 @@ class Akismet
      *
      *	@param string $referrer	The referring page.  Optional.
      */
-    public function setReferrer($referrer) {
+    public function setReferrer($referrer)
+    {
         $this->comment['referrer'] = $referrer;
     }
 
@@ -228,7 +237,8 @@ class Akismet
      *
      *	@param string $permalink	The URL.  Optional.
      */
-    public function setPermalink($permalink) {
+    public function setPermalink($permalink)
+    {
         $this->comment['permalink'] = $permalink;
     }
 
@@ -237,14 +247,16 @@ class Akismet
      *
      *	May be blank, comment, trackback, pingback, or a made up value like "registration" or "wiki".
      */
-    public function setCommentType($commentType) {
+    public function setCommentType($commentType)
+    {
         $this->comment['comment_type'] = $commentType;
     }
 
     /**
      *	The name that the author submitted with the comment.
      */
-    public function setCommentAuthor($commentAuthor) {
+    public function setCommentAuthor($commentAuthor)
+    {
         $this->comment['comment_author'] = $commentAuthor;
     }
 
@@ -253,42 +265,48 @@ class Akismet
      *
      *	The address is assumed to be valid.
      */
-    public function setCommentAuthorEmail($authorEmail) {
+    public function setCommentAuthorEmail($authorEmail)
+    {
         $this->comment['comment_author_email'] = $authorEmail;
     }
 
     /**
      *	The URL that the author submitted with the comment.
      */
-    public function setCommentAuthorURL($authorURL) {
+    public function setCommentAuthorURL($authorURL)
+    {
         $this->comment['comment_author_url'] = $authorURL;
     }
 
     /**
      *	The comment's body text.
      */
-    public function setCommentContent($commentBody) {
+    public function setCommentContent($commentBody)
+    {
         $this->comment['comment_content'] = $commentBody;
     }
 
     /**
      *	Defaults to 80
      */
-    public function setAPIPort($apiPort) {
+    public function setAPIPort($apiPort)
+    {
         $this->apiPort = $apiPort;
     }
 
     /**
      *	Defaults to rest.akismet.com
      */
-    public function setAkismetServer($akismetServer) {
+    public function setAkismetServer($akismetServer)
+    {
         $this->akismetServer = $akismetServer;
     }
 
     /**
      *	Defaults to '1.1'
      */
-    public function setAkismetVersion($akismetVersion) {
+    public function setAkismetVersion($akismetVersion)
+    {
         $this->akismetVersion = $akismetVersion;
     }
 }
@@ -308,7 +326,8 @@ class Akismet
  *  @author		Alex Potsides
  *  @link		http://www.achingbrain.net/
  */
-class SocketWriteRead {
+class SocketWriteRead
+{
     private $host;
     private $port;
     private $request;
@@ -323,7 +342,8 @@ class SocketWriteRead {
      *	@param	string	$request		The data to send.
      *	@param	int		$responseLength	The amount of data to read.  Defaults to 1160 bytes.
      */
-    public function __construct($host, $port, $request, $responseLength = 1160) {
+    public function __construct($host, $port, $request, $responseLength = 1160)
+    {
         $this->host = $host;
         $this->port = $port;
         $this->request = $request;
@@ -337,19 +357,20 @@ class SocketWriteRead {
      *
      * @throws	An exception is thrown if a connection cannot be made to the remote host.
      */
-    public function send() {
+    public function send()
+    {
         $this->response = '';
 
         $fs = fsockopen($this->host, $this->port, $this->errorNumber, $this->errorString, 3);
 
-        if($this->errorNumber != 0) {
+        if ($this->errorNumber != 0) {
             throw new Exception('Error connecting to host: ' . $this->host . ' Error number: ' . $this->errorNumber . ' Error message: ' . $this->errorString);
         }
 
-        if($fs !== false) {
+        if ($fs !== false) {
             @fwrite($fs, $this->request);
 
-            while(!feof($fs)) {
+            while (!feof($fs)) {
                 $this->response .= fgets($fs, $this->responseLength);
             }
 
@@ -362,7 +383,8 @@ class SocketWriteRead {
      *
      *  @return	string
      */
-    public function getResponse() {
+    public function getResponse()
+    {
         return $this->response;
     }
 
@@ -373,7 +395,8 @@ class SocketWriteRead {
      *
      *	@return int
      */
-    public function getErrorNumner() {
+    public function getErrorNumner()
+    {
         return $this->errorNumber;
     }
 
@@ -384,7 +407,8 @@ class SocketWriteRead {
      *
      *	@return string
      */
-    public function getErrorString() {
+    public function getErrorString()
+    {
         return $this->errorString;
     }
 }

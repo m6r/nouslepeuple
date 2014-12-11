@@ -12,10 +12,9 @@ include(mnminclude.'tags.php');
 include(mnminclude.'user.php');
 include(mnminclude.'smartyvariables.php');
 
-if (!$_COOKIE['referrer']){
-    if(empty($_POST['phase']) && (!empty($_GET['url']))) {
-        if(!empty($_GET['url']))
-        {
+if (!$_COOKIE['referrer']) {
+    if (empty($_POST['phase']) && (!empty($_GET['url']))) {
+        if (!empty($_GET['url'])) {
             $_POST['url'] = $_GET['url'];
         }
     }
@@ -26,7 +25,7 @@ if (!$_COOKIE['referrer']){
 // html tags allowed during submit
 if (checklevel('admin')) {
     $Story_Content_Tags_To_Allow = Story_Content_Tags_To_Allow_God;
-} elseif (checklevel('moderator')){
+} elseif (checklevel('moderator')) {
     $Story_Content_Tags_To_Allow = Story_Content_Tags_To_Allow_Admin;
 } else {
     $Story_Content_Tags_To_Allow = Story_Content_Tags_To_Allow_Normal;
@@ -45,11 +44,10 @@ $main_smarty = do_sidebar($main_smarty);
 
 //to check anonymous mode activated
 global $current_user;
-if($current_user->authenticated != TRUE)
-{
+if ($current_user->authenticated != TRUE) {
     $vars = '';
     check_actions('anonymous_story_user_id', $vars);
-    if ($vars['anonymous_story'] != true){
+    if ($vars['anonymous_story'] != true) {
         force_authentication();
     }
 }
@@ -67,36 +65,33 @@ $vars = '';
 check_actions('submit_post_authentication', $vars);
 
 // this is for direct links from weblogs
-if(empty($_POST['phase']) && (!empty($_GET['url']) || is_numeric($_GET['id']))) {
+if (empty($_POST['phase']) && (!empty($_GET['url']) || is_numeric($_GET['id']))) {
     $_POST['phase'] = 1;
-    if(!empty($_GET['url']))
-    {
+    if (!empty($_GET['url'])) {
         $_POST['url'] = $_GET['url'];
-    }
-    else
-    {
+    } else {
         $row = $db->get_row("SELECT * FROM ".table_links." WHERE link_id='".$db->escape($_GET['id'])."' AND link_author='{$current_user->user_id}'",ARRAY_A);
-        if (!$row['link_id'])
-        {
-        define('pagename', 'submit');
-        $main_smarty->assign('pagename', pagename);
-        $main_smarty->assign('submit_error', 'badkey');
-        $main_smarty->assign('tpl_center', $the_template . '/submit_errors_center');
-        $main_smarty->display($the_template . '/pligg.tpl');
-        die();
+        if (!$row['link_id']) {
+            define('pagename', 'submit');
+            $main_smarty->assign('pagename', pagename);
+            $main_smarty->assign('submit_error', 'badkey');
+            $main_smarty->assign('tpl_center', $the_template . '/submit_errors_center');
+            $main_smarty->display($the_template . '/pligg.tpl');
+            die();
         }
         $_POST['url'] = $row['link_url'];
     }
-        $_POST['randkey'] = rand(10000,10000000);
-    if(!empty($_GET['trackback']))
+    $_POST['randkey'] = rand(10000,10000000);
+    if (!empty($_GET['trackback'])) {
         $_POST['trackback'] = $_GET['trackback'];
+    }
 }
 
 // determine which step of the submit process we are on
 $phase = isset($_POST["phase"]) && is_numeric($_POST["phase"]) ? $_POST["phase"] : 0;
 
 // If show URL input box is disabled, go straight to step 2
-if($phase == 0 && Submit_Show_URL_Input == false) {
+if ($phase == 0 && Submit_Show_URL_Input == false) {
     $phase = 1;
 }
 switch ($phase) {
@@ -117,7 +112,8 @@ switch ($phase) {
 exit;
 
 // enter URL before submit process
-function do_submit0() {
+function do_submit0()
+{
     global $main_smarty, $the_template;
     $main_smarty->assign('submit_rand', rand(10000,10000000));
     $main_smarty->assign('Submit_Show_URL_Input', Submit_Show_URL_Input);
@@ -133,54 +129,54 @@ function do_submit0() {
 }
 
 // submit step 1
-function do_submit1() {
+function do_submit1()
+{
     global $main_smarty, $db, $dblang, $current_user, $the_template;
 
     $url = htmlspecialchars(sanitize($_POST['url'], 3));
     $url = str_replace('&amp;', '&', $url);
     $url = html_entity_decode($url);
 
-    if (strpos($url,'http')!==0){
+    if (strpos($url,'http')!==0) {
         $url = "http://$url";
     }
 
     $linkres=new Link;
     $linkres->randkey = sanitize($_POST['randkey'], 3);
 
-    if(Submit_Show_URL_Input == false) {
+    if (Submit_Show_URL_Input == false) {
         $url = "http://";
         $linkres->randkey = rand(10000,10000000);
     }
     $Submit_Show_URL_Input = Submit_Show_URL_Input;
-    if($url == "http://" || $url == ""){
+    if ($url == "http://" || $url == "") {
         $Submit_Show_URL_Input = false;
     }
 
     $edit = false;
-    if (is_numeric($_GET['id']))
-    {
+    if (is_numeric($_GET['id'])) {
         $linkres->id = $_GET['id'];
         $linkres->read(FALSE);
         $trackback=$_GET['trackback'];
-    }
-    else
-    {
+    } else {
         $linkres->get($url);
-        if ($_POST['title'])
+        if ($_POST['title']) {
             $linkres->title = stripslashes(sanitize($_POST['title'], 4, $Story_Content_Tags_To_Allow));
-        if ($_POST['tags'])
+        }
+        if ($_POST['tags']) {
             $linkres->tags = stripslashes(sanitize($_POST['tags'], 4));
-        if ($_POST['description'])
+        }
+        if ($_POST['description']) {
             $linkres->content = stripslashes(sanitize($_POST['description'], 4, $Story_Content_Tags_To_Allow));
+        }
 
-        if ($_POST['category'])
-        {
-        $cats = explode(',',$_POST['category']);
-        foreach ($cats as $cat)
-            if ($cat_id = $db->get_var("SELECT category_id FROM ".table_categories." WHERE category_name='".$db->escape(trim($cat))."'"))
-            {
-            $linkres->category = $cat_id;
-            break;
+        if ($_POST['category']) {
+            $cats = explode(',',$_POST['category']);
+            foreach ($cats as $cat) {
+                if ($cat_id = $db->get_var("SELECT category_id FROM ".table_categories." WHERE category_name='".$db->escape(trim($cat))."'")) {
+                    $linkres->category = $cat_id;
+                    break;
+                }
             }
         }
         $trackback=$linkres->trackback;
@@ -200,14 +196,14 @@ function do_submit1() {
 
     $isLink = preg_match($pattern, $url); // Returns true if a link
 
-    if($url == "http://" || $url == ""){
-        if(Submit_Require_A_URL == false){
-            $linkres->valid = true;}
-        else{
+    if ($url == "http://" || $url == "") {
+        if (Submit_Require_A_URL == false) {
+            $linkres->valid = true;
+        } else {
             $linkres->valid = false;
         }
         $linkres->url_title = "";
-    } elseif ($isLink == false){
+    } elseif ($isLink == false) {
         $linkres->valid = false;
     }
 
@@ -215,21 +211,21 @@ function do_submit1() {
     check_actions('submit_validating_url', $vars);
     $linkres = $vars['linkres'];
 
-    if(!$linkres->valid) {
+    if (!$linkres->valid) {
         $main_smarty->assign('submit_error', 'invalidurl');
         $main_smarty->assign('tpl_center', $the_template . '/submit_errors_center');
         $main_smarty->display($the_template . '/pligg.tpl');
         return;
     }
 
-    if(Submit_Require_A_URL == true || ($url != "http://" && $url != "")){
-        if(!is_numeric($_GET['id']) && $linkres->duplicates($url) > 0) {
+    if (Submit_Require_A_URL == true || ($url != "http://" && $url != "")) {
+        if (!is_numeric($_GET['id']) && $linkres->duplicates($url) > 0) {
             $main_smarty->assign('submit_search', getmyurl("search_url", htmlentities($url)));
             $main_smarty->assign('submit_error', 'dupeurl');
             $main_smarty->assign('tpl_center', $the_template . '/submit_errors_center');
 
             define('pagename', 'submit');
-                 $main_smarty->assign('pagename', pagename);
+            $main_smarty->assign('pagename', pagename);
 
             $main_smarty->display($the_template . '/pligg.tpl');
             return;
@@ -252,8 +248,12 @@ function do_submit1() {
     $main_smarty->assign('submit_url_description', $linkres->url_description);
     $main_smarty->assign('submit_id', $linkres->id);
     $main_smarty->assign('submit_type', $linkres->type());
-    if(isset($link_title)){$main_smarty->assign('submit_title', str_replace('"',"&#034;",$link_title));}
-    if(isset($link_content)){$main_smarty->assign('submit_content', $link_content);}
+    if (isset($link_title)) {
+        $main_smarty->assign('submit_title', str_replace('"',"&#034;",$link_title));
+    }
+    if (isset($link_content)) {
+        $main_smarty->assign('submit_content', $link_content);
+    }
     $main_smarty->assign('submit_trackback', $trackback);
     $main_smarty->assign('submit_link_field1', $linkres->link_field1);
     $main_smarty->assign('submit_link_field2', $linkres->link_field2);
@@ -297,8 +297,7 @@ function do_submit1() {
     $main_smarty->assign('submit_group_array', get_groupdetail_user());*/
 
     //to display group drop down
-    if(enable_group == "true")
-    {
+    if (enable_group == "true") {
         $output = '';
         $group_membered = $db->get_results("SELECT group_id,group_name FROM " . table_groups . "
 			LEFT JOIN ".table_group_member." ON member_group_id=group_id
@@ -307,19 +306,17 @@ function do_submit1() {
 				AND (member_role != 'banned' && member_role != 'flagged')
 			ORDER BY group_name ASC");
 
-        if ($group_membered)
-        {
+        if ($group_membered) {
             $output .= "<select name='link_group_id' tabindex='3' class='form-control submit_group_select'>";
             $output .= "<option value = ''>".$main_smarty->get_config_vars('PLIGG_Visual_Group_Select_Group')."</option>";
-            foreach($group_membered as $results)
-            {
+            foreach ($group_membered as $results) {
                 $output .= "<option value = ".$results->group_id. ($linkres->link_group_id ? ' selected' : '') . ">".$results->group_name."</option>";
             }
             $output .= "</select>";
         }
         $main_smarty->assign('output', $output);
     }
-    if($current_user->authenticated != TRUE){
+    if ($current_user->authenticated != TRUE) {
         $vars = '';
         check_actions('register_showform', $vars);
     }
@@ -337,7 +334,8 @@ function do_submit1() {
 }
 
 // submit step 2
-function do_submit2() {
+function do_submit2()
+{
     global $db, $main_smarty, $dblang, $the_template, $linkres, $current_user, $Story_Content_Tags_To_Allow;
 
     $main_smarty->assign('auto_vote', auto_vote);
@@ -347,34 +345,39 @@ function do_submit2() {
     define('pagename', 'submit');
     $main_smarty->assign('pagename', pagename);
 
-    if($current_user->authenticated != TRUE){
+    if ($current_user->authenticated != TRUE) {
         $vars = array('username' => $current_user->user_login);
         check_actions('register_check_errors', $vars);
     }
 
     check_actions('submit2_check_errors', $vars);
 
-    if($vars['error'] == true){
+    if ($vars['error'] == true) {
         // No action
     }
 
     $linkres=new Link;
     $linkres->id = sanitize($_POST['id'], 3);
 
-    if($_SESSION['step']!=1)die('Wrong step');
-    if(!is_numeric($linkres->id))die();
-    if(!$linkres->verify_ownership($current_user->user_id))    die($main_smarty->get_config_vars('PLIGG_Visual_Submit2Errors_NoAccess'));
+    if ($_SESSION['step']!=1) {
+        die('Wrong step');
+    }
+    if (!is_numeric($linkres->id)) {
+        die();
+    }
+    if (!$linkres->verify_ownership($current_user->user_id)) {
+        die($main_smarty->get_config_vars('PLIGG_Visual_Submit2Errors_NoAccess'));
+    }
 
     $linkres->read(FALSE);
 
-    if($linkres->votes($current_user->user_id) == 0 && auto_vote == true) {
+    if ($linkres->votes($current_user->user_id) == 0 && auto_vote == true) {
         $linkres->insert_vote($current_user->user_id, '10');
         $linkres->store_basic();
         $linkres->read(FALSE);
     }
 
-    if (is_array($_POST['category']))
-    {
+    if (is_array($_POST['category'])) {
         $linkres->category=sanitize($_POST['category'][0], 3);
         $linkres->additional_cats=array_slice($_POST['category'],1);
     } else {
@@ -390,29 +393,59 @@ function do_submit2() {
     $linkres->content = close_tags(stripslashes(sanitize($_POST['bodytext'], 4, $Story_Content_Tags_To_Allow)));
     //$linkres->content = str_replace("\n", "<br />", $linkres->content);
 
-    if(isset($_POST['link_field1'])){$linkres->link_field1 = sanitize($_POST['link_field1'], 4, $Story_Content_Tags_To_Allow);}
-    if(isset($_POST['link_field2'])){$linkres->link_field2 = sanitize($_POST['link_field2'], 4, $Story_Content_Tags_To_Allow);}
-    if(isset($_POST['link_field3'])){$linkres->link_field3 = sanitize($_POST['link_field3'], 4, $Story_Content_Tags_To_Allow);}
-    if(isset($_POST['link_field4'])){$linkres->link_field4 = sanitize($_POST['link_field4'], 4, $Story_Content_Tags_To_Allow);}
-    if(isset($_POST['link_field5'])){$linkres->link_field5 = sanitize($_POST['link_field5'], 4, $Story_Content_Tags_To_Allow);}
-    if(isset($_POST['link_field6'])){$linkres->link_field6 = sanitize($_POST['link_field6'], 4, $Story_Content_Tags_To_Allow);}
-    if(isset($_POST['link_field7'])){$linkres->link_field7 = sanitize($_POST['link_field7'], 4, $Story_Content_Tags_To_Allow);}
-    if(isset($_POST['link_field8'])){$linkres->link_field8 = sanitize($_POST['link_field8'], 4, $Story_Content_Tags_To_Allow);}
-    if(isset($_POST['link_field9'])){$linkres->link_field9 = sanitize($_POST['link_field9'], 4, $Story_Content_Tags_To_Allow);}
-    if(isset($_POST['link_field10'])){$linkres->link_field10 = sanitize($_POST['link_field10'], 4, $Story_Content_Tags_To_Allow);}
-    if(isset($_POST['link_field11'])){$linkres->link_field11 = sanitize($_POST['link_field11'], 4, $Story_Content_Tags_To_Allow);}
-    if(isset($_POST['link_field12'])){$linkres->link_field12 = sanitize($_POST['link_field12'], 4, $Story_Content_Tags_To_Allow);}
-    if(isset($_POST['link_field13'])){$linkres->link_field13 = sanitize($_POST['link_field13'], 4, $Story_Content_Tags_To_Allow);}
-    if(isset($_POST['link_field14'])){$linkres->link_field14 = sanitize($_POST['link_field14'], 4, $Story_Content_Tags_To_Allow);}
-    if(isset($_POST['link_field15'])){$linkres->link_field15 = sanitize($_POST['link_field15'], 4, $Story_Content_Tags_To_Allow);}
+    if (isset($_POST['link_field1'])) {
+        $linkres->link_field1 = sanitize($_POST['link_field1'], 4, $Story_Content_Tags_To_Allow);
+    }
+    if (isset($_POST['link_field2'])) {
+        $linkres->link_field2 = sanitize($_POST['link_field2'], 4, $Story_Content_Tags_To_Allow);
+    }
+    if (isset($_POST['link_field3'])) {
+        $linkres->link_field3 = sanitize($_POST['link_field3'], 4, $Story_Content_Tags_To_Allow);
+    }
+    if (isset($_POST['link_field4'])) {
+        $linkres->link_field4 = sanitize($_POST['link_field4'], 4, $Story_Content_Tags_To_Allow);
+    }
+    if (isset($_POST['link_field5'])) {
+        $linkres->link_field5 = sanitize($_POST['link_field5'], 4, $Story_Content_Tags_To_Allow);
+    }
+    if (isset($_POST['link_field6'])) {
+        $linkres->link_field6 = sanitize($_POST['link_field6'], 4, $Story_Content_Tags_To_Allow);
+    }
+    if (isset($_POST['link_field7'])) {
+        $linkres->link_field7 = sanitize($_POST['link_field7'], 4, $Story_Content_Tags_To_Allow);
+    }
+    if (isset($_POST['link_field8'])) {
+        $linkres->link_field8 = sanitize($_POST['link_field8'], 4, $Story_Content_Tags_To_Allow);
+    }
+    if (isset($_POST['link_field9'])) {
+        $linkres->link_field9 = sanitize($_POST['link_field9'], 4, $Story_Content_Tags_To_Allow);
+    }
+    if (isset($_POST['link_field10'])) {
+        $linkres->link_field10 = sanitize($_POST['link_field10'], 4, $Story_Content_Tags_To_Allow);
+    }
+    if (isset($_POST['link_field11'])) {
+        $linkres->link_field11 = sanitize($_POST['link_field11'], 4, $Story_Content_Tags_To_Allow);
+    }
+    if (isset($_POST['link_field12'])) {
+        $linkres->link_field12 = sanitize($_POST['link_field12'], 4, $Story_Content_Tags_To_Allow);
+    }
+    if (isset($_POST['link_field13'])) {
+        $linkres->link_field13 = sanitize($_POST['link_field13'], 4, $Story_Content_Tags_To_Allow);
+    }
+    if (isset($_POST['link_field14'])) {
+        $linkres->link_field14 = sanitize($_POST['link_field14'], 4, $Story_Content_Tags_To_Allow);
+    }
+    if (isset($_POST['link_field15'])) {
+        $linkres->link_field15 = sanitize($_POST['link_field15'], 4, $Story_Content_Tags_To_Allow);
+    }
 
-    if(!isset($_POST['summarytext'])){
+    if (!isset($_POST['summarytext'])) {
         $linkres->link_summary = utf8_substr(sanitize($_POST['bodytext'], 4, $Story_Content_Tags_To_Allow), 0, StorySummary_ContentTruncate - 1);
         //$linkres->link_summary = close_tags(str_replace("\n", "<br />", $linkres->link_summary));
     } else {
         $linkres->link_summary = sanitize($_POST['summarytext'], 4, $Story_Content_Tags_To_Allow);
         //$linkres->link_summary = close_tags(str_replace("\n", "<br />", $linkres->link_summary));
-        if(utf8_strlen($linkres->link_summary) > StorySummary_ContentTruncate){
+        if (utf8_strlen($linkres->link_summary) > StorySummary_ContentTruncate) {
             loghack('SubmitAStory-SummaryGreaterThanLimit', 'username: ' . sanitize($_POST["username"], 3).'|email: '.sanitize($_POST["email"], 3), true);
             $linkres->link_summary = utf8_substr($linkres->link_summary, 0, StorySummary_ContentTruncate - 1);
             //$linkres->link_summary = close_tags(str_replace("\n", "<br />", $linkres->link_summary));
@@ -420,10 +453,9 @@ function do_submit2() {
     }
 
     //get link_group_id
-    if((isset($_REQUEST['link_group_id']))&&($_REQUEST['link_group_id']!='')){
+    if ((isset($_REQUEST['link_group_id']))&&($_REQUEST['link_group_id']!='')) {
         $linkres->link_group_id = intval($_REQUEST['link_group_id']);
-    }
-    else{
+    } else {
         $linkres->link_group_id=0;
     }
 
@@ -434,21 +466,18 @@ function do_submit2() {
     }
 
     //comment subscription
-    if(isset($_POST['comment_subscription']))
-    {
-
+    if (isset($_POST['comment_subscription'])) {
         $vars = array('link_id' => $linkres->id);
         check_actions('comment_subscription_insert_function', $vars);
     }
 
     //comment subscription
-    if(isset($_POST['timestamp_date_day']))
-    {
+    if (isset($_POST['timestamp_date_day'])) {
         //open date
         $timestamp_date_day = $_POST['timestamp_date_day'];
         $timestamp_date_month = $_POST['timestamp_date_month'];
         $timestamp_date_year = $_POST['timestamp_date_year'];
-        if (!is_numeric($timestamp_date_day) || !is_numeric($timestamp_date_month) || !is_numeric($timestamp_date_year)){
+        if (!is_numeric($timestamp_date_day) || !is_numeric($timestamp_date_month) || !is_numeric($timestamp_date_year)) {
             $timestamp_date = date("m-d-Y");
         } else {
             $timestamp_date = $timestamp_date_month."-".$timestamp_date_day."-".$timestamp_date_year;
@@ -461,7 +490,7 @@ function do_submit2() {
     $vars = '';
     check_actions('submit_step_3_after_first_store', $vars);
 
-    if ($vars['error'] == true && link_catcha_errors('captcha_error')){
+    if ($vars['error'] == true && link_catcha_errors('captcha_error')) {
         return;
     }
 
@@ -480,7 +509,7 @@ function do_submit2() {
         $main_smarty->assign('tags_url', $tags_url);
     }
 
-    if(isset($url)){
+    if (isset($url)) {
         $main_smarty->assign('submit_url', $url);
     } else {
         $main_smarty->assign('submit_url', '');
@@ -494,7 +523,7 @@ function do_submit2() {
     $main_smarty->assign('submit_title', str_replace('"',"&#034;",$link_title));
     $main_smarty->assign('submit_content', $link_content);
 
-    if(isset($trackback)){
+    if (isset($trackback)) {
         $main_smarty->assign('submit_trackback', $trackback);
     } else {
         $main_smarty->assign('submit_trackback', '');
@@ -507,7 +536,7 @@ function do_submit2() {
     $vars = '';
     check_actions('do_submit2', $vars);
     $_SESSION['step'] = 2;
-    if (Submit_Complete_Step2){
+    if (Submit_Complete_Step2) {
         do_submit3();
     } else {
         $main_smarty->display($the_template . '/pligg.tpl');
@@ -515,14 +544,19 @@ function do_submit2() {
 }
 
 // submit step 3
-function do_submit3() {
+function do_submit3()
+{
     global $db, $dblang;
 
     $linkres=new Link;
     $linkres->id = sanitize($_POST['id'], 3);
 
-    if(!is_numeric($linkres->id))die();
-    if(!Submit_Complete_Step2 && $_SESSION['step']!=2)die('Wrong step');
+    if (!is_numeric($linkres->id)) {
+        die();
+    }
+    if (!Submit_Complete_Step2 && $_SESSION['step']!=2) {
+        die('Wrong step');
+    }
 
     $linkres->read();
 
@@ -534,13 +568,10 @@ function do_submit3() {
     $vars = array('linkres'=>&$linkres);
     check_actions('do_submit3', $vars);
     $linkres->status = $vars['linkres']->status;
-    if ($vars['linkres']->status=='discard')
-    {
+    if ($vars['linkres']->status=='discard') {
         $vars = array('link_id' => $linkres->id);
         check_actions('story_discard', $vars);
-    }
-    elseif ($vars['linkres']->status=='spam')
-    {
+    } elseif ($vars['linkres']->status=='spam') {
         $vars = array('link_id' => $linkres->id);
         check_actions('story_spam', $vars);
     }
@@ -551,7 +582,7 @@ function do_submit3() {
 
     tags_insert_string($linkres->id, $dblang, $linkres->tags);
 
-    if(isset($_POST['trackback']) && sanitize($_POST['trackback'], 3) != '') {
+    if (isset($_POST['trackback']) && sanitize($_POST['trackback'], 3) != '') {
         require_once(mnminclude.'trackback.php');
         $trackres = new Trackback;
         $trackres->url=sanitize($_POST['trackback'], 3);
@@ -566,7 +597,7 @@ function do_submit3() {
     check_actions('submit_pre_redirect', $vars);
     if ($vars['redirect']) {
         header('Location: '.$vars['redirect']);
-    } elseif($linkres->link_group_id == 0){
+    } elseif ($linkres->link_group_id == 0) {
         header("Location: " . getmyurl('new'));
     } else {
         $redirect = getmyurl("group_story", $linkres->link_group_id);
@@ -581,21 +612,21 @@ function link_errors($linkres)
     global $main_smarty, $the_template, $cached_categories;
     $error = false;
 
-    if(sanitize($_POST['randkey'], 3) !== $linkres->randkey) { // random key error
+    if (sanitize($_POST['randkey'], 3) !== $linkres->randkey) { // random key error
         $main_smarty->assign('submit_error', 'badkey');
         $error = true;
     }
-    if($linkres->status != 'discard' && $linkres->status != 'draft') { // if link has already been submitted
+    if ($linkres->status != 'discard' && $linkres->status != 'draft') { // if link has already been submitted
         $main_smarty->assign('submit_error', 'hashistory');
         $main_smarty->assign('submit_error_history', $linkres->status);
         $error = true;
     }
     $story = preg_replace('/[\s]+/',' ',strip_tags($linkres->content));
-    if(utf8_strlen($linkres->title) < minTitleLength  || utf8_strlen($story) < minStoryLength ) {
+    if (utf8_strlen($linkres->title) < minTitleLength  || utf8_strlen($story) < minStoryLength ) {
         $main_smarty->assign('submit_error', 'incomplete');
         $error = true;
     }
-    if(utf8_strlen($linkres->title) > maxTitleLength) {
+    if (utf8_strlen($linkres->title) > maxTitleLength) {
         $main_smarty->assign('submit_error', 'long_title');
         $error = true;
     }
@@ -604,12 +635,12 @@ function link_errors($linkres)
         $error = true;
     }
 
-    if(utf8_strlen($linkres->tags) < minTagsLength && $linkres->tags!="" ) {
+    if (utf8_strlen($linkres->tags) < minTagsLength && $linkres->tags!="" ) {
         $main_smarty->assign('submit_error', 'short_tags');
         $error = true;
     }
 
-    if(utf8_strlen($linkres->tags) > maxTagsLength) {
+    if (utf8_strlen($linkres->tags) > maxTagsLength) {
         $main_smarty->assign('submit_error', 'long_tags');
         $error = true;
     }
@@ -618,22 +649,22 @@ function link_errors($linkres)
         $main_smarty->assign('submit_error', 'long_summary');
         $error = true;
     }
-    if(preg_match('/.*http:\//', $linkres->title)) { // if URL is found in link title
+    if (preg_match('/.*http:\//', $linkres->title)) { // if URL is found in link title
         $main_smarty->assign('submit_error', 'urlintitle');
         $error = true;
     }
-    if(!$linkres->category > 0) { // if no category is selected
+    if (!$linkres->category > 0) { // if no category is selected
         $main_smarty->assign('submit_error', 'nocategory');
         $error = true;
     }
-    foreach($cached_categories as $cat) {
-        if($cat->category__auto_id == $linkres->category && !allowToAuthorCat($cat)) { // category does not allow authors of this level
+    foreach ($cached_categories as $cat) {
+        if ($cat->category__auto_id == $linkres->category && !allowToAuthorCat($cat)) { // category does not allow authors of this level
             $main_smarty->assign('submit_error', 'nocategory');
             $error = true;
         }
     }
 
-    if($error == true){
+    if ($error == true) {
         $main_smarty->assign('link_id', $linkres->id);
         $main_smarty->assign('tpl_center', $the_template . '/submit_errors_center');
         $main_smarty->display($the_template . '/pligg.tpl');
@@ -648,7 +679,7 @@ function link_catcha_errors($linkerror)
     global $main_smarty, $the_template;
     $error = false;
 
-    if($linkerror == 'captcha_error') { // if no category is selected
+    if ($linkerror == 'captcha_error') { // if no category is selected
         $main_smarty->assign('submit_error', 'register_captcha_error');
         $main_smarty->assign('tpl_center', $the_template . '/submit_errors_center');
         $main_smarty->display($the_template . '/pligg.tpl');

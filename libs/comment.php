@@ -1,8 +1,12 @@
 <?php
 
-if(!defined('mnminclude')){header('Location: ../error_404.php');die();}
+if (!defined('mnminclude')) {
+    header('Location: ../error_404.php');
+    die();
+}
 
-class Comment {
+class Comment
+{
     var $id = 0;
     var $randkey = 0;
     var $author = 0;
@@ -16,13 +20,18 @@ class Comment {
     var $votes = 0;
     var $status = 'published';
 
-    function store() {
+    function store()
+    {
         // save the comment to the database
         global $db, $current_user, $the_template;
 
-        if(!$this->date) $this->date=time();
+        if (!$this->date) {
+            $this->date=time();
+        }
         $comment_id = $this->id;
-        if(!is_numeric($comment_id)){return false;}
+        if (!is_numeric($comment_id)) {
+            return false;
+        }
         $comment_author = $this->author;
         $comment_link = $this->link;
         $comment_karma = $this->karma;
@@ -33,16 +42,14 @@ class Comment {
         $comment_status = $this->status;
         $comment_parent = $this->parent;
 
-        if($this->id===0) {
-
+        if ($this->id===0) {
             $this->canSave = true; // assume we can save
 
             $vars = array('comment'=>&$this);
             check_actions('comment_save', $vars);
             $comment_status = $this->status;
 
-            if($this->canSave == true){
-
+            if ($this->canSave == true) {
                 // if this is a new comment
                 $sql = "INSERT IGNORE INTO " . table_comments . " (comment_parent, comment_user_id, comment_link_id, comment_karma, comment_date, comment_randkey, comment_content, comment_status) VALUES ($comment_parent, $comment_author, $comment_link, $comment_karma, FROM_UNIXTIME($comment_date), $comment_randkey, '$comment_content', '$comment_status')";
                 $db->query($sql);
@@ -57,9 +64,7 @@ class Comment {
 
                 $vars = array('comment'=>&$this);
                 check_actions('comment_post_save', $vars);
-
             }
-
         } else {
             // if we're editing an existing comment
             $sql = "UPDATE " . table_comments . " set comment_votes=$comment_votes, comment_user_id=$comment_author, comment_link_id=$comment_link, comment_karma=$comment_karma, comment_date=FROM_UNIXTIME($comment_date), comment_randkey=$comment_randkey, comment_content='$comment_content', comment_status='$comment_status' WHERE comment_id=$comment_id";
@@ -68,15 +73,17 @@ class Comment {
 
         $vars = array('comment' => $this);
         check_actions('comment_store_post_sql', $vars);
-
     }
 
-    function read($usecache = TRUE) {
+    function read($usecache = TRUE)
+    {
         // read the comment from the database
         global $db, $current_user, $cached_comments;
         $this->username = false;
         $id = $this->id;
-        if(!is_numeric($id)){return false;}
+        if (!is_numeric($id)) {
+            return false;
+        }
 
         if (isset($cached_comments[$id]) && $usecache == TRUE) {
             $link = $cached_comments[$id];
@@ -84,7 +91,7 @@ class Comment {
             $link = $db->get_row("SELECT * FROM " . table_comments . " WHERE comment_id = $id");
             $cached_comments[$id] = $link;
         }
-        if($link) {
+        if ($link) {
             $this->author=$link->comment_user_id;
             $this->randkey=$link->comment_randkey;
             $this->link=$link->comment_link_id;
@@ -103,12 +110,15 @@ class Comment {
         return false;
     }
 
-    function quickread() {
+    function quickread()
+    {
         global $db, $current_user;
         $this->username = false;
         $id = $this->id;
-        if(!is_numeric($id)){return false;}
-        if(($link = $db->get_row("SELECT * FROM " . table_comments . " WHERE comment_id = $id"))) {
+        if (!is_numeric($id)) {
+            return false;
+        }
+        if (($link = $db->get_row("SELECT * FROM " . table_comments . " WHERE comment_id = $id"))) {
             $this->content=$link->comment_content;
             return $link->comment_content;
         }
@@ -116,22 +126,25 @@ class Comment {
         return false;
     }
 
-    function print_summary($link, $fetch = false) {
+    function print_summary($link, $fetch = false)
+    {
         global $current_user, $the_template;
         static $comment_counter = 0;
         static $link_index=0;
 
         // setup smarty
             include_once('internal/Smarty.class.php');
-            $smarty = new Smarty;
-            $smarty->compile_dir = "cache/";
-            $smarty->template_dir = "templates/";
-            $smarty->config_dir = "";
-            $smarty->assign('pligg_language', pligg_language);
-            $smarty->config_load("/languages/lang_" . pligg_language . ".conf");
+        $smarty = new Smarty;
+        $smarty->compile_dir = "cache/";
+        $smarty->template_dir = "templates/";
+        $smarty->config_dir = "";
+        $smarty->assign('pligg_language', pligg_language);
+        $smarty->config_load("/languages/lang_" . pligg_language . ".conf");
 
         // if we can't read the comment, return
-            if(!$this->read) return;
+            if (!$this->read) {
+                return;
+            }
 
         // counter
             $comment_counter++;
@@ -139,26 +152,25 @@ class Comment {
         $smarty = $this->fill_smarty($smarty);
         $smarty->assign('rand', rand(1000000,100000000));
 
-        if($fetch == false){
+        if ($fetch == false) {
             $smarty->display($the_template . '/comment_show.tpl');
         } else {
             return $smarty->fetch($the_template . '/comment_show.tpl');
         }
-
     }
 
-    function fill_smarty($smarty){
+    function fill_smarty($smarty)
+    {
         global $current_user, $the_template, $comment_counter, $link, $ranklist, $db;
-        if (!$ranklist)
-        {
-        $users = $db->get_results("SELECT user_karma, COUNT(*) FROM ".table_users." WHERE user_level NOT IN ('Spammer') AND user_karma>0 GROUP BY user_karma ORDER BY user_karma DESC",ARRAY_N);
-        $ranklist = array();
-        $rank = 1;
-        if ($users)
-            foreach ($users as $dbuser)
-            {
-            $ranklist[$dbuser[0]] = $rank;
-            $rank += $dbuser[1];
+        if (!$ranklist) {
+            $users = $db->get_results("SELECT user_karma, COUNT(*) FROM ".table_users." WHERE user_level NOT IN ('Spammer') AND user_karma>0 GROUP BY user_karma ORDER BY user_karma DESC",ARRAY_N);
+            $ranklist = array();
+            $rank = 1;
+            if ($users) {
+                foreach ($users as $dbuser) {
+                    $ranklist[$dbuser[0]] = $rank;
+                    $rank += $dbuser[1];
+                }
             }
         }
 
@@ -218,7 +230,9 @@ class Comment {
         $canIhaveAccess = 0;
         $canIhaveAccess = $canIhaveAccess + checklevel('admin');
         $canIhaveAccess = $canIhaveAccess + checklevel('moderator');
-        if($canIhaveAccess == 1){$smarty->assign('isadmin', 1);}
+        if ($canIhaveAccess == 1) {
+            $smarty->assign('isadmin', 1);
+        }
 
         // the link to upvote the comment
         $jslinky = "cvote($current_user->user_id,$this->id,$this->id," . "'" . md5($current_user->user_id.$this->randkey) . "',10,'" . my_base_url . my_pligg_base . "/')";
@@ -243,7 +257,8 @@ class Comment {
         return $smarty;
     }
 
-    function username() {
+    function username()
+    {
         global $db;
         include_once(mnminclude.'user.php');
 
@@ -259,7 +274,8 @@ class Comment {
         return $this->username;
     }
 
-    function votes($user, $value="<> 0") {
+    function votes($user, $value="<> 0")
+    {
         require_once(mnminclude.'votes.php');
 
         $vote = new Vote;
@@ -270,7 +286,8 @@ class Comment {
     }
 
     // DB 11/10/08
-    function votes_from_ip($ip='', $value="<> 0") {
+    function votes_from_ip($ip='', $value="<> 0")
+    {
         require_once(mnminclude.'votes.php');
 
         $vote = new Vote;
@@ -282,9 +299,12 @@ class Comment {
     }
     /////
 
-    function remove_vote($user=0, $value=10) {
+    function remove_vote($user=0, $value=10)
+    {
         require_once(mnminclude.'votes.php');
-        if(!is_numeric($this->id)){return false;}
+        if (!is_numeric($this->id)) {
+            return false;
+        }
 
         $vote = new Vote;
         $vote->type='comments';
@@ -299,10 +319,13 @@ class Comment {
         $this->votes=$vote->count()-$vote->count('<0');
     }
 
-    function insert_vote($user=0, $value=10) {
+    function insert_vote($user=0, $value=10)
+    {
         global $anon_karma;
         require_once(mnminclude.'votes.php');
-        if(!is_numeric($this->id)){return false;}
+        if (!is_numeric($this->id)) {
+            return false;
+        }
 
         $vote = new Vote;
         $vote->type='comments';
@@ -310,13 +333,13 @@ class Comment {
         $vote->link=$this->id;
         $vote->value=$value;
 
-        if($vote->insert()) {
+        if ($vote->insert()) {
             $vote = new Vote;
             $vote->type='comments';
             $vote->link=$this->id;
             $this->votes=$vote->count()-$vote->count('<0');
 
-            if(comment_buries_spam>0 && $vote->count_all("<0")>=comment_buries_spam) {
+            if (comment_buries_spam>0 && $vote->count_all("<0")>=comment_buries_spam) {
                 $this->status='discard';
                 $this->store();
 

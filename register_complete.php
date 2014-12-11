@@ -13,7 +13,7 @@ $user=$_GET['user'];
 
 $usr = new User();
 $usr->username = $user;
-if ($usr->read()){
+if ($usr->read()) {
     $email = $usr->email;
 }
 

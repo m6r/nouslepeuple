@@ -2,33 +2,39 @@
 function joinGroup($group_id,$privacy)
 {
     global $db, $current_user,$main_smarty,$the_template,$my_base_url,$my_pligg_base;
-    if (!is_numeric($group_id)) die();
-    if (!$current_user->user_id) die();
+    if (!is_numeric($group_id)) {
+        die();
+    }
+    if (!$current_user->user_id) {
+        die();
+    }
 
     // Enforce "Max Joinable Groups" config option
-    if (reached_max_joinable_groups($db, $current_user))
+    if (reached_max_joinable_groups($db, $current_user)) {
         return;
+    }
 
     $privacy = $db->get_var("SELECT group_privacy FROM " . table_groups . " WHERE group_id = $group_id");
-    if($privacy == 'public')
+    if ($privacy == 'public') {
         $member_status = 'active';
-    else
+    } else {
         $member_status = 'inactive';
+    }
 
-        if (isMember($group_id)) return;
+    if (isMember($group_id)) {
+        return;
+    }
 
     $sql = "INSERT IGNORE INTO ". table_group_member ." ( `member_user_id` , `member_group_id`, `member_role`,`member_status` ) VALUES ('".$current_user->user_id ."', '".$group_id."','normal','".$member_status."' ) ";
     $db->query($sql);
 
     //member count update increase
-    if(isMemberActive($group_id) == 'active')
-    {
+    if (isMemberActive($group_id) == 'active') {
         $member_count = get_group_members($group_id);
         $member_update = "update ". table_groups ." set group_members = '".$member_count."' where group_id = '".$group_id."'";
         $db->query($member_update);
     }
-    if($privacy != 'public')
-    {
+    if ($privacy != 'public') {
         $creator_id = get_group_creator($group_id);
         $to = get_group_user_email($creator_id);
 
@@ -47,7 +53,9 @@ function joinGroup($group_id,$privacy)
 function unjoinGroup($group_id,$privacy)
 {
     global $db, $current_user;
-    if (!is_numeric($group_id)) die();
+    if (!is_numeric($group_id)) {
+        die();
+    }
 
     //$isMember = isMember($story_id);if($privacy == 'public')
     $sql2 = "delete from ". table_group_member ." where member_user_id = '".$current_user->user_id ."' and member_group_id = '".$group_id."' ";
@@ -62,21 +70,27 @@ function unjoinGroup($group_id,$privacy)
 function isMember($group_id)
 {
     global $db, $current_user;
-    if (!is_numeric($group_id)) die();
+    if (!is_numeric($group_id)) {
+        die();
+    }
 
     return $db->get_var("SELECT count(*) FROM " . table_group_member . " WHERE member_group_id = $group_id AND member_user_id = '".$current_user->user_id ."' " );
 }
 function isMemberActive($group_id)
 {
     global $db, $current_user;
-    if (!is_numeric($group_id)) die();
+    if (!is_numeric($group_id)) {
+        die();
+    }
 
     return $db->get_var("SELECT member_status FROM " . table_group_member . " WHERE member_group_id = $group_id AND member_user_id = '".$current_user->user_id ."' " );
 }
 function get_group_members($group_id)
 {
     global $db;
-    if (!is_numeric($group_id)) die();
+    if (!is_numeric($group_id)) {
+        die();
+    }
 
     $gid = $group_id;
     //$creator = $db->get_row("SELECT group_members FROM " . table_groups . " WHERE group_id = $gid");
@@ -87,7 +101,9 @@ function get_group_members($group_id)
 function get_group_creator($group_id)
 {
     global $db;
-    if (!is_numeric($group_id)) die();
+    if (!is_numeric($group_id)) {
+        die();
+    }
 
     $gid = $group_id;
     $creator = $db->get_row("SELECT group_creator FROM " . table_groups . " WHERE group_id = $gid");
@@ -97,7 +113,9 @@ function get_group_creator($group_id)
 function get_group_username($uid)
 {
     $user_id = $uid;
-    if (!is_numeric($user_id)) die();
+    if (!is_numeric($user_id)) {
+        die();
+    }
 
     include_once(mnminclude.'user.php');
     $user = new User;
@@ -109,7 +127,9 @@ function get_group_username($uid)
 function get_group_user_email($uid)
 {
     $user_id = $uid;
-    if (!is_numeric($user_id)) die();
+    if (!is_numeric($user_id)) {
+        die();
+    }
 
     include_once(mnminclude.'user.php');
     $user = new User;
@@ -122,15 +142,17 @@ function get_group_user_email($uid)
 function get_groupid_user($userid)
 {
     global $db,$current_user;
-    if (!is_numeric($userid)) die();
+    if (!is_numeric($userid)) {
+        die();
+    }
 
-        $group_array = array();
+    $group_array = array();
 // DB 01/08/09
         $groupdetail = $db->get_results("SELECT DISTINCT (group_id) AS group_id FROM " . table_group_member . " WHERE member_user_id =".$userid."");
 //		$groupdetail = $db->get_results("SELECT DISTINCT (group_id) AS group_id FROM " . table_group_member . " , " . table_groups . " , ".table_links." WHERE link_group_id = member_group_id AND member_group_id = group_id AND member_user_id =".$userid."");
 /////
         $group_array = $groupdetail;
-        return $group_array;
+    return $group_array;
         /*
         foreach($groupdetail as $groupcount)
         {
@@ -160,7 +182,9 @@ function get_groupdetail_user()
 function group_check_to_publish($group_id)
 {
     global $db;
-    if (!is_numeric($group_id)) die();
+    if (!is_numeric($group_id)) {
+        die();
+    }
 
     $gid = $group_id;
     $group_vote_to_publish = $db->get_row("SELECT group_vote_to_publish FROM " . table_groups . " WHERE group_id = $gid");
@@ -169,25 +193,29 @@ function group_check_to_publish($group_id)
 
 /** Find out if the user has already joined the maximum allowable number of groups.
  To enforce "Max Joinable Groups" config option. */
-function reached_max_joinable_groups($db, $current_user) {
- $user_id = $current_user->user_id;
- if (!is_numeric($user_id)) die();
+function reached_max_joinable_groups($db, $current_user)
+{
+    $user_id = $current_user->user_id;
+    if (!is_numeric($user_id)) {
+        die();
+    }
 
- $current_memberships = $db->get_var('SELECT COUNT(*) FROM ' . table_group_member
+    $current_memberships = $db->get_var('SELECT COUNT(*) FROM ' . table_group_member
   . " WHERE member_user_id = '$user_id'");
 
- return $current_memberships >= max_groups_to_join;
+    return $current_memberships >= max_groups_to_join;
 }
 
 //displaying group as story
 function group_display($requestID)
 {
     global $db,$main_smarty,$the_template;
-    if (!is_numeric($requestID)) die();
+    if (!is_numeric($requestID)) {
+        die();
+    }
 
     $group = $db->get_row("SELECT * FROM " . table_groups . " WHERE group_id = $requestID");
-    if($group)
-    {
+    if ($group) {
         $group_id=$group->group_id;
         $group_name=$group->group_name;
         $group_safename=$group->group_safename;
@@ -221,10 +249,11 @@ function group_display($requestID)
         $main_smarty->assign('group_vote_to_publish', $group_vote_to_publish);
 
         //get group avatar path
-        if($group_avatar == "uploaded" && file_exists(mnmpath."avatars/groups_uploaded/".$group_id."_".group_avatar_size_width.".jpg"))
+        if ($group_avatar == "uploaded" && file_exists(mnmpath."avatars/groups_uploaded/".$group_id."_".group_avatar_size_width.".jpg")) {
             $imgsrc = my_base_url . my_pligg_base."/avatars/groups_uploaded/".$group_id."_".group_avatar_size_width.".jpg";
-        else
+        } else {
             $imgsrc = my_base_url . my_pligg_base."/templates/".$the_template."/img/group_large.gif";
+        }
         $main_smarty->assign('imgsrc', $imgsrc);
 
         //get group creator and his urls
@@ -237,7 +266,9 @@ function group_display($requestID)
         global $current_user;
         $canIhaveAccess = $canIhaveAccess + checklevel('admin');
         $canIhaveAccess = $canIhaveAccess + checklevel('moderator');
-        if($current_user->user_id == $group_creator || $canIhaveAccess == 1){$main_smarty->assign('is_group_admin', 1);}
+        if ($current_user->user_id == $group_creator || $canIhaveAccess == 1) {
+            $main_smarty->assign('is_group_admin', 1);
+        }
 
         //check member
         //include_once(mnminclude.'group.php');
@@ -249,10 +280,11 @@ function group_display($requestID)
         // Joining and unjoining member links
         // Set the url to an empty string if the user has already joined the maximum
         // allowable number of groups
-        if (reached_max_joinable_groups($db, $current_user))
+        if (reached_max_joinable_groups($db, $current_user)) {
             $join_url = '';
-        else
+        } else {
             $join_url = getmyurl('join_group', $group_id, $group_privacy);
+        }
 
         $main_smarty->assign('join_group_url', $join_url);
         $main_smarty->assign('join_group_privacy_url', $join_url);
@@ -279,7 +311,9 @@ function group_display($requestID)
 function member_display($requestID)
 {
     global $db,$main_smarty,$current_user;
-    if (!is_numeric($requestID)) die();
+    if (!is_numeric($requestID)) {
+        die();
+    }
 
     $change_role = $main_smarty->get_config_vars("PLIGG_Visual_Group_Change_Role");
     $role_normal = $main_smarty->get_config_vars("PLIGG_Visual_Group_Role_Normal");
@@ -288,14 +322,13 @@ function member_display($requestID)
     $role_flagged = $main_smarty->get_config_vars("PLIGG_Visual_Group_Role_Flagged");
     $role_banned = $main_smarty->get_config_vars("PLIGG_Visual_Group_Role_Banned");
     $gcreator = get_group_creator($requestID);
-    if($gcreator == $current_user->user_id)
+    if ($gcreator == $current_user->user_id) {
         $member = $db->get_results("SELECT * FROM " . table_group_member . " WHERE member_group_id = $requestID AND member_user_id!=0");
-    else
+    } else {
         $member = $db->get_results("SELECT * FROM " . table_group_member . " WHERE member_group_id = $requestID AND member_user_id!=0 and member_status = 'active'");
-    if($member)
-    {
-        foreach($member as $memberid)
-        {
+    }
+    if ($member) {
+        foreach ($member as $memberid) {
             $member_user_id = $memberid->member_user_id;
             $member_role = $memberid->member_role;
 
@@ -312,10 +345,9 @@ function member_display($requestID)
             $group_member_avatar = get_avatar('small', "", "", "", $member_user_id);
 
             $member_display .= '<tr><td><a href="' . $group_member_url . '" class="group_member"><img src="' . $group_member_avatar . '" alt="' . $member_name . '" align="absmiddle" /></a></td><td><a href="' . $group_member_url . '" class="group_member">' . $member_name . '</a></td>';
-            if($gcreator == $current_user->user_id)
-            {
+            if ($gcreator == $current_user->user_id) {
                 if ($memberid->member_status=='active') {
-                    if($member_user_id == $current_user->user_id) {
+                    if ($member_user_id == $current_user->user_id) {
                         $main_smarty->assign('is_group_admin', 'true');
                         $member_display .= '<td>'.$member_role.'</td><td><a class="btn btn-default" href="#groupadminlinks-'.$index.'" data-toggle="modal"><i class="fa fa-edit" title="'.$change_role.'"></i> Edit</a></td><td>&nbsp;</td>';
                     } else {
@@ -348,7 +380,7 @@ function member_display($requestID)
                     $member_display .= '<td>&nbsp;</td><td>&nbsp;</td><td><a class="btn btn-success" href="'.my_base_url . my_pligg_base . '/join_group.php?activate=true&group_id='.$requestID.'&user_id='.$member_user_id.'">Activate</a></td>';
                 }
             }
-                $index=$index+1;
+            $index=$index+1;
             $member_display .= '</tr>';
         }
     }
@@ -359,63 +391,69 @@ function member_display($requestID)
 function group_stories($requestID,$catId,$view,$flag=0)
 {
     global $db,$main_smarty,$the_template,$page_size,$cached_links;
-    if (!is_numeric($requestID)) die();
+    if (!is_numeric($requestID)) {
+        die();
+    }
 
 
     $link = new Link;
     $group_new_display = "";
     $group_published_display = "";
 
-    if ($catId)
-        {
+    if ($catId) {
         $child_cats = '';
         // do we also search the subcategories?
-        if( Independent_Subcategories == true){
+        if ( Independent_Subcategories == true) {
             $child_array = '';
 
             // get a list of all children and put them in $child_array.
             children_id_to_array($child_array, table_categories, $catId);
             if ($child_array != '') {
                 // build the sql
-                foreach($child_array as $child_cat_id) {
+                foreach ($child_array as $child_cat_id) {
                     $child_cat_sql .= ' OR `link_category` = ' . $child_cat_id . ' ';
-                    if (Multiple_Categories)
+                    if (Multiple_Categories) {
                         $child_cat_sql .= ' OR ac_cat_id = ' . $child_cat_id . ' ';
+                    }
                 }
             }
         }
-        if (Multiple_Categories)
+        if (Multiple_Categories) {
             $child_cat_sql .= " OR ac_cat_id = $catId ";
-        $from_where .= " AND (link_category=$catId " . $child_cat_sql . ")";
         }
+        $from_where .= " AND (link_category=$catId " . $child_cat_sql . ")";
+    }
 
     $group_vote = group_check_to_publish($requestID);
 
 
-    if ($view == 'new')
+    if ($view == 'new') {
         $from_where .= " AND link_votes<$group_vote AND link_status='new'";
-    else
+    } else {
         $from_where .= " AND ((link_votes >= $group_vote AND link_status = 'new') OR link_status = 'published')";
+    }
 
     $offset = (get_current_page()-1)*$page_size;
-    if($flag==1){
-    $sql = "SELECT SQL_CALC_FOUND_ROWS * FROM " . table_links . " WHERE link_group_id = $requestID AND link_group_status!='discard' $from_where GROUP BY link_id ORDER BY link_published_date DESC, link_date DESC ";
-    }else{
-    $sql = "SELECT SQL_CALC_FOUND_ROWS * FROM " . table_links . " WHERE link_group_id = $requestID AND link_group_status!='discard' $from_where GROUP BY link_id ORDER BY link_published_date DESC, link_date DESC LIMIT $offset, $page_size";
+    if ($flag==1) {
+        $sql = "SELECT SQL_CALC_FOUND_ROWS * FROM " . table_links . " WHERE link_group_id = $requestID AND link_group_status!='discard' $from_where GROUP BY link_id ORDER BY link_published_date DESC, link_date DESC ";
+    } else {
+        $sql = "SELECT SQL_CALC_FOUND_ROWS * FROM " . table_links . " WHERE link_group_id = $requestID AND link_group_status!='discard' $from_where GROUP BY link_id ORDER BY link_published_date DESC, link_date DESC LIMIT $offset, $page_size";
     }
 
 
     // Search on additional categories
-    if ($catId && Multiple_Categories)
+    if ($catId && Multiple_Categories) {
         $sql = str_replace("WHERE", " LEFT JOIN ".table_additional_categories. " ON ac_link_id=link_id WHERE", $sql);
+    }
     $links = $db->get_results($sql);
     $rows = $db->get_var("SELECT FOUND_ROWS()");
 
-    if($flag==1)
-     return $rows;
+    if ($flag==1) {
+        return $rows;
+    }
 
     if ($links) {
-        foreach($links as $dblink) {
+        foreach ($links as $dblink) {
             $link->id=$dblink->link_id;
             $cached_links[$dblink->link_id] = $dblink;
             $link->read();
@@ -425,74 +463,79 @@ function group_stories($requestID,$catId,$view,$flag=0)
     $main_smarty->assign('group_display', $group_display);
 
     //for auto scrolling
-    if(Auto_scroll==2 || Auto_scroll==3){
-      $main_smarty->assign("scrollpageSize",$page_size);
-      $main_smarty->assign('total_row', $rows);
-      $main_smarty->assign("group_vote",$group_vote);
-      if($catId)
-      $main_smarty->assign('catID', $catId);
-
-    }else
-    $main_smarty->assign('group_story_pagination', do_pages($rows, $page_size, 'group_story', true));
+    if (Auto_scroll==2 || Auto_scroll==3) {
+        $main_smarty->assign("scrollpageSize",$page_size);
+        $main_smarty->assign('total_row', $rows);
+        $main_smarty->assign("group_vote",$group_vote);
+        if ($catId) {
+            $main_smarty->assign('catID', $catId);
+        }
+    } else {
+        $main_smarty->assign('group_story_pagination', do_pages($rows, $page_size, 'group_story', true));
+    }
 }
 //get the shared story for groups
 function group_shared($requestID,$catId,$flag=0)
 {
     global $db,$main_smarty,$the_template, $page_size,$cached_links;
-    if (!is_numeric($requestID)) die();
+    if (!is_numeric($requestID)) {
+        die();
+    }
 
     $link = new Link;
     $group_shared_display = "";
-    if ($catId)
-        {
+    if ($catId) {
         $child_cats = '';
         // do we also search the subcategories?
-        if( Independent_Subcategories == true){
+        if ( Independent_Subcategories == true) {
             $child_array = '';
 
             // get a list of all children and put them in $child_array.
             children_id_to_array($child_array, table_categories, $catId);
             if ($child_array != '') {
                 // build the sql
-                foreach($child_array as $child_cat_id) {
+                foreach ($child_array as $child_cat_id) {
                     $child_cat_sql .= ' OR `link_category` = ' . $child_cat_id . ' ';
-                    if (Multiple_Categories)
+                    if (Multiple_Categories) {
                         $child_cat_sql .= ' OR ac_cat_id = ' . $child_cat_id . ' ';
+                    }
                 }
             }
         }
-        if (Multiple_Categories)
+        if (Multiple_Categories) {
             $child_cat_sql .= " OR ac_cat_id = $catId ";
-        $from_where .= " AND (link_category=$catId " . $child_cat_sql . ")";
         }
+        $from_where .= " AND (link_category=$catId " . $child_cat_sql . ")";
+    }
 
     $offset = (get_current_page()-1)*$page_size;
 
-    if($flag==1){
-    $sql="SELECT SQL_CALC_FOUND_ROWS b.* FROM " . table_group_shared . " a
+    if ($flag==1) {
+        $sql="SELECT SQL_CALC_FOUND_ROWS b.* FROM " . table_group_shared . " a
 				    LEFT JOIN " . table_links . " b ON link_id=share_link_id
 				    WHERE share_group_id = $requestID AND !ISNULL(link_id) $from_where
 				    GROUP BY link_id
 				    ORDER BY link_published_date DESC, link_date DESC ";
-    }else{
-    $sql="SELECT SQL_CALC_FOUND_ROWS b.* FROM " . table_group_shared . " a
+    } else {
+        $sql="SELECT SQL_CALC_FOUND_ROWS b.* FROM " . table_group_shared . " a
 				    LEFT JOIN " . table_links . " b ON link_id=share_link_id
 				    WHERE share_group_id = $requestID AND !ISNULL(link_id) $from_where
 				    GROUP BY link_id
 				    ORDER BY link_published_date DESC, link_date DESC  LIMIT $offset, $page_size";
-
     }
     // Search on additional categories
-    if ($catId && Multiple_Categories)
+    if ($catId && Multiple_Categories) {
         $sql = str_replace("WHERE", " LEFT JOIN ".table_additional_categories. " ON ac_link_id=link_id WHERE", $sql);
+    }
     $links = $db->get_results($sql);
     $rows  = $db->get_var("SELECT FOUND_ROWS()");
 
-    if($flag==1)
-    return $rows;
+    if ($flag==1) {
+        return $rows;
+    }
 
     if ($links) {
-        foreach($links as $dblink) {
+        foreach ($links as $dblink) {
             $link->id=$dblink->link_id;
             $cached_links[$dblink->link_id] = $dblink;
             $link->read();
@@ -503,27 +546,29 @@ function group_shared($requestID,$catId,$flag=0)
 
 
     //for auto scrolling
-    if(Auto_scroll==2 || Auto_scroll==3){
-      $main_smarty->assign("scrollpageSize",$page_size);
-      $main_smarty->assign('total_row', $rows);
-      if($catId)
-      $main_smarty->assign('catID', $catId);
+    if (Auto_scroll==2 || Auto_scroll==3) {
+        $main_smarty->assign("scrollpageSize",$page_size);
+        $main_smarty->assign('total_row', $rows);
+        if ($catId) {
+            $main_smarty->assign('catID', $catId);
+        }
 
-      $main_smarty->assign('total_row', $rows);
-
-    }else
-      $main_smarty->assign('group_story_pagination', do_pages($rows, $page_size, 'group_story', true));
+        $main_smarty->assign('total_row', $rows);
+    } else {
+        $main_smarty->assign('group_story_pagination', do_pages($rows, $page_size, 'group_story', true));
+    }
 }
 //displaying group as story
 function group_print_summary($requestID)
 {
     global $db,$main_smarty,$the_template;
-    if (!is_numeric($requestID)) die();
+    if (!is_numeric($requestID)) {
+        die();
+    }
 
     $index = 0;
     $group = $db->get_row("SELECT group_id,group_creator, group_status, group_members, group_date, group_name, group_safename, group_description, group_privacy, group_avatar FROM " . table_groups . " WHERE group_id = $requestID");
-    if($group)
-    {
+    if ($group) {
         $group_id=$group->group_id;
         $group_name=$group->group_name;
         $group_safename=$group->group_safename;
@@ -552,10 +597,11 @@ function group_print_summary($requestID)
         $main_smarty->assign('group_date', $group_date);
 
         //get group avatar path
-        if($group_avatar == "uploaded" && file_exists(mnmpath."avatars/groups_uploaded/".$group_id."_".group_avatar_size_width.".jpg"))
+        if ($group_avatar == "uploaded" && file_exists(mnmpath."avatars/groups_uploaded/".$group_id."_".group_avatar_size_width.".jpg")) {
             $imgsrc = my_base_url . my_pligg_base."/avatars/groups_uploaded/".$group_id."_".group_avatar_size_width.".jpg";
-        else
+        } else {
             $imgsrc = my_base_url . my_pligg_base."/templates/".$the_template."/img/group_large.gif";
+        }
         $main_smarty->assign('imgsrc', $imgsrc);
 
         //get group creator and his url
@@ -568,7 +614,9 @@ function group_print_summary($requestID)
 
         //check group admin
         global $current_user;
-        if($current_user->user_id == $group_creator){$main_smarty->assign('is_group_admin', 1);}
+        if ($current_user->user_id == $group_creator) {
+            $main_smarty->assign('is_group_admin', 1);
+        }
 
         //language
         $lang_Created_By = $main_smarty->get_config_vars("PLIGG_Visual_Group_Created_By");
@@ -582,10 +630,11 @@ function group_print_summary($requestID)
         // Joining and unjoining member links
         // Set the url to an empty string if the user has already joined the maximum
         // allowable number of groups
-        if (reached_max_joinable_groups($db, $current_user))
+        if (reached_max_joinable_groups($db, $current_user)) {
             $join_url = '';
-        else
+        } else {
             $join_url = getmyurl("join_group",$group_id);
+        }
 
         $main_smarty->assign('join_group_url',$join_url);
         $main_smarty->assign('unjoin_group_url',getmyurl("unjoin_group",$group_id));

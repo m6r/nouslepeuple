@@ -18,7 +18,7 @@ $main_smarty = do_sidebar($main_smarty);
 define('pagename', 'page');
 $main_smarty->assign('pagename', pagename);
 
-if($_REQUEST['page']){
+if ($_REQUEST['page']) {
     global $db, $main_smarty;
     $page = $db->escape(sanitize($_REQUEST['page'],4));
 
@@ -31,7 +31,7 @@ if($_REQUEST['page']){
 							WHERE `old_title_url` = '$page' AND !ISNULL(link_id)");
     }
 
-    if($page_results->link_id){
+    if ($page_results->link_id) {
         $main_smarty->assign('page_title' , $page_results->link_title);
         $main_smarty->assign('meta_keywords' , $page_results->link_field1);
         $main_smarty->assign('meta_description' , $page_results->link_field2);

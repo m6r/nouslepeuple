@@ -25,7 +25,7 @@ define('xml_sitemaps_lang_conf', '/modules/xml_sitemaps/lang.conf');
 
 // don't touch anything past this line.
 
-if(is_object($main_smarty)){
+if (is_object($main_smarty)) {
     $main_smarty->assign('xml_sitemaps_path', xml_sitemaps_path);
     $main_smarty->assign('xml_sitemaps_conf', xml_sitemaps_lang_conf);
 }

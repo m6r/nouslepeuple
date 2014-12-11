@@ -1,6 +1,9 @@
 <?php
 
-if(!defined('mnminclude')){header('Location: ../error_404.php');die();}
+if (!defined('mnminclude')) {
+    header('Location: ../error_404.php');
+    die();
+}
 
 include mnminclude.'extra_fields_smarty.php';
 
@@ -9,12 +12,14 @@ $main_smarty->template_dir = mnmpath."templates/";
 $main_smarty->cache_dir = mnmpath."cache/";
 
 // determine if we're in root or another folder like admin
-if(!defined('lang_loc')){
+if (!defined('lang_loc')) {
     $pos = strrpos($_SERVER["SCRIPT_NAME"], "/");
     $path = substr($_SERVER["SCRIPT_NAME"], 0, $pos);
-    if ($path == "/"){$path = "";}
+    if ($path == "/") {
+        $path = "";
+    }
 
-    if($path != my_pligg_base){
+    if ($path != my_pligg_base) {
         define('lang_loc', '..');
     } else {
         define('lang_loc', '.');
@@ -23,7 +28,7 @@ if(!defined('lang_loc')){
 
 // Check if a .maintenance file exists in the Pligg root directory
 $maintenance_file = "./.maintenance";
-if(file_exists($maintenance_file)){
+if (file_exists($maintenance_file)) {
     $main_smarty->assign('maintenance_mode', 'true');
 } else {
     $main_smarty->assign('maintenance_mode', 'false');
@@ -33,10 +38,18 @@ $main_smarty->config_dir = "";
 $main_smarty->force_compile = false; // has to be off to use cache
 $main_smarty->config_load(lang_loc . "/languages/lang_" . pligg_language . ".conf");
 
-if(isset($_GET['id']) && is_numeric($_GET['id'])){$main_smarty->assign('request_id', $_GET['id']);}
-if(isset($_GET['category']) && sanitize($_GET['category'], 3) != ''){$main_smarty->assign('request_category', sanitize($_GET['category'], 3));}
-if(isset($_GET['search']) && sanitize($_GET['search'], 3) != ''){$main_smarty->assign('request_search', sanitize($_GET['search'], 3));}
-if(isset($_POST['username']) && sanitize($_GET['username'], 3) != ''){$main_smarty->assign('login_username', sanitize($_POST['username'], 3));}
+if (isset($_GET['id']) && is_numeric($_GET['id'])) {
+    $main_smarty->assign('request_id', $_GET['id']);
+}
+if (isset($_GET['category']) && sanitize($_GET['category'], 3) != '') {
+    $main_smarty->assign('request_category', sanitize($_GET['category'], 3));
+}
+if (isset($_GET['search']) && sanitize($_GET['search'], 3) != '') {
+    $main_smarty->assign('request_search', sanitize($_GET['search'], 3));
+}
+if (isset($_POST['username']) && sanitize($_GET['username'], 3) != '') {
+    $main_smarty->assign('login_username', sanitize($_POST['username'], 3));
+}
 
 $main_smarty->assign('votes_per_ip', votes_per_ip);
 $main_smarty->assign('dblang', $dblang);
@@ -56,7 +69,7 @@ $main_smarty->assign('UseAvatars', do_we_use_avatars());
 $main_smarty->assign('Allow_Friends', Allow_Friends);
 $main_smarty->assign('Pager_setting', Auto_scroll);
 
-if($current_user->user_login){
+if ($current_user->user_login) {
     $main_smarty->assign('Current_User_Avatar', $avatars = get_avatar('all', "", "", "", $current_user->user_id));
     $main_smarty->assign('Current_User_Avatar_ImgSrc', $avatars['small']);
 }
@@ -66,13 +79,15 @@ $main_smarty->assign('enable_group', enable_group);
 $main_smarty->assign('group_submit_level', group_submit_level);
 $group_submit_level = group_submit_level;
 $current_user_level = $current_user->user_level;
-if(group_submit_level == $current_user_level || group_submit_level == 'normal' || $current_user_level == 'admin')
+if (group_submit_level == $current_user_level || group_submit_level == 'normal' || $current_user_level == 'admin') {
     $main_smarty->assign('group_allow', 1);
+}
 
 $main_smarty->assign('SearchMethod', SearchMethod);
 $main_smarty = SetSmartyURLs($main_smarty);
-if ($main_smarty->get_template_vars('tpl_center'))
+if ($main_smarty->get_template_vars('tpl_center')) {
     $main_smarty->display('blank.tpl');
+}
 $the_template = The_Template;
 $main_smarty->assign('the_template', The_Template);
 $main_smarty->assign('tpl_head', $the_template . '/head');
@@ -88,9 +103,13 @@ $main_smarty->assign('tpl_header_admin', '/header');
 //remove this after we eliminate the need for do_header
 $canIhaveAccess = 0;
 $canIhaveAccess = $canIhaveAccess + checklevel('admin');
-if($canIhaveAccess == 1){$main_smarty->assign('isadmin', 1);}
+if ($canIhaveAccess == 1) {
+    $main_smarty->assign('isadmin', 1);
+}
 $canIhaveAccess = $canIhaveAccess + checklevel('moderator');
-if($canIhaveAccess == 1){$main_smarty->assign('isadmin', 1);}
+if ($canIhaveAccess == 1) {
+    $main_smarty->assign('isadmin', 1);
+}
 
 // show count of new stories
 $new_submissions_count = $db->get_var('SELECT count(*) from ' . table_links . ' where link_status = "new";');
@@ -148,11 +167,12 @@ $main_smarty->assign('moderated_total_count', $moderated_total_count);
 //count installed module with updates available
 $res_update_mod=mysql_query('SELECT folder from ' . table_modules . ' where latest_version>version') or die(mysql_error());
 $num_update_mod=0;
-if(mysql_num_rows($res_update_mod)>0){
-while($modules_folders=mysql_fetch_array($res_update_mod)){
-    if (file_exists(mnmmodules . $modules_folders['folder']))
+if (mysql_num_rows($res_update_mod)>0) {
+    while ($modules_folders=mysql_fetch_array($res_update_mod)) {
+        if (file_exists(mnmmodules . $modules_folders['folder'])) {
             $num_update_mod++;
- }
+        }
+    }
 }
 $main_smarty->assign('in_no_module_update_require', $num_update_mod);
 
@@ -171,7 +191,7 @@ check_actions('all_pages_top', $vars);
 
 // setup the sorting links on the index page in smarty
 $pligg_category = isset($_GET['category']) ? sanitize($_GET['category'], 3) : '';
-if($pligg_category != ''){
+if ($pligg_category != '') {
     $main_smarty->assign('index_url_recent', getmyurl('maincategory', $pligg_category));
     $main_smarty->assign('index_url_today', getmyurl('index_sort', 'today', $pligg_category));
     $main_smarty->assign('index_url_yesterday', getmyurl('index_sort', 'yesterday', $pligg_category));
@@ -185,8 +205,7 @@ if($pligg_category != ''){
     $main_smarty->assign('index_url_commented', getmyurl('index_sort', 'commented', $pligg_category));
 
     $main_smarty->assign('cat_url', getmyurl("maincategory"));
-}
-else {
+} else {
     $main_smarty->assign('index_url_recent', getmyurl('index'));
     $main_smarty->assign('index_url_today', getmyurl('index_sort', 'today'));
     $main_smarty->assign('index_url_yesterday', getmyurl('index_sort', 'yesterday'));
@@ -198,7 +217,6 @@ else {
     $main_smarty->assign('index_url_upvoted', getmyurl('index_sort', 'upvoted'));
     $main_smarty->assign('index_url_downvoted', getmyurl('index_sort', 'downvoted'));
     $main_smarty->assign('index_url_commented', getmyurl('index_sort', 'commented'));
-
 }
 //group sort smarty
 $main_smarty->assign('group_url_newest', getmyurl('group_sort', 'newest'));
@@ -207,8 +225,7 @@ $main_smarty->assign('group_url_members', getmyurl('group_sort', 'members'));
 $main_smarty->assign('group_url_name', getmyurl('group_sort', 'name'));
 
 // setup the links
-if ($current_user->user_id > 0 && $current_user->authenticated)
-{
+if ($current_user->user_id > 0 && $current_user->authenticated) {
     $login=$current_user->user_login;
     $main_smarty->assign('user_url_personal_data', getmyurl('user', $login));
     $main_smarty->assign('user_url_news_sent', getmyurl('user2', $login, 'history'));

@@ -26,8 +26,8 @@ $canIhaveAccess = $canIhaveAccess + checklevel('moderator');
 
 $is_moderator = checklevel('moderator'); // Moderators have a value of '1' for the variable $is_moderator
 
-if($canIhaveAccess == 0){
-//	$main_smarty->assign('tpl_center', '/admin/access_denied');
+if ($canIhaveAccess == 0) {
+    //	$main_smarty->assign('tpl_center', '/admin/access_denied');
 //	$main_smarty->display($template_dir . '/admin/admin.tpl');
     header("Location: " . getmyurl('admin_login', $_SERVER['REQUEST_URI']));
     die();
@@ -36,16 +36,18 @@ if($canIhaveAccess == 0){
 // sidebar
 $main_smarty = do_sidebar($main_smarty);
 
-if($canIhaveAccess == 1) {
+if ($canIhaveAccess == 1) {
     global $offset;
     $CSRF = new csrf();
 
     // Items per page drop-down
-    if(isset($_GET["pagesize"]) && is_numeric($_GET["pagesize"])) {
+    if (isset($_GET["pagesize"]) && is_numeric($_GET["pagesize"])) {
         misc_data_update('pagesize',$_GET["pagesize"]);
     }
     $pagesize = get_misc_data('pagesize');
-    if ($pagesize <= 0) $pagesize = 30;
+    if ($pagesize <= 0) {
+        $pagesize = 30;
+    }
     $main_smarty->assign('pagesize', $pagesize);
 
     // figure out what "page" of the results we're on
@@ -53,20 +55,19 @@ if($canIhaveAccess == 1) {
 
     // if user is searching
     $temp = '';
-    if($_GET["keyword"] && $_GET["keyword"]!= $main_smarty->get_config_vars('PLIGG_Visual_Search_SearchDefaultText')){
+    if ($_GET["keyword"] && $_GET["keyword"]!= $main_smarty->get_config_vars('PLIGG_Visual_Search_SearchDefaultText')) {
         $pligg_keyword = sanitize($_GET["keyword"], 3);
         $search_sql = " AND (link_author LIKE '%".$pligg_keyword."%' OR link_title LIKE '%".$pligg_keyword."%' OR link_content LIKE '%".$pligg_keyword."%' OR link_tags LIKE '%".$pligg_keyword."%') ";
     }
 
-    if ($_GET['user'])
-    {
+    if ($_GET['user']) {
         $user = mysql_fetch_array(mysql_query("SELECT * FROM " . table_users . " where user_login='".sanitize($_GET['user'], 3)."'"));
         $user_sql = " AND link_author='".$user['user_id']."'";
     }
 
 
     // if admin uses the filter
-    if(isset($_GET["filter"])) {
+    if (isset($_GET["filter"])) {
         switch (sanitize($_GET["filter"], 3)) {
             case 'new':
                 $filter_sql = " link_status = 'new' ";
@@ -109,9 +110,9 @@ if($canIhaveAccess == 1) {
     // read links from database
     $user = new User;
     $link = new Link;
-    if($filtered) {
-    $template_stories = array();
-        foreach($filtered as $dbfiltered) {
+    if ($filtered) {
+        $template_stories = array();
+        foreach ($filtered as $dbfiltered) {
             $link->id = $dbfiltered->link_id;
             $cached_links[$dbfiltered->link_id] = $dbfiltered;
             $link->read();
@@ -138,57 +139,44 @@ if($canIhaveAccess == 1) {
 
     // if admin changes the link status
     if (isset($_GET['action']) && sanitize($_GET['action'], 3) == "bulkmod" && isset($_POST['admin_acction'])) {
-
         $CSRF->check_expired('admin_links_edit');
-        if ($CSRF->check_valid(sanitize($_POST['token'], 3), 'admin_links_edit')){
+        if ($CSRF->check_valid(sanitize($_POST['token'], 3), 'admin_links_edit')) {
             $comment = array();
 
 
             $admin_acction=$_POST['admin_acction'];
 
             foreach ($_POST["link"] as $key => $v) {
-
-                if($admin_acction=="published" || $admin_acction=="new" || $admin_acction=="discard" || $admin_acction=="spam"){
+                if ($admin_acction=="published" || $admin_acction=="new" || $admin_acction=="discard" || $admin_acction=="spam") {
                     $link_status=$db->get_var('select link_status from ' . table_links . '  WHERE link_id = "'.$key.'"');
-                    if($link_status!=$admin_acction){
-
+                    if ($link_status!=$admin_acction) {
                         if ($admin_acction == "published") {
                             $db->query('UPDATE `' . table_links . '` SET `link_status` = "published", link_published_date = now() WHERE `link_id` = "'.$key.'"');
                             $vars = array('link_id' => $key);
                             check_actions('link_published', $vars);
-                        }
-                        elseif ($admin_acction == "new") {
+                        } elseif ($admin_acction == "new") {
                             $db->query('UPDATE `' . table_links . '` SET `link_status` = "new", link_published_date=0 WHERE `link_id` = "'.$key.'"');
-                        }
-                        elseif ($admin_acction == "discard") {
+                        } elseif ($admin_acction == "discard") {
                             $db->query('UPDATE `' . table_links . '` SET `link_status` = "discard" WHERE `link_id` = "'.$key.'"');
 
                             $vars = array('link_id' => $key);
                             check_actions('story_discard', $vars);
-                        }
-                        elseif ($admin_acction == "spam") {
-
-
+                        } elseif ($admin_acction == "spam") {
                             $user_id = $db->get_var($sql="SELECT link_author FROM `" . table_links . "` WHERE `link_id` = ".$key.";");
                             $db->query('UPDATE `' . table_links . '` SET `link_status` = "spam" WHERE `link_id` = "'.$key.'"');
                             $vars = array('link_id' => $key);
-                             check_actions('story_discard', $vars);
+                            check_actions('story_discard', $vars);
                             $user = new User;
                             $user->id = $user_id;
                             $user->read();
 
-                            if ($user->level!='admin' && $user->level!="Spammer")
-                            {
+                            if ($user->level!='admin' && $user->level!="Spammer") {
                                 killspam($user_id);
                                 $killspammed[$user_id] = 1;
-                                }
                             }
-
-
                         }
-
+                    }
                 }
-
             }
 
             totals_regenerate();
@@ -215,13 +203,12 @@ if($canIhaveAccess == 1) {
 
     // show the template
     $main_smarty->assign('tpl_center', '/admin/submissions');
-    if ($is_moderator == '1'){
+    if ($is_moderator == '1') {
         $main_smarty->display($template_dir . '/admin/moderator.tpl');
     } else {
         $main_smarty->display($template_dir . '/admin/admin.tpl');
     }
-}
-else {
+} else {
     echo 'This page is restricted to site Admins!';
 }
 

@@ -27,8 +27,8 @@ $canIhaveAccess = $canIhaveAccess + checklevel('moderator');
 
 $is_moderator = checklevel('moderator'); // Moderators have a value of '1' for the variable $is_moderator
 
-if($canIhaveAccess == 0){
-//	$main_smarty->assign('tpl_center', '/admin/access_denied');
+if ($canIhaveAccess == 0) {
+    //	$main_smarty->assign('tpl_center', '/admin/access_denied');
 //	$main_smarty->display($template_dir . '/admin/admin.tpl');
     header("Location: " . getmyurl('admin_login', $_SERVER['REQUEST_URI']));
     die();
@@ -37,34 +37,35 @@ if($canIhaveAccess == 0){
 // sidebar
 $main_smarty = do_sidebar($main_smarty);
 
-if($canIhaveAccess == 1) {
+if ($canIhaveAccess == 1) {
     global $offset;
     $CSRF = new csrf();
 
     // Items per page drop-down
-    if(isset($_GET["pagesize"]) && is_numeric($_GET["pagesize"])) {
+    if (isset($_GET["pagesize"]) && is_numeric($_GET["pagesize"])) {
         misc_data_update('pagesize',$_GET["pagesize"]);
     }
     $pagesize = get_misc_data('pagesize');
-    if ($pagesize <= 0) $pagesize = 30;
+    if ($pagesize <= 0) {
+        $pagesize = 30;
+    }
     $main_smarty->assign('pagesize', $pagesize);
 
     // figure out what "page" of the results we're on
     $offset=(get_current_page()-1)*$pagesize;
 
     // if user is searching
-    if($_GET["keyword"] && $_GET["keyword"]!= $main_smarty->get_config_vars('PLIGG_Visual_Search_SearchDefaultText')){
+    if ($_GET["keyword"] && $_GET["keyword"]!= $main_smarty->get_config_vars('PLIGG_Visual_Search_SearchDefaultText')) {
         $search_sql = " AND (comment_content LIKE '%".sanitize($_GET["keyword"], 3)."%' OR user_login LIKE '%".sanitize($_GET["keyword"], 3)."%')";
     }
 
-    if ($_GET['user'])
-    {
+    if ($_GET['user']) {
         $user = mysql_fetch_array(mysql_query("SELECT * FROM " . table_users . " where user_login='".sanitize($_GET['user'], 3)."'"));
         $user_sql = " AND comment_user_id='".$user['user_id']."'";
     }
 
     // if admin uses the filter
-    if(isset($_GET["filter"])) {
+    if (isset($_GET["filter"])) {
         switch (sanitize($_GET["filter"], 3)) {
             case 'all':
                 $filter_sql = " comment_status != 'spam' AND comment_status != 'discard'";
@@ -82,9 +83,9 @@ if($canIhaveAccess == 1) {
                 $filter_sql = " comment_status = '".$db->escape($_GET["filter"])."' ";
                 break;
         }
-    }
-    else
+    } else {
         $filter_sql = " comment_status != 'spam' AND comment_status != 'discard'";
+    }
 
     $filtered = $db->get_results($sql="SELECT SQL_CALC_FOUND_ROWS * FROM " . table_comments . "
 							LEFT JOIN ".table_users." ON user_id=comment_user_id
@@ -95,12 +96,12 @@ if($canIhaveAccess == 1) {
     // read comments from database
     $user = new User;
     $comment = new Comment;
-    if($filtered) {
-      $template_comments = array();
-      foreach($filtered as $dbfiltered) {
-        $comment->id = $dbfiltered->comment_id;
-        $cached_comments[$dbfiltered->comment_id] = $dbfiltered;
-        $comment->read();
+    if ($filtered) {
+        $template_comments = array();
+        foreach ($filtered as $dbfiltered) {
+            $comment->id = $dbfiltered->comment_id;
+            $cached_comments[$dbfiltered->comment_id] = $dbfiltered;
+            $comment->read();
 #	    $user->id = $comment->author;
 #	    $user->read();
           $template_comments[] = array(
@@ -113,8 +114,8 @@ if($canIhaveAccess == 1) {
             'comment_status' => $comment->status,
             'comment_date' => $dbfiltered->comment_date
           );
-      }
-      $main_smarty->assign('template_comments', $template_comments);
+        }
+        $main_smarty->assign('template_comments', $template_comments);
     }
 
     // breadcrumbs and page title
@@ -129,41 +130,30 @@ if($canIhaveAccess == 1) {
         $killspammed = array();
         $admin_acction=$_POST['admin_acction'];
 
-        if ($CSRF->check_valid(sanitize($_POST['token'], 3), 'comments_edit')){
-
-
-
-            foreach($_POST["comment"] as $key => $value) {
-
+        if ($CSRF->check_valid(sanitize($_POST['token'], 3), 'comments_edit')) {
+            foreach ($_POST["comment"] as $key => $value) {
                 $comment_status=$db->get_var('select comment_status from ' . table_comments . '  WHERE comment_id = "'.$key.'"');
 
-                if($comment_status!=$admin_acction){
+                if ($comment_status!=$admin_acction) {
+                    if ($admin_acction == "published") {
+                        $db->query($sql='UPDATE `' . table_comments . '` SET `comment_status` = "published" WHERE `comment_id` = "'.$key.'"');
+                    } elseif ($admin_acction == "moderated") {
+                        $db->query($sql='UPDATE `' . table_comments . '` SET `comment_status` = "moderated" WHERE `comment_id` = "'.$key.'"');
+                    } elseif ($admin_acction == "discard" || $admin_acction == "delete") {
+                        $db->query($sql='UPDATE `' . table_comments . '` SET `comment_status` = "discard" WHERE `comment_id` = "'.$key.'"');
 
-                if ($admin_acction == "published") {
-                    $db->query($sql='UPDATE `' . table_comments . '` SET `comment_status` = "published" WHERE `comment_id` = "'.$key.'"');
-                }
-                elseif ($admin_acction == "moderated") {
-                    $db->query($sql='UPDATE `' . table_comments . '` SET `comment_status` = "moderated" WHERE `comment_id` = "'.$key.'"');
-                }
-                elseif ($admin_acction == "discard" || $admin_acction == "delete") {
-                    $db->query($sql='UPDATE `' . table_comments . '` SET `comment_status` = "discard" WHERE `comment_id` = "'.$key.'"');
-
-                    $vars = array('comment_id' => $key);
-                    check_actions('comment_discard', $vars);
-                }
-                elseif ($admin_acction == "spam" && !$killspammed[$user_id]) {
-                    $user_id = $db->get_var("SELECT comment_user_id FROM `" . table_comments . "` WHERE `comment_id` = ".$key.";");
+                        $vars = array('comment_id' => $key);
+                        check_actions('comment_discard', $vars);
+                    } elseif ($admin_acction == "spam" && !$killspammed[$user_id]) {
+                        $user_id = $db->get_var("SELECT comment_user_id FROM `" . table_comments . "` WHERE `comment_id` = ".$key.";");
 #					$db->query($sql='UPDATE `' . table_comments . '` SET `comment_status` = "spam" WHERE `comment_id` = "'.$key.'"');
                     killspam($user_id);
-                    $killspammed[$user_id] = 1;
+                        $killspammed[$user_id] = 1;
+                    }
                 }
-                }
-
-
             }
             header("Location: ".my_pligg_base."/admin/admin_comments.php?page=".sanitize($_GET['page'],3));
             die();
-
         } else {
             $CSRF->show_invalid_error(1);
             exit;
@@ -184,14 +174,12 @@ if($canIhaveAccess == 1) {
     // show the template
     $main_smarty->assign('tpl_center', '/admin/comments');
 
-    if ($is_moderator == '1'){
+    if ($is_moderator == '1') {
         $main_smarty->display($template_dir . '/admin/moderator.tpl');
     } else {
         $main_smarty->display($template_dir . '/admin/admin.tpl');
     }
-
-}
-else {
+} else {
     echo 'not for you! go away!';
 }
 

@@ -1,23 +1,27 @@
 <?php
-if (!$step) { header('Location: ./install.php'); die(); }
+if (!$step) {
+    header('Location: ./install.php');
+    die();
+}
 
-if ($_POST['language'])
+if ($_POST['language']) {
     $language = addslashes(strip_tags($_POST['language']));
-if($language == 'arabic'){
+}
+if ($language == 'arabic') {
     include_once('./languages/lang_arabic.php');
-}elseif($language == 'catalan'){
+} elseif ($language == 'catalan') {
     include_once('./languages/lang_catalan.php');
-}elseif($language == 'chinese_simplified'){
+} elseif ($language == 'chinese_simplified') {
     include_once('./languages/lang_chinese_simplified.php');
-}elseif($language == 'french'){
+} elseif ($language == 'french') {
     include_once('./languages/lang_french.php');
-}elseif($language == 'german'){
+} elseif ($language == 'german') {
     include_once('./languages/lang_german.php');
-}elseif($language == 'italian'){
+} elseif ($language == 'italian') {
     include_once('./languages/lang_italian.php');
-}elseif($language == 'russian'){
+} elseif ($language == 'russian') {
     include_once('./languages/lang_russian.php');
-}elseif($language == 'thai'){
+} elseif ($language == 'thai') {
     include_once('./languages/lang_thai.php');
 } else {
     $language = 'english';
@@ -25,30 +29,45 @@ if($language == 'arabic'){
 }
 
 $file='../config.php';
-if (!file_exists($file)) { $errors[]="$file " . $lang['NotFound'] ; }
-elseif (filesize($file) <= 0) { $errors[]="$file " . $lang['ZeroBytes'] ; }
+if (!file_exists($file)) {
+    $errors[]="$file " . $lang['NotFound'] ;
+} elseif (filesize($file) <= 0) {
+    $errors[]="$file " . $lang['ZeroBytes'] ;
+}
 
 $file='../settings.php';
-if (!file_exists($file)) { $errors[]="$file " . $lang['SettingsNotFound'] ; }
-elseif (filesize($file) <= 0) { $errors[]="$file " . $lang['ZeroBytes'] ; }
-elseif (!is_writable($file)) { $errors[]="$file " . $lang['NotEditable'] ; }
+if (!file_exists($file)) {
+    $errors[]="$file " . $lang['SettingsNotFound'] ;
+} elseif (filesize($file) <= 0) {
+    $errors[]="$file " . $lang['ZeroBytes'] ;
+} elseif (!is_writable($file)) {
+    $errors[]="$file " . $lang['NotEditable'] ;
+}
 
 $file='../libs/dbconnect.php';
-if (!file_exists($file)) { $errors[]="$file " . $lang['DbconnectNotFound'] ; }
-elseif (!is_writable($file)) { $errors[]="$file " . $lang['NotEditable'] ; }
+if (!file_exists($file)) {
+    $errors[]="$file " . $lang['DbconnectNotFound'] ;
+} elseif (!is_writable($file)) {
+    $errors[]="$file " . $lang['NotEditable'] ;
+}
 
 $file='../cache';
-if (!file_exists($file)) { $errors[]="$file " . $lang['CacheNotFound'] ; }
-elseif (!is_writable($file)) { $errors[]="$file " . $lang['NotEditable'] ; }
+if (!file_exists($file)) {
+    $errors[]="$file " . $lang['CacheNotFound'] ;
+} elseif (!is_writable($file)) {
+    $errors[]="$file " . $lang['NotEditable'] ;
+}
 
 $language = addslashes(strip_tags($_REQUEST['language']));
 $file="../languages/lang_$language.conf";
-if (!file_exists($file)) { $errors[]="$file " . $lang['LangNotFound'] ; }
-elseif (!is_writable($file)) { $errors[]="$file " . $lang['NotEditable'] ; }
+if (!file_exists($file)) {
+    $errors[]="$file " . $lang['LangNotFound'] ;
+} elseif (!is_writable($file)) {
+    $errors[]="$file " . $lang['NotEditable'] ;
+}
 
 if (!$errors) {
-
-$output='
+    $output='
 <form class="form-horizontal" id="form1" name="form1" action="install.php" method="post">
 	<fieldset>
 		<p>' . $lang['EnterMySQL'] . '</p>
@@ -99,10 +118,7 @@ $output='
 	</fieldset>
 </form>
 ';
-
-
-}
-else {
+} else {
     $output=DisplayErrors($errors);
     $output.='<div class="alert">' . $lang['Errors'] . '</div>';
 }

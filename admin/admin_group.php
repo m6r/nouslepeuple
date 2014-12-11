@@ -24,7 +24,7 @@ $canIhaveAccess = $canIhaveAccess + checklevel('moderator');
 
 $is_moderator = checklevel('moderator'); // Moderators have a value of '1' for the variable $is_moderator
 
-if($canIhaveAccess == 0){
+if ($canIhaveAccess == 0) {
     header("Location: " . getmyurl('admin_login', $_SERVER['REQUEST_URI']));
     die();
 }
@@ -46,19 +46,18 @@ $main_smarty->assign('version_number', $pligg_version);
 
 global $db;
 
-if(isset($_REQUEST['mode'])){
+if (isset($_REQUEST['mode'])) {
     $mode = $_REQUEST['mode'];
     $group_id = $_REQUEST['group_id'];
-    if($mode=='delete' && is_numeric($group_id)){
+    if ($mode=='delete' && is_numeric($group_id)) {
         $db->query("DELETE FROM ".table_groups." WHERE group_id=".$group_id);
         $db->query("DELETE FROM ".table_group_member." WHERE member_group_id=".$group_id);
         $db->query("DELETE FROM ".table_group_shared." WHERE share_group_id=".$group_id);
 
         header("Location: ".my_pligg_base."/admin/admin_group.php");
         die();
-    }
-    elseif($mode=='approve' && is_numeric($group_id)){
-            $db->query("UPDATE ".table_groups." SET group_status='Enable' WHERE group_id=$group_id");
+    } elseif ($mode=='approve' && is_numeric($group_id)) {
+        $db->query("UPDATE ".table_groups." SET group_status='Enable' WHERE group_id=$group_id");
 
         header("Location: ".my_pligg_base."/admin/admin_group.php");
         die();
@@ -73,7 +72,7 @@ $main_smarty->assign('groups',$db->get_results($sql,ARRAY_A));
 
 // show the template
 $main_smarty->assign('tpl_center', '/admin/groups');
-if ($is_moderator == '1'){
+if ($is_moderator == '1') {
     $main_smarty->display($template_dir . '/admin/moderator.tpl');
 } else {
     $main_smarty->display($template_dir . '/admin/admin.tpl');

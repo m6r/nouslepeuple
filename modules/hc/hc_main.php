@@ -1,11 +1,16 @@
 <?php
-function hc_register(&$vars){
+function hc_register(&$vars)
+{
     global $main_smarty, $the_template, $hc_registered;
 
-    if ($hc_registered) return;
+    if ($hc_registered) {
+        return;
+    }
     $hc_registered = true;
 
-    if(!isset($_SESSION)){session_start();}
+    if (!isset($_SESSION)) {
+        session_start();
+    }
     $_SESSION['hc_math_answer'] == '';
 
     $q_1_low = (get_misc_data('hc_math_q1low') == '') ? 1 : get_misc_data('hc_math_q1low');
@@ -31,7 +36,6 @@ function hc_register(&$vars){
 // prefilter routine
 function add_header_comment($tpl_source, &$smarty)
 {
-
     return str_replace(
         array('name="title"',
               'name="comment_content"',
@@ -44,9 +48,12 @@ function add_header_comment($tpl_source, &$smarty)
 
 
 
-function hc_register_check_errors(&$vars){
+function hc_register_check_errors(&$vars)
+{
     global $main_smarty, $the_template, $hc_checked;
-    if ($hc_checked) return;
+    if ($hc_checked) {
+        return;
+    }
     $hc_checked = true;
 
     $username = $vars['username'];
@@ -57,10 +64,11 @@ function hc_register_check_errors(&$vars){
     $main_smarty->assign('email', $email);
     $main_smarty->assign('password', $password);
 
-    if(!isset($_SESSION)){session_start();}
+    if (!isset($_SESSION)) {
+        session_start();
+    }
 
-    if ((!isset($_POST[$_SESSION['titlename']]) || !isset($_POST[$_SESSION['bodyname']])) && !isset($_POST[$_SESSION['commentname']]))
-    {
+    if ((!isset($_POST[$_SESSION['titlename']]) || !isset($_POST[$_SESSION['bodyname']])) && !isset($_POST[$_SESSION['commentname']])) {
         $main_smarty->assign('register_hc_error', "Human Check error. Please try again.");
         $vars['error'] = true;
     } else {

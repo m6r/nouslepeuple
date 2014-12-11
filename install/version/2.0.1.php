@@ -10,7 +10,6 @@ $pligg_version = $db->get_var($sql);
 
 // Check if you need to run the one time upgrade to Pligg 2.0.1
 if (version_compare($pligg_version, '2.0.0') <= 0) {
-
     echo '<li>Performing one-time Pligg 2.0.1 Upgrade<ul>';
 
     // Remove the Custom Avatar Storage Directory Option

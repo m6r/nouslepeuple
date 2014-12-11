@@ -10,7 +10,6 @@ $pligg_version = $db->get_var($sql);
 
 // Check if you need to run the one time upgrade to Pligg 2.0.0
 if ($pligg_version == '2.0.0rc2') {
-
     echo '<li>Performing one-time Pligg 2.0.0 Upgrade<ul>';
 
     // 2.0.0 RC2 incorrectly defined the group member user levels
