@@ -304,7 +304,8 @@ function insert_comment ()
     }
 
     if (sanitize($_POST['link_id'], 3) == $link->id && $current_user->authenticated && sanitize($_POST['user_id'], 3) == $current_user->user_id &&    sanitize($_POST['randkey'], 3) > 0) {
-        if (sanitize($_POST['comment_content'], 4) != '') {// this is a normal new comment
+        if (sanitize($_POST['comment_content'], 4) != '') {
+            // this is a normal new comment
             $cancontinue = true;
         }
         if (is_array($_POST['reply_comment_content'])) {

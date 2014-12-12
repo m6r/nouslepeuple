@@ -31,6 +31,7 @@ return Symfony\CS\Config\Config::create()
         'indentation',
         'whitespacy_lines',
         'braces',
+        'short_tag'
     ))
     ->finder($finder)
 ;

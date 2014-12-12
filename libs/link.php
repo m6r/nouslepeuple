@@ -806,7 +806,8 @@ class Link
     {
         global $db, $main_smarty, $rows,$current_user;
         $current_userid = $current_user->user_id;
-        if (!isset($this->group_membered) && $current_userid) {//		    $this->group_membered = $db->get_results("SELECT group_id,group_name FROM " . table_groups . " WHERE group_creator = $current_userid and group_status = 'Enable'");
+        if (!isset($this->group_membered) && $current_userid) {
+            //		    $this->group_membered = $db->get_results("SELECT group_id,group_name FROM " . table_groups . " WHERE group_creator = $current_userid and group_status = 'Enable'");
             $this->group_membered = $db->get_results("SELECT DISTINCT group_id,group_name FROM " . table_groups . " LEFT JOIN ".table_group_member." ON member_group_id=group_id AND member_user_id = $current_userid WHERE group_status = 'Enable' AND member_status='active'");
         }
 
