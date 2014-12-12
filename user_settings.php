@@ -24,7 +24,7 @@ $main_smarty->assign('pagename', pagename);
 
 
 // if not logged in, redirect to the index page
-    $login = isset($_COOKIE['mnm_user'] ) ? sanitize($_COOKIE['mnm_user'] , 3) : '';
+    $login = isset($_COOKIE['mnm_user']) ? sanitize($_COOKIE['mnm_user'], 3) : '';
     //$login = isset($_GET['login']) ? sanitize($_GET['login'], 3) : '';
     if ($login === '') {
         if ($current_user->user_id > 0) {
@@ -36,8 +36,8 @@ $main_smarty->assign('pagename', pagename);
     }
 
 if (Allow_User_Change_Templates && file_exists("./templates/".$_POST['template']."/header.tpl")) {
-    $domain = $_SERVER['HTTP_HOST']=='localhost' ? '' : preg_replace('/^www/','',$_SERVER['HTTP_HOST']);
-    setcookie("template", $_POST['template'], time()+60*60*24*30,'/',$domain);
+    $domain = $_SERVER['HTTP_HOST']=='localhost' ? '' : preg_replace('/^www/', '', $_SERVER['HTTP_HOST']);
+    setcookie("template", $_POST['template'], time()+60*60*24*30, '/', $domain);
 }
 
 $CSRF->check_expired('user_settings');
@@ -54,10 +54,10 @@ $select_check = $_POST['chack'];
         $url = strtolower(end(explode('/', $geturl)));
         $vowels = array($url);
         $Get_URL = str_replace($vowels, "", $geturl); */
-if ($_SERVER['HTTP_REFERER'] && strpos($_SERVER['HTTP_REFERER'],$my_base_url.$my_pligg_base)===0) {
+if ($_SERVER['HTTP_REFERER'] && strpos($_SERVER['HTTP_REFERER'], $my_base_url.$my_pligg_base)===0) {
     $geturl = $_SERVER['HTTP_REFERER'];
 } else {
-    $geturl = sanitize($_SERVER['HTTP_REFERER'],3);
+    $geturl = sanitize($_SERVER['HTTP_REFERER'], 3);
 }
 $url = strtolower(end(explode('/', $geturl)));
 
@@ -71,13 +71,11 @@ $url = strtolower(end(explode('/', $geturl)));
     if (!$select_check) {
         $select_check = array();
     }
-    $diff = array_diff($arr,$select_check);
+    $diff = array_diff($arr, $select_check);
 
-    $select_checked = $db->escape(implode(",",$diff));
+    $select_checked = $db->escape(implode(",", $diff));
 
     $sql = "UPDATE " . table_users . " set user_categories='$select_checked' WHERE user_id = '$sqlGetiUserId'";
     $query = mysql_query($sql);
-    $to_page = preg_replace("/&err=.+$/","",$geturl);
+    $to_page = preg_replace("/&err=.+$/", "", $geturl);
     header("location:".$to_page."");
-
-?>

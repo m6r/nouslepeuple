@@ -69,5 +69,3 @@ if (is_numeric($post_id) && $post_id > 0) {
 
     $link->evaluate_formulas();
 }
-
-?>

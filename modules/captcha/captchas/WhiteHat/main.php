@@ -28,7 +28,7 @@
         $user_code = (isset($_POST['security_code'])) ? $_POST['security_code'] : '';
         $sess_code = (isset($_SESSION['security_code'])) ? $_SESSION['security_code'] : '';
 
-        if ( $sess_code == $user_code && $user_code != '') {
+        if ($sess_code == $user_code && $user_code != '') {
             unset($_SESSION['security_code']);
             return true;
         } else {
@@ -47,4 +47,3 @@
         // nothing special is needed for this captcha
         return true;
     }
-?>

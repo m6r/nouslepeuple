@@ -89,14 +89,14 @@ function dowork()
                     exit;
                 } else {
                     if (file_exists('../templates/'.js_urldecode($_REQUEST['var_value']).'/template_details.php')) {
-                        include ('../templates/'.js_urldecode($_REQUEST['var_value']).'/template_details.php');
+                        include('../templates/'.js_urldecode($_REQUEST['var_value']).'/template_details.php');
                     }
                     if ($template_info['designed_for_pligg_version'] < pligg_version() && !$_REQUEST['force']) {
                         if (!$template_info['designed_for_pligg_version']) {
                             $template_info['designed_for_pligg_version'] = 'unknown';
                         }
                         print sprintf("if (confirm('".$main_smarty->get_config_vars('PLIGG_Visual_AdminPanel_Template_Version')."')) {XMLHttpRequestObject.open('GET', '?action=save&var_id={$config->var_id}&var_value=".urlencode($_REQUEST['var_value'])."&force=1', true); XMLHttpRequestObject.send(null);}",
-                                $template_info['designed_for_pligg_version'],pligg_version());
+                                $template_info['designed_for_pligg_version'], pligg_version());
                         exit;
                     }
                 }
@@ -106,5 +106,3 @@ function dowork()
         }
     }
 }
-
-?>

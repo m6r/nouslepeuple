@@ -43,32 +43,32 @@ define('pagename', 'group_story');
 $main_smarty->assign('pagename', pagename);
 
 $privacy = $db->get_var("SELECT group_privacy FROM " . table_groups . " WHERE group_id = '$requestID';");
-$view = sanitize(sanitize($_REQUEST["view"],1),3);
+$view = sanitize(sanitize($_REQUEST["view"], 1), 3);
 if ($requestID > 0) {
     //For Infinit scrolling and continue reading option
 
     if (($privacy!='private' || isMemberActive($requestID)=='active')) {
-        $main_smarty->assign('group_shared_rows', group_shared($requestID,$catID,1));
-        $main_smarty->assign('group_published_rows', group_stories($requestID,$catID,'published',1));
-        $main_smarty->assign('group_new_rows', group_stories($requestID,$catID,'new',1));
+        $main_smarty->assign('group_shared_rows', group_shared($requestID, $catID, 1));
+        $main_smarty->assign('group_published_rows', group_stories($requestID, $catID, 'published', 1));
+        $main_smarty->assign('group_new_rows', group_stories($requestID, $catID, 'new', 1));
 
         switch ($view) {
             case 'shared':
-                group_shared($requestID,$catID);
+                group_shared($requestID, $catID);
                 break;
              case 'published':
-                group_stories($requestID,$catID,'published');
+                group_stories($requestID, $catID, 'published');
                 break;
 
              case 'new':
-                group_stories($requestID,$catID,'new');
+                group_stories($requestID, $catID, 'new');
                 break;
 
             case 'members':
                 member_display($requestID);
                 break;
             default:
-                group_stories($requestID,$catID,$view);
+                group_stories($requestID, $catID, $view);
 
         }
     } else {
@@ -114,16 +114,16 @@ if ($view == 'new') {
 $main_smarty->assign('groupview_published', getmyurl('group_story2', $requestTitle, 'published'));
 $main_smarty->assign('groupview_new', getmyurl('group_story2', $requestTitle, 'new'));
 if ($view == 'shared') {
-    $main_smarty->assign('URL_maincategory', getmyurl('group_story2', $requestTitle, 'shared',"category"));
+    $main_smarty->assign('URL_maincategory', getmyurl('group_story2', $requestTitle, 'shared', "category"));
 } else {
-    $main_smarty->assign('URL_maincategory', getmyurl('group_story2', $requestTitle, 'published',"category"));
+    $main_smarty->assign('URL_maincategory', getmyurl('group_story2', $requestTitle, 'published', "category"));
 }
-$main_smarty->assign('URL_newcategory', getmyurl('group_story2', $requestTitle, 'new',"category"));
+$main_smarty->assign('URL_newcategory', getmyurl('group_story2', $requestTitle, 'new', "category"));
 $main_smarty->assign('groupview_sharing', getmyurl('group_story2', $requestTitle, 'shared'));
 $main_smarty->assign('groupview_members', getmyurl('group_story2', $requestTitle, 'members'));
 
-$main_smarty->assign('group_edit_url', getmyurl('editgroup',$requestID));
-$main_smarty->assign('group_delete_url', getmyurl('deletegroup',$requestID));
+$main_smarty->assign('group_edit_url', getmyurl('editgroup', $requestID));
+$main_smarty->assign('group_delete_url', getmyurl('deletegroup', $requestID));
 
 $CSRF = new csrf();
 
@@ -140,7 +140,7 @@ if ($_POST["avatar"] == "uploaded") {
         $myfile = $_FILES['image_file']['name'];
         $imagename = basename($myfile);
         $mytmpfile = $_FILES['image_file']['tmp_name'];
-        if (!in_array($_FILES['image_file']['type'],$allowedFileTypes)) {
+        if (!in_array($_FILES['image_file']['type'], $allowedFileTypes)) {
             $error['Type'] = 'Only these file types are allowed : jpeg, gif, png';
         }
 
@@ -203,4 +203,3 @@ function cleanit($value)
     $value = trim($value);
     return $value;
 }
-?>

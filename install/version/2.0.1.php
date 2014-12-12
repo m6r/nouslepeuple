@@ -26,5 +26,3 @@ if (version_compare($pligg_version, '2.0.0') <= 0) {
     // Finished 2.0.1 upgrade
     echo'</ul></li>';
 }
-
-?>

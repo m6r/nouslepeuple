@@ -1,20 +1,20 @@
 <?php
 function str_ends_with($haystack, $needle)
 {
-    return ( substr ($haystack, -strlen ($needle) ) === $needle) || $needle === '';
+    return (substr($haystack, -strlen($needle)) === $needle) || $needle === '';
 }
 
 /* If the URL is too verbose (specifying index.php or page 1), then, of course
  * we just want the main page, which defaults to page 1 anyway. */
-$url = parse_url ($_SERVER['REQUEST_URI']);
-if (strpos($_SERVER['REQUEST_URI'],'index.php') !== false || ( isset ($_GET['page']) && $_GET['page'] == 1)) {
+$url = parse_url($_SERVER['REQUEST_URI']);
+if (strpos($_SERVER['REQUEST_URI'], 'index.php') !== false || (isset($_GET['page']) && $_GET['page'] == 1)) {
     header("HTTP/1.1 301 Moved Permanently");
-    $_SERVER['QUERY_STRING'] = str_replace('page=1','',$_SERVER['QUERY_STRING']);
-    header ("Location: ./".($_SERVER['QUERY_STRING'] ? '?'.$_SERVER['QUERY_STRING'] : ''));
+    $_SERVER['QUERY_STRING'] = str_replace('page=1', '', $_SERVER['QUERY_STRING']);
+    header("Location: ./".($_SERVER['QUERY_STRING'] ? '?'.$_SERVER['QUERY_STRING'] : ''));
     exit;
 } elseif (str_ends_with($url['path'], '/page/1') || str_ends_with($url['path'], '/page/1/')) {
     header("HTTP/1.1 301 Moved Permanently");
-    header ("Location: ../".($_SERVER['QUERY_STRING'] ? '?'.$_SERVER['QUERY_STRING'] : ''));
+    header("Location: ../".($_SERVER['QUERY_STRING'] ? '?'.$_SERVER['QUERY_STRING'] : ''));
     exit;
 }
 
@@ -109,7 +109,7 @@ if (isset($_REQUEST['category'])) {
     $navwhere['link1'] = getmyurl('root', '');
     $navwhere['text2'] = $thecat;
     $main_smarty->assign('navbar_where', $navwhere);
-    $main_smarty->assign('pretitle', $thecat );
+    $main_smarty->assign('pretitle', $thecat);
     $main_smarty->assign('posttitle', $main_smarty->get_config_vars('PLIGG_Visual_Published_News'));
     $main_smarty->assign('page_header', $thecat . $main_smarty->get_config_vars('PLIGG_Visual_Published_News'));
     // pagename
@@ -130,16 +130,16 @@ if (isset($_REQUEST['category'])) {
 
 // On veut switcher sur la page new.php si le classement est changé.
 if (isset($_GET['category'])) {
-    $main_smarty->assign('index_url_recent', getmyurl('newcategory', sanitize($_GET['category'],2)));
-    $main_smarty->assign('index_url_today', getmyurl('new_sort', 'today', sanitize($_GET['category'],2)));
-    $main_smarty->assign('index_url_yesterday', getmyurl('new_sort', 'yesterday', sanitize($_GET['category'],2)));
-    $main_smarty->assign('index_url_week', getmyurl('new_sort', 'week', sanitize($_GET['category'],2)));
-    $main_smarty->assign('index_url_month', getmyurl('new_sort', 'month', sanitize($_GET['category'],2)));
-    $main_smarty->assign('index_url_year', getmyurl('new_sort', 'year', sanitize($_GET['category'],2)));
-    $main_smarty->assign('index_url_alltime', getmyurl('new_sort', 'alltime', sanitize($_GET['category'],2)));
-    $main_smarty->assign('index_url_upvoted', getmyurl('new_sort', 'upvoted', sanitize($_GET['category'],2)));
-    $main_smarty->assign('index_url_downvoted', getmyurl('new_sort', 'downvoted', sanitize($_GET['category'],2)));
-    $main_smarty->assign('index_url_commented', getmyurl('new_sort', 'commented', sanitize($_GET['category'],2)));
+    $main_smarty->assign('index_url_recent', getmyurl('newcategory', sanitize($_GET['category'], 2)));
+    $main_smarty->assign('index_url_today', getmyurl('new_sort', 'today', sanitize($_GET['category'], 2)));
+    $main_smarty->assign('index_url_yesterday', getmyurl('new_sort', 'yesterday', sanitize($_GET['category'], 2)));
+    $main_smarty->assign('index_url_week', getmyurl('new_sort', 'week', sanitize($_GET['category'], 2)));
+    $main_smarty->assign('index_url_month', getmyurl('new_sort', 'month', sanitize($_GET['category'], 2)));
+    $main_smarty->assign('index_url_year', getmyurl('new_sort', 'year', sanitize($_GET['category'], 2)));
+    $main_smarty->assign('index_url_alltime', getmyurl('new_sort', 'alltime', sanitize($_GET['category'], 2)));
+    $main_smarty->assign('index_url_upvoted', getmyurl('new_sort', 'upvoted', sanitize($_GET['category'], 2)));
+    $main_smarty->assign('index_url_downvoted', getmyurl('new_sort', 'downvoted', sanitize($_GET['category'], 2)));
+    $main_smarty->assign('index_url_commented', getmyurl('new_sort', 'commented', sanitize($_GET['category'], 2)));
     $main_smarty->assign('cat_url', getmyurl("newcategory"));
 } else {
     $main_smarty->assign('index_url_recent', getmyurl('new'));
@@ -192,4 +192,3 @@ if (Auto_scroll==2 || Auto_scroll==3) {
 // show the template
 $main_smarty->assign('tpl_center', $the_template . '/index_center');
 $main_smarty->display($the_template . '/pligg.tpl');
-?>

@@ -34,5 +34,3 @@ if (isset($main_smarty) && is_object($main_smarty)) {
     $main_smarty->assign('admin_language_pligg_lang_conf', admin_language_pligg_lang_conf);
     $main_smarty->assign('admin_language_tpl_path', admin_language_tpl_path);
 }
-
-?>

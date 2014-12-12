@@ -5,7 +5,7 @@ function links_show_comment_content(&$vars)
         $vars['comment_text'] = text_to_html($vars['comment_text']);
     }
     if (get_misc_data('links_nofollow')) {
-        $vars['comment_text'] = preg_replace('/<a ([^>]+)>/i','<a rel="nofollow" $1>',$vars['comment_text']);
+        $vars['comment_text'] = preg_replace('/<a ([^>]+)>/i', '<a rel="nofollow" $1>', $vars['comment_text']);
     }
 }
 
@@ -15,7 +15,7 @@ function links_summary_fill_smarty(&$vars)
         $vars['smarty']->_vars['story_content'] = text_to_html($vars['smarty']->_vars['story_content']);
     }
     if (get_misc_data('links_nofollow')) {
-        $vars['smarty']->_vars['story_content'] = preg_replace('/<a ([^>]+)>/i','<a rel="nofollow" $1>',$vars['smarty']->_vars['story_content']);
+        $vars['smarty']->_vars['story_content'] = preg_replace('/<a ([^>]+)>/i', '<a rel="nofollow" $1>', $vars['smarty']->_vars['story_content']);
     }
 }
 
@@ -76,5 +76,3 @@ function links_showpage()
         header("Location: " . getmyurl('login', $_SERVER['REQUEST_URI']));
     }
 }
-
-?>

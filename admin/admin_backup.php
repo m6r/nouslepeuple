@@ -55,5 +55,3 @@ $main_smarty->assign('version_number', $pligg_version);
 // show the template
 $main_smarty->assign('tpl_center', '/admin/backup');
 $main_smarty->display($template_dir . '/admin/admin.tpl');
-
-?>

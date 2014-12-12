@@ -365,4 +365,3 @@ class Akismet extends AkismetObject
         return $query_string;
     }
 }
-?>

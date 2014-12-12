@@ -13,7 +13,7 @@ $from_where = "1";
 if (!checklevel('admin')) {
     $from_where .= " AND group_status = 'Enable' ";
 } elseif ($_REQUEST["approve"] && is_numeric($_REQUEST["approve"])) {
-    $db->query("UPDATE ".table_groups." SET group_status='Enable' WHERE group_id=".$db->escape(sanitize($_REQUEST["approve"],3)));
+    $db->query("UPDATE ".table_groups." SET group_status='Enable' WHERE group_id=".$db->escape(sanitize($_REQUEST["approve"], 3)));
 }
 
 
@@ -53,9 +53,9 @@ $main_smarty = do_sidebar($main_smarty);
 
 group_read($from_where, $order_by);
 
-function group_read($from_where,$order_by)
+function group_read($from_where, $order_by)
 {
-    Global $db, $main_smarty, $view, $user, $rows, $page_size, $offset;
+    global $db, $main_smarty, $view, $user, $rows, $page_size, $offset;
     // figure out what "page" of the results we're on
     $offset=(get_current_page()-1)*$page_size;
 
@@ -95,4 +95,3 @@ function group_read($from_where,$order_by)
 // show the template
 $main_smarty->assign('tpl_center', $the_template . '/group_center');
 $main_smarty->display($the_template . '/pligg.tpl');
-?>

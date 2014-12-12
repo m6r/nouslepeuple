@@ -19,7 +19,7 @@ include_once(mnminclude.'user.php');
 $requestID = isset($_GET['id']) && is_numeric($_GET['id']) ? $_GET['id'] : 0;
 
 if (isset($_GET['title']) && sanitize($_GET['title'], 3) != '') {
-    $requestTitle = sanitize(sanitize($_GET['title'], 3),4);
+    $requestTitle = sanitize(sanitize($_GET['title'], 3), 4);
 }
 if (isset($requestTitle)) {
     $requestID = $db->get_var($sql = "SELECT link_id FROM " . table_links . " WHERE `link_title_url` = '".$db->escape($requestTitle)."';");
@@ -145,4 +145,3 @@ function onlyreadables($string)
     }
     return str_replace("~", "", $string);
 }
-?>

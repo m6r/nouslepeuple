@@ -31,5 +31,3 @@ if (isset($main_smarty) && is_object($main_smarty)) {
     $main_smarty->assign('spam_trigger_lang_conf', spam_trigger_lang_conf);
     $main_smarty->assign('spam_trigger_tpl_path', spam_trigger_tpl_path);
 }
-
-?>

@@ -9,7 +9,6 @@ if (defined('mnminclude')) {
     $do_not_include_in_pages = array();
 
 
-    if ( do_we_load_module() ) {
+    if (do_we_load_module()) {
     }
 }
-?>

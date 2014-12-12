@@ -15,5 +15,3 @@ if (is_object($main_smarty)) {
 
     $main_smarty->assign('sidebar_tag_cloud_tpl_path', sidebar_tag_cloud_tpl_path);
 }
-
-?>

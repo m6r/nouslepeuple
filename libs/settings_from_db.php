@@ -27,7 +27,7 @@ if (!defined('mnminclude')) {
         if ($row->var_method == "normal") {
             $pligg_vars[$row->var_name] = $value;
             if ($main_smarty) {
-                $main_smarty->assign(str_replace("$","",$row->var_name), $value);
+                $main_smarty->assign(str_replace("$", "", $row->var_name), $value);
             }
         } elseif ($row->var_method == "define") {
             if ($row->var_name != 'table_prefix') {
@@ -74,5 +74,3 @@ $anon_karma = $pligg_vars['$anon_karma'];
 $page_size = $pligg_vars['$page_size'];
 $top_users_size = $pligg_vars['$top_users_size'];
 $thetemp = $pligg_vars['$thetemp'];
-
-?>

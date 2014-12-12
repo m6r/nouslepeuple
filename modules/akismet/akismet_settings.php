@@ -49,5 +49,3 @@ if (isset($main_smarty) && is_object($main_smarty)) {
     $main_smarty->assign('URL_akismet_isSpam', URL_akismet_isSpam);
     $main_smarty->assign('URL_akismet_isSpamcomment', URL_akismet_isSpamcomment);
 }
-
-?>

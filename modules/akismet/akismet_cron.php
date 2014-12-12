@@ -23,12 +23,9 @@ if (count($spam_links) > 0) {
     foreach ($spam_links as $link_id) {
         $link = new Link;
         $link->id = $link_id;
-        $link->read(FALSE);
+        $link->read(false);
         $link->status = 'discard';
         $link->store();
         echo 'Discarding link_id: ' . $link_id . '<br />';
     }
 }
-
-
-?>

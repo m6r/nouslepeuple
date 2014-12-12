@@ -40,4 +40,3 @@ if (isset($_REQUEST['id'])) {
     $db->query(" Delete from ".table_group_shared." where share_group_id =".$group_id);
     header('Location: '.$my_base_url.$my_pligg_base);
 }
-?>

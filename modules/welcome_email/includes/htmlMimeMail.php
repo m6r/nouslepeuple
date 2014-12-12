@@ -531,11 +531,11 @@ class htmlMimeMail
         $text        = isset($this->text)         ? true : false;
 
         switch (true) {
-            case $text AND !$attachments:
+            case $text and !$attachments:
                 $message = &$this->_addTextPart($null, $this->text);
                 break;
 
-            case !$text AND $attachments AND !$html:
+            case !$text and $attachments and !$html:
                 $message = &$this->_addMixedPart();
 
                 for ($i=0; $i<count($this->attachments); $i++) {
@@ -543,7 +543,7 @@ class htmlMimeMail
                 }
                 break;
 
-            case $text AND $attachments:
+            case $text and $attachments:
                 $message = &$this->_addMixedPart();
                 $this->_addTextPart($message, $this->text);
 
@@ -552,7 +552,7 @@ class htmlMimeMail
                 }
                 break;
 
-            case $html AND !$attachments AND !$html_images:
+            case $html and !$attachments and !$html_images:
                 if (!is_null($this->html_text)) {
                     $message = &$this->_addAlternativePart($null);
                     $this->_addTextPart($message, $this->html_text);
@@ -562,7 +562,7 @@ class htmlMimeMail
                 }
                 break;
 
-            case $html AND !$attachments AND $html_images:
+            case $html and !$attachments and $html_images:
                 if (!is_null($this->html_text)) {
                     $message = &$this->_addAlternativePart($null);
                     $this->_addTextPart($message, $this->html_text);
@@ -577,7 +577,7 @@ class htmlMimeMail
                 }
                 break;
 
-            case $html AND $attachments AND !$html_images:
+            case $html and $attachments and !$html_images:
                 $message = &$this->_addMixedPart();
                 if (!is_null($this->html_text)) {
                     $alt = &$this->_addAlternativePart($message);
@@ -591,7 +591,7 @@ class htmlMimeMail
                 }
                 break;
 
-            case $html AND $attachments AND $html_images:
+            case $html and $attachments and $html_images:
                 $message = &$this->_addMixedPart();
                 if (!is_null($this->html_text)) {
                     $alt = &$this->_addAlternativePart($message);
@@ -708,7 +708,7 @@ class htmlMimeMail
                 // Get flat representation of headers, parsing
                 // Cc and Bcc as we go
                 foreach ($this->headers as $name => $value) {
-                    if ($name == 'Cc' OR $name == 'Bcc') {
+                    if ($name == 'Cc' or $name == 'Bcc') {
                         $addresses = Mail_RFC822::parseAddressList($value, $this->smtp_params['helo'], null, false);
                         foreach ($addresses as $address) {
                             $smtp_recipients[] = sprintf('%s@%s', $address->mailbox, $address->host);
@@ -781,4 +781,4 @@ class htmlMimeMail
         return implode(CRLF, $headers) . CRLF . CRLF . $this->output;
     }
 } // End of class.
-?>
+;

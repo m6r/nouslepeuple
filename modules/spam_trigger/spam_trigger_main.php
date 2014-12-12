@@ -41,8 +41,8 @@ function spam_trigger_showpage()
 
         define('pagename', 'admin_modifyspam_trigger');
         $main_smarty->assign('pagename', pagename);
-        $main_smarty->assign('settings', str_replace('"','&#034;',get_spam_trigger_settings()));
-        $main_smarty->assign('places',$spam_trigger_places);
+        $main_smarty->assign('settings', str_replace('"', '&#034;', get_spam_trigger_settings()));
+        $main_smarty->assign('places', $spam_trigger_places);
         $main_smarty->assign('tpl_center', spam_trigger_tpl_path . 'spam_trigger_main');
         $main_smarty->display($template_dir . '/admin/admin.tpl');
     } else {
@@ -196,10 +196,10 @@ function spam_trigger_killspam($id)
 
 function spam_trigger_check($text, $wordlist)
 {
-    $words = explode("\n",$wordlist);
+    $words = explode("\n", $wordlist);
     foreach ($words as $word) {
-        $word = trim(str_replace("\r","",$word));
-        if (strlen($word) && preg_match('/(^|[^\w])('.$word.')($|[^\w])/i',$text)) {
+        $word = trim(str_replace("\r", "", $word));
+        if (strlen($word) && preg_match('/(^|[^\w])('.$word.')($|[^\w])/i', $text)) {
             return false;
         }
     }
@@ -217,4 +217,3 @@ function get_spam_trigger_settings()
         'spam_hard' => get_misc_data('spam_trigger_hard')
         );
 }
-?>

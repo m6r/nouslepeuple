@@ -12,5 +12,3 @@ if (is_object($main_smarty)) {
     $main_smarty->assign('welcome_privmsg_conf', welcome_privmsg_lang_conf);
     $main_smarty->assign('welcome_privmsg_tpl_path', welcome_privmsg_tpl_path);
 }
-
-?>

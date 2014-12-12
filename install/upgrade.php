@@ -65,7 +65,7 @@ if ($language == '' && $_POST['submit'] == '') {
         echo '<a class="btn btn-primary" href = "upgrade.php?language=local">Click to Continue in English</a>';
     }
 
-    include ('footer.php');
+    include('footer.php');
 
     die();
 } else {
@@ -75,4 +75,3 @@ if ($language == '' && $_POST['submit'] == '') {
 $include='footer.php'; if (file_exists($include)) {
      include_once($include);
  }
-?>

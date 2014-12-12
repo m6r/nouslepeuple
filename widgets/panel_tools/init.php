@@ -6,5 +6,3 @@ $widget['widget_uninstall_icon'] = 0;
 $widget['name'] = 'Admin Panel Tools';
 $widget['desc'] = 'This module contians links to useful tools for Administrators. Examples include: Delete template cache, Optimize Database, and Backup site.';
 $widget['version'] = 0.1;
-
-?>

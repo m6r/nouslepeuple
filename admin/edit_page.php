@@ -39,7 +39,7 @@ $main_smarty->assign('isAdmin', $canIhaveAccess);
 // sidebar
 $main_smarty = do_sidebar($main_smarty);
 
-    $randkey = rand(1000000,100000000);
+    $randkey = rand(1000000, 100000000);
     $main_smarty->assign('randkey', $randkey);
 
 // pagename
@@ -53,13 +53,13 @@ if (isset($_REQUEST['link_id'])) {
             $sql = (" SELECT * from ".table_links." where link_id='$link_id'");
             $page_id=$db->get_results($sql);
             foreach ($page_id as $page_results) {
-                $main_smarty->assign('page_title' , $page_results->link_title);
-                $main_smarty->assign('page_url' , $page_results->link_title_url);
-                $main_smarty->assign('page_keywords' , $page_results->link_field1);
-                $main_smarty->assign('page_description' , $page_results->link_field2);
-                $main_smarty->assign('page_content' , $page_results->link_content);
+                $main_smarty->assign('page_title', $page_results->link_title);
+                $main_smarty->assign('page_url', $page_results->link_title_url);
+                $main_smarty->assign('page_keywords', $page_results->link_field1);
+                $main_smarty->assign('page_description', $page_results->link_field2);
+                $main_smarty->assign('page_content', $page_results->link_content);
             }
-            $main_smarty->assign('link_id' , $link_id);
+            $main_smarty->assign('link_id', $link_id);
         }
     }
 }
@@ -91,7 +91,7 @@ if ($_REQUEST['process']=='edit_page') {
             }
 
             $sql = " UPDATE ".table_links." SET `link_modified` = NOW( ) , `link_title` = '$page_title', `link_title_url` = '$page_url', `link_content` = '$page_content', link_field1='$page_keywords', link_field2='$page_description' WHERE `link_id` =".$link_id." LIMIT 1 ";
-            $result = @mysql_query ($sql);
+            $result = @mysql_query($sql);
             if ($result==1) {
                 header('Location: '.getmyurl("page", $page_url));
                 die();
@@ -102,5 +102,3 @@ if ($_REQUEST['process']=='edit_page') {
 // show the template
 $main_smarty->assign('tpl_center', '/admin/page_edit');
 $main_smarty->display($template_dir . '/admin/admin.tpl');
-
-?>

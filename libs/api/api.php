@@ -329,6 +329,4 @@
         }
     }
 
-REMOVE THIS LINE TO ACTIVATE */
-
-?>
+REMOVE THIS LINE TO ACTIVATE */;

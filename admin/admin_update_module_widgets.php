@@ -50,5 +50,3 @@ if ($canIhaveAccess == 1) {
         }
     }
 }
-
-?>

@@ -5,5 +5,3 @@
     $module_info['settings_url'] = '../module.php?module=captcha';
     $module_info['homepage_url'] = 'http://pligg.com/downloads/module/captcha/';
     $module_info['update_url'] = 'http://pligg.com/downloads/module/captcha/version/';
-
-?>

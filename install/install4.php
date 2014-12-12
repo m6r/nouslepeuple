@@ -59,10 +59,10 @@ if (!$errors) {
     $dbname = EZSQL_DB_NAME;
     $dbhost = EZSQL_DB_HOST;
 
-    if ($conn = @mysql_connect($dbhost,$dbuser,$dbpass)) {
+    if ($conn = @mysql_connect($dbhost, $dbuser, $dbpass)) {
         $db_selected = mysql_select_db($dbname, $conn);
         if (!$db_selected) {
-            die ('Error: '.$dbname.' : '.mysql_error());
+            die('Error: '.$dbname.' : '.mysql_error());
         }
         define('table_prefix', $_POST['tableprefix']);
 
@@ -70,7 +70,7 @@ if (!$errors) {
 
         //time to create the tables
         echo '<li>' . $lang['CreatingTables'] . '</li>';
-        include_once ('../libs/db.php');
+        include_once('../libs/db.php');
         include_once("installtables.php");
         if (pligg_createtables($conn) == 1) {
             echo "<li>" . $lang['TablesGood'] . "</li>";
@@ -85,33 +85,33 @@ if (!$errors) {
 if (!$errors) {
     // refresh / recreate settings
     // this is needed to update it with table_prefix if it has been changed from "pligg_"
-    include_once( '../libs/admin_config.php' );
+    include_once('../libs/admin_config.php');
 
     $config = new pliggconfig;
     $config->create_file('../settings.php');
 
     $my_base_url = "http://" . $_SERVER["HTTP_HOST"];
     $my_pligg_base=dirname($_SERVER["PHP_SELF"]);
-    $my_pligg_base=str_replace("/".substr(strrchr($my_pligg_base, '/'), 1),'',$my_pligg_base);
+    $my_pligg_base=str_replace("/".substr(strrchr($my_pligg_base, '/'), 1), '', $my_pligg_base);
 
     $sql = "Update " . table_config . " set `var_value` = '" . $my_base_url . "' where `var_name` = '" . '$my_base_url' . "';";
-    mysql_query( $sql, $conn );
+    mysql_query($sql, $conn);
 
     $sql = "Update " . table_config . " set `var_value` = '" . $my_pligg_base . "' where `var_name` = '" . '$my_pligg_base' . "';";
-    mysql_query( $sql, $conn );
+    mysql_query($sql, $conn);
 
     // Set the site language to what the user has been using during the installation
     $language = addslashes(strip_tags($_REQUEST['language']));
     $sql = "Update " . table_config . " set `var_value` = '" . $language . "' where `var_name` = '" . '$language' . "';";
-    mysql_query( $sql, $conn );
+    mysql_query($sql, $conn);
 
     $config = new pliggconfig;
     $config->create_file('../settings.php');
 
-    include_once( '../config.php' );
+    include_once('../config.php');
 
     // Remove the cookie setting a template value
-    setcookie("template", "", time()-60000,$my_pligg_base,$domain);
+    setcookie("template", "", time()-60000, $my_pligg_base, $domain);
 
     $output='<div class="instructions"><p>' . $lang['EnterAdmin'] . '</p>
 	<table>
@@ -154,7 +154,7 @@ if (!$errors) {
 	';
 }
 
-    mysql_query( $sql, $conn );
+    mysql_query($sql, $conn);
 if (isset($errors)) {
     $output=DisplayErrors($errors);
     $output.='<p>' . $lang['Errors'] . '</p>';
@@ -173,4 +173,3 @@ if (function_exists("gd_info")) {
 
 echo $output;
 echo '</div>';
-?>

@@ -8,4 +8,4 @@
 
     //$module_info['settings_url'] = '../module.php?module=hc';
     //$module_info['db_add_field'][]=array(table_prefix . 'links', 'akismet', 'TINYINT',  3, "UNSIGNED", 0, '0');
-?>
+;

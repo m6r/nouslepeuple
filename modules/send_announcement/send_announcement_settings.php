@@ -35,5 +35,3 @@ if (is_object($main_smarty)) {
     //$main_smarty->assign('send_announcement_lang_conf', send_announcement_lang_conf);
     //$main_smarty->assign('send_announcement_tpl_path', send_announcement_tpl_path);
 }
-
-?>

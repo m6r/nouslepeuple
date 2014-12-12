@@ -56,5 +56,3 @@ if (isset($main_smarty) && is_object($main_smarty)) {
     $main_smarty->assign('status_places', $status_places);
     $main_smarty->assign('status_tpl_path', status_tpl_path);
 }
-
-?>

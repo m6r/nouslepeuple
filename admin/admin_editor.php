@@ -53,7 +53,7 @@ if ($_SERVER['REQUEST_METHOD'] != 'POST') {
         $filelist = directoryToArray($filedir, true);
         foreach ($filelist as $file) {
             $ext = substr(strrchr($file, '.'), 1);
-            if (in_array($ext,$valid_ext) && is_writable($file)) {
+            if (in_array($ext, $valid_ext) && is_writable($file)) {
                 $files[] = $file;
             }
         }
@@ -69,7 +69,7 @@ if ($_SERVER['REQUEST_METHOD'] != 'POST') {
     } else {
         $main_smarty->assign('error', 1);
     }
-    $main_smarty->assign('the_file', sanitize($_POST['the_file'],3));
+    $main_smarty->assign('the_file', sanitize($_POST['the_file'], 3));
 } elseif ($_POST["save"]) {
     if (!$_POST["updatedfile"] && !$_POST['isempty']) {
         $error = "<h3>ERROR!</h3><p>File NOT saved! <br /> You can't save blank file without confirmation. <br />  <a href=\"\">Click here to go back to the editor.</a></p>";
@@ -77,7 +77,7 @@ if ($_SERVER['REQUEST_METHOD'] != 'POST') {
         $data_to_save = $_POST["updatedfile"];
         $data_to_save = str_ireplace("<END-TA-DO-NOT-EDIT>", "</textarea>", $data_to_save);
         $data_to_save = stripslashes($data_to_save);
-        if (fwrite($file2ed,$data_to_save)!==FALSE) {
+        if (fwrite($file2ed, $data_to_save)!==FALSE) {
             $error = "<h3>File Saved</h3><p><a href=\"\">Click here to go back to the editor.</a></p>";
             fclose($file2ed);
         } else {
@@ -101,7 +101,7 @@ function directoryToArray($directory, $recursive)
     $array_items = array();
     if ($handle = opendir($directory)) {
         while (false !== ($file = readdir($handle))) {
-            if ($file != "." && $file != ".." && $file != $me && substr($file,0,1) != '.') {
+            if ($file != "." && $file != ".." && $file != $me && substr($file, 0, 1) != '.') {
                 if (is_dir($directory. "/" . $file)) {
                     if ($recursive) {
                         $array_items = array_merge($array_items, directoryToArray($directory. "/" . $file, $recursive));
@@ -117,5 +117,3 @@ function directoryToArray($directory, $recursive)
     }
     return $array_items;
 }
-
-?>

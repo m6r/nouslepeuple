@@ -35,4 +35,3 @@ if (is_object($main_smarty)) {
     $main_smarty->assign('anonymous_comments_tpl_path', anonymous_comments_tpl_path);
     $main_smarty->assign('URL_anonymous_comments', URL_anonymous_comments);
 }
-?>

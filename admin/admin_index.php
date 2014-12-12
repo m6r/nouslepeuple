@@ -45,7 +45,7 @@ if ($_GET['action']=='move') {
         die("Wrong parameter 'top'");
     }
 
-    $list = split(',',$_GET['list']);
+    $list = split(',', $_GET['list']);
     foreach ($list as $item) {
         if ($item && is_numeric($item)) {
             $db->query($sql="UPDATE ".table_widgets." SET `position`=".(++$i)." WHERE id=$item");
@@ -124,8 +124,8 @@ define('pagename', 'admin_index');
 $main_smarty->assign('pagename', pagename);
 
 
-$widgets = $db->get_results($sql='SELECT * from ' . table_widgets . ' where enabled=1 ORDER BY position',ARRAY_A);
-$main_smarty->assign('pligg_lang_conf',lang_loc . "/languages/lang_" . pligg_language . ".conf");
+$widgets = $db->get_results($sql='SELECT * from ' . table_widgets . ' where enabled=1 ORDER BY position', ARRAY_A);
+$main_smarty->assign('pligg_lang_conf', lang_loc . "/languages/lang_" . pligg_language . ".conf");
 #$db->cache_queries = false;
 if ($widgets) {
     // for each module...
@@ -141,17 +141,15 @@ if ($widgets) {
             } elseif (file_exists('../widgets/'.$widgets[$i]['folder'].'/lang.conf')) {
                 $widgets[$i]['lang_conf'] = '../widgets/'.$widgets[$i]['folder'].'/lang.conf';
             }
-            $widgets[$i] = array_merge($widgets[$i],$widget);
+            $widgets[$i] = array_merge($widgets[$i], $widget);
         } else {
-            array_splice($widgets,$i--,1);
+            array_splice($widgets, $i--, 1);
         }
     }
-    $main_smarty->assign('widgets',$widgets);
+    $main_smarty->assign('widgets', $widgets);
 }
 
 
 // show the template
 $main_smarty->assign('tpl_center', '/admin/home');
 $main_smarty->display($template_dir . '/admin/admin.tpl');
-
-?>

@@ -73,5 +73,3 @@ if (is_object($main_smarty)) {
     $main_smarty->assign('sidebar_stats_pligg_lang_conf', sidebar_stats_pligg_lang_conf);
     $main_smarty->assign('sidebar_stats_lang_conf', sidebar_stats_lang_conf);
 }
-
-?>

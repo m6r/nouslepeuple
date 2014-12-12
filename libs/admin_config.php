@@ -112,32 +112,32 @@ class pliggconfig
             echo translate("It looks like this should be set to")." <strong>".$path."</strong><br>";
         }
 
-        echo '<input class="form-control admin_config_input emptytext" id="editme' .$this->var_id. '" onclick="show_edit('.$this->var_id.')" value="'.htmlentities($this->var_value,ENT_QUOTES,'UTF-8').'">';
+        echo '<input class="form-control admin_config_input emptytext" id="editme' .$this->var_id. '" onclick="show_edit('.$this->var_id.')" value="'.htmlentities($this->var_value, ENT_QUOTES, 'UTF-8').'">';
         echo '<span class="emptytext" id="showme' .$this->var_id. '" style="display:none;">';
-        if (preg_match('/^\s*(.+),\s*(.+) or (.+)\s*$/',$this->var_optiontext,$m)) {
+        if (preg_match('/^\s*(.+),\s*(.+) or (.+)\s*$/', $this->var_optiontext, $m)) {
             echo "<select name=\"var_value\" class=\"form-control\">";
             for ($ii=1; $ii<=3; $ii++) {
                 echo "<option value='{$m[$ii]}' ".($m[$ii]==$this->var_value ? "selected" : "").">{$m[$ii]}</option>";
             }
             echo "</select><br />";
-        } elseif (preg_match('/^\s*(.+[^\/])\s*\/\s*([^\/].+)\s*$/',$this->var_optiontext,$m) ||
-            preg_match('/^\s*(.+) or (.+)\s*$/',$this->var_optiontext,$m)) {
-            if (preg_match('/^(\d+)\s*=\s*(.+)$/',$m[1],$m1) &&
-            preg_match('/^(\d+)\s*=\s*(.+)$/',$m[2],$m2)) {
+        } elseif (preg_match('/^\s*(.+[^\/])\s*\/\s*([^\/].+)\s*$/', $this->var_optiontext, $m) ||
+            preg_match('/^\s*(.+) or (.+)\s*$/', $this->var_optiontext, $m)) {
+            if (preg_match('/^(\d+)\s*=\s*(.+)$/', $m[1], $m1) &&
+            preg_match('/^(\d+)\s*=\s*(.+)$/', $m[2], $m2)) {
                 echo "<select name=\"var_value\" class=\"form-control\"><option value='{$m1[1]}' ".($m1[1]==$this->var_value ? "selected" : "").">{$m1[2]}</option><option value='{$m2[1]}' ".($m2[1]==$this->var_value ? "selected" : "").">{$m2[2]}</option></select><br />";
             } else {
                 echo "<select name=\"var_value\" class=\"form-control\"><option value='{$m[1]}' ".($m[1]==$this->var_value ? "selected" : "").">{$m[1]}</option><option value='{$m[2]}' ".($m[2]==$this->var_value ? "selected" : "").">{$m[2]}</option></select><br />";
             }
-        } elseif (preg_match('/^\s*(\d+)\s*-\s*(\d+)\s*$/',$this->var_optiontext,$m)) {
+        } elseif (preg_match('/^\s*(\d+)\s*-\s*(\d+)\s*$/', $this->var_optiontext, $m)) {
             echo "<select name=\"var_value\" class=\"form-control\">";
             for ($ii=$m[1]; $ii<=$m[2]; $ii++) {
                 echo "<option value='$ii' ".($ii==$this->var_value ? "selected" : "").">$ii</option>";
             }
             echo "</select><br />";
         } else {
-            echo "<input type=\"text\" class='form-control admin_config_input edit_input' name=\"var_value\" value=\"".htmlentities($this->var_value,ENT_QUOTES,'UTF-8')."\" ";
-            if (strpos($this->var_optiontext,'number')===0) {
-                $min = preg_match('/at least (\d+)/',$this->var_optiontext,$m) ? $m[1] : 0;
+            echo "<input type=\"text\" class='form-control admin_config_input edit_input' name=\"var_value\" value=\"".htmlentities($this->var_value, ENT_QUOTES, 'UTF-8')."\" ";
+            if (strpos($this->var_optiontext, 'number')===0) {
+                $min = preg_match('/at least (\d+)/', $this->var_optiontext, $m) ? $m[1] : 0;
                 echo "size='5' onblur='check_number({$this->var_id},this,$min)'";
             }
             echo '>';

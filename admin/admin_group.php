@@ -65,7 +65,7 @@ if (isset($_REQUEST['mode'])) {
 }
 
 $sql = "SELECT * FROM ".table_groups." LEFT JOIN ".table_users." ON user_id=group_creator ORDER BY group_name";
-$main_smarty->assign('groups',$db->get_results($sql,ARRAY_A));
+$main_smarty->assign('groups', $db->get_results($sql, ARRAY_A));
 
 //$main_smarty->assign('page_title' , $page_title);
 //$main_smarty->assign('page_text' , $page_text);
@@ -77,4 +77,3 @@ if ($is_moderator == '1') {
 } else {
     $main_smarty->display($template_dir . '/admin/admin.tpl');
 }
-?>

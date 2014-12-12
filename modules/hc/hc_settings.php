@@ -70,5 +70,3 @@ if (isset($main_smarty) && is_object($main_smarty)) {
 
     $main_smarty->assign('URL_hc', URL_hc);
 }
-
-?>

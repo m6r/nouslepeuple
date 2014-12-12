@@ -35,7 +35,7 @@ $curuserid=$_REQUEST['curuserid'];
 if (isset($catID) && (!empty($catID))) {
     $search->category = $catID;
 }
-if (isset($part) && $part!="" ) {
+if (isset($part) && $part!="") {
     $search->setmek = $db->escape($part);
 }
 if (isset($sorder)) {
@@ -192,7 +192,7 @@ function gen_query_forCatId($catId)
     if ($catId) {
         $child_cats = '';
         // do we also search the subcategories?
-        if ( Independent_Subcategories == true) {
+        if (Independent_Subcategories == true) {
             $child_array = '';
 
             // get a list of all children and put them in $child_array.
@@ -216,4 +216,3 @@ function gen_query_forCatId($catId)
 
     return $from_where    ;
 }
-?>

@@ -22,13 +22,13 @@ $main_smarty->assign('posttitle', $main_smarty->get_config_vars('PLIGG_Visual_Se
 $query = "SELECT *
 		  FROM ".table_categories."
 		  ORDER BY category_name";
-$result = mysql_query( $query );
+$result = mysql_query($query);
 
-while ( $row = mysql_fetch_array( $result ) ) {
-    $category_option .= '<option value="'.$row['category_id'].'">'.ucfirst( $row['category_name'] ).'</option>'."\n";
+while ($row = mysql_fetch_array($result)) {
+    $category_option .= '<option value="'.$row['category_id'].'">'.ucfirst($row['category_name']).'</option>'."\n";
 }
 
-$main_smarty->assign('category_option', $category_option );
+$main_smarty->assign('category_option', $category_option);
 
 
 // pagename
@@ -43,4 +43,3 @@ $main_smarty->assign('headers', $header_items);
 // show the template
 $main_smarty->assign('tpl_center', $the_template . '/search_advanced_center');
 $main_smarty->display($the_template . '/pligg.tpl');
-?>

@@ -29,7 +29,7 @@ $CSRF->create('user_settings', true, true);
 
 // if not logged in, redirect to the index page
 $login = isset($_GET['login']) ? sanitize($_GET['login'], 3) : '';
-$truelogin = isset($_COOKIE['mnm_user'] ) ? sanitize($_COOKIE['mnm_user'] , 3) : '';
+$truelogin = isset($_COOKIE['mnm_user']) ? sanitize($_COOKIE['mnm_user'], 3) : '';
 if ($login === '' && !$_GET['keyword']) {
     if ($current_user->user_id > 0) {
         $login = $current_user->user_login;
@@ -129,7 +129,7 @@ if ($view == 'search') {
                     $results[$key]['remove_friend'] = getmyurl('user_add_remove', 'removefriend', $val['user_login']);
                 }
             } else {
-                unset ($results[$key]);
+                unset($results[$key]);
             }
         }
 
@@ -276,12 +276,12 @@ if ($view == 'profile') {
             $dir = "templates";
             $templates = array();
             foreach (scandir($dir) as $file) {
-                if (strstr($file,".")!==0 && file_exists("$dir/$file/header.tpl")) {
+                if (strstr($file, ".")!==0 && file_exists("$dir/$file/header.tpl")) {
                     $templates[] = $file;
                 }
             }
             $main_smarty->assign('templates', $templates);
-            $main_smarty->assign('current_template', sanitize($_COOKIE['template'],3));
+            $main_smarty->assign('current_template', sanitize($_COOKIE['template'], 3));
             $main_smarty->assign('Allow_User_Change_Templates', Allow_User_Change_Templates);
         }
         $main_smarty->assign('nav_set', 4);
@@ -374,14 +374,14 @@ check_actions('user_post_views', $vars);
 
 // auto scrolling
 if (Auto_scroll==2 || Auto_scroll==3) {
-    $main_smarty->assign("scrollpageSize",$page_size);
-    $main_smarty->assign('curuserid',$current_user->user_id);
-    $main_smarty->assign('userid',$user->id);
+    $main_smarty->assign("scrollpageSize", $page_size);
+    $main_smarty->assign('curuserid', $current_user->user_id);
+    $main_smarty->assign('userid', $user->id);
     $main_smarty->assign('viewtype', $view);
 }
 
 // determine which user page to display
-Global $db, $main_smarty, $view, $user, $rows, $page_size, $offset;
+global $db, $main_smarty, $view, $user, $rows, $page_size, $offset;
 $the_page = 'profile';
 switch ($view) {
 
@@ -529,7 +529,7 @@ switch ($view) {
 do_following($user->id);
 do_followers($user->id);
 
-function do_stories ()
+function do_stories()
 {
     global $db, $main_smarty, $rows, $user, $offset, $page_size,$current_user,$cached_links;
     //if ($current_user->user_id == $user->id)
@@ -567,7 +567,7 @@ function do_stories ()
     $main_smarty->assign('user_page', $output);
 }
 
-function do_voted ()
+function do_voted()
 {
     global $db, $main_smarty, $rows, $user, $offset, $page_size,$cached_links;
 
@@ -587,7 +587,7 @@ function do_voted ()
     }
     $main_smarty->assign('user_page', $output);
 }
-function do_updownvoted ($status = null)
+function do_updownvoted($status = null)
 {
     global $db, $main_smarty, $rows, $user, $offset, $page_size, $cached_links;
 
@@ -617,7 +617,7 @@ function do_updownvoted ($status = null)
     $main_smarty->assign('user_page', $output);
 }
 
-function do_history ()
+function do_history()
 {
     global $db, $main_smarty, $rows, $user, $offset, $page_size,$cached_links;
     $output = '';
@@ -635,7 +635,7 @@ function do_history ()
     $main_smarty->assign('user_page', $output);
 }
 
-function do_published ()
+function do_published()
 {
     global $db, $main_smarty, $rows, $user, $offset, $page_size,$cached_links;
     $output = '';
@@ -653,7 +653,7 @@ function do_published ()
     $main_smarty->assign('user_page', $output);
 }
 
-function do_new ()
+function do_new()
 {
     global $db, $main_smarty, $rows, $user, $offset, $page_size,$cached_links;
     $output = '';
@@ -671,7 +671,7 @@ function do_new ()
     $main_smarty->assign('user_page', $output);
 }
 
-function do_commented ()
+function do_commented()
 {
     global $db, $main_smarty, $rows, $user, $offset, $page_size, $cached_links, $the_template;
     $output = '';
@@ -698,14 +698,14 @@ function do_commented ()
     $main_smarty->assign('user_page', $output);
 }
 
-function do_removefriend ()
+function do_removefriend()
 {
     global $db, $main_smarty, $user, $the_template;
     $friend = new Friend;
     $friend->remove($user->id);
 }
 
-function do_addfriend ()
+function do_addfriend()
 {
     global $db, $main_smarty, $user, $the_template;
     $friend = new Friend;
@@ -718,7 +718,7 @@ function do_following($user_id)
     $friend = new Friend;
     $friends = $friend->get_friend_list($user_id);
 
-    $main_smarty->assign('the_template',$the_template);
+    $main_smarty->assign('the_template', $the_template);
     $main_smarty->assign('following', $friends);
 }
 
@@ -728,7 +728,7 @@ function do_followers($user_id)
     $friend = new Friend;
     $friends = $friend->get_friend_list_2($user_id);
 
-    $main_smarty->assign('the_template',$the_template);
+    $main_smarty->assign('the_template', $the_template);
     $main_smarty->assign('follower', $friends);
 }
 function do_member_groups()
@@ -745,4 +745,3 @@ function do_member_groups()
         }
     }
 }
-?>

@@ -75,7 +75,7 @@ class Comment
         check_actions('comment_store_post_sql', $vars);
     }
 
-    function read($usecache = TRUE)
+    function read($usecache = true)
     {
         // read the comment from the database
         global $db, $current_user, $cached_comments;
@@ -150,7 +150,7 @@ class Comment
             $comment_counter++;
 
         $smarty = $this->fill_smarty($smarty);
-        $smarty->assign('rand', rand(1000000,100000000));
+        $smarty->assign('rand', rand(1000000, 100000000));
 
         if ($fetch == false) {
             $smarty->display($the_template . '/comment_show.tpl');
@@ -163,7 +163,7 @@ class Comment
     {
         global $current_user, $the_template, $comment_counter, $link, $ranklist, $db;
         if (!$ranklist) {
-            $users = $db->get_results("SELECT user_karma, COUNT(*) FROM ".table_users." WHERE user_level NOT IN ('Spammer') AND user_karma>0 GROUP BY user_karma ORDER BY user_karma DESC",ARRAY_N);
+            $users = $db->get_results("SELECT user_karma, COUNT(*) FROM ".table_users." WHERE user_level NOT IN ('Spammer') AND user_karma>0 GROUP BY user_karma ORDER BY user_karma DESC", ARRAY_N);
             $ranklist = array();
             $rank = 1;
             if ($users) {
@@ -201,7 +201,7 @@ class Comment
         $smarty->assign('comment_link', $this->link);
         $smarty->assign('user_view_url', getmyurl('user', $this->username));
         $smarty->assign('comment_date_timestamp', $this->date);
-        $smarty->assign('comment_date', date('F, d Y g:i A',$this->date));
+        $smarty->assign('comment_date', date('F, d Y g:i A', $this->date));
         $smarty->assign('comment_age', txt_time_diff($this->date));
         $smarty->assign('comment_randkey', $this->randkey);
         $smarty->assign('comment_votes', $this->votes);
@@ -361,4 +361,3 @@ class Comment
         return false;
     }
 }
-?>

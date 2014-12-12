@@ -2,11 +2,11 @@
 
 ini_set('include_path', '.');
 
-define('LOG_FILE','logs/error.log'); // Used by the Admin Panel error log file viewer
+define('LOG_FILE', 'logs/error.log'); // Used by the Admin Panel error log file viewer
 
 error_reporting(E_ALL ^ E_NOTICE ^ E_WARNING); // Define the types of errors that will be reported to the error log
-ini_set('display_errors','Off'); // Off = Don't print errors to the browser
-ini_set('error_log','logs/error.log'); // Error log file location
+ini_set('display_errors', 'Off'); // Off = Don't print errors to the browser
+ini_set('error_log', 'logs/error.log'); // Error log file location
 
 // Template Caching
 // 0 = off
@@ -33,10 +33,10 @@ if (get_magic_quotes_gpc()) {
 if ($main_smarty) {
     $get = array();
     foreach ($_GET as $k => $v) {
-        $get[$k] = stripslashes(htmlentities(strip_tags($v),ENT_QUOTES,'UTF-8'));
+        $get[$k] = stripslashes(htmlentities(strip_tags($v), ENT_QUOTES, 'UTF-8'));
     }
     $get['return'] = addslashes($get['return']);
-    $main_smarty->assign('get',$get);
+    $main_smarty->assign('get', $get);
 }
 
 // CSFR/XSFR protection
@@ -62,7 +62,7 @@ include_once 'settings.php';
 
 function sanit($var)
 {
-    return addslashes(htmlentities(strip_tags($var),ENT_QUOTES,'UTF-8'));
+    return addslashes(htmlentities(strip_tags($var), ENT_QUOTES, 'UTF-8'));
 }
 
 if ($my_base_url == '') {
@@ -91,7 +91,7 @@ if ($my_base_url == '') {
 define('urlmethod', $URLMethod);
 
 if (isset($_COOKIE['template'])) {
-    $thetemp = str_replace('..','',sanit($_COOKIE['template']));
+    $thetemp = str_replace('..', '', sanit($_COOKIE['template']));
 }
 
 // template check
@@ -212,5 +212,3 @@ function loadCategoriesForCache($clear_cache = false)
     }
     return $db->get_results($sql);
 }
-
-?>

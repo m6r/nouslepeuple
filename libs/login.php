@@ -10,7 +10,7 @@ class UserAuth
     var $user_id  = 0;
     var $user_login = "";
     var $md5_pass = "";
-    var $authenticated = FALSE;
+    var $authenticated = false;
 
 
     function UserAuth()
@@ -31,7 +31,7 @@ class UserAuth
                     $this->user_level = $dbuser->user_level;
                     $this->user_login  = $userInfo[0];
                     $this->md5_pass = $userInfo[2];
-                    $this->authenticated = TRUE;
+                    $this->authenticated = true;
                     if ($dbuser->user_language) {
                         $language = $dbuser->user_language;
                     }
@@ -43,16 +43,16 @@ class UserAuth
 
     function SetIDCookie($what, $remember)
     {
-        $domain = preg_replace('/^www/','',$_SERVER['HTTP_HOST']);
-        if (!strstr($domain,'.') || strpos($domain,'localhost:')===0) {
+        $domain = preg_replace('/^www/', '', $_SERVER['HTTP_HOST']);
+        if (!strstr($domain, '.') || strpos($domain, 'localhost:')===0) {
             $domain='';
         }
         switch ($what) {
             case 0:    // Borra cookie, logout
-                setcookie ("mnm_user", "", time()-3600, "/",$domain); // Expiramos el cookie
-                setcookie ("mnm_key", "", time()-3600, "/",$domain); // Expiramos el cookie
-                setcookie ("mnm_user", "", time()-3600, "/"); // Expiramos el cookie
-                setcookie ("mnm_key", "", time()-3600, "/"); // Expiramos el cookie
+                setcookie("mnm_user", "", time()-3600, "/", $domain); // Expiramos el cookie
+                setcookie("mnm_key", "", time()-3600, "/", $domain); // Expiramos el cookie
+                setcookie("mnm_user", "", time()-3600, "/"); // Expiramos el cookie
+                setcookie("mnm_key", "", time()-3600, "/"); // Expiramos el cookie
                 break;
             case 1: //Usuario logeado, actualiza el cookie
                 // Atencion, cambiar aqu�cuando se cambie el password de base de datos a MD5
@@ -69,8 +69,8 @@ class UserAuth
                 else {
                     $time = 0;
                 }
-                setcookie("mnm_user", $this->user_login, $time, "/",$domain);
-                setcookie("mnm_key", $strCookie, $time, "/",$domain);
+                setcookie("mnm_user", $this->user_login, $time, "/", $domain);
+                setcookie("mnm_key", $strCookie, $time, "/", $domain);
                 break;
         }
     }
@@ -78,7 +78,7 @@ class UserAuth
     function Authenticate($username, $pass, $remember=false, $already_salted_pass='')
     {
         global $db;
-        $dbusername=sanitize($db->escape($username),4);
+        $dbusername=sanitize($db->escape($username), 4);
 
         check_actions('login_start', $vars);
         $user=$db->get_row("SELECT * FROM " . table_users . " WHERE user_login = '$dbusername' or user_email= '$dbusername' ");
@@ -99,7 +99,7 @@ class UserAuth
                 return false;
             }
 
-            $this->authenticated = TRUE;
+            $this->authenticated = true;
             $this->md5_pass = md5($user->user_pass);
             $this->SetIDCookie(1, $remember);
             require_once(mnminclude.'check_behind_proxy.php');
@@ -116,8 +116,8 @@ class UserAuth
         global $main_smarty;
 
         $this->user_login = "";
-        $this->authenticated = FALSE;
-        $this->SetIDCookie (0, '');
+        $this->authenticated = false;
+        $this->SetIDCookie(0, '');
 
         define('wheretoreturn', $url);
         $vars = '';
@@ -152,4 +152,3 @@ class UserAuth
 }
 
 $current_user = new UserAuth();
-?>

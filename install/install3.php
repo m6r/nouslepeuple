@@ -37,7 +37,7 @@ if (!isset($dbuser)) {
     $dbhost = $_POST['dbhost'];
 }
 
-if ($conn = @mysql_connect($dbhost,$dbuser,$dbpass)) {
+if ($conn = @mysql_connect($dbhost, $dbuser, $dbpass)) {
     @$_SESSION['checked_step'] = 3;
 
     $output.= "<p>" . $lang['ConnectionEstab'] . "</p>\n";
@@ -97,4 +97,3 @@ if ($check_errors !== false) {
 } else {
     header("Location: $url_install3");
 }
-?>

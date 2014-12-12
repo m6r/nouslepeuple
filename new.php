@@ -64,16 +64,16 @@ $search->doSearch();
 
 // setup the links
 if (isset($_GET['category'])) {
-    $main_smarty->assign('index_url_recent', getmyurl('newcategory', sanitize($_GET['category'],2)));
-    $main_smarty->assign('index_url_today', getmyurl('new_sort', 'today', sanitize($_GET['category'],2)));
-    $main_smarty->assign('index_url_yesterday', getmyurl('new_sort', 'yesterday', sanitize($_GET['category'],2)));
-    $main_smarty->assign('index_url_week', getmyurl('new_sort', 'week', sanitize($_GET['category'],2)));
-    $main_smarty->assign('index_url_month', getmyurl('new_sort', 'month', sanitize($_GET['category'],2)));
-    $main_smarty->assign('index_url_year', getmyurl('new_sort', 'year', sanitize($_GET['category'],2)));
-    $main_smarty->assign('index_url_alltime', getmyurl('new_sort', 'alltime', sanitize($_GET['category'],2)));
-    $main_smarty->assign('index_url_upvoted', getmyurl('new_sort', 'upvoted', sanitize($_GET['category'],2)));
-    $main_smarty->assign('index_url_downvoted', getmyurl('new_sort', 'downvoted', sanitize($_GET['category'],2)));
-    $main_smarty->assign('index_url_commented', getmyurl('new_sort', 'commented', sanitize($_GET['category'],2)));
+    $main_smarty->assign('index_url_recent', getmyurl('newcategory', sanitize($_GET['category'], 2)));
+    $main_smarty->assign('index_url_today', getmyurl('new_sort', 'today', sanitize($_GET['category'], 2)));
+    $main_smarty->assign('index_url_yesterday', getmyurl('new_sort', 'yesterday', sanitize($_GET['category'], 2)));
+    $main_smarty->assign('index_url_week', getmyurl('new_sort', 'week', sanitize($_GET['category'], 2)));
+    $main_smarty->assign('index_url_month', getmyurl('new_sort', 'month', sanitize($_GET['category'], 2)));
+    $main_smarty->assign('index_url_year', getmyurl('new_sort', 'year', sanitize($_GET['category'], 2)));
+    $main_smarty->assign('index_url_alltime', getmyurl('new_sort', 'alltime', sanitize($_GET['category'], 2)));
+    $main_smarty->assign('index_url_upvoted', getmyurl('new_sort', 'upvoted', sanitize($_GET['category'], 2)));
+    $main_smarty->assign('index_url_downvoted', getmyurl('new_sort', 'downvoted', sanitize($_GET['category'], 2)));
+    $main_smarty->assign('index_url_commented', getmyurl('new_sort', 'commented', sanitize($_GET['category'], 2)));
     $main_smarty->assign('cat_url', getmyurl("newcategory"));
 } else {
     $main_smarty->assign('index_url_recent', getmyurl('new'));
@@ -102,7 +102,7 @@ if (isset($_REQUEST['category'])) {
     $navwhere['link1'] = getmyurl('new', '');
     $navwhere['text2'] = $thecat;
     $main_smarty->assign('navbar_where', $navwhere);
-    $main_smarty->assign('pretitle', $thecat );
+    $main_smarty->assign('pretitle', $thecat);
     $main_smarty->assign('posttitle', $main_smarty->get_config_vars('PLIGG_Visual_Pligg_Queued'));
     $main_smarty->assign('page_header', $thecat . $main_smarty->get_config_vars('PLIGG_Visual_Pligg_Queued'));
 } else {
@@ -137,7 +137,7 @@ include('./libs/link_summary.php'); // this is the code that show the links / st
 
 //For Infinite scrolling and continue reading option
 if (Auto_scroll==2 || Auto_scroll==3) {
-    $main_smarty->assign("scrollpageSize",$page_size);
+    $main_smarty->assign("scrollpageSize", $page_size);
 } else {
     $main_smarty->assign('link_pagination', do_pages($rows, $page_size, "new", true));
 }
@@ -145,4 +145,3 @@ if (Auto_scroll==2 || Auto_scroll==3) {
 // show the template
 $main_smarty->assign('tpl_center', $the_template . '/new_center');
 $main_smarty->display($the_template . '/pligg.tpl');
-?>

@@ -104,9 +104,9 @@ if (enable_group == "true" && (group_submit_level == $current_user_level || grou
                     require_once(mnminclude.'class.phpmailer5.php');
                 }
                 if (isset($_POST['group_mailer'])) {
-                    Global $db,$current_user;
+                    global $db,$current_user;
                     $names = $_POST['group_mailer'];
-                    $v1 = explode (",", $names);
+                    $v1 = explode(",", $names);
                     $name = "";
 
                     $user = new User;
@@ -124,7 +124,7 @@ if (enable_group == "true" && (group_submit_level == $current_user_level || grou
                         $subject = $main_smarty->get_config_vars('PLIGG_InvitationEmail_Subject');
                         $to = $t;
 
-                        $message = sprintf($main_smarty->get_config_vars('PLIGG_InvitationEmail_Message'),"<a href='".my_base_url.my_pligg_base."/group_story.php?id=".$in_id."'>".$group_name."</a>","<a href='".my_base_url.my_pligg_base."/user.php?login=".$username."'>".$username."</a>");
+                        $message = sprintf($main_smarty->get_config_vars('PLIGG_InvitationEmail_Message'), "<a href='".my_base_url.my_pligg_base."/group_story.php?id=".$in_id."'>".$group_name."</a>", "<a href='".my_base_url.my_pligg_base."/user.php?login=".$username."'>".$username."</a>");
 
                     //echo $to.":".$site_mail.":".$subject."$message<br/>";
 
@@ -163,4 +163,3 @@ $main_smarty->assign('pagename', pagename);
 // show the template
 $main_smarty->assign('tpl_center', $the_template . '/submit_groups_center');
 $main_smarty->display($the_template . '/pligg.tpl');
-?>

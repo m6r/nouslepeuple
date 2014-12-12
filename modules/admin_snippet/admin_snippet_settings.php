@@ -124,5 +124,3 @@ if (isset($main_smarty) && is_object($main_smarty)) {
     $main_smarty->assign('admin_snippet_tpl_path', admin_snippet_tpl_path);
     $main_smarty->assign('admin_snippet_locations', $locations);
 }
-
-?>

@@ -1,13 +1,13 @@
 <?php
 class Search
 {
-    var $newerthan = NULL;
+    var $newerthan = null;
     var $searchTerm = '';
     var $filterToStatus = 'all';
     var $filterToTimeFrame = '';
     var $isTag = false;
     var $searchTable = '';
-    var $orderBy = NULL;
+    var $orderBy = null;
     var $offset = 0;
     var $pagesize = '';
     var $sql = '';
@@ -130,7 +130,7 @@ class Search
 
         /////sorojit: for user selected category display
         if ($_COOKIE['mnm_user']) {
-            $user_login = $db->escape(sanitize($_COOKIE['mnm_user'],3));
+            $user_login = $db->escape(sanitize($_COOKIE['mnm_user'], 3));
             $sqlGeticategory = $db->get_var("SELECT user_categories from " . table_users . " where user_login = '$user_login';");
             if ($sqlGeticategory) {
                 $from_where .= " AND link_category NOT IN ($sqlGeticategory)";
@@ -147,7 +147,7 @@ class Search
             if ($catId) {
                 $child_cats = '';
                 // do we also search the subcategories?
-                if ( Independent_Subcategories == true) {
+                if (Independent_Subcategories == true) {
                     $child_array = '';
 
                     // get a list of all children and put them in $child_array.
@@ -191,9 +191,9 @@ class Search
         }
 
         // always check groups (to hide private groups)
-        $from_where = str_replace("WHERE"," LEFT JOIN ".table_groups." ON ".table_links.".link_group_id = ".table_groups.".group_id WHERE",$from_where);
+        $from_where = str_replace("WHERE", " LEFT JOIN ".table_groups." ON ".table_links.".link_group_id = ".table_groups.".group_id WHERE", $from_where);
         if (Voting_Method == 2) {
-            $from_where = str_replace("WHERE"," LEFT JOIN ".table_votes. " ON vote_type='links' AND vote_link_id=link_id AND vote_value>0 WHERE",$from_where);
+            $from_where = str_replace("WHERE", " LEFT JOIN ".table_votes. " ON vote_type='links' AND vote_link_id=link_id AND vote_value>0 WHERE", $from_where);
         }
 
         // Search on additional categories
@@ -207,7 +207,7 @@ class Search
             foreach ($groups as $group) {
                 $group_ids[] = $group->member_group_id;
             }
-            $group_list = join(",",$group_ids);
+            $group_list = join(",", $group_ids);
             $from_where .= " AND (".table_groups.".group_privacy!='private' OR ISNULL(".table_groups.".group_privacy) OR ".table_groups.".group_id IN($group_list)) ";
         } else {
             $group_list = '';
@@ -274,23 +274,23 @@ class Search
             //check if it is a literal search
             $buffKeyword = $this->searchTerm;
             $keywords = array();
-            if ( substr( $this->searchTerm, 1, 1 ) == '"'  && substr( $this->searchTerm, strlen( $this->searchTerm )-1 , 1 ) == '"' ) {
+            if (substr($this->searchTerm, 1, 1) == '"'  && substr($this->searchTerm, strlen($this->searchTerm)-1, 1) == '"') {
                 $literal = true;
                 $addparam = ' COLLATE utf8_general_ci ';
-                $this->searchTerm = str_replace( '\"','',$this->searchTerm );
+                $this->searchTerm = str_replace('\"', '', $this->searchTerm);
                 $keywords[] = $this->searchTerm;
             } else {
-                $keywords = explode( ' ', $this->searchTerm );
+                $keywords = explode(' ', $this->searchTerm);
             }
             $bufferOrig = $this->searchTerm;
 
             //search category
-            if ( $this->s_cat != 0 ) {
+            if ($this->s_cat != 0) {
                 $catId = $this->s_cat;
                 if ($catId) {
                     $child_cats = '';
                     // do we also search the subcategories?
-                    if ( Independent_Subcategories == true) {
+                    if (Independent_Subcategories == true) {
                         $child_array = '';
                         // get a list of all children and put them in $child_array.
                         children_id_to_array($child_array, table_categories, $catId);
@@ -313,8 +313,8 @@ class Search
             }
 
             //search tags
-            if ( $this->s_tags != 0 && $this->searchTerm) {
-                foreach ( $keywords as $key ) {
+            if ($this->s_tags != 0 && $this->searchTerm) {
+                foreach ($keywords as $key) {
                     $this->searchTerm = $key;
                     $search_params[] = " ".table_links.".link_tags $addparam LIKE '%".$this->searchTerm."%' ";
                 }
@@ -322,16 +322,16 @@ class Search
             }
 
             //search links
-            if ( $this->s_story != 0 && $this->searchTerm) {
-                foreach ( $keywords as $key ) {
+            if ($this->s_story != 0 && $this->searchTerm) {
+                foreach ($keywords as $key) {
                     $this->searchTerm = $key;
-                    if ( $this->s_story == 1 ) {
+                    if ($this->s_story == 1) {
                         $search_params[] = " ".table_links.".link_title $addparam LIKE '%".$this->searchTerm."%' ";
                     }
-                    if ( $this->s_story == 2 ) {
+                    if ($this->s_story == 2) {
                         $search_params[] = " ".table_links.".link_content $addparam LIKE '%".$this->searchTerm."%' ";
                     }
-                    if ( $this->s_story == 3 ) {
+                    if ($this->s_story == 3) {
                         $search_params[] = " ".table_links.".link_title $addparam LIKE '%".$this->searchTerm."%' ";
                         $search_params[] = " ".table_links.".link_content $addparam LIKE '%".$this->searchTerm."%' ";
                     }
@@ -340,9 +340,9 @@ class Search
             }
 
             //search author
-            if ( $this->s_user != 0 && $this->searchTerm) {
+            if ($this->s_user != 0 && $this->searchTerm) {
                 $from_where .= " INNER JOIN ".table_users." ON ".table_links.".link_author = ".table_users.".user_id ";
-                foreach ( $keywords as $key ) {
+                foreach ($keywords as $key) {
                     $this->searchTerm = $key;
                     $search_params[] = " ".table_users.".user_login $addparam LIKE '%".$this->searchTerm."%' ";
                 }
@@ -350,16 +350,16 @@ class Search
             }
 
             //search group
-            if ( $this->s_group != 0 && $this->searchTerm) {
-                foreach ( $keywords as $key ) {
+            if ($this->s_group != 0 && $this->searchTerm) {
+                foreach ($keywords as $key) {
                     $this->searchTerm = $key;
-                    if ( $this->s_group == 1 ) {
+                    if ($this->s_group == 1) {
                         $search_params[] = " ".table_groups.".group_name $addparam LIKE '%".$this->searchTerm."%' ";
                     }
-                    if ( $this->s_group == 2 ) {
+                    if ($this->s_group == 2) {
                         $search_params[] = " ".table_groups.".group_description $addparam LIKE '%".$this->searchTerm."%' ";
                     }
-                    if ( $this->s_group == 3 ) {
+                    if ($this->s_group == 3) {
                         $search_params[] = " ".table_groups.".group_name $addparam LIKE '%".$this->searchTerm."%' ";
                         $search_params[] = " ".table_groups.".group_description $addparam LIKE '%".$this->searchTerm."%' ";
                     }
@@ -368,9 +368,9 @@ class Search
             }
 
             //search comments
-            if ( $this->s_comments != 0 && $this->searchTerm) {
+            if ($this->s_comments != 0 && $this->searchTerm) {
                 $from_where .= " LEFT JOIN ".table_comments." ON ".table_links.".link_id = ".table_comments.".comment_link_id ";
-                foreach ( $keywords as $key ) {
+                foreach ($keywords as $key) {
                     $this->searchTerm = $key;
                     $search_params[] = " (".table_comments.".comment_content $addparam LIKE '%".$this->searchTerm."%' AND comment_status='published')";
                 }
@@ -378,8 +378,8 @@ class Search
             }
 
             //search by date
-            if ( $this->s_date ) {
-                $this->s_date = date('Y-m-d',strtotime($this->s_date));
+            if ($this->s_date) {
+                $this->s_date = date('Y-m-d', strtotime($this->s_date));
 #				$from_where .= " WHERE DATE(link_date)='{$this->s_date}' ";
                 $search_AND_params[] = " DATE(".table_links.".link_date)='{$this->s_date}' ";
 #				$this->searchTerm = $bufferOrig;
@@ -394,17 +394,17 @@ class Search
                 $from_where .= " LEFT JOIN ".table_additional_categories. " ON ac_link_id=link_id";
             }
 
-            if ( $this->status != '' && $this->status != 'all' ) {
+            if ($this->status != '' && $this->status != 'all') {
                 $search_params[] = " ".table_links.".link_status = '{$this->status}' ";
             }
 
             if (sizeof($search_params)) {
-                $search_clause = '('.implode( ' OR ', $search_params ).' ) ';
+                $search_clause = '('.implode(' OR ', $search_params).' ) ';
             } else {
                 $search_clause = '1';
             }
             if (sizeof($search_AND_params)>0) {
-                $search_clause .= ' AND ('.implode( ' AND ', $search_AND_params ).' ) ';
+                $search_clause .= ' AND ('.implode(' AND ', $search_AND_params).' ) ';
             }
             $this->sql = $query.' '.$from_where.' WHERE '.$search_clause." AND ".table_links.".link_status IN ('published','new')";
             $this->searchTerm = $buffKeyword;
@@ -497,19 +497,19 @@ class Search
             }
 
             $ords = $this->ords;
-            $order_clauses = array ( 'newest' => 'link_date DESC',
+            $order_clauses = array( 'newest' => 'link_date DESC',
                           'oldest' => 'link_date ASC',
                           'commented' => 'link_comments DESC',
                           'upvoted' => $rating_column . ' DESC',
                           'downvoted' => $rating_column . ' ASC'
                             );
 
-            if ( array_key_exists ($ords, $order_clauses) ) {
+            if (array_key_exists($ords, $order_clauses)) {
                 $orderBy = $order_clauses[$ords];
             } else {
                 $orderBy = $order_clauses['newest'];
             }
-            $orderBy1 = str_replace(array(' DESC',' ASC'), '', $orderBy);
+            $orderBy1 = str_replace(array(' DESC', ' ASC'), '', $orderBy);
             foreach ($newfoundlinks as $thelink) {
                 $sortarray[$thelink['link_id']] = $thelink[$orderBy1];
             }
@@ -550,7 +550,7 @@ class Search
                 $this->searchTable = table_tags . " INNER JOIN " . table_links . " ON " . table_tags . ".tag_link_id = " . table_links . ".link_id";
 
                 // thanks to jalso for this code
-                    $x = explode(",",$words);
+                    $x = explode(",", $words);
                 $sq = "(";
                 foreach ($x as $k=>$v) {
                     $sq .= "tag_words = '".trim($x[$k])."'";
@@ -568,7 +568,7 @@ class Search
             } else {
                 // search the links table
                 $this->searchTable = table_links;
-                $words = str_replace(array('-','+','/','\\','?','=','$','%','^','&','*','(',')','!','@','|'),'',$words);
+                $words = str_replace(array('-', '+', '/', '\\', '?', '=', '$', '%', '^', '&', '*', '(', ')', '!', '@', '|'), '', $words);
                 if ($SearchMethod == 3) {
                     $SearchMethod = $this->determine_search_method($words);
                 }
@@ -628,9 +628,9 @@ class Search
                     }
 
                     //$where = " AND MATCH (link_url, link_url_title, link_title, link_content, link_tags $matchfields) AGAINST ('$words') ";
-                    $words = $db->escape(str_replace('+','',stripslashes($words)));
-                    if (preg_match_all('/("[^"]+"|[^\s]+)/',$words,$m)) {
-                        $words = '+'.join(" +",$m[1]);
+                    $words = $db->escape(str_replace('+', '', stripslashes($words)));
+                    if (preg_match_all('/("[^"]+"|[^\s]+)/', $words, $m)) {
+                        $words = '+'.join(" +", $m[1]);
                     }
                     $where = " AND MATCH (link_title, link_content, link_tags $matchfields) AGAINST ('$words' IN BOOLEAN MODE) ";
                 }
@@ -707,7 +707,7 @@ class Search
     {
         global $db;
         $sq = '';
-        preg_match_all('/"([^"]+)"|([^\s]+)/',$words,$m);
+        preg_match_all('/"([^"]+)"|([^\s]+)/', $words, $m);
         foreach ($m[1] as $v) {
             if (trim($v)) {
                 $sq .= $search_field . " LIKE '%".$db->escape(trim($v))."%' AND ";
@@ -720,14 +720,14 @@ class Search
         }
 //		foreach(explode(' ',$words) as $v){
 
-        return substr ( $sq, 0, -4 );
+        return substr($sq, 0, -4);
     }
 
     function determine_search_method(&$words)
     {
         // find out which of the methods is best and then use it.
 
-        $pieces = explode(" ", str_replace('"','',$words));
+        $pieces = explode(" ", str_replace('"', '', $words));
         $SearchMethod = 1; // assume that it'll be ok to use method 1
 
         foreach ($pieces as $piece) {
@@ -752,7 +752,7 @@ class Search
     {
         static $word_array;
 
-        if ( ! $word_array ) {
+        if (! $word_array) {
             // list came from here
             // http://meta.wikimedia.org/wiki/MySQL_4.0.20_stop_word_list
             $stopwordlist = "a's able about above according accordingly across actually after afterwards again against ain't all allow allows almost alone along already also although always am among amongst an and another any anybody anyhow anyone anything anyway anyways anywhere apart appear appreciate appropriate are aren't around as aside ask asking associated at available away awfully be became because become becomes becoming been before beforehand behind being believe below beside besides best better between beyond both brief but by c'mon c's came can can't cannot cant cause causes certain certainly changes clearly co com come comes concerning consequently consider considering contain containing contains corresponding could couldn't course currently definitely described despite did didn't different do does doesn't doing don't done down downwards during each edu eg eight either else elsewhere enough entirely especially et etc even ever every everybody everyone everything everywhere ex exactly example except far few fifth first five followed following follows for former formerly forth four from further furthermore get gets getting given gives go goes going gone got gotten greetings had hadn't happens hardly has hasn't have haven't having he he's hello help hence her here here's hereafter hereby herein hereupon hers herself hi him himself his hither hopefully how howbeit however i'd i'll i'm i've ie if ignored immediate in inasmuch inc indeed indicate indicated indicates inner insofar instead into inward is isn't it it'd it'll it's its itself just keep keeps kept know knows known last lately later latter latterly least less lest let let's like liked likely little look looking looks ltd mainly many may maybe me mean meanwhile merely might more moreover most mostly much must my myself name namely nd near nearly necessary need needs neither never nevertheless new next nine no nobody non none noone nor normally not nothing novel now nowhere obviously of off often oh ok okay old on once one ones only onto or other others otherwise ought our ours ourselves out outside over overall own particular particularly per perhaps placed please plus possible presumably probably provides que quite qv rather rd re really reasonably regarding regardless regards relatively respectively right said same saw say saying says second secondly see seeing seem seemed seeming seems seen self selves sensible sent serious seriously seven several shall she should shouldn't since six so some somebody somehow someone something sometime sometimes somewhat somewhere soon sorry specified specify specifying still sub such sup sure t's take taken tell tends th than thank thanks thanx that that's thats the their theirs them themselves then thence there there's thereafter thereby therefore therein theres thereupon these they they'd they'll they're they've think third this thorough thoroughly those though three through throughout thru thus to together too took toward towards tried tries truly try trying twice two un under unfortunately unless unlikely until unto up upon us use used useful uses using usually value various very via viz vs want wants was wasn't way we we'd we'll we're we've welcome well went were weren't what what's whatever when whence whenever where where's whereafter whereas whereby wherein whereupon wherever whether which while whither who who's whoever whole whom whose why will willing wish with within without won't wonder would would wouldn't yes yet you you'd you'll you're you've your yours yourself yourselves zero";
@@ -782,7 +782,7 @@ class Search
             $rating_column = 'link_votes';
         }
 
-        $order_clauses = array ( 'newest' => 'link_date DESC',
+        $order_clauses = array( 'newest' => 'link_date DESC',
                           'oldest' => 'link_date ASC',
                           'mostpopular' => $rating_column . ' DESC',
                           'leastpopular' => $rating_column . ' ASC'
@@ -790,15 +790,15 @@ class Search
 
         if ($this->filterToStatus == "new") {
             $ords = $this->ords;
-            if ( array_key_exists ($ords, $order_clauses) ) {
+            if (array_key_exists($ords, $order_clauses)) {
                 $this->orderBy = $order_clauses[$ords];
             } else {
                 $this->orderBy = $order_clauses['newest'];
             }
         }
 
-        $timeFrames = array ('today', 'yesterday', 'week', 'month', 'year', 'alltime','upvoted', 'downvoted', 'commented');
-        if ( in_array ($setmek, $timeFrames) ) {
+        $timeFrames = array('today', 'yesterday', 'week', 'month', 'year', 'alltime','upvoted', 'downvoted', 'commented');
+        if (in_array($setmek, $timeFrames)) {
             if ($setmek == 'alltime') {
                 $this->filterToTimeFrame = '';
             } else {
@@ -809,4 +809,3 @@ class Search
         }
     }
 }
-?>

@@ -244,14 +244,14 @@ class Link
         }
 
         foreach ($this->additional_cats as $cat) {
-            $db->query("INSERT INTO ".table_additional_categories." SET ac_cat_id='".sanitize($cat,3)."', ac_link_id={$this->id}");
+            $db->query("INSERT INTO ".table_additional_categories." SET ac_cat_id='".sanitize($cat, 3)."', ac_link_id={$this->id}");
         }
 
         $vars = array('link' => $this);
         check_actions('link_store_basic_post_sql', $vars);
     }
 
-    function read($usecache = TRUE)
+    function read($usecache = true)
     {
         global $db, $current_user, $cached_links;
         $id = $this->id;
@@ -445,7 +445,7 @@ class Link
         global $current_user, $globals, $the_template, $db, $ranklist;
 
         if (!$ranklist) {
-            $users = $db->get_results("SELECT user_karma, COUNT(*) FROM ".table_users." WHERE user_level NOT IN ('Spammer') AND user_karma>0 GROUP BY user_karma ORDER BY user_karma DESC",ARRAY_N);
+            $users = $db->get_results("SELECT user_karma, COUNT(*) FROM ".table_users." WHERE user_level NOT IN ('Spammer') AND user_karma>0 GROUP BY user_karma ORDER BY user_karma DESC", ARRAY_N);
             $ranklist = array();
             $rank = 1;
             if ($users) {
@@ -538,7 +538,7 @@ class Link
 
         $smarty->assign('link_submit_time', $this->date);
         $smarty->assign('link_submit_timeago', txt_time_diff($this->date));
-        $smarty->assign('link_submit_date', date('F, d Y g:i A',$this->date));
+        $smarty->assign('link_submit_date', date('F, d Y g:i A', $this->date));
         $smarty->assign('link_published_time', $this->published_date);
         $smarty->assign('link_published_timeago', txt_time_diff($this->published_date));
         $smarty->assign('link_category', $this->category_name());
@@ -578,7 +578,7 @@ class Link
             $current_user_id = $current_user->user_id;
             $jsLink = "vote($current_user_id, $this->id, $link_index, '" . md5($current_user_id . $this->randkey) . "', ";
             for ($stars = 1; $stars <= 5; $stars++) {
-                $smarty->assign("link_shakebox_javascript_vote_{$stars}star", $jsLink . ($stars * 2) . ')' );
+                $smarty->assign("link_shakebox_javascript_vote_{$stars}star", $jsLink . ($stars * 2) . ')');
             }
 
             $smarty->assign('vote_count', $this->votecount);
@@ -704,7 +704,7 @@ class Link
         $smarty->assign('group_story_links_publish', getmyurl('group_story_links_publish', $this->id));
         $smarty->assign('group_story_links_new', getmyurl('group_story_links_new', $this->id));
         $smarty->assign('group_story_links_discard', getmyurl('group_story_links_discard', $this->id));
-        $smarty->assign('link_id',$this->id);
+        $smarty->assign('link_id', $this->id);
         $smarty->assign('user_url_add_links', getmyurl('user_add_links', $this->id));
         $smarty->assign('user_url_remove_links', getmyurl('user_remove_links', $this->id));
         $smarty->assign('enable_tags', Enable_Tags);
@@ -769,9 +769,9 @@ class Link
                 $c++;
                 for ($i=0; $i<=$c; $i++) {
                     if (isset($tag_array[$i])) {
-                        if ( $URLMethod == 1 ) {
+                        if ($URLMethod == 1) {
                             $tags_url_array[$i] = my_pligg_base . "/search.php?search=".urlencode(trim($tag_array[$i]))."&amp;tag=true";
-                        } elseif ( $URLMethod == 2) {
+                        } elseif ($URLMethod == 2) {
                             $tags_url_array[$i] = my_pligg_base . "/tag/" . urlencode(trim($tag_array[$i]));
                         }
                     }
@@ -829,7 +829,7 @@ class Link
                 $content=    close_tags(utf8_substr($this->content, 0, StorySummary_ContentTruncate));
                 $content.="<div class=\"read_more_article\" storyid=\"".$this->id."\" > ".$main_smarty->get_config_vars('PLIGG_Visual_Read_More')."</div>" ;
                 $content.="<div class=\"read_more_story".$this->id." hide\" >";
-                $content.=close_tags(utf8_substr($this->content, StorySummary_ContentTruncate,utf8_strlen($this->content) ));
+                $content.=close_tags(utf8_substr($this->content, StorySummary_ContentTruncate, utf8_strlen($this->content)));
                 $content.="</div>";
                 // echo $content;
                 return $content;
@@ -1186,7 +1186,7 @@ class Link
         }
         sort($cats, SORT_STRING);
 
-        return join(',',$cats);
+        return join(',', $cats);
     }
 
 
@@ -1253,7 +1253,7 @@ class Link
         }
     }
 
-    function evaluate_formulas ()
+    function evaluate_formulas()
     {
         global $db;
 
@@ -1329,7 +1329,7 @@ class Link
         }
     }
 
-    function check_spam($text )
+    function check_spam($text)
     {
         global $MAIN_SPAM_RULESET;
         global $USER_SPAM_RULESET;
@@ -1338,12 +1338,12 @@ class Link
         $mk_regex_array = array();
         preg_match_all($regex_url, $text, $mk_regex_array);
 
-        for ( $cnt=0; $cnt < count($mk_regex_array[2]); $cnt++ ) {
-            $test_domain = rtrim($mk_regex_array[2][$cnt],"\\");
+        for ($cnt=0; $cnt < count($mk_regex_array[2]); $cnt++) {
+            $test_domain = rtrim($mk_regex_array[2][$cnt], "\\");
             if (strlen($test_domain) > 3) {
                 $domain_to_test = $test_domain . ".multi.surbl.org";
-                if ( strstr(gethostbyname($domain_to_test),'127.0.0')) {
-                    logSpam( "surbl rejected $test_domain");
+                if (strstr(gethostbyname($domain_to_test), '127.0.0')) {
+                    logSpam("surbl rejected $test_domain");
                     return true;
                 }
             }
@@ -1364,24 +1364,24 @@ class Link
 
     function check_spam_rules($ruleFile, $text)
     {
-        if (!file_exists( $ruleFile)) {
+        if (!file_exists($ruleFile)) {
             echo $ruleFile . " does not exist\n";
             return false;
         }
-        $handle = fopen( $ruleFile, "r");
+        $handle = fopen($ruleFile, "r");
         while (!feof($handle)) {
             $buffer = fgets($handle, 4096);
             $splitbuffer = explode("####", $buffer);
             // Parse domain name from a line
-            $expression = parse_url(trim($splitbuffer[0]),PHP_URL_HOST);
+            $expression = parse_url(trim($splitbuffer[0]), PHP_URL_HOST);
             if (!$expression) {
                 $expression = trim($splitbuffer[0]);
             }
             // Make it regexp compatible
-            $expression = str_replace('.','\.',$expression);
+            $expression = str_replace('.', '\.', $expression);
             // Check $text against http://<domain>
             if (strlen($expression) > 0 && preg_match("/\/\/([^\.]+\.)*$expression(\/|$)/i", $text)) {
-                $this->logSpam( "$ruleFile violation: $expression");
+                $this->logSpam("$ruleFile violation: $expression");
                 return true;
             }
         }
@@ -1404,8 +1404,8 @@ class Link
 
         $message = $date . "\t" . $timestamp . "\t" . $ip . "\t" . $message . "\n";
 
-        $file = fopen( $SPAM_LOG_BOOK, "a");
-        fwrite( $file, $message );
+        $file = fopen($SPAM_LOG_BOOK, "a");
+        fwrite($file, $message);
         fclose($file);
     }
 }
@@ -1473,7 +1473,7 @@ class PliggHTTPRequest
            $response .= fread($this->_fp, 1024);
        }
        fclose($this->_fp);
-       if (!strstr($response,'HTTP/')) {
+       if (!strstr($response, 'HTTP/')) {
            return("BADURL");
        }
 
@@ -1499,12 +1499,11 @@ class PliggHTTPRequest
            $http = new PliggHTTPRequest($headers['location']);
            return($http->DownloadToString($http));
        } else {
-           if (extension_loaded('iconv') && preg_match('/charset=(.+)$/',$headers['content-type'],$m)) {
-               $body = iconv($m[1],"UTF-8",$body);
+           if (extension_loaded('iconv') && preg_match('/charset=(.+)$/', $headers['content-type'], $m)) {
+               $body = iconv($m[1], "UTF-8", $body);
            }
 
            return($body);
        }
    }
 }
-?>

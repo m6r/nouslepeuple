@@ -101,7 +101,7 @@ class Friend
         }
         $sql = "SELECT CONCAT( friend_from, ',', friend_to ) AS STATUS FROM " . table_friends . " WHERE (friend_from, friend_to) IN (( " . $current_user->user_id . "," . $friend . " ) , ( ". $friend . "," . $current_user->user_id. " ))";
         //$sql = "SELECT " . table_users . ".user_id FROM " . table_friends . " INNER JOIN " . table_users . " ON " . table_friends . ".friend_to = " . table_users . ".user_id WHERE " . table_friends . ".friend_from=" . $current_user->user_id .";";
-        $result = $db->get_results($sql,ARRAY_A);
+        $result = $db->get_results($sql, ARRAY_A);
         //var_dump($result);
         //echo sizeof($result);
         if (sizeof($result) == 2) {
@@ -124,5 +124,3 @@ class Friend
         // returns null if not
     }
 }
-
-?>

@@ -16,7 +16,7 @@
 
         $privatekey = get_misc_data('adcopy_privkey');
         $hashkey = get_misc_data('adcopy_hashkey');
-        $resp = solvemedia_check_answer ($privatekey,
+        $resp = solvemedia_check_answer($privatekey,
                                 $_SERVER["REMOTE_ADDR"],
                                 $_POST["adcopy_challenge"],
                                 $_POST["adcopy_response"],
@@ -103,4 +103,3 @@
             return true;
         }
     }
-?>

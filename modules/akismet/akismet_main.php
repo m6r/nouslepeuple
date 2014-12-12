@@ -3,7 +3,7 @@ function akismet_save_profile(&$x)
 {
     global $current_user;
 
-    $text = join(' ',$_POST);
+    $text = join(' ', $_POST);
 
     $user = new User;
     $user->id = $current_user->user_id;
@@ -529,4 +529,3 @@ function akismet_get_comment_count()
     global $db;
     return $db->get_var("SELECT COUNT(*) FROM ".table_prefix . "spam_comments");
 }
-?>

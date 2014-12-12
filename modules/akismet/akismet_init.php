@@ -8,7 +8,7 @@ if (defined('mnminclude')) {
     $include_in_pages = array('all');
     $do_not_include_in_pages = array();
 
-    if ( do_we_load_module() ) {
+    if (do_we_load_module()) {
         /*		module_add_action('all_pages_top', 'akismet_top', '');
 
         $canIhaveAccess = 0;
@@ -39,4 +39,3 @@ if (defined('mnminclude')) {
         include_once(mnmmodules . 'akismet/akismet_main.php');
     }
 }
-?>

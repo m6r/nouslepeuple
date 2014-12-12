@@ -10,8 +10,8 @@
     $fields = $db->get_results("DESCRIBE ".table_links);
     if ($fields) {
         foreach ($fields as $field) {
-            if ($field->Field == 'link_status' && !strstr($field->Type,"'moderated'")) {
-                $db->query("ALTER TABLE `".table_links."` CHANGE  `link_status`  `link_status` ".str_replace(')',",'moderated')",$field->Type)." DEFAULT  'discard'");
+            if ($field->Field == 'link_status' && !strstr($field->Type, "'moderated'")) {
+                $db->query("ALTER TABLE `".table_links."` CHANGE  `link_status`  `link_status` ".str_replace(')', ",'moderated')", $field->Type)." DEFAULT  'discard'");
             }
         }
     }
@@ -268,4 +268,3 @@ virgin
 weight reduction
 work at home');
     }
-?>

@@ -17,7 +17,7 @@ $canIhaveAccess = $canIhaveAccess + checklevel('moderator');
 $errorMsg="";
 
 // if user tries to log in
-if ( (isset($_POST["processlogin"]) && is_numeric($_POST["processlogin"])) || (isset($_GET["processlogin"]) && is_numeric($_GET["processlogin"])) ) {
+if ((isset($_POST["processlogin"]) && is_numeric($_POST["processlogin"])) || (isset($_GET["processlogin"]) && is_numeric($_GET["processlogin"]))) {
     if ($_POST["processlogin"] == 1) { // users logs in with username and password
         $username = sanitize(trim($_POST['username']), 3);
         $password = sanitize(trim($_POST['password']), 3);
@@ -27,24 +27,24 @@ if ( (isset($_POST["processlogin"]) && is_numeric($_POST["processlogin"])) || (i
             $persistent = '';
         }
 
-        $dbusername=sanitize($db->escape($username),4);
+        $dbusername=sanitize($db->escape($username), 4);
         require_once(mnminclude.'check_behind_proxy.php');
         $lastip=check_ip_behind_proxy();
         $login=$db->get_row("SELECT *, UNIX_TIMESTAMP()-UNIX_TIMESTAMP(login_time) AS time FROM " . table_login_attempts . " WHERE login_ip='$lastip'");
         if ($login->login_id) {
             $login_id = $login->login_id;
             if ($login->time < 3) {
-                $errorMsg=sprintf($main_smarty->get_config_vars('PLIGG_Visual_Login_Error'),3);
+                $errorMsg=sprintf($main_smarty->get_config_vars('PLIGG_Visual_Login_Error'), 3);
             } elseif ($login->login_count>=3) {
-                if ($login->time < min(60*pow(2,$login->login_count-3),3600)) {
-                    $errorMsg=sprintf($main_smarty->get_config_vars('PLIGG_Login_Incorrect_Attempts'),$login->login_count,min(60*pow(2,$login->login_count-3),3600)-$login->time);
+                if ($login->time < min(60*pow(2, $login->login_count-3), 3600)) {
+                    $errorMsg=sprintf($main_smarty->get_config_vars('PLIGG_Login_Incorrect_Attempts'), $login->login_count, min(60*pow(2, $login->login_count-3), 3600)-$login->time);
                 }
             }
         } elseif (!is_ip_approved($lastip)) {
             $db->query("INSERT INTO ".table_login_attempts." SET login_username = '$dbusername', login_time=NOW(), login_ip='$lastip'");
             $login_id = $db->insert_id;
             if (!$login_id) {
-                $errorMsg=sprintf($main_smarty->get_config_vars('PLIGG_Visual_Login_Error'),3);
+                $errorMsg=sprintf($main_smarty->get_config_vars('PLIGG_Visual_Login_Error'), 3);
             }
         }
 
@@ -92,8 +92,8 @@ if ( (isset($_POST["processlogin"]) && is_numeric($_POST["processlogin"])) || (i
 }
 
 // misc smarty
-$main_smarty->assign('errorMsg',$errorMsg);
-$main_smarty->assign('post_username',$username);
+$main_smarty->assign('errorMsg', $errorMsg);
+$main_smarty->assign('post_username', $username);
 
 // pagename
 define('pagename', 'admin_login');
@@ -108,6 +108,3 @@ if ($canIhaveAccess == 0) {
     $return =  my_pligg_base.'/admin/admin_index.php';
     header('Location: '.$return);
 }
-
-
-?>

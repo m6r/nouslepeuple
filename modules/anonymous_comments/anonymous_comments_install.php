@@ -9,5 +9,3 @@
     $module_info['db_sql'][] = "ALTER TABLE ".table_comments." ADD `comment_anonymous_username` VARCHAR( 32 ) NOT NULL" ;
     $module_info['db_sql'][] = "ALTER TABLE ".table_comments." ADD `comment_anonymous_email` VARCHAR( 128 ) NOT NULL" ;
     $module_info['db_sql'][] = "ALTER TABLE ".table_comments." ADD `comment_anonymous_website` VARCHAR( 128 ) NOT NULL" ;
-
-?>

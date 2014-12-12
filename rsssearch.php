@@ -9,15 +9,15 @@ include(mnminclude.'tags.php');
 include(mnminclude.'search.php');
 include(mnminclude.'smartyvariables.php');
 
-$_REQUEST['search'] = str_replace(array('://',':/'),array(':\\',':\\'),$_REQUEST['search']);
-if (strstr($_REQUEST['search'],'/') && $URLMethod == 2) {
-    $post = split('/',$_REQUEST['search']);
+$_REQUEST['search'] = str_replace(array('://', ':/'), array(':\\', ':\\'), $_REQUEST['search']);
+if (strstr($_REQUEST['search'], '/') && $URLMethod == 2) {
+    $post = split('/', $_REQUEST['search']);
     $_GET['search'] = $_REQUEST['search'] = $post[0];
     for ($i=1; $i+1<sizeof($post); $i+=2) {
         $_REQUEST[$post[$i]] = $post[$i+1];
     }
 }
-$_GET['search'] = $_REQUEST['search'] = str_replace(array(':\\',':\\'),array('://',':/'),$_REQUEST['search']);
+$_GET['search'] = $_REQUEST['search'] = str_replace(array(':\\', ':\\'), array('://', ':/'), $_REQUEST['search']);
 
 
 // module system hook
@@ -65,18 +65,18 @@ $search->pagesize = $page_size;
 
 
 //Advanced Search
-if ( isset( $_REQUEST['adv'] ) && $_REQUEST['adv'] == 1 ) {
+if (isset($_REQUEST['adv']) && $_REQUEST['adv'] == 1) {
     $search->adv = true;
-    $search->s_group = sanitize($_REQUEST['sgroup'],2);
-    $search->s_tags = sanitize($_REQUEST['stags'],2);
-    $search->s_story = sanitize($_REQUEST['slink'],2);
-    $search->status = sanitize($_REQUEST['status'],2);
-    $search->s_user = sanitize($_REQUEST['suser'],2);
-    $search->s_cat = sanitize($_REQUEST['scategory'],2);
-    $search->s_comments = sanitize($_REQUEST['scomments'],2);
-    $search->s_date = sanitize($_REQUEST['date'],2);
+    $search->s_group = sanitize($_REQUEST['sgroup'], 2);
+    $search->s_tags = sanitize($_REQUEST['stags'], 2);
+    $search->s_story = sanitize($_REQUEST['slink'], 2);
+    $search->status = sanitize($_REQUEST['status'], 2);
+    $search->s_user = sanitize($_REQUEST['suser'], 2);
+    $search->s_cat = sanitize($_REQUEST['scategory'], 2);
+    $search->s_comments = sanitize($_REQUEST['scomments'], 2);
+    $search->s_date = sanitize($_REQUEST['date'], 2);
 
-    if ( intval( $_REQUEST['sgroup'] ) > 0 ) {
+    if (intval($_REQUEST['sgroup']) > 0) {
         $display_grouplinks = true;
     }
 }
@@ -93,7 +93,7 @@ if ($_GET['tag']) {
 } else {
     $title = " | " . $main_smarty->get_config_vars("PLIGG_Visual_Search_Keywords");
 }
-$title .= " | " . sanitize($_GET['search'],4);
+$title .= " | " . sanitize($_GET['search'], 4);
 
 do_rss_header($title);
 
@@ -167,4 +167,3 @@ function onlyreadables($string)
     }
     return str_replace("~", "", $string);
 }
-?>

@@ -47,13 +47,13 @@ if (isset($_REQUEST["mode"]) && sanitize($_REQUEST["mode"], 3) == "newuser") {
             $main_smarty->assign(username_error, $main_smarty->get_config_vars('PLIGG_Visual_Register_Error_UserTooShort'));
         } elseif (!preg_match('/^[a-zA-Z0-9\-]+$/', $username)) {
             $main_smarty->assign(username_error, $main_smarty->get_config_vars('PLIGG_Visual_Register_Error_UserInvalid'));
-        } elseif (user_exists(trim($username)) ) {
+        } elseif (user_exists(trim($username))) {
             $main_smarty->assign(username_error, $main_smarty->get_config_vars('PLIGG_Visual_Register_Error_UserExists'));
         } elseif (!check_email(trim($email))) {
             $main_smarty->assign(email_error, $main_smarty->get_config_vars('PLIGG_Visual_Register_Error_BadEmail'));
         } elseif (email_exists(trim($email))) {
             $main_smarty->assign(email_error, $main_smarty->get_config_vars('PLIGG_Visual_Register_Error_EmailExists'));
-        } elseif (strlen($password) < 5 ) {
+        } elseif (strlen($password) < 5) {
             $main_smarty->assign(password_error, $main_smarty->get_config_vars('PLIGG_Visual_Register_Error_FiveCharPass'));
         } else {
             $db->query("INSERT IGNORE INTO " . table_users . " (user_login, user_level, user_email, user_pass, user_date) VALUES ('$username', '$level', '$email', '$saltedpass', now())");
@@ -64,5 +64,3 @@ if (isset($_REQUEST["mode"]) && sanitize($_REQUEST["mode"], 3) == "newuser") {
         exit;
     }
 }
-
-    ?>

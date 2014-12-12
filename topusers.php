@@ -136,4 +136,3 @@ if (Auto_scroll==2 || Auto_scroll==3) {
 // show the template
 $main_smarty->assign('tpl_center', $the_template . '/topusers_center');
 $main_smarty->display($the_template . '/pligg.tpl');
-?>

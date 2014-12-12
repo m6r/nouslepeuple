@@ -4,7 +4,7 @@ if (!defined('mnminclude')) {
     die();
 }
 
-function module_add_action($location, $the_function, $variables, $weight = array ('weight' => 0) )
+function module_add_action($location, $the_function, $variables, $weight = array('weight' => 0))
 {
     global $script_name, $module_actions, $include_in_pages, $do_not_include_in_pages;
     if (is_array($include_in_pages)) {
@@ -28,7 +28,7 @@ function module_remove_action($location, $the_function)
     }
 }
 
-function module_add_action_tpl($location, $the_tpl, $weight = array ('weight' => 0) )
+function module_add_action_tpl($location, $the_tpl, $weight = array('weight' => 0))
 {
     global $script_name, $module_actions_tpl, $include_in_pages, $do_not_include_in_pages;
     if (is_array($include_in_pages)) {
@@ -36,7 +36,7 @@ function module_add_action_tpl($location, $the_tpl, $weight = array ('weight' =>
             if (is_array($do_not_include_in_pages) && in_array($script_name, $do_not_include_in_pages)) {
                 return;
             }
-            $module_actions_tpl[$location][$the_tpl] = get_module_weight($the_tpl,$weight);
+            $module_actions_tpl[$location][$the_tpl] = get_module_weight($the_tpl, $weight);
         }
     }
 }
@@ -44,11 +44,11 @@ function module_add_action_tpl($location, $the_tpl, $weight = array ('weight' =>
 
 
 
-function get_module_weight($the_tpl,$weight)
+function get_module_weight($the_tpl, $weight)
 {
     global $db;
     if ($weight['weight']==0) {
-        $folder_array=explode("/",$the_tpl);
+        $folder_array=explode("/", $the_tpl);
         if ($folder_array[2]!="") {
             $mysql="SELECT weight from " .table_modules . " where folder='".$folder_array[2]."' and enabled=1 ";
             $mod_weight = $db->get_var($mysql);
@@ -60,7 +60,7 @@ function get_module_weight($the_tpl,$weight)
     return $weight;
 }
 
-function module_add_css($the_css, $weight = array ('weight' => 0) )
+function module_add_css($the_css, $weight = array('weight' => 0))
 {
     global $script_name, $module_css, $include_in_pages, $do_not_include_in_pages;
     if (is_array($include_in_pages)) {
@@ -73,7 +73,7 @@ function module_add_css($the_css, $weight = array ('weight' => 0) )
     }
 }
 
-function module_add_js($the_js, $weight = array ('weight' => 0) )
+function module_add_js($the_js, $weight = array('weight' => 0))
 {
     global $script_name, $module_js, $include_in_pages, $do_not_include_in_pages;
     if (is_array($include_in_pages)) {
@@ -89,9 +89,9 @@ function module_add_js($the_js, $weight = array ('weight' => 0) )
 function check_for_js()
 {
     global $module_js, $include_in_pages;
-    if ( $module_js ) {
+    if ($module_js) {
         uasort($module_js, 'actioncmp');
-        foreach ( $module_js as $k => $v) {
+        foreach ($module_js as $k => $v) {
             echo '<script src="' . $k . '" type="text/javascript"></script>';
         }
     }
@@ -100,9 +100,9 @@ function check_for_js()
 function check_for_css()
 {
     global $module_css, $include_in_pages;
-    if ( $module_css ) {
+    if ($module_css) {
         uasort($module_css, 'actioncmp');
-        foreach ( $module_css as $k => $v) {
+        foreach ($module_css as $k => $v) {
             echo '<link rel="stylesheet" type="text/css" href="' . $k . '" media="screen" />';
         }
     }
@@ -114,7 +114,7 @@ function check_actions($location, &$vars)
     $vars['location'] = $location;
     if ($module_actions[$location]) {
         uasort($module_actions[$location], 'actioncmp');
-        foreach ( $module_actions[$location] as $kk => $vv ) {
+        foreach ($module_actions[$location] as $kk => $vv) {
             call_user_func_array($kk, array(&$vars));
         }
     }
@@ -128,11 +128,11 @@ function actioncmp($a, $b)
     return ($a['weight'] < $b['weight']) ? -1 : 1;
 }
 
-function check_actions_tpl($location,&$smarty)
+function check_actions_tpl($location, &$smarty)
 {
     global $module_actions_tpl, $main_smarty, $thetemp;
 
-    $smarty->assign("location",$location);
+    $smarty->assign("location", $location);
     if ($module_actions_tpl[$location]) {
         uasort($module_actions_tpl[$location], 'actioncmp');
         //$weight=sort_cloumn($module_actions_tpl[$location]);
@@ -140,8 +140,8 @@ function check_actions_tpl($location,&$smarty)
 
         // Override module templates
         $path = 'templates/' . $thetemp . '/';
-        foreach ( $module_actions_tpl[$location] as $kk => $vv ) {
-            $file = $path . str_replace(array('../','templates/'),'',$kk);
+        foreach ($module_actions_tpl[$location] as $kk => $vv) {
+            $file = $path . str_replace(array('../', 'templates/'), '', $kk);
             if (file_exists($file)) {
                 $smarty->display($file);
             } else {
@@ -274,5 +274,3 @@ function module_db_add_field($field_table, $field_name, $field_type,  $field_len
         $db->query($sql);
     }
 }
-
-?>

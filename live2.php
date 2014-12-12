@@ -30,7 +30,7 @@ if ($groups) {
     foreach ($groups as $group) {
         $group_ids[] = $group->member_group_id;
     }
-    $group_list = join(",",$group_ids);
+    $group_list = join(",", $group_ids);
     $where = " AND (".table_groups.".group_privacy!='private' OR ISNULL(".table_groups.".group_privacy) OR ".table_groups.".group_id IN($group_list)) ";
 } else {
     $group_list = '';
@@ -227,5 +227,3 @@ function get_status($status)
     }
     return $status;
 }
-
-?>

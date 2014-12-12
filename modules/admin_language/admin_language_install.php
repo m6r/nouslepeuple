@@ -5,5 +5,3 @@
     $module_info['settings_url'] = '../module.php?module=admin_language';
     $module_info['homepage_url'] = 'http://pligg.com/downloads/module/admin-modify-language/';
     $module_info['update_url'] = 'http://pligg.com/downloads/module/admin-modify-language/version/';
-
-?>

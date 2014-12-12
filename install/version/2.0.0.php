@@ -33,5 +33,3 @@ if ($pligg_version == '2.0.0rc2') {
     // Finished 2.0.0 upgrade
     echo'</ul></li>';
 }
-
-?>

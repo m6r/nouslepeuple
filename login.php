@@ -22,10 +22,10 @@ $errorMsg="";
 
 // if user requests to logout
 if ($my_pligg_base) {
-    if (strpos($_GET['return'],$my_pligg_base)!==0) {
+    if (strpos($_GET['return'], $my_pligg_base)!==0) {
         $_GET['return']=$my_pligg_base . '/';
     }
-    if (strpos($_POST['return'],$my_pligg_base)!==0) {
+    if (strpos($_POST['return'], $my_pligg_base)!==0) {
         $_POST['return']=$my_pligg_base . '/';
     }
 }
@@ -36,7 +36,7 @@ if (isset($_GET["op"])) {
 }
 
 // if user tries to log in
-if ( (isset($_POST["processlogin"]) && is_numeric($_POST["processlogin"])) || (isset($_GET["processlogin"]) && is_numeric($_GET["processlogin"])) ) {
+if ((isset($_POST["processlogin"]) && is_numeric($_POST["processlogin"])) || (isset($_GET["processlogin"]) && is_numeric($_GET["processlogin"]))) {
     if ($_POST["processlogin"] == 1) { // users logs in with username and password
         $username = sanitize(trim($_POST['username']), 3);
         $password = sanitize(trim($_POST['password']), 3);
@@ -46,24 +46,24 @@ if ( (isset($_POST["processlogin"]) && is_numeric($_POST["processlogin"])) || (i
             $persistent = '';
         }
 
-        $dbusername=sanitize($db->escape($username),4);
+        $dbusername=sanitize($db->escape($username), 4);
         require_once(mnminclude.'check_behind_proxy.php');
         $lastip=check_ip_behind_proxy();
         $login=$db->get_row("SELECT *, UNIX_TIMESTAMP()-UNIX_TIMESTAMP(login_time) AS time FROM " . table_login_attempts . " WHERE login_ip='$lastip'");
         if ($login->login_id) {
             $login_id = $login->login_id;
             if ($login->time < 3) {
-                $errorMsg=sprintf($main_smarty->get_config_vars('PLIGG_Visual_Login_Error'),3);
+                $errorMsg=sprintf($main_smarty->get_config_vars('PLIGG_Visual_Login_Error'), 3);
             } elseif ($login->login_count>=3) {
-                if ($login->time < min(60*pow(2,$login->login_count-3),3600)) {
-                    $errorMsg=sprintf($main_smarty->get_config_vars('PLIGG_Login_Incorrect_Attempts'),$login->login_count,min(60*pow(2,$login->login_count-3),3600)-$login->time);
+                if ($login->time < min(60*pow(2, $login->login_count-3), 3600)) {
+                    $errorMsg=sprintf($main_smarty->get_config_vars('PLIGG_Login_Incorrect_Attempts'), $login->login_count, min(60*pow(2, $login->login_count-3), 3600)-$login->time);
                 }
             }
         } elseif (!is_ip_approved($lastip)) {
             $db->query("INSERT INTO ".table_login_attempts." SET login_username = '$dbusername', login_time=NOW(), login_ip='$lastip'");
             $login_id = $db->insert_id;
             if (!$login_id) {
-                $errorMsg=sprintf($main_smarty->get_config_vars('PLIGG_Visual_Login_Error'),3);
+                $errorMsg=sprintf($main_smarty->get_config_vars('PLIGG_Visual_Login_Error'), 3);
             }
         }
 
@@ -113,7 +113,7 @@ if ( (isset($_POST["processlogin"]) && is_numeric($_POST["processlogin"])) || (i
     }
 
     if ($_POST["processlogin"] == 3) { // if user requests forgotten password
-        $email = sanitize($db->escape(trim($_POST['email'])),4);
+        $email = sanitize($db->escape(trim($_POST['email'])), 4);
         if (check_email($email)) {
             $user = $db->get_row("SELECT * FROM `" . table_users . "` where `user_email` = '".$email."' AND user_level!='Spammer'");
             if ($user) {
@@ -126,7 +126,7 @@ if ( (isset($_POST["processlogin"]) && is_numeric($_POST["processlogin"])) || (i
 
                 $times= time();
 
-                $body = sprintf($main_smarty->get_config_vars("PLIGG_PassEmail_Body"),$main_smarty->get_config_vars("PLIGG_Visual_Name"));
+                $body = sprintf($main_smarty->get_config_vars("PLIGG_PassEmail_Body"), $main_smarty->get_config_vars("PLIGG_Visual_Name"));
                 $body .="\n \n";
                 $body .= $my_base_url . $my_pligg_base . '/recover.php?id=' . base64_encode($username). '&n=' . time();
 
@@ -196,7 +196,7 @@ if ( (isset($_POST["processlogin"]) && is_numeric($_POST["processlogin"])) || (i
     }
 
     if ($_POST["processlogin"] == 5 && pligg_validate()) { // resend confirmation email
-        $email = sanitize($db->escape(trim($_POST['email'])),4);
+        $email = sanitize($db->escape(trim($_POST['email'])), 4);
         if (check_email($email)) {
             $user = $db->get_row("SELECT * FROM `" . table_users . "` where `user_email` = '".$email."' AND user_level!='Spammer'");
             if ($user) {
@@ -205,7 +205,7 @@ if ( (isset($_POST["processlogin"]) && is_numeric($_POST["processlogin"])) || (i
                 $domain = $main_smarty->get_config_vars('PLIGG_Visual_Name');
                 $validation = my_base_url . my_pligg_base . "/validation.php?code=$encode&uid=".urlencode($user->username)."&email=".urlencode($_POST['email']);
                 $str = $main_smarty->get_config_vars('PLIGG_PassEmail_verification_message');
-                eval('$str = "'.str_replace('"','\"',$str).'";');
+                eval('$str = "'.str_replace('"', '\"', $str).'";');
                 $message = "$str";
 
                 if (phpnum()>=5) {
@@ -240,11 +240,9 @@ define('pagename', 'login');
 $main_smarty->assign('pagename', pagename);
 
 // misc smarty
-$main_smarty->assign('errorMsg',$errorMsg);
+$main_smarty->assign('errorMsg', $errorMsg);
 $main_smarty->assign('register_url', getmyurl('register'));
 
 // show the template
 $main_smarty->assign('tpl_center', $the_template . '/login_center');
 $main_smarty->display($the_template . '/pligg.tpl');
-
-?>

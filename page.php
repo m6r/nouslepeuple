@@ -20,7 +20,7 @@ $main_smarty->assign('pagename', pagename);
 
 if ($_REQUEST['page']) {
     global $db, $main_smarty;
-    $page = $db->escape(sanitize($_REQUEST['page'],4));
+    $page = $db->escape(sanitize($_REQUEST['page'], 4));
 
     $page_results=$db->get_row($sql = " SELECT * from ".table_links." where link_title_url='$page' and link_status='page'");
 
@@ -32,10 +32,10 @@ if ($_REQUEST['page']) {
     }
 
     if ($page_results->link_id) {
-        $main_smarty->assign('page_title' , $page_results->link_title);
-        $main_smarty->assign('meta_keywords' , $page_results->link_field1);
-        $main_smarty->assign('meta_description' , $page_results->link_field2);
-        $main_smarty->assign('page_content' , $page_results->link_content);
+        $main_smarty->assign('page_title', $page_results->link_title);
+        $main_smarty->assign('meta_keywords', $page_results->link_field1);
+        $main_smarty->assign('meta_description', $page_results->link_field2);
+        $main_smarty->assign('page_content', $page_results->link_content);
         $main_smarty->assign('posttitle', $page_results->link_title);
         $main_smarty->assign('link_id', $page_results->link_id);
     }
@@ -49,5 +49,3 @@ if ($_REQUEST['page']) {
 // show the template
 $main_smarty->assign('tpl_center', $the_template . '/page_center');
 $main_smarty->display($the_template . '/pligg.tpl');
-
-?>

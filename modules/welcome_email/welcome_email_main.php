@@ -76,5 +76,3 @@ function welcome_email_send(&$registration_details)
         die;
     }
 }
-
-?>

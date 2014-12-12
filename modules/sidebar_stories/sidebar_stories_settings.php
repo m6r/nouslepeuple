@@ -16,5 +16,3 @@ if (is_object($main_smarty)) {
     $main_smarty->assign('sidebar_stories_lang_conf', sidebar_stories_lang_conf);
     $main_smarty->assign('sidebar_stories_tpl_path', sidebar_stories_tpl_path);
 }
-
-?>

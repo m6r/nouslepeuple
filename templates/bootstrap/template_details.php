@@ -8,5 +8,4 @@
 
 //	$template_info['homepage_url'] = 'http://pligg.com/downloads/template/bootstrap/';
 //	$template_info['update_url'] = 'http://pligg.com/downloads/template/bootstrap/version/';
-
-?>
+;

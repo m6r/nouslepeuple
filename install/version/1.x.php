@@ -9,7 +9,7 @@ $sql = "SELECT data FROM " . table_misc_data . " WHERE name = 'pligg_version'";
 $pligg_version = $db->get_var($sql);
 
 // Perform a simple number comparison to get everything below version 1.2.2
-$old_version = str_replace('.', '' , $pligg_version);
+$old_version = str_replace('.', '', $pligg_version);
 $new_version = '122';
 
 // Check if you need to run the one time 1.x upgrade
@@ -365,8 +365,8 @@ if ($old_version < $new_version) {
     $fields = $db->get_results("DESCRIBE ".table_users);
     if ($fields) {
         foreach ($fields as $field) {
-            if ($field->Field == 'user_level' && !strstr($field->Type,"'Spammer'")) {
-                $db->query($sql="ALTER TABLE `".table_users."` CHANGE  `user_level`  `user_level` ".str_replace(')',",'Spammer')",$field->Type)." DEFAULT  'normal'");
+            if ($field->Field == 'user_level' && !strstr($field->Type, "'Spammer'")) {
+                $db->query($sql="ALTER TABLE `".table_users."` CHANGE  `user_level`  `user_level` ".str_replace(')', ",'Spammer')", $field->Type)." DEFAULT  'normal'");
             }
         }
     }
@@ -376,8 +376,8 @@ if ($old_version < $new_version) {
     $fields = $db->get_results("DESCRIBE ".table_links);
     if ($fields) {
         foreach ($fields as $field) {
-            if ($field->Field == 'link_status' && !strstr($field->Type,"'page'")) {
-                $db->query("ALTER TABLE `".table_links."` CHANGE  `link_status`  `link_status` ".str_replace(')',",'page')",$field->Type)." DEFAULT  'discard'");
+            if ($field->Field == 'link_status' && !strstr($field->Type, "'page'")) {
+                $db->query("ALTER TABLE `".table_links."` CHANGE  `link_status`  `link_status` ".str_replace(')', ",'page')", $field->Type)." DEFAULT  'discard'");
             }
         }
     }
@@ -580,7 +580,7 @@ if ($old_version < $new_version) {
     // Random hash used for encrypting data
     $randkey = '';
     for ($i=0; $i<32; $i++) {
-        $randkey .= chr(rand(48,200));
+        $randkey .= chr(rand(48, 200));
     }
     misc_data_update('hash', $randkey);
     misc_data_update('validate', 0);
@@ -623,7 +623,7 @@ if ($old_version < $new_version) {
     $fieldexists = checkforfield('user_categories', table_users);
     if (!$fieldexists) {
         // DB 04/13/09
-        $categories = $db->get_results("SELECT category_id FROM `".table_categories."` WHERE category_id>0",ARRAY_A);
+        $categories = $db->get_results("SELECT category_id FROM `".table_categories."` WHERE category_id>0", ARRAY_A);
         $cats = array();
         if ($categories) {
             foreach ($categories as $cat) {
@@ -647,12 +647,12 @@ if ($old_version < $new_version) {
 
             $result = mysql_query("SELECT * FROM ".table_users);
             while ($row = mysql_fetch_array($result)) {
-                $cats = split(',',$row['user_categories']);
-                $diff = array_diff($arr,$cats);
-                mysql_query($sql="UPDATE ".table_users." SET user_categories='".join(',',$diff)."' WHERE user_id='{$row['user_id']}'");
+                $cats = split(',', $row['user_categories']);
+                $diff = array_diff($arr, $cats);
+                mysql_query($sql="UPDATE ".table_users." SET user_categories='".join(',', $diff)."' WHERE user_id='{$row['user_id']}'");
             }
 
-            misc_data_update('user_cat','changed');
+            misc_data_update('user_cat', 'changed');
         }
     }
 
@@ -789,6 +789,3 @@ if ($old_version < $new_version) {
     // Finished 1.x upgrade
     echo'</ul>';
 }
-
-
-?>

@@ -39,5 +39,3 @@ function welcome_privmsg_send(&$registration_details)
         die;
     }
 }
-
-?>

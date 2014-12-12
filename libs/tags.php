@@ -8,7 +8,7 @@ if (!defined('mnminclude')) {
 function tags_normalize_string($string)
 {
     $string = preg_replace('/[\.\,] *$/', "", $string);
-    $string = str_replace(array(chr(216).chr(140),'+'),array(',',','),$string);
+    $string = str_replace(array(chr(216).chr(140), '+'), array(',', ','), $string);
     return utf8_strtolower($string);
 }
 
@@ -46,13 +46,13 @@ function tags_insert_string($link, $lang, $string, $date = 0)
 
 class TagCloud
 {
-    var $word_limit = NULL; // limit to cloud to this many words
+    var $word_limit = null; // limit to cloud to this many words
     var $smarty_variable = '';
     var $filterTo = 'all'; // published, new or ALL (does not include discarded)
     var $filterCategory = 0; // a specific category
-    var $range_values = NULL; // only used on the tagcloud page where there is a list of time ranges to filter to.
-    var $min_points = NULL; // the size of the smallest tag
-    var $max_points = NULL; // the size of the largest tag
+    var $range_values = null; // only used on the tagcloud page where there is a list of time ranges to filter to.
+    var $min_points = null; // the size of the smallest tag
+    var $max_points = null; // the size of the largest tag
 
     //CDPDF
     var $search_subcats = true; // search it's subcategories?
@@ -78,7 +78,7 @@ class TagCloud
             }
 
         // see if we clicked on a link to filter to a specific time range
-        if (($from = check_integer('range')) >= 0 && $from < count($this->range_values) && $this->range_values[$from] > 0 ) {
+        if (($from = check_integer('range')) >= 0 && $from < count($this->range_values) && $this->range_values[$from] > 0) {
             $from_time = time() - $this->range_values[$from];
             $from_where = "FROM " . table_tags . ", " . table_links . " WHERE  tag_lang='$dblang' and tag_date > FROM_UNIXTIME($from_time) and link_id = tag_link_id and ";
             $time_query = "&amp;from=$from_time";
@@ -103,7 +103,7 @@ class TagCloud
             $catId = $this->filterCategory;
             $child_cats = '';
         // do we also search the subcategories?
-        if ( Independent_Subcategories == true) {
+        if (Independent_Subcategories == true) {
             $child_array = '';
 
             // get a list of all children and put them in $child_array.
@@ -254,6 +254,3 @@ class TagCloud
         $this->smarty_variable->assign('tags_coef', $coef);
     }
 }
-
-
-?>

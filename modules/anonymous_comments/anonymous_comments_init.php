@@ -9,7 +9,7 @@ if (defined('mnminclude')) {
     $do_not_include_in_pages = array();
 
 
-    if ( do_we_load_module() ) {
+    if (do_we_load_module()) {
         //module_add_action('anonymous_comments_insert_function', 'anonymous_comments_insert', '');
         module_add_action('anonymous_user_id', 'get_anonymous_user_id', '');
         module_add_action('show_comment_username', 'get_comment_username', '');
@@ -19,4 +19,3 @@ if (defined('mnminclude')) {
         include_once(mnmmodules . 'anonymous_comments/anonymous_comments_main.php');
     }
 }
-?>

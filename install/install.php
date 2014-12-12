@@ -63,5 +63,3 @@ echo '</div>';
 $include='footer.php'; if (file_exists($include)) {
      include_once($include);
  }
-
-?>

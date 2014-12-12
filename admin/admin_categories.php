@@ -89,11 +89,11 @@ if ($canIhaveAccess == 1) {
         if ($CSRF->check_valid(sanitize($_POST['token'], 3), 'category_manager')) {
             if (!$_POST['safename']) {
                 $_POST['safename'] = makeCategoryFriendly($_POST['name']);
-                $row = $db->get_row("SELECT * FROM ".table_categories." WHERE category_safe_name='".mysql_real_escape_string(sanitize($_POST['safename'],4))."' AND category__auto_id!='{$_POST['auto_id']}'");
+                $row = $db->get_row("SELECT * FROM ".table_categories." WHERE category_safe_name='".mysql_real_escape_string(sanitize($_POST['safename'], 4))."' AND category__auto_id!='{$_POST['auto_id']}'");
                 $i = '';
                 while ($row->category_id>0) {
                     $i++;
-                    $row = $db->get_row("SELECT * FROM ".table_categories." WHERE category_safe_name='".mysql_real_escape_string(sanitize($_POST['safename'].$i,4))."' AND category__auto_id!='{$_POST['auto_id']}'");
+                    $row = $db->get_row("SELECT * FROM ".table_categories." WHERE category_safe_name='".mysql_real_escape_string(sanitize($_POST['safename'].$i, 4))."' AND category__auto_id!='{$_POST['auto_id']}'");
                 }
                 $_POST['safename'].=$i;
             }
@@ -118,34 +118,34 @@ if ($canIhaveAccess == 1) {
                     die();
                 }
 
-                $db->query("UPDATE `" . table_categories . "` SET category_name='".mysql_real_escape_string(sanitize($_POST['name'],4))."',
-								  category_safe_name='".mysql_real_escape_string(sanitize($_POST['safename'],4))."',
-								  category_parent='".mysql_real_escape_string(sanitize($_POST['parent'],4))."',
-								  category_desc='".mysql_real_escape_string(sanitize($_POST['description'],4))."',
-								  category_keywords='".mysql_real_escape_string(sanitize($_POST['keywords'],4))."',
-								  category_author_level='".mysql_real_escape_string(sanitize($_POST['level'],4))."',
-								  category_author_group='".mysql_real_escape_string(sanitize($_POST['group'],4))."',
-								  category_votes='".mysql_real_escape_string(sanitize($_POST['votes'],4))."',
-								  category_karma='".mysql_real_escape_string(sanitize($_POST['karma'],4))."'
+                $db->query("UPDATE `" . table_categories . "` SET category_name='".mysql_real_escape_string(sanitize($_POST['name'], 4))."',
+								  category_safe_name='".mysql_real_escape_string(sanitize($_POST['safename'], 4))."',
+								  category_parent='".mysql_real_escape_string(sanitize($_POST['parent'], 4))."',
+								  category_desc='".mysql_real_escape_string(sanitize($_POST['description'], 4))."',
+								  category_keywords='".mysql_real_escape_string(sanitize($_POST['keywords'], 4))."',
+								  category_author_level='".mysql_real_escape_string(sanitize($_POST['level'], 4))."',
+								  category_author_group='".mysql_real_escape_string(sanitize($_POST['group'], 4))."',
+								  category_votes='".mysql_real_escape_string(sanitize($_POST['votes'], 4))."',
+								  category_karma='".mysql_real_escape_string(sanitize($_POST['karma'], 4))."'
 								  WHERE category__auto_id='{$_POST['auto_id']}'");
             } else {
-                $row = $db->get_row("SELECT * FROM ".table_categories." WHERE category_safe_name='".mysql_real_escape_string(sanitize($_POST['safename'],4))."'");
+                $row = $db->get_row("SELECT * FROM ".table_categories." WHERE category_safe_name='".mysql_real_escape_string(sanitize($_POST['safename'], 4))."'");
                 $i = '';
                 while ($row->category_id>0) {
                     $i++;
-                    $row = $db->get_row("SELECT * FROM ".table_categories." WHERE category_safe_name='".mysql_real_escape_string(sanitize($_POST['safename'].$i,4))."'");
+                    $row = $db->get_row("SELECT * FROM ".table_categories." WHERE category_safe_name='".mysql_real_escape_string(sanitize($_POST['safename'].$i, 4))."'");
                 }
                 $_POST['safename'].=$i;
-                $db->query("INSERT INTO `" . table_categories . "` SET category_name='".mysql_real_escape_string(sanitize($_POST['name'],4))."',
-									  category_safe_name='".mysql_real_escape_string(sanitize($_POST['safename'],4))."',
-									  category_parent='".mysql_real_escape_string(sanitize($_POST['parent'],4))."',
-									  category_desc='".mysql_real_escape_string(sanitize($_POST['description'],4))."',
-									  category_keywords='".mysql_real_escape_string(sanitize($_POST['keywords'],4))."',
-									  category_author_level='".mysql_real_escape_string(sanitize($_POST['level'],4))."',
+                $db->query("INSERT INTO `" . table_categories . "` SET category_name='".mysql_real_escape_string(sanitize($_POST['name'], 4))."',
+									  category_safe_name='".mysql_real_escape_string(sanitize($_POST['safename'], 4))."',
+									  category_parent='".mysql_real_escape_string(sanitize($_POST['parent'], 4))."',
+									  category_desc='".mysql_real_escape_string(sanitize($_POST['description'], 4))."',
+									  category_keywords='".mysql_real_escape_string(sanitize($_POST['keywords'], 4))."',
+									  category_author_level='".mysql_real_escape_string(sanitize($_POST['level'], 4))."',
 									  category_lang='$dblang',
-									  category_votes='".mysql_real_escape_string(sanitize($_POST['votes'],4))."',
-									  category_karma='".mysql_real_escape_string(sanitize($_POST['karma'],4))."',
-									  category_author_group='".mysql_real_escape_string(sanitize($_POST['group'],4))."'");
+									  category_votes='".mysql_real_escape_string(sanitize($_POST['votes'], 4))."',
+									  category_karma='".mysql_real_escape_string(sanitize($_POST['karma'], 4))."',
+									  category_author_group='".mysql_real_escape_string(sanitize($_POST['group'], 4))."'");
             }
             Cat_Safe_Names();
             if (caching == 1) {
@@ -426,4 +426,3 @@ function move_delete_stories($id)
         die();
     }
 }
-?>

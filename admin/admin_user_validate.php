@@ -19,7 +19,6 @@ if ($canIhaveAccess == 0) {
 
 
     die();
-
 } // sidebar
 $main_smarty = do_sidebar($main_smarty);
     if (isset($_REQUEST['id'])) {
@@ -51,15 +50,10 @@ $main_smarty = do_sidebar($main_smarty);
         <a data-dismiss="modal" class="btn btn-primary" href="#">Close</a>
     </div>
 </div>';
-
         } else {
             die;
-
         }
-
     }
 // pagename
 define('pagename', 'admin_user_validate');
 $main_smarty->assign('pagename', pagename);
-
-?>

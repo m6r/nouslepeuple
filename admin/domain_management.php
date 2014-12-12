@@ -76,8 +76,8 @@ if ($canIhaveAccess == 1) {
 
         if (is_writable($blacklist)) {
             $txt = file_get_contents($blacklist);
-            $txt = str_replace(trim($domain),'', $txt);
-            $txt = preg_replace('/^\n+|^[\t\s]*\n+/m','',$txt);
+            $txt = str_replace(trim($domain), '', $txt);
+            $txt = preg_replace('/^\n+|^[\t\s]*\n+/m', '', $txt);
             file_put_contents($blacklist, $txt);
 
             // Prepare the blacklist data for display
@@ -96,8 +96,8 @@ if ($canIhaveAccess == 1) {
 
         if (is_writable($whitelist)) {
             $txt = file_get_contents($whitelist);
-            $txt = str_replace(trim($domain),'', $txt);
-            $txt = preg_replace('/^\n+|^[\t\s]*\n+/m','',$txt);
+            $txt = str_replace(trim($domain), '', $txt);
+            $txt = preg_replace('/^\n+|^[\t\s]*\n+/m', '', $txt);
             file_put_contents($whitelist, $txt);
 
             // Prepare the whitelist data for display
@@ -240,4 +240,3 @@ if ($canIhaveAccess == 1) {
     // You need to login as an admin
     header("Location: " . getmyurl('admin_login', $_SERVER['REQUEST_URI']));
 }
-?>

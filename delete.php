@@ -93,7 +93,7 @@ if (isset($_REQUEST['link_id'])) {
         $redirectUrl = $linkslug;
     }
     if (isset($_REQUEST['pnme']) and $_REQUEST['pnme'] != 'story' and $_REQUEST['pnme'] != 'published') {
-        $arr = explode("/", substr($_SERVER['HTTP_REFERER'],0, -1));
+        $arr = explode("/", substr($_SERVER['HTTP_REFERER'], 0, -1));
 
         if (end($arr) != '') {
             $secndlnk = end($arr);
@@ -172,4 +172,3 @@ if (isset($_REQUEST['comment_id'])) {
         header('Location: '.$my_base_url.$my_pligg_base);
     }
 }
-?>

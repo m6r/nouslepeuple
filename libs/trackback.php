@@ -110,11 +110,11 @@ class Trackback
         $http_request .= "User-Agent: PLG (http://pligg.com) ";
         $http_request .= "\r\n\r\n";
         $http_request .= $query_string;
-        if ( '' == $trackback_url['port'] ) {
+        if ('' == $trackback_url['port']) {
             $trackback_url['port'] = 80;
         }
         $fs = @fsockopen($trackback_url['host'], $trackback_url['port'], $errno, $errstr, 5);
-        if ($fs && ($res=@fputs($fs, $http_request)) ) {
+        if ($fs && ($res=@fputs($fs, $http_request))) {
             @fclose($fs);
             $this->status='ok';
             $this->store();
@@ -125,4 +125,3 @@ class Trackback
         return $false;
     }
 }
-?>

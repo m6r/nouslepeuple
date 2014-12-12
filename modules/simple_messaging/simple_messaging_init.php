@@ -8,7 +8,7 @@ if (defined('mnminclude')) {
     $include_in_pages = array('all');
     $do_not_include_in_pages = array();
 
-    if ( do_we_load_module() ) {
+    if (do_we_load_module()) {
         module_add_action('all_pages_top', 'get_new_messages', '');
 
         // show the inbox link in the menus on the top
@@ -28,4 +28,3 @@ if (defined('mnminclude')) {
         include_once(mnmmodules . 'simple_messaging/simple_messaging_main.php');
     }
 }
-?>

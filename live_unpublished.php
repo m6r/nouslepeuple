@@ -34,7 +34,7 @@ if ($groups) {
     foreach ($groups as $group) {
         $group_ids[] = $group->member_group_id;
     }
-    $group_list = join(",",$group_ids);
+    $group_list = join(",", $group_ids);
     $where = " AND (".table_groups.".group_privacy!='private' OR ISNULL(".table_groups.".group_privacy) OR ".table_groups.".group_id IN($group_list)) ";
 } else {
     $group_list = '';
@@ -72,7 +72,7 @@ if ($stories) {
         }
         $live_item['link_username'] = $dblink->user_login;
         $live_item['link_category'] = GetCatName($link->category);
-        $live_item['link_category_url'] = getmyurl("newcategory",$link->category_safe_name());
+        $live_item['link_category_url'] = getmyurl("newcategory", $link->category_safe_name());
 #		$live_item['link_category_url'] = $link->category_safe_name();
         $live_item['link_url'] = $link->get_internal_url();
         $live_items[] = $live_item;
@@ -88,4 +88,3 @@ $main_smarty = do_sidebar($main_smarty);
 // show the template
 $main_smarty->assign('tpl_center', $the_template . '/live_unpublished_center');
 $main_smarty->display($the_template . '/pligg.tpl');
-?>

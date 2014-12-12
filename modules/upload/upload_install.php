@@ -49,5 +49,3 @@
         misc_data_update('upload_defsize', '200x200');
         misc_data_update('upload_fileplace', 'tpl_pligg_story_who_voted_start');
     }
-
-?>

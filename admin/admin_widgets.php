@@ -50,7 +50,7 @@ if ($canIhaveAccess == 1) {
     }
 
     if ($_GET['action'] == 'disable') {
-        $module = $db->escape(sanitize($_REQUEST['module'],3));
+        $module = $db->escape(sanitize($_REQUEST['module'], 3));
         $sql = "UPDATE " . table_widgets . " set enabled = 0 where `name` = '" . $module . "';";
         //echo $sql;
         $db->query($sql);
@@ -61,7 +61,7 @@ if ($canIhaveAccess == 1) {
         die();
     }
     if ($_GET['action'] == 'enable') {
-        $module = $db->escape(sanitize($_REQUEST['module'],3));
+        $module = $db->escape(sanitize($_REQUEST['module'], 3));
         $sql = "UPDATE " . table_widgets . " set enabled = 1 where `name` = '" . $module . "';";
         //echo $sql;
         $db->query($sql);
@@ -72,7 +72,7 @@ if ($canIhaveAccess == 1) {
         die();
     }
     if ($_GET['action'] == 'install') {
-        $widget = $db->escape(sanitize($_REQUEST['widget'],3));
+        $widget = $db->escape(sanitize($_REQUEST['widget'], 3));
 
         if ($widget_info = include_widget_settings($widget)) {
             $version = $widget_info['version'];
@@ -92,7 +92,7 @@ if ($canIhaveAccess == 1) {
         die();
     }
     if ($_GET['action'] == 'remove') {
-        $widget = $db->escape(sanitize($_REQUEST['widget'],3));
+        $widget = $db->escape(sanitize($_REQUEST['widget'], 3));
         $sql = "SELECT * FROM " . table_widgets . " WHERE `name` = '" . $widget . "';";
         $row = $db->get_row($sql);
 
@@ -119,7 +119,7 @@ if ($canIhaveAccess == 1) {
     }
 }
 
-function clear_widget_cache ()
+function clear_widget_cache()
 {
     global $db;
     if (caching == 1) {
@@ -144,5 +144,3 @@ function include_widget_settings($name)
         return false;
     }
 }
-
-?>

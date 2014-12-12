@@ -17,5 +17,3 @@
     $module_info['db_sql'][] =  "INSERT  into " . table_misc_data . " (name,data) VALUES ('karma_story_discard','-250')";
     $module_info['db_sql'][] =  "INSERT  into " . table_misc_data . " (name,data) VALUES ('karma_story_spam','-10000')";
     $module_info['db_sql'][] =  "INSERT  into " . table_misc_data . " (name,data) VALUES ('karma_comment_delete','-50')";
-
-?>

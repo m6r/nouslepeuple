@@ -16,7 +16,7 @@ if (!defined('mnminclude')) {
         // used in the index and new pages
         $ls_debug = false;
         if ($ls_debug == true) {
-            echo '--' . sanitize($linksum_count,3) . '--<br />';
+            echo '--' . sanitize($linksum_count, 3) . '--<br />';
         }
         if ($linksum_count == "SELECT count(*) FROM " . table_links . " WHERE  link_status='published'  ") {
             if ($ls_debug == true) {
@@ -35,7 +35,7 @@ if (!defined('mnminclude')) {
             $rows = $db->get_var($linksum_count);
         }
         if ($ls_debug == true) {
-            echo '<br />' . sanitize($rows,3) . '<br />';
+            echo '<br />' . sanitize($rows, 3) . '<br />';
         }
         $links = $db->get_col($linksum_sql);
         $the_results = $links;
@@ -96,9 +96,9 @@ if (!defined('mnminclude')) {
         // so get the SQL and add results to the cache
 
 
-        if ( count ( $ids ) ) {
-            $sql .= 'link_id IN ('.implode(',',$ids).')';
-            foreach ( $db->get_results($sql) as $row ) {
+        if (count($ids)) {
+            $sql .= 'link_id IN ('.implode(',', $ids).')';
+            foreach ($db->get_results($sql) as $row) {
                 $cached_links[$row->link_id] = $row;
                 if (!isset($link_authors[$row->link_author])) {
                     $link_authors[$row->link_author] = $row->link_author;
@@ -109,17 +109,17 @@ if (!defined('mnminclude')) {
 
         // get all authors at once from the users table
         $sql = 'SELECT  *  FROM ' . table_users . ' WHERE ';
-        if ( count ( $link_authors ) ) {
+        if (count($link_authors)) {
             $sql .= 'user_id IN (' . implode(',', $link_authors) . ')';
 
-            foreach ( $db->get_results($sql) as $user ) {
+            foreach ($db->get_results($sql) as $user) {
                 $cached_users[$user->user_id] = $user;
             }
         }
 
         // user saved _links
-        if ( count ( $saved_ids ) ) {
-            $sql_saved .= 'saved_link_id IN ('.implode(',',$ids).')';
+        if (count($saved_ids)) {
+            $sql_saved .= 'saved_link_id IN ('.implode(',', $ids).')';
             $results = $db->get_results($sql_saved);
 
             if ($results) {
@@ -147,7 +147,7 @@ if (!defined('mnminclude')) {
         foreach ($new_search as $link_id) {
             $link->id=$link_id;
             $link->read();
-            if ( $display_grouplinks ) {
+            if ($display_grouplinks) {
                 $link->link_group_id = 0;
             }
             $link_summary_output .= $link->print_summary('summary', true);
@@ -166,4 +166,3 @@ if (!defined('mnminclude')) {
     } else {
         echo $link_summary_output;
     }
-?>

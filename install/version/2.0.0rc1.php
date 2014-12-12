@@ -330,6 +330,3 @@ if ($pligg_version == '1.2.2') {
     // Finished 2.0.0rc1 upgrade
     echo'</ul></li>';
 }
-
-
-?>

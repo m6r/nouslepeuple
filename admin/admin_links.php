@@ -42,7 +42,7 @@ if ($canIhaveAccess == 1) {
 
     // Items per page drop-down
     if (isset($_GET["pagesize"]) && is_numeric($_GET["pagesize"])) {
-        misc_data_update('pagesize',$_GET["pagesize"]);
+        misc_data_update('pagesize', $_GET["pagesize"]);
     }
     $pagesize = get_misc_data('pagesize');
     if ($pagesize <= 0) {
@@ -124,7 +124,7 @@ if ($canIhaveAccess == 1) {
                 'link_title' => $link->title,
                 'link_status' => $link->status,
                 'link_author' => $user->username,
-                'link_date' => date("d-m-Y",$link->date),
+                'link_date' => date("d-m-Y", $link->date),
             );
         }
         $main_smarty->assign('template_stories', $template_stories);
@@ -211,5 +211,3 @@ if ($canIhaveAccess == 1) {
 } else {
     echo 'This page is restricted to site Admins!';
 }
-
-?>

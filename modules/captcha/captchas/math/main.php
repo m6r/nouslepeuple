@@ -85,4 +85,3 @@
         // nothing special is needed for this captcha
         return true;
     }
-?>

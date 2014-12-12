@@ -81,10 +81,9 @@ if ($page_id) {
     }
 }
 
-$main_smarty->assign('page_title' , $page_title);
-$main_smarty->assign('page_text' , $page_text);
+$main_smarty->assign('page_title', $page_title);
+$main_smarty->assign('page_text', $page_text);
 
 // show the template
 $main_smarty->assign('tpl_center', '/admin/pages');
 $main_smarty->display($template_dir . '/admin/admin.tpl');
-?>

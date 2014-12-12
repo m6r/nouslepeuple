@@ -50,7 +50,7 @@ if ($_POST["avatar"] == "uploaded") {
         $myfile = $_FILES['image_file']['name'];
         $imagename = basename($myfile);
         $mytmpfile = $_FILES['image_file']['tmp_name'];
-        if (!in_array($_FILES['image_file']['type'],$allowedFileTypes)) {
+        if (!in_array($_FILES['image_file']['type'], $allowedFileTypes)) {
             $error['Type'] = 'Only these file types are allowed : jpeg, gif, png';
         }
 
@@ -113,7 +113,7 @@ if ($_POST["avatar"] == "uploaded") {
         $group_name = $group_title;
         $group_safename = makeUrlFriendly($group_title, true);
         if (isset($_POST['group_privacy'])) {
-            $group_privacy = $db->escape(sanitize($_POST['group_privacy'],3));
+            $group_privacy = $db->escape(sanitize($_POST['group_privacy'], 3));
         }
 
         if (!$group_title) {
@@ -132,7 +132,7 @@ if ($_POST["avatar"] == "uploaded") {
             $errors = $main_smarty->get_config_vars('PLIGG_Visual_Group_Saved_Changes');
         }
 
-        $main_smarty->assign("errors",$errors);
+        $main_smarty->assign("errors", $errors);
     } else {
         $CSRF->show_invalid_error(1);
         exit;
@@ -154,4 +154,3 @@ function cleanit($value)
     $value = trim($value);
     return $value;
 }
-?>

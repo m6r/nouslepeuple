@@ -49,5 +49,3 @@ if (isset($main_smarty) && is_object($main_smarty)) {
     $main_smarty->assign('URL_simple_messaging_delmsg', URL_simple_messaging_delmsg);
     $main_smarty->assign('URL_simple_messaging_reply', URL_simple_messaging_reply);
 }
-
-?>

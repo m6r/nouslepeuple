@@ -109,5 +109,4 @@ foreach($users as $dbuser) {
     $sContributorLines = $sContributorLines . "</li>\n";
 }
 
-*/
-?>
+*/;

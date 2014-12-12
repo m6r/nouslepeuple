@@ -1,7 +1,7 @@
 <?php
 error_reporting(E_ALL ^ E_NOTICE ^ E_WARNING ^ E_STRICT);
 $page = 'upgrade';
-include ('header.php');
+include('header.php');
 define("mnmpath", dirname(__FILE__).'/../');
 define("mnminclude", dirname(__FILE__).'/../libs/');
 define("mnmmodules", dirname(__FILE__).'/../modules/');
@@ -55,7 +55,7 @@ if ($language == '' && $_POST['submit'] == '') {
         echo '<a class="btn btn-primary" href = "upgrade.php?language=local">Click to Continue in English</a>';
     }
 
-    include ('footer.php');
+    include('footer.php');
 
     die();
 } else {
@@ -115,7 +115,7 @@ if (!$errors) {
         if ($tableexists) {
             $sql = "SELECT data FROM " . table_misc_data . " WHERE name = 'pligg_version'";
             $pligg_version = $db->get_var($sql);
-            $old_version = str_replace('.', '' , $pligg_version);
+            $old_version = str_replace('.', '', $pligg_version);
         }
 
     // Language File Upgrade
@@ -127,7 +127,7 @@ if (!$errors) {
         $oldLanguage100 = "// End 1.0.0 Language File";
             $content = file_get_contents('./languages/updates/lang_' . $language . '_update_101.conf');
             if ($content) {
-                $languageContent = str_replace($oldLanguage100 , $content , $languageContent);
+                $languageContent = str_replace($oldLanguage100, $content, $languageContent);
             }
         }
 
@@ -135,7 +135,7 @@ if (!$errors) {
             $oldLanguage101 = "// End 1.0.1 Language File";
             $content = file_get_contents('./languages/updates/lang_' . $language . '_update_102.conf');
             if ($content) {
-                $languageContent = str_replace($oldLanguage101 , $content , $languageContent);
+                $languageContent = str_replace($oldLanguage101, $content, $languageContent);
             }
         }
 
@@ -143,14 +143,14 @@ if (!$errors) {
             // No language file changes this release
         $oldLanguage102 = "// End 1.0.2 Language File";
             $oldLanguage103= "// End 1.0.3 Language File";
-            $languageContent = str_replace($oldLanguage102 , $oldLanguage103 , $languageContent);
+            $languageContent = str_replace($oldLanguage102, $oldLanguage103, $languageContent);
         }
 
         if ($old_version < '104') {
             $oldLanguage103 = "// End 1.0.3 Language File";
             $content = file_get_contents('./languages/updates/lang_' . $language . '_update_104.conf');
             if ($content) {
-                $languageContent = str_replace($oldLanguage103 , $content , $languageContent);
+                $languageContent = str_replace($oldLanguage103, $content, $languageContent);
             }
         }
 
@@ -158,7 +158,7 @@ if (!$errors) {
             $oldLanguage104 = "// End 1.0.4 Language File";
             $content = file_get_contents('./languages/updates/lang_' . $language . '_update_105.conf');
             if ($content) {
-                $languageContent = str_replace($oldLanguage104 , $content , $languageContent);
+                $languageContent = str_replace($oldLanguage104, $content, $languageContent);
             }
         }
 
@@ -166,14 +166,14 @@ if (!$errors) {
             // No language file changes this release
         $oldLanguage110 = "// End 1.1.0 Language File";
             $oldLanguage111= "// End 1.1.1 Language File";
-            $languageContent = str_replace($oldLanguage110 , $oldLanguage111 , $languageContent);
+            $languageContent = str_replace($oldLanguage110, $oldLanguage111, $languageContent);
         }
 
         if ($old_version < '112') {
             $oldLanguage111 = "// End 1.1.1 Language File";
             $content = file_get_contents('./languages/updates/lang_' . $language . '_update_112.conf');
             if ($content) {
-                $languageContent = str_replace($oldLanguage111 , $content , $languageContent);
+                $languageContent = str_replace($oldLanguage111, $content, $languageContent);
             }
         }
 
@@ -181,7 +181,7 @@ if (!$errors) {
             $oldLanguage112 = "// End 1.1.2 Language File";
             $content = file_get_contents('./languages/updates/lang_' . $language . '_update_113.conf');
             if ($content) {
-                $languageContent = str_replace($oldLanguage112 , $content , $languageContent);
+                $languageContent = str_replace($oldLanguage112, $content, $languageContent);
             }
         }
 
@@ -189,7 +189,7 @@ if (!$errors) {
             $oldLanguage113 = "// End 1.1.3 Language File";
             $content = file_get_contents('./languages/updates/lang_' . $language . '_update_114.conf');
             if ($content) {
-                $languageContent = str_replace($oldLanguage113 , $content , $languageContent);
+                $languageContent = str_replace($oldLanguage113, $content, $languageContent);
             }
         }
 
@@ -197,7 +197,7 @@ if (!$errors) {
             $oldLanguage114 = "// End 1.1.4 Language File";
             $content = file_get_contents('./languages/updates/lang_' . $language . '_update_115.conf');
             if ($content) {
-                $languageContent = str_replace($oldLanguage114 , $content , $languageContent);
+                $languageContent = str_replace($oldLanguage114, $content, $languageContent);
             }
         }
 
@@ -205,7 +205,7 @@ if (!$errors) {
             $oldLanguage115 = "// End 1.1.5 Language File";
             $content = file_get_contents('./languages/updates/lang_' . $language . '_update_120.conf');
             if ($content) {
-                $languageContent = str_replace($oldLanguage115 , $content , $languageContent);
+                $languageContent = str_replace($oldLanguage115, $content, $languageContent);
             }
         }
 
@@ -213,7 +213,7 @@ if (!$errors) {
             $oldLanguage120 = "// End 1.2.0 Language File";
             $content = file_get_contents('./languages/updates/lang_' . $language . '_update_121.conf');
             if ($content) {
-                $languageContent = str_replace($oldLanguage120 , $content , $languageContent);
+                $languageContent = str_replace($oldLanguage120, $content, $languageContent);
             }
         }
 
@@ -221,14 +221,14 @@ if (!$errors) {
             // No language file changes this release
         $oldLanguage121 = "// End 1.2.1 Language File";
             $newLanguage122= "// End 1.2.2 Language File";
-            $languageContent = str_replace($oldLanguage121 , $newLanguage122 , $languageContent);
+            $languageContent = str_replace($oldLanguage121, $newLanguage122, $languageContent);
         }
 
         if ($old_version < '200') {
             $oldLanguage122 = "// End 1.2.2 Language File";
             $content = file_get_contents('./languages/updates/lang_' . $language . '_update_200.conf');
             if ($content) {
-                $languageContent = str_replace($oldLanguage122 , $content , $languageContent);
+                $languageContent = str_replace($oldLanguage122, $content, $languageContent);
             }
         }
 
@@ -236,21 +236,21 @@ if (!$errors) {
             // No language file changes this release
         $oldLanguage200 = "// End 2.0.0 Language File";
             $newLanguage201= "// End 2.0.1 Language File";
-            $languageContent = str_replace($oldLanguage200 , $newLanguage201 , $languageContent);
+            $languageContent = str_replace($oldLanguage200, $newLanguage201, $languageContent);
         }
 
         if ($old_version < '202') {
             // No language file changes this release
         $oldLanguage201 = "// End 2.0.1 Language File";
             $newLanguage202= "// End 2.0.2 Language File";
-            $languageContent = str_replace($oldLanguage201 , $newLanguage202 , $languageContent);
+            $languageContent = str_replace($oldLanguage201, $newLanguage202, $languageContent);
         }
 
         if ($old_version < '203') {
             // No language file changes this release
         $oldLanguage202 = "// End 2.0.2 Language File";
             $newLanguage203= "// End 2.0.3 Language File";
-            $languageContent = str_replace($oldLanguage202 , $newLanguage203 , $languageContent);
+            $languageContent = str_replace($oldLanguage202, $newLanguage203, $languageContent);
         }
 
 // echo $languageContent;
@@ -286,7 +286,7 @@ if (!$errors) {
             // Get version-specific updates
         $sql = "SELECT data FROM " . table_misc_data . " WHERE name = 'pligg_version'";
             $pligg_version = $db->get_var($sql);
-            $old_version = str_replace('.', '' , $pligg_version);
+            $old_version = str_replace('.', '', $pligg_version);
         }
 
         if (!$tableexists) {
@@ -349,4 +349,3 @@ echo '</div>'; // .well
 $include='footer.php'; if (file_exists($include)) {
      include_once($include);
  }
-?>

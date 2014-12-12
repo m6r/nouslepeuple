@@ -46,7 +46,7 @@ if ($link) {
     if ($link->link_author==$current_user->user_id || $current_user->user_level == "moderator" || $current_user->user_level == "admin") {
         // DB 11/11/08
         if ($current_user->user_level != "admin" && $current_user->user_level != "moderator" && limit_time_to_edit!=0 && (time()-$link->date)/60 > edit_time_limit) {
-            echo "<br /><br />" . sprintf($main_smarty->get_config_vars('PLIGG_Visual_EditLink_Timeout'),edit_time_limit) . "<br/ ><br /><a href=".my_base_url.my_pligg_base.">".$main_smarty->get_config_vars('PLIGG_Visual_Name')." </a>";
+            echo "<br /><br />" . sprintf($main_smarty->get_config_vars('PLIGG_Visual_EditLink_Timeout'), edit_time_limit) . "<br/ ><br /><a href=".my_base_url.my_pligg_base.">".$main_smarty->get_config_vars('PLIGG_Visual_Name')." </a>";
             exit;
         }
         /////
@@ -106,8 +106,8 @@ if ($link) {
                 }
             }
 
-                if ($linkres->author != sanitize($_POST["author"],3) && !empty($_POST["author"])) {
-                    $linkres->author = sanitize($_POST["author"],3);
+                if ($linkres->author != sanitize($_POST["author"], 3) && !empty($_POST["author"])) {
+                    $linkres->author = sanitize($_POST["author"], 3);
                 }
 
                 if ($canIhaveAccess == 1) {
@@ -122,7 +122,7 @@ if ($link) {
 
                 if (is_array($_POST['category'])) {
                     $linkres->category=sanitize($_POST['category'][0], 3);
-                    $linkres->additional_cats=array_slice($_POST['category'],1);
+                    $linkres->additional_cats=array_slice($_POST['category'], 1);
                 } else {
                     $linkres->category=sanitize($_POST['category'], 3);
                 }
@@ -206,8 +206,8 @@ if ($link) {
 
             $usersql = mysql_query("SELECT user_id, user_login FROM " . table_users . " WHERE user_enabled=1 and user_login!='' ORDER BY user_login");
             $userdata = array();
-            while ($rows = mysql_fetch_array ($usersql, MYSQL_ASSOC)) {
-                array_push ($userdata, $rows);
+            while ($rows = mysql_fetch_array($usersql, MYSQL_ASSOC)) {
+                array_push($userdata, $rows);
             }
             //$userdata = $db->get_results("SELECT user_id, user_login FROM " . table_users . " WHERE user_enabled=1");
 
@@ -246,7 +246,7 @@ if ($link) {
             $main_smarty->assign('submit_link_field15', $linkres->link_field15);
 
             include_once(mnminclude.'dbtree.php');
-            $array = tree_to_array(0, table_categories, FALSE);
+            $array = tree_to_array(0, table_categories, false);
             $array = array_values(array_filter($array, "allowToAuthorCat"));
 
             $main_smarty->assign('lastspacer', 0);
@@ -260,7 +260,7 @@ if ($link) {
             if (Enable_Tags) {
                 $main_smarty->assign('tags', $linkres->tags);
                 if (!empty($linkres->tags)) {
-                    $word_array = explode(",",$linkres->tags);
+                    $word_array = explode(",", $linkres->tags);
                     foreach ($word_array as $word) {
                         $tag_array[] = trim($word);
                     }
@@ -306,8 +306,8 @@ function link_errors($linkres)
         $error = true;
     }
     // if story title or description is too short
-    $story = preg_replace('/[\s]+/',' ',strip_tags($linkres->content));
-    if (utf8_strlen($linkres->title) < minTitleLength  || utf8_strlen($story) < minStoryLength ) {
+    $story = preg_replace('/[\s]+/', ' ', strip_tags($linkres->content));
+    if (utf8_strlen($linkres->title) < minTitleLength  || utf8_strlen($story) < minStoryLength) {
         $main_smarty->assign('submit_error', 'incomplete');
         $error = true;
     }
@@ -315,7 +315,7 @@ function link_errors($linkres)
         $main_smarty->assign('submit_error', 'long_title');
         $error = true;
     }
-    if (utf8_strlen($linkres->content) > maxStoryLength ) {
+    if (utf8_strlen($linkres->content) > maxStoryLength) {
         $main_smarty->assign('submit_error', 'long_content');
         $error = true;
     }
@@ -323,7 +323,7 @@ function link_errors($linkres)
         $main_smarty->assign('submit_error', 'long_tags');
         $error = true;
     }
-    if (utf8_strlen($linkres->summary) > maxSummaryLength ) {
+    if (utf8_strlen($linkres->summary) > maxSummaryLength) {
         $main_smarty->assign('submit_error', 'long_summary');
         $error = true;
     }
@@ -357,5 +357,3 @@ function link_errors($linkres)
     }
     return $error;
 }
-
-?>

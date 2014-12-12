@@ -29,5 +29,3 @@ if (is_object($main_smarty)) {
     $main_smarty->assign('xml_sitemaps_path', xml_sitemaps_path);
     $main_smarty->assign('xml_sitemaps_conf', xml_sitemaps_lang_conf);
 }
-
-?>

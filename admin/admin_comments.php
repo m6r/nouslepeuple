@@ -43,7 +43,7 @@ if ($canIhaveAccess == 1) {
 
     // Items per page drop-down
     if (isset($_GET["pagesize"]) && is_numeric($_GET["pagesize"])) {
-        misc_data_update('pagesize',$_GET["pagesize"]);
+        misc_data_update('pagesize', $_GET["pagesize"]);
     }
     $pagesize = get_misc_data('pagesize');
     if ($pagesize <= 0) {
@@ -152,7 +152,7 @@ if ($canIhaveAccess == 1) {
                     }
                 }
             }
-            header("Location: ".my_pligg_base."/admin/admin_comments.php?page=".sanitize($_GET['page'],3));
+            header("Location: ".my_pligg_base."/admin/admin_comments.php?page=".sanitize($_GET['page'], 3));
             die();
         } else {
             $CSRF->show_invalid_error(1);
@@ -182,6 +182,3 @@ if ($canIhaveAccess == 1) {
 } else {
     echo 'not for you! go away!';
 }
-
-
-?>

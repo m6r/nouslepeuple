@@ -22,5 +22,3 @@ if ($_REQUEST['widget']=='pligg_news') {
 if ($main_smarty) {
     $main_smarty->assign('news_count', $news_count);
 }
-
-?>

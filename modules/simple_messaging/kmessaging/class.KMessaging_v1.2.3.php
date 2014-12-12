@@ -103,20 +103,20 @@ var $DBHost = EZSQL_DB_HOST;
      *	@return Int 3	If the database cannot be selected When connection to the Database done outside of the class
      *	@return Int 4	If Conection var is not correct
     */
-    function KMessaging($connect = false,$selectDB = false,$con = '')
+    function KMessaging($connect = false, $selectDB = false, $con = '')
     {
         if ($connect) {
-            $con = @mysql_connect($this->DBHost,$this->DBUser,$this->DBPass);
+            $con = @mysql_connect($this->DBHost, $this->DBUser, $this->DBPass);
             if ($con) {
-                if (!@mysql_select_db($this->DBName,$con)) {
+                if (!@mysql_select_db($this->DBName, $con)) {
                     return 1;
                 } else {
                     return 2;
                 }
             }
         } elseif ($selectDB) {
-            if ( strlen($con) > 0 ) {
-                if (!@mysql_select_db($this->DBName,$con)) {
+            if (strlen($con) > 0) {
+                if (!@mysql_select_db($this->DBName, $con)) {
                     return 3;
                 } else {
                     return 4;
@@ -141,21 +141,21 @@ var $DBHost = EZSQL_DB_HOST;
     *
     * @desc Send message to $receiver
     */
-    function SendMessage($title ,$body ,$sender ,$receiver ,$senderLevel)
+    function SendMessage($title, $body, $sender, $receiver, $senderLevel)
     {
-        if ( strlen($title) == 0 ) {
+        if (strlen($title) == 0) {
             return 1;
         }
-        if ( strlen($body) == 0 ) {
+        if (strlen($body) == 0) {
             return 2;
         }
-        if ( strlen($sender) == 0 ) {
+        if (strlen($sender) == 0) {
             return 3;
         }
-        if ( strlen($receiver) == 0 ) {
+        if (strlen($receiver) == 0) {
             return 4;
         }
-        if ( strlen($senderLevel) == 0) {
+        if (strlen($senderLevel) == 0) {
             return 5;
         }
         $sql = "INSERT INTO ".$this->tblName." (title,body,sender,receiver,senderLevel,readed) VALUES ('$title','$body',$sender,$receiver,$senderLevel,0)";
@@ -251,7 +251,7 @@ var $DBHost = EZSQL_DB_HOST;
     * @param int $msgId
     * @desc This function is used to return the send date of a especific message
     */
-    function GetSendDate( $msgId )
+    function GetSendDate($msgId)
     {
         if (strlen($msgId) == 0) {
             return 1;
@@ -334,7 +334,7 @@ var $DBHost = EZSQL_DB_HOST;
     */
     function GetAllmessages($sort = 0, $receiver = '', $sender = '', $filter = 0)
     {
-        switch ( $sort ) {
+        switch ($sort) {
             case 0:
                 $order = 'senderLevel ASC';
                 break;
@@ -356,7 +356,7 @@ var $DBHost = EZSQL_DB_HOST;
         }
         $where = '';
 
-        switch ( $filter ) {
+        switch ($filter) {
             case 0:
                 break;
             case 1:
@@ -377,12 +377,12 @@ var $DBHost = EZSQL_DB_HOST;
         //echo $sql;
         $result = @mysql_query($sql);
 
-        if ( !$result ) {
+        if (!$result) {
             return 1;
         }
         $num = mysql_num_rows($result);
         $message = '';
-        for ($i = 0 ; $i < $num ; $i++ ) {
+        for ($i = 0 ; $i < $num ; $i++) {
             $row = mysql_fetch_object($result);
             $message[$i]['id'] = $row->idMsg;
             $message[$i]['receiver'] = $row->receiver;
@@ -393,7 +393,7 @@ var $DBHost = EZSQL_DB_HOST;
             $message[$i]['readed'] = $row->readed&1;
             $message[$i]['date'] = $row->date;
         }
-        if ( !is_array($message) ) {
+        if (!is_array($message)) {
             return 2;
         }
         return $message;
@@ -410,7 +410,7 @@ var $DBHost = EZSQL_DB_HOST;
     * @param Int $who 2	Hide from the recipient
     * @desc Delete message
     */
-    function DeleteMessage($msgId,$who=0)
+    function DeleteMessage($msgId, $who=0)
     {
         if (strlen($msgId) == 0) {
             return 1;
@@ -429,4 +429,3 @@ var $DBHost = EZSQL_DB_HOST;
         }
     }
 }
-?>

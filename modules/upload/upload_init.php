@@ -9,7 +9,7 @@ if (defined('mnminclude')) {
 
 
     $include_in_pages = array('module');
-    if ( do_we_load_module() ) {
+    if (do_we_load_module()) {
         $moduleName = $_REQUEST['module'];
         if ($moduleName == 'upload') {
             module_add_action('module_page', 'upload_showpage', '');
@@ -19,7 +19,7 @@ if (defined('mnminclude')) {
     }
 
     $include_in_pages = array('all');
-    if ( do_we_load_module() ) {
+    if (do_we_load_module()) {
         include_once(mnmmodules . 'upload/upload_main.php');
         module_add_action('lib_link_summary_fill_smarty', 'upload_track', '');
         module_add_action('rss_item', 'upload_rss_item', '');
@@ -46,26 +46,25 @@ if (defined('mnminclude')) {
     }
 
     $include_in_pages = array('submit','story','edit');
-    if ( do_we_load_module() ) {
+    if (do_we_load_module()) {
         include_once(mnmmodules . 'upload/upload_main.php');
 
         module_add_action_tpl('tpl_pligg_submit_step2_after_form', upload_tpl_path . '/upload_files.tpl');
 
         $settings = get_upload_settings();
         if ($settings['allow_comment']) {
-            module_add_action('after_comment_submit', 'upload_do_comment_submit','');
-            module_add_action('after_comment_edit', 'upload_do_comment_submit','');
+            module_add_action('after_comment_submit', 'upload_do_comment_submit', '');
+            module_add_action('after_comment_edit', 'upload_do_comment_submit', '');
             module_add_action_tpl('tpl_pligg_story_comments_form_end', upload_tpl_path . '/upload_comments.tpl');
         }
     }
 
     $include_in_pages = array('editlink');
-    if ( do_we_load_module() ) {
-        module_add_action('edit_link_hook', 'upload_edit_link','');
+    if (do_we_load_module()) {
+        module_add_action('edit_link_hook', 'upload_edit_link', '');
         include_once(mnmmodules . 'upload/upload_main.php');
 
         module_add_action_tpl('tpl_pligg_submit_step2_after_form', upload_tpl_path . '/upload_files.tpl');
 //        	module_add_action_tpl('submit_step_2_pre_extrafields', upload_tpl_path . '/edit_files.tpl');
     }
 }
-?>

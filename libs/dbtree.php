@@ -115,7 +115,7 @@ function get_cached_between($lft, $rgt)
 }
 
 
-function tree_to_array($root, $table, $showRoot = TRUE)
+function tree_to_array($root, $table, $showRoot = true)
 {
     // showRoot -- Do we want to include the "root" category named "all" in our results -- all subcats WILL appear regardless
 
@@ -235,5 +235,4 @@ function OrderNew()
 }
 
 // function Cat_Safe_Names has been moved to admin_categories.php
-
-?>
+;

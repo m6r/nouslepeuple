@@ -67,5 +67,3 @@ if (isset($main_smarty) && is_object($main_smarty)) {
     $main_smarty->assign('upload_extensions', get_misc_data('upload_extensions'));
     $main_smarty->assign('upload_external', get_misc_data('upload_external'));
 }
-
-?>

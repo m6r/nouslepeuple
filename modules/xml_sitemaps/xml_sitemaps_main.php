@@ -24,19 +24,19 @@ function xml_sitemaps_show_sitemap()
     header("Content-type: text/xml");
     if (isset($_GET['i'])) {
         if (is_numeric($_GET['i'])) {
-            create_sitemap_links($_GET['i'],XmlSitemaps_Links_per_sitemap);
+            create_sitemap_links($_GET['i'], XmlSitemaps_Links_per_sitemap);
         } else {
             if ($_GET['i']=="main") {
                 create_sitemap_main();
             } else {
-                if (preg_match('/pages(\d+)/',$_GET['i'],$m)) {
-                    create_sitemap_pages($m[1],XmlSitemaps_Links_per_sitemap);
+                if (preg_match('/pages(\d+)/', $_GET['i'], $m)) {
+                    create_sitemap_pages($m[1], XmlSitemaps_Links_per_sitemap);
                 } else {
-                    if (preg_match('/users(\d+)/',$_GET['i'],$m)) {
-                        create_sitemap_users($m[1],XmlSitemaps_Links_per_sitemap);
+                    if (preg_match('/users(\d+)/', $_GET['i'], $m)) {
+                        create_sitemap_users($m[1], XmlSitemaps_Links_per_sitemap);
                     } else {
-                        if (preg_match('/groups(\d+)/',$_GET['i'],$m)) {
-                            create_sitemap_groups($m[1],XmlSitemaps_Links_per_sitemap);
+                        if (preg_match('/groups(\d+)/', $_GET['i'], $m)) {
+                            create_sitemap_groups($m[1], XmlSitemaps_Links_per_sitemap);
                         }
                     }
                 }
@@ -55,25 +55,25 @@ function create_sitemaps_index($max_rec)
     global $db,$my_base_url,$my_pligg_base;
     $nr=0;
 
-    if (sitemap_header("index",true)) {
+    if (sitemap_header("index", true)) {
         return true;
     }
 
     // Stories
         $sql = "select link_modified AS date from ".table_links." where link_status='published' OR link_status='new' order by link_modified DESC";
-    sitemap_index_body($sql,'',$max_rec);
+    sitemap_index_body($sql, '', $max_rec);
 
     // Static Pages
         $sql = "SELECT link_modified AS date FROM ".table_links." WHERE link_status='page' order by link_modified DESC";
-    sitemap_index_body($sql,'pages',$max_rec);
+    sitemap_index_body($sql, 'pages', $max_rec);
 
     // User profiles
         $sql = "SELECT user_modification AS date FROM ".table_users." WHERE user_enabled order by user_modification DESC";
-    sitemap_index_body($sql,'users',$max_rec);
+    sitemap_index_body($sql, 'users', $max_rec);
 
     // Groups
         $sql = "SELECT group_date AS date FROM ".table_groups." WHERE group_status='Enable' ORDER BY group_date DESC";
-    sitemap_index_body($sql,'groups',$max_rec);
+    sitemap_index_body($sql, 'groups', $max_rec);
 
     // Main pages
     echo "<sitemap>\n";
@@ -84,20 +84,20 @@ function create_sitemaps_index($max_rec)
     }
     echo "</sitemap>";
 
-    sitemap_footer("index",true);
+    sitemap_footer("index", true);
 }
 
 //
 // User profiles list
 //
-function create_sitemap_users($index,$max_rec)
+function create_sitemap_users($index, $max_rec)
 {
     if (sitemap_header("users$index")) {
         return true;
     }
 
     $sql = "SELECT * FROM " . table_users . " WHERE user_enabled ORDER BY user_modification DESC";
-    sitemap_body($sql,'user_modification',"user",'user_login',0.9,$index,$max_rec);
+    sitemap_body($sql, 'user_modification', "user", 'user_login', 0.9, $index, $max_rec);
 
     sitemap_footer("users$index");
 }
@@ -105,14 +105,14 @@ function create_sitemap_users($index,$max_rec)
 //
 // Groups list
 //
-function create_sitemap_groups($index,$max_rec)
+function create_sitemap_groups($index, $max_rec)
 {
     if (sitemap_header("groups$index")) {
         return true;
     }
 
     $sql = "SELECT * FROM " . table_groups . " WHERE group_status='Enable' ORDER BY group_date DESC";
-    sitemap_body($sql,'group_date',"group_story_title",'group_safename',1,$index,$max_rec);
+    sitemap_body($sql, 'group_date', "group_story_title", 'group_safename', 1, $index, $max_rec);
 
     sitemap_footer("groups$index");
 }
@@ -120,14 +120,14 @@ function create_sitemap_groups($index,$max_rec)
 //
 // Pligg static pages
 //
-function create_sitemap_pages($index,$max_rec)
+function create_sitemap_pages($index, $max_rec)
 {
     if (sitemap_header("pages$index")) {
         return true;
     }
 
     $sql = "SELECT * FROM ".table_links." WHERE link_status='page' order by link_modified DESC";
-    sitemap_body($sql,'link_modified',"page",'link_title_url',0.0001,$index,$max_rec);
+    sitemap_body($sql, 'link_modified', "page", 'link_title_url', 0.0001, $index, $max_rec);
 
     sitemap_footer("pages$index");
 }
@@ -135,7 +135,7 @@ function create_sitemap_pages($index,$max_rec)
 //
 // Pligg stories
 //
-function create_sitemap_links($index,$max_rec)
+function create_sitemap_links($index, $max_rec)
 {
     global $db;
 
@@ -155,7 +155,7 @@ function create_sitemap_links($index,$max_rec)
             echo "<loc>".getmyFullurl("storyURL", urlencode($link->category_safe_name($link->category)), urlencode($link->title_url), $link->id)."</loc>\n";
             //c / v  * 30   + vo /v * 10 +  ( 100 / acum-mod  ) * 60
             $v=(time()-$link->date)/60;
-            $pri=max(0.0001,(( $link->comments /$v ) * 30  + ( $link->votes * 10  / $v ) + ( 100 / max(100,time()-$link->modified) )  * 60 )/ 100 );
+            $pri=max(0.0001, (($link->comments /$v) * 30  + ($link->votes * 10  / $v) + (100 / max(100, time()-$link->modified))  * 60)/ 100);
             echo "<lastmod>";
             echo my_format_date($link->modified);
             echo "</lastmod>\n";
@@ -180,14 +180,14 @@ function create_sitemap_main()
     }
 
     sitemap_add_page('index',   "SELECT MAX(UNIX_TIMESTAMP(link_modified)) FROM ".table_links." WHERE link_status='published'");
-    sitemap_add_page('new',"SELECT MAX(UNIX_TIMESTAMP(link_modified)) FROM ".table_links." WHERE link_status='new'");
+    sitemap_add_page('new', "SELECT MAX(UNIX_TIMESTAMP(link_modified)) FROM ".table_links." WHERE link_status='new'");
     sitemap_add_page('groups',  "SELECT MAX(UNIX_TIMESTAMP(group_date)) FROM ".table_groups." WHERE group_status='Enable'");
-    sitemap_add_page('tagcloud',"SELECT MAX(UNIX_TIMESTAMP(tag_date)) FROM ".table_tags);
+    sitemap_add_page('tagcloud', "SELECT MAX(UNIX_TIMESTAMP(tag_date)) FROM ".table_tags);
     sitemap_add_page('live',    "SELECT MAX(UNIX_TIMESTAMP(link_date)) FROM ".table_links." WHERE link_status='new' OR link_status='published'");
-    sitemap_add_page('topusers',"SELECT MAX(UNIX_TIMESTAMP(user_modification)) FROM " . table_users . " WHERE user_enabled");
+    sitemap_add_page('topusers', "SELECT MAX(UNIX_TIMESTAMP(user_modification)) FROM " . table_users . " WHERE user_enabled");
 
-    create_entry(mktime(0,0,0,1,1,date('Y')),getmyFullurl('submit'));
-    create_entry(mktime(0,0,0,1,1,date('Y')),getmyFullurl('advancedsearch'));
+    create_entry(mktime(0, 0, 0, 1, 1, date('Y')), getmyFullurl('submit'));
+    create_entry(mktime(0, 0, 0, 1, 1, date('Y')), getmyFullurl('advancedsearch'));
 
     //////////////////////...........categories.................
     $sql = "SELECT category_id,category_name,category_safe_name FROM ".table_categories." WHERE category_enabled=1 AND category_name!='new category'";
@@ -197,8 +197,8 @@ function create_sitemap_main()
         $sql = "SELECT UNIX_TIMESTAMP(link_published_date),link_id FROM ".table_links." WHERE link_category=".$i->category_id." AND link_status='published' ORDER BY link_published_date DESC, link_date DESC LIMIT 1";
         $res = $db->get_col($sql);
         if (isset($res[0])) {
-            $path = getmyFullurl('maincategory',urlencode($i->category_safe_name));
-            create_entry($res[0],$path);
+            $path = getmyFullurl('maincategory', urlencode($i->category_safe_name));
+            create_entry($res[0], $path);
             if ($res[0] > $maxtime) {
                 $maxtime = $res[0];
             }
@@ -206,12 +206,12 @@ function create_sitemap_main()
         $sql = "SELECT UNIX_TIMESTAMP(link_date) FROM ".table_links." WHERE link_category=".$i->category_id." AND link_status='new' ORDER BY link_date DESC LIMIT 1";
         $res = $db->get_col($sql);
         if (isset($res[0])) {
-            $path = getmyFullurl('newcategory',urlencode($i->category_safe_name));
-            create_entry($res[0],$path);
+            $path = getmyFullurl('newcategory', urlencode($i->category_safe_name));
+            create_entry($res[0], $path);
         }
     }
     // rssfeeds
-    create_entry($maxtime,"$my_base_url$my_pligg_base/rssfeeds.php");
+    create_entry($maxtime, "$my_base_url$my_pligg_base/rssfeeds.php");
 
     $vars = '';
     check_actions('xml_sitemaps_main', $vars);
@@ -254,8 +254,8 @@ function xml_sitemaps_sites_ping()
 //
 function sitemap_call_url($pingUrl)
 {
-    $pingres=fopen($pingUrl,'r');
-    while ($res=fread($pingres,8192)) {
+    $pingres=fopen($pingUrl, 'r');
+    while ($res=fread($pingres, 8192)) {
         //		echo $res."\n";
     }
     fclose($pingres);
@@ -266,12 +266,12 @@ function sitemap_call_url($pingUrl)
 // $sql should be 'SELECT <modification_datetime_field> AS date FROM xxx WHERE yyy'
 // $name is a filename
 //
-function sitemap_index_body($sql,$name,$max_rec)
+function sitemap_index_body($sql, $name, $max_rec)
 {
     global $db,$my_base_url,$my_pligg_base;
 
     // Calculate total data size using given query
-        $db->query($sql1=str_ireplace('select ','SELECT SQL_CALC_FOUND_ROWS ',$sql)." LIMIT 0,1");
+        $db->query($sql1=str_ireplace('select ', 'SELECT SQL_CALC_FOUND_ROWS ', $sql)." LIMIT 0,1");
     $res = $db->get_var("SELECT FOUND_ROWS()");
 
     // Separate into pages if needed
@@ -324,13 +324,13 @@ function sitemap_body($sql, $datefield, $urlname, $urlfield, $pri, $index, $max_
 // Create an entry for given pligg URL specified by $name, depending of data last modification
 // $sql should be 'SELECT MAX(UNIX_TIMESTAMP(<modification_datetime_field)) FROM xxx'
 //
-function sitemap_add_page($name,$sql)
+function sitemap_add_page($name, $sql)
 {
     global $db;
 
     $res = $db->get_var($sql);
     if ($res) {
-        create_entry($res,getmyFullurl($name));
+        create_entry($res, getmyFullurl($name));
     }
 }
 
@@ -338,7 +338,7 @@ function sitemap_add_page($name,$sql)
 // Create XML header for all files or return it from a cache
 // $isindex==true for sitemap index page
 //
-function sitemap_header($name,$isindex)
+function sitemap_header($name, $isindex)
 {
     if (XmlSitemaps_use_cache) {
         $icf="cache/sitemap-$name.xml";
@@ -361,7 +361,7 @@ function sitemap_header($name,$isindex)
 // Create XML footer for all files and put xml to the cache if needed
 // $isindex==true for sitemap index page
 //
-function sitemap_footer($name,$isindex)
+function sitemap_footer($name, $isindex)
 {
     if ($isindex) {
         echo '</sitemapindex>';
@@ -373,11 +373,11 @@ function sitemap_footer($name,$isindex)
         $icf="cache/sitemap-$name.xml";
         $ret=ob_get_contents();
         ob_end_flush();
-        file_put_contents($icf,$ret);
+        file_put_contents($icf, $ret);
     }
 }
 
-function create_entry($m_time,$path)
+function create_entry($m_time, $path)
 {
     $freq = freq_calc($m_time);
     echo "<url>\n";
@@ -419,9 +419,7 @@ function freq_calc($d)
 
 function my_format_date($mtime)
 {
-    $ret=date('Y-m-d\TH:i:s',$mtime);
-    $ret.=preg_replace('/(\+|\-)([0-9]{2})([0-9]{2})/','$1$2:$3',date('O',$mtime));
+    $ret=date('Y-m-d\TH:i:s', $mtime);
+    $ret.=preg_replace('/(\+|\-)([0-9]{2})([0-9]{2})/', '$1$2:$3', date('O', $mtime));
     return $ret;
 }
-
-?>

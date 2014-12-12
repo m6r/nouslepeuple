@@ -9,9 +9,9 @@ include(mnminclude.'link.php');
 $requestID = sanitize($_REQUEST['id'], 3);
 $requestTitle = sanitize($_REQUEST['title'], 3);
 $requestURL = sanitize($_REQUEST['url'], 3);
-$requestTitle = sanitize($requestTitle,4);
-$requestURL = sanitize($requestURL,4);
-$requestURL = preg_replace('/(https?:\/)([^\/])/','$1/$2',$requestURL);
+$requestTitle = sanitize($requestTitle, 4);
+$requestURL = sanitize($requestURL, 4);
+$requestURL = preg_replace('/(https?:\/)([^\/])/', '$1/$2', $requestURL);
 if ($requestTitle != '') {
     $requestID = $db->get_var("SELECT link_id FROM " . table_links . " WHERE `link_title_url` = '" . $db->escape($requestTitle) . "';");
 }
@@ -40,5 +40,3 @@ if (is_numeric($requestID)) {
     header("HTTP/1.1 301 Moved Permanently");
     header('Location: '. $link->url);
 }
-
-?>

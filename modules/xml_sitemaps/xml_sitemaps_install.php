@@ -51,4 +51,3 @@
     if (!defined('XmlSitemaps_cache_ttl')) {
         $module_info['db_sql'][]="insert into ".table_prefix."config (var_page,var_name,var_value,var_defaultvalue,var_optiontext,var_title,var_desc,var_method) values ('XmlSitemaps','XmlSitemaps_cache_ttl','3600','3600','positive numerical value','Cache TTL','Cache life time in seconds','define')";
     }
-?>

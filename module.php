@@ -22,7 +22,3 @@ $main_smarty->assign('un_no_module_update_require', $data_for_update_uninstall_m
 
 $vars = '';
 check_actions('module_page', $vars);
-
-
-
-?>

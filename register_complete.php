@@ -24,4 +24,3 @@ $main_smarty->assign('pagename', pagename);
 $main_smarty = do_sidebar($main_smarty, $navwhere);
 $main_smarty->assign('tpl_center', $the_template . '/register_complete_center');
 $main_smarty->display($the_template . '/pligg.tpl');
-?>

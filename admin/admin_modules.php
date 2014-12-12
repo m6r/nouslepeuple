@@ -74,11 +74,11 @@ if ($status=="uninstalled") {
     $token=$_GET['token'];
     if (isset($token)) {
         $updatekey=$_GET['updkey'];
-        $updkey_array=@explode(",",$updatekey);
+        $updkey_array=@explode(",", $updatekey);
 
         if (isset($foundfolders) && is_array($foundfolders)) {
             foreach ($foundfolders as $key => $value) {
-                if (!in_array($value,$updkey_array)) {
+                if (!in_array($value, $updkey_array)) {
                     unset($foundfolders[$key]);
                 }
             }
@@ -101,7 +101,7 @@ if ($status=="uninstalled") {
                     $updateurl  = $module_info['update_url'];
                     $versionupdate = safe_file_get_contents($updateurl);
 
-                    if (preg_match('/(\d+[\d\.]+)/',$versionupdate,$m)) {
+                    if (preg_match('/(\d+[\d\.]+)/', $versionupdate, $m)) {
                         if ($m[1]>$module_info['version']) {
                             $update_key[$updatecount]=$value;
                             $updatecount++;
@@ -119,7 +119,7 @@ if ($status=="uninstalled") {
                 }
 
                 if (is_array($text)) {
-                    $module_info_data[$i]['desc']=@implode("",$text);
+                    $module_info_data[$i]['desc']=@implode("", $text);
                 } else {
                     $module_info_data[$i]['desc']=$module_info['desc'];
                 }
@@ -228,11 +228,11 @@ if ($status=="uninstalled") {
                         $updateurl  = $module_info['update_url'];
                         $versionupdate = safe_file_get_contents($updateurl);
 
-                        if (preg_match('/(\d+[\d\.]+)/',$versionupdate,$m) && $m[1] != $module->latest_version) {
+                        if (preg_match('/(\d+[\d\.]+)/', $versionupdate, $m) && $m[1] != $module->latest_version) {
                             $versionupdate = $m[1];
 
                             $db->query($sql="UPDATE `". table_modules . "` SET `latest_version`='$versionupdate' WHERE `id`='".$module->id."'");
-                        } elseif ($versionupdate=="Invalid Product ID" ) {
+                        } elseif ($versionupdate=="Invalid Product ID") {
                             $db->query("UPDATE `". table_modules . "` SET `latest_version`=0 WHERE `id`='".$module->id."'");
                         } else {
                             $versionupdate = 'N/A';
@@ -339,20 +339,20 @@ $action=$_GET['action'];
 
 if ($action == 'readme') {
     $main_smarty->assign('action', 'readme');
-    $module = sanitize($_REQUEST['module'],3);
+    $module = sanitize($_REQUEST['module'], 3);
     $main_smarty->assign('module_management_name', $main_smarty->get_config_vars('PLIGG_Visual_AdminPanel_Module_Readme'));
     $main_smarty->assign('module_readme_return', $main_smarty->get_config_vars('PLIGG_Visual_AdminPanel_Module_Return'));
 
 
     if (file_exists('../modules/' . $module . '/' . $module . '_readme.htm')) {
-        $main_smarty->assign('found','yes');
+        $main_smarty->assign('found', 'yes');
         $myFile = '../modules/' . $module . '/' . $module . '_readme.htm';
         $fh = fopen($myFile, 'r');
-        $theData = fread($fh,filesize($myFile));
+        $theData = fread($fh, filesize($myFile));
         fclose($fh);
         $main_smarty->assign('readme_content', $theData);
     } else {
-        $main_smarty->assign('found','no');
+        $main_smarty->assign('found', 'no');
         $main_smarty->assign('not_found', $main_smarty->get_config_vars('PLIGG_Visual_AdminPanel_Module_Readme_Not_Found'));
     }
 } else {
@@ -370,7 +370,7 @@ if ($canIhaveAccess == 1) {
     }
 
     if ($_GET['action'] == 'disable') {
-        $module = $db->escape(sanitize($_REQUEST['module'],3));
+        $module = $db->escape(sanitize($_REQUEST['module'], 3));
         $sql = "UPDATE " . table_modules . " set enabled = 0 where `name` = '" . $module . "';";
         //echo $sql;
         $db->query($sql);
@@ -381,7 +381,7 @@ if ($canIhaveAccess == 1) {
         die();
     }
     if ($_GET['action'] == 'enable') {
-        $module = $db->escape(sanitize($_REQUEST['module'],3));
+        $module = $db->escape(sanitize($_REQUEST['module'], 3));
         $sql = "UPDATE " . table_modules . " set enabled = 1 where `name` = '" . $module . "';";
         //echo $sql;
         $db->query($sql);
@@ -403,7 +403,7 @@ if ($canIhaveAccess == 1) {
 }
 
 if ($action == 'install') {
-    $module = $db->escape(sanitize($_REQUEST['module'],3));
+    $module = $db->escape(sanitize($_REQUEST['module'], 3));
     if ($module_info = include_module_settings($module)) {
         $version = $module_info['version'];
         $name = $module_info['name'];
@@ -417,7 +417,7 @@ if ($action == 'install') {
         die('No install file exists.');
     }
 
-    $res_total_module = mysql_query('SELECT * from ' . table_modules );
+    $res_total_module = mysql_query('SELECT * from ' . table_modules);
     $total_module=mysql_num_rows($res_total_module);
     $db->query("INSERT IGNORE INTO " . table_modules . " (`name`, `version`, `folder`, `enabled`,`weight`) values ('".$name."', '" . $version . "', '".$module."', 1,'".$total_module."');");
     clear_module_cache();
@@ -425,7 +425,7 @@ if ($action == 'install') {
 }
 
 if ($action == 'remove') {
-    $module = $db->escape(sanitize($_REQUEST['module'],3));
+    $module = $db->escape(sanitize($_REQUEST['module'], 3));
     $sql = "SELECT * FROM " . table_modules . " WHERE `name` = '" . $module . "';";
 
     $row = $db->get_row($sql);
@@ -444,7 +444,7 @@ if ($action == 'remove') {
     header('Location: admin_modules.php');
 }
 
-function clear_module_cache ()
+function clear_module_cache()
 {
     global $db;
     if (caching == 1) {
@@ -459,14 +459,14 @@ function clear_module_cache ()
     }
 }
 
-function safe_file_get_contents($url,$redirect=0)
+function safe_file_get_contents($url, $redirect=0)
 {
     $parts = parse_url($url);
     $site  = $parts['host'];
     $port  = $parts['port'] ? $parts['port'] : 80;
     $path  = $parts['path'] . ($parts['query'] ? "?".$parts['query'] : "") . ($parts['fragment'] ? "#".$parts['fragment'] : "");
     $timeout = 5;
-    $sock = @fsockopen( $site, $port, $errnum, $errstr, $timeout);
+    $sock = @fsockopen($site, $port, $errnum, $errstr, $timeout);
     if (!$sock) {
         return "Cannot connect to $site:$port: $errstr($errno)";
     } else {
@@ -477,13 +477,13 @@ function safe_file_get_contents($url,$redirect=0)
         $dump .= "Connection: close\r\n\r\n";
         $res = "";
         // Send HTTP query
-            fputs( $sock, $dump );
+            fputs($sock, $dump);
         // Read all
         $header = true;
-        while ( $str = fgets( $sock, 1024 ) ) {
+        while ($str = fgets($sock, 1024)) {
             if ($header) {
-                if (preg_match("/^Location: ([^\\s]+)\\s*$/",$str,$m) && ++$redirect<10) {
-                    return safe_file_get_contents($m[1],$redirect);
+                if (preg_match("/^Location: ([^\\s]+)\\s*$/", $str, $m) && ++$redirect<10) {
+                    return safe_file_get_contents($m[1], $redirect);
                 }
                 if ($str == "\r\n") {
                     $header = false;
@@ -492,9 +492,7 @@ function safe_file_get_contents($url,$redirect=0)
                 $res .= $str;
             }
         }
-        fclose( $sock );
+        fclose($sock);
     }
     return $res;
 }
-
-?>

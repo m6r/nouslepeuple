@@ -44,9 +44,9 @@ if (is_numeric($_GET['lid']) && $_GET['action']=='likes') {
 			WHERE update_id={$_GET['id']}";
     $update = $db->get_row($sql);
     if ($update->update_id && $update->user_level!='Spammer') {
-        $main_smarty->assign('posttitle','Status Update #'.$_GET['id']);
-        $main_smarty->assign('update',get_object_vars ($update));
-        $main_smarty->assign('settings',$settings=get_status_settings());
+        $main_smarty->assign('posttitle', 'Status Update #'.$_GET['id']);
+        $main_smarty->assign('update', get_object_vars($update));
+        $main_smarty->assign('settings', $settings=get_status_settings());
         $main_smarty->assign('current_user', get_object_vars($current_user));
         $main_smarty->assign('current_username', '@'.$current_user->user_login);
         $main_smarty->assign('tpl_center', '../modules/status/templates/status_permalink');
@@ -70,18 +70,18 @@ if ($_POST['status']) {
     $_SESSION['status_text'] = $_POST['status'];
 
     if (!$isadmin) {
-        $text  = sanitize($_POST['status'],3);
+        $text  = sanitize($_POST['status'], 3);
     } else {
         $text  = mysql_real_escape_string(close_tags($_POST['status']));
     }
 
     // Post to a group
-    if (enable_group && ($groupname = strstr($text,'!'))) {
-        $groupname = substr($groupname,1);
+    if (enable_group && ($groupname = strstr($text, '!'))) {
+        $groupname = substr($groupname, 1);
     // Check if user is allowed to post to the group
     $groups = $db->get_results("SELECT * FROM ".table_groups." WHERE group_status='Enable' ORDER BY group_name DESC");
         foreach ($groups as $group) {
-            if (strpos($groupname,$group->group_name)===0) {
+            if (strpos($groupname, $group->group_name)===0) {
                 $group_id = $group->group_id;
                 break;
             }
@@ -92,7 +92,7 @@ if ($_POST['status']) {
     }
 
     // Post to all users
-    if (preg_match('/\*(\w+)/',$text,$m)) {
+    if (preg_match('/\*(\w+)/', $text, $m)) {
         $level = strtolower($m[1]);
         if ($isadmin) {
             // Admin can message all existing levels
@@ -109,7 +109,7 @@ if ($_POST['status']) {
             }
         }
     // Admins can message to admins and moderators
-    elseif ($isadmin && in_array($level,array('admin','moderator'))) {
+    elseif ($isadmin && in_array($level, array('admin', 'moderator'))) {
         $level_sql = "update_level='$level',";
     }
     }
@@ -117,7 +117,7 @@ if ($_POST['status']) {
     // Limit text size if needed
     $limit = get_misc_data('status_max_chars');
     if ($limit > 0) {
-        $text  = substr($text,0,$limit);
+        $text  = substr($text, 0, $limit);
     }
     $id = is_numeric($_POST['id']) ? $_POST['id'] : 0;
 
@@ -136,7 +136,7 @@ if ($_POST['status']) {
         $main_smarty->config_load('../modules/status/lang.conf');
 
         // To specified user
-        if (preg_match_all('/@([^\s]+)/',$text,$m)) {
+        if (preg_match_all('/@([^\s]+)/', $text, $m)) {
             $users = $m[1];
         } else {
             $users = array();
@@ -147,7 +147,7 @@ if ($_POST['status']) {
             $user->username = $username;
             if ($user->read() && $user->extra_field['status_email']) {
                 $subject = $main_smarty->get_config_vars('PLIGG_Status_Email_Subject');
-                $body = sprintf( $main_smarty->get_config_vars('PLIGG_Status_Email_Body'),
+                $body = sprintf($main_smarty->get_config_vars('PLIGG_Status_Email_Body'),
                     $current_user->user_login,
                     my_base_url.getmyurl('user2', $current_user->user_login, 'profile').'#'.$newid);
                 $headers = 'From: ' . $main_smarty->get_config_vars("PLIGG_Status_From") . "\r\n";
@@ -190,4 +190,3 @@ if ($_SERVER['HTTP_REFERER']) {
 } else {
     header("Location: ".getmyurl('user2', $current_user->user_login, 'profile'));
 }
-?>

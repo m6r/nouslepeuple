@@ -15,5 +15,3 @@ if ($_REQUEST['widget']=='Spam Trigger') {
         $widget['column'] = '';
     }
 }
-
-?>

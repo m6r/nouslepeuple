@@ -33,5 +33,3 @@ if ($main_smarty) {
         $widget['column'] = '';
     }
 }
-
-?>

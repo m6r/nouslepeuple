@@ -29,5 +29,3 @@ if (is_object($main_smarty)) {
     $main_smarty->assign('social_bookmark_tpl_path', social_bookmark_tpl_path);
     $main_smarty->assign('social_bookmark_pligg_lang_conf', social_bookmark_pligg_lang_conf);
 }
-
-?>

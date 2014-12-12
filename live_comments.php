@@ -71,4 +71,3 @@ $main_smarty = do_sidebar($main_smarty);
 // show the template
 $main_smarty->assign('tpl_center', $the_template . '/live_comments_center');
 $main_smarty->display($the_template . '/pligg.tpl');
-?>

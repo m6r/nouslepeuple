@@ -1,25 +1,25 @@
 <?php
 
 //old functions - no longer used, kept just incase for now...
-function DoesExist ( $canContinue, $file, $mode, $desc )
+function DoesExist($canContinue, $file, $mode, $desc)
 {
-    @chmod( $file, $mode );
-    $good = file_exists( $file ) ? 1 : 0;
-    Message ( $desc.' does exist.: ', $good );
-    return ( $canContinue && $good );
+    @chmod($file, $mode);
+    $good = file_exists($file) ? 1 : 0;
+    Message($desc.' does exist.: ', $good);
+    return ($canContinue && $good);
 }
 
-function isWriteable ( $canContinue, $file, $mode, $desc )
+function isWriteable($canContinue, $file, $mode, $desc)
 {
-    @chmod( $file, $mode );
-    $good = is_writable( $file ) ? 1 : 0;
-    Message ( $desc.' is writable: ', $good );
-    return ( $canContinue && $good );
+    @chmod($file, $mode);
+    $good = is_writable($file) ? 1 : 0;
+    Message($desc.' is writable: ', $good);
+    return ($canContinue && $good);
 }
 
-function Message( $message, $good )
+function Message($message, $good)
 {
-    if ( $good ) {
+    if ($good) {
         $yesno = '<b><font color="green">Yes</font></b>';
     } else {
         $yesno = '<b><font color="red">No</font></b>';
@@ -49,9 +49,9 @@ function check_lang_conf($version)
 {
     $file = '../libs/lang_english.conf';
     $data=file_get_contents($file);
-    $lines=explode("\n",$data);
+    $lines=explode("\n", $data);
     foreach ($lines as $line) {
-        if (preg_match("#\/\/<VERSION>$version<\/VERSION>#",$line)) {
+        if (preg_match("#\/\/<VERSION>$version<\/VERSION>#", $line)) {
             return TRUE;
         }
     }
@@ -79,5 +79,3 @@ function getfiles($dirname=".")
     }
     return($files);
 }
-
-?>

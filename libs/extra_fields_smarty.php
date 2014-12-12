@@ -141,4 +141,3 @@ if (Enable_Extra_Fields) {
         $main_smarty->assign('Field_15_Validation_Error_Message', Field_15_Validation_Error_Message);
     }
 }
-?>

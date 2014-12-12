@@ -8,12 +8,12 @@ function status_is_allowed($user)
     array_walk($users, 'status_trim_value');
     array_walk($groups, 'status_trim_value');
 
-    if (!strstr($settings['level'],$user->level) &&
-        !in_array($user->username,$users) &&
+    if (!strstr($settings['level'], $user->level) &&
+        !in_array($user->username, $users) &&
         (!$settings['groups'] ||
          !$db->get_row($sql="SELECT group_id FROM ".table_groups."
 					INNER JOIN ".table_group_member." ON member_group_id=group_id AND member_user_id='{$user->id}' AND member_status='active'
-					WHERE group_name IN ('".join("','",$groups)."')"))) {
+					WHERE group_name IN ('".join("','", $groups)."')"))) {
         return false;
     } else {
         return true;
@@ -52,9 +52,9 @@ function status_comment_submit($vars)
         $text = $main_smarty->get_config_vars('PLIGG_Status_Comment_Update');
         $limit = get_misc_data('status_max_chars');
         if ($limit>0 && strlen($text)+strlen($user->username)+strlen($linkres->title)-4 > $limit) {
-            $linkres->title = substr($linkres->title,0,max($limit+4-strlen($text)-strlen($user->username)-3,10)).'...';
+            $linkres->title = substr($linkres->title, 0, max($limit+4-strlen($text)-strlen($user->username)-3, 10)).'...';
         }
-        $text = sprintf( $text, $user->username, '<a href="'.$linkres->get_internal_url().'">'.$linkres->title.'</a>' );
+        $text = sprintf($text, $user->username, '<a href="'.$linkres->get_internal_url().'">'.$linkres->title.'</a>');
         $db->query($sql="INSERT INTO ".table_prefix."updates SET update_time=UNIX_TIMESTAMP(),
 							    update_type='c',
 							    update_user_id='{$comment->author}',
@@ -88,9 +88,9 @@ function status_story_submit($vars)
         $text = $main_smarty->get_config_vars('PLIGG_Status_Story_Update');
         $limit = get_misc_data('status_max_chars');
         if ($limit>0 && strlen($text)+strlen($user->username)+strlen($linkres->title)-4 > $limit) {
-            $linkres->title = substr($linkres->title,0,max($limit+4-strlen($text)-strlen($user->username)-3,10)).'...';
+            $linkres->title = substr($linkres->title, 0, max($limit+4-strlen($text)-strlen($user->username)-3, 10)).'...';
         }
-        $text = sprintf( $text, $user->username, '<a href="'.$linkres->get_internal_url().'">'.$linkres->title.'</a>' );
+        $text = sprintf($text, $user->username, '<a href="'.$linkres->get_internal_url().'">'.$linkres->title.'</a>');
         $db->query($sql="INSERT INTO ".table_prefix."updates SET update_time=UNIX_TIMESTAMP(),
 							    update_type='s',
 							    update_user_id='{$linkres->author}',
@@ -122,13 +122,13 @@ function status_showpage()
     if ($canIhaveAccess == 1) {
         if ($_POST['submit']) {
             if ($_REQUEST['status_level']) {
-                $level = join(',',$_REQUEST['status_level']);
+                $level = join(',', $_REQUEST['status_level']);
             }
             if ($_REQUEST['status_profile_level']) {
-                $level1 = join(',',$_REQUEST['status_profile_level']);
+                $level1 = join(',', $_REQUEST['status_profile_level']);
             }
 
-            $_REQUEST = str_replace('"',"'",$_REQUEST);
+            $_REQUEST = str_replace('"', "'", $_REQUEST);
             misc_data_update('status_level', mysql_real_escape_string($level));
             misc_data_update('status_profile_level', mysql_real_escape_string($level1));
             misc_data_update('status_switch', mysql_real_escape_string($_REQUEST['status_switch']));
@@ -239,7 +239,7 @@ function status_profile_save()
     $user->extra['status_switch']=sanitize($_POST['status_switch']);
     $user->extra['status_friends']=sanitize($_POST['status_friends']);
     $user->extra['status_all_friends']=sanitize($_POST['status_all_friends']);
-    $user->extra['status_friend_list']=sanitize(@join(',',$_POST['status_friend_list']));
+    $user->extra['status_friend_list']=sanitize(@join(',', $_POST['status_friend_list']));
     $user->extra['status_comment']=sanitize($_POST['status_comment']);
     $user->extra['status_group']=sanitize($_POST['status_group']);
     $user->extra['status_story']=sanitize($_POST['status_story']);
@@ -258,4 +258,3 @@ function status_profile_show()
     $main_smarty->assign('status_story', $user->extra_field['status_story']);
     $main_smarty->assign('status_email', $user->extra_field['status_email']);
 }
-?>

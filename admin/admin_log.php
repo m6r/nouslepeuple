@@ -23,7 +23,7 @@ if ($canIhaveAccess == 0) {
 
 if ($_GET['clear']) {
     $fp = fopen('../'.LOG_FILE, "a");
-    ftruncate($fp,0);
+    ftruncate($fp, 0);
     fclose($fp);
     header("Location: admin_log.php");
     exit;
@@ -36,5 +36,3 @@ $main_smarty->assign('pagename', pagename);
 // show the template
 $main_smarty->assign('tpl_center', '/admin/error_log');
 $main_smarty->display($template_dir . '/admin/admin.tpl');
-
-?>

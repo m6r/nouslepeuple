@@ -7,5 +7,3 @@ if (is_object($main_smarty)) {
     $main_smarty->assign('sidebar_saved_lang_conf', sidebar_saved_lang_conf);
     $main_smarty->assign('sidebar_saved_tpl_path', sidebar_saved_tpl_path);
 }
-
-?>

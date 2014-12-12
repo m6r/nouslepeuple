@@ -31,7 +31,18 @@ return Symfony\CS\Config\Config::create()
         'indentation',
         'whitespacy_lines',
         'braces',
-        'short_tag'
+        'short_tag',
+        'elseif',
+        'function_call_space',
+        'function_declaration',
+        'indentation',
+        'line_after_namespace',
+        'lowercase_constants',
+        'lowercase_keywords',
+        'method_argument_space',
+        'multiple_use',
+        'parenthesis',
+        'php_closing_tag',
     ))
     ->finder($finder)
 ;

@@ -43,4 +43,3 @@ function insert_anonymous_comment(&$vars)
     $link->store();
     /////
 }
-?>

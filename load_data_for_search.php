@@ -27,4 +27,3 @@
 
     include('./libs/link_summary.php'); // this is the code that show the links / stories
     echo $link_summary_output;
-?>

@@ -23,7 +23,7 @@ if ($canIhaveAccess == 0) {
     die();
 }
 
-recursive_remove_directory('../cache',TRUE);
+recursive_remove_directory('../cache', true);
 
 ?>
 <div class="modal-dialog">

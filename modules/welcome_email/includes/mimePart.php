@@ -126,7 +126,7 @@ class Mail_mimePart
     function Mail_mimePart($body = '', $params = array())
     {
         if (!defined('MAIL_MIMEPART_CRLF')) {
-            define('MAIL_MIMEPART_CRLF', defined('MAIL_MIME_CRLF') ? MAIL_MIME_CRLF : "\r\n", TRUE);
+            define('MAIL_MIMEPART_CRLF', defined('MAIL_MIME_CRLF') ? MAIL_MIME_CRLF : "\r\n", true);
         }
 
         foreach ($params as $key => $value) {
@@ -292,7 +292,7 @@ class Mail_mimePart
      *
      * @access private
      */
-    function _quotedPrintableEncode($input , $line_max = 76)
+    function _quotedPrintableEncode($input, $line_max = 76)
     {
         $lines  = preg_split("/\r?\n/", $input);
         $eol    = MAIL_MIMEPART_CRLF;
@@ -307,11 +307,11 @@ class Mail_mimePart
                 $char = substr($line, $i, 1);
                 $dec  = ord($char);
 
-                if (($dec == 32) AND ($i == ($linlen - 1))) {    // convert space at eol only
+                if (($dec == 32) and ($i == ($linlen - 1))) {    // convert space at eol only
                     $char = '=20';
                 } elseif ($dec == 9) {
                     ; // Do nothing if a tab.
-                } elseif (($dec == 61) OR ($dec < 32 ) OR ($dec > 126)) {
+                } elseif (($dec == 61) or ($dec < 32) or ($dec > 126)) {
                     $char = $escape . strtoupper(sprintf('%02s', dechex($dec)));
                 }
 
@@ -327,4 +327,4 @@ class Mail_mimePart
         return $output;
     }
 } // End of class
-?>
+;

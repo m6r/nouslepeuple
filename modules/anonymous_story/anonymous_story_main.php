@@ -19,4 +19,3 @@ function get_anonymous_story_user_id(&$vars)
         $current_user->authenticated = false;
     }
 }
-?>

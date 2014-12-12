@@ -54,15 +54,15 @@ define("ADCOPY_SIGNUP",            "http://api.solvemedia.com/public/signup");
  * @param $data - array of string elements to be encoded
  * @return string - encoded request
  */
-function _adcopy_qsencode ($data)
+function _adcopy_qsencode($data)
 {
     $req = "";
-    foreach ( $data as $key => $value ) {
-        $req .= $key . '=' . urlencode( stripslashes($value) ) . '&';
+    foreach ($data as $key => $value) {
+        $req .= $key . '=' . urlencode(stripslashes($value)) . '&';
     }
 
         // Cut the last '&'
-        $req=substr($req,0,strlen($req)-1);
+        $req=substr($req, 0, strlen($req)-1);
     return $req;
 }
 
@@ -78,7 +78,7 @@ function _adcopy_qsencode ($data)
  */
 function _adcopy_http_post($host, $path, $data, $port = 80)
 {
-    $req = _adcopy_qsencode ($data);
+    $req = _adcopy_qsencode($data);
 
     $http_request  = "POST $path HTTP/1.0\r\n";
     $http_request .= "Host: $host\r\n";
@@ -89,13 +89,13 @@ function _adcopy_http_post($host, $path, $data, $port = 80)
     $http_request .= $req;
 
     $response = '';
-    if ( false == ( $fs = @fsockopen($host, $port, $errno, $errstr, 10) ) ) {
-        die ('Could not open socket');
+    if (false == ($fs = @fsockopen($host, $port, $errno, $errstr, 10))) {
+        die('Could not open socket');
     }
 
     fwrite($fs, $http_request);
 
-    while ( !feof($fs) ) {
+    while (!feof($fs)) {
         $response .= fgets($fs, 1024);
     } // One TCP-IP packet [sic]
         fclose($fs);
@@ -116,9 +116,9 @@ function _adcopy_http_post($host, $path, $data, $port = 80)
 
  * @return string - The HTML to be embedded in the user's form.
  */
-function solvemedia_get_html ($pubkey, $error = null, $use_ssl = false)
+function solvemedia_get_html($pubkey, $error = null, $use_ssl = false)
 {
-    if ($pubkey == 'KLoj-jfX2UP0GEYOmYX.NOWL0ReUhErZ' || $pubkey == '' || $pubkey == null ) {
+    if ($pubkey == 'KLoj-jfX2UP0GEYOmYX.NOWL0ReUhErZ' || $pubkey == '' || $pubkey == null) {
         $pubkey = 'KLoj-jfX2UP0GEYOmYX.NOWL0ReUhErZ'; // Redeclare default key in case of null value
 
         $page_file = basename($_SERVER['PHP_SELF']); // Get the file generating the page to figure out what key to assign it
@@ -173,9 +173,9 @@ class SolveMediaResponse
   * @param string $hashkey
   * @return SolveMediaResponse
   */
-function solvemedia_check_answer ($privkey, $remoteip, $challenge, $response, $hashkey = '' )
+function solvemedia_check_answer($privkey, $remoteip, $challenge, $response, $hashkey = '')
 {
-    if ($privkey == 'Dm.c-mjmNP7Fhz-hKOpNz8l.NAMGp0wO' || $privkey == '' || $privkey == null ) {
+    if ($privkey == 'Dm.c-mjmNP7Fhz-hKOpNz8l.NAMGp0wO' || $privkey == '' || $privkey == null) {
         // Re-declare the default private key and hash in case of null value
         $privkey = 'Dm.c-mjmNP7Fhz-hKOpNz8l.NAMGp0wO';
         $hashkey = 'nePptHN4rt.-UVLPFScpSuddqdtFdu2N';
@@ -194,7 +194,7 @@ function solvemedia_check_answer ($privkey, $remoteip, $challenge, $response, $h
     }
 
     if ($remoteip == null || $remoteip == '') {
-        die ("For security reasons, you must pass the remote ip to solvemedia");
+        die("For security reasons, you must pass the remote ip to solvemedia");
     }
 
         //discard spam submissions
@@ -205,8 +205,8 @@ function solvemedia_check_answer ($privkey, $remoteip, $challenge, $response, $h
             return $adcopy_response;
         }
 
-    $response = _adcopy_http_post (ADCOPY_VERIFY_SERVER, "/papi/verify",
-                                          array (
+    $response = _adcopy_http_post(ADCOPY_VERIFY_SERVER, "/papi/verify",
+                                          array(
                                                  'privatekey' => $privkey,
                                                  'remoteip'   => $remoteip,
                                                  'challenge'  => $challenge,
@@ -214,21 +214,21 @@ function solvemedia_check_answer ($privkey, $remoteip, $challenge, $response, $h
                                                  )
                                           );
 
-    $answers = explode ("\n", $response [1]);
+    $answers = explode("\n", $response [1]);
     $adcopy_response = new SolveMediaResponse();
 
-    if ( strlen($hashkey) ) {
+    if (strlen($hashkey)) {
         # validate message authenticator
-            $hash = sha1( $answers[0] . $challenge . $hashkey );
+            $hash = sha1($answers[0] . $challenge . $hashkey);
 
-        if ( $hash != $answers[2] ) {
+        if ($hash != $answers[2]) {
             $adcopy_response->is_valid = false;
             $adcopy_response->error = 'hash-fail';
             return $adcopy_response;
         }
     }
 
-    if (trim ($answers [0]) == 'true') {
+    if (trim($answers [0]) == 'true') {
         $adcopy_response->is_valid = true;
     } else {
         $adcopy_response->is_valid = false;
@@ -244,13 +244,11 @@ function solvemedia_check_answer ($privkey, $remoteip, $challenge, $response, $h
  * @param string $domain The domain where the page is hosted
  * @param string $appname The name of your application
  */
-function solvemedia_get_signup_url ($domain = null, $appname = null)
+function solvemedia_get_signup_url($domain = null, $appname = null)
 {
-    return ADCOPY_SIGNUP . "?" .  _adcopy_qsencode (array ('domain' => $domain, 'app' => $appname));
+    return ADCOPY_SIGNUP . "?" .  _adcopy_qsencode(array('domain' => $domain, 'app' => $appname));
 }
 
 
 /* Mailhide related code */
-/* [ deleted ] */
-
-?>
+/* [ deleted ] */;

@@ -25,17 +25,17 @@ function upload_showpage()
 
             $sizes = unserialize(get_misc_data('upload_sizes'));
             for ($i=0; $i<sizeof($sizes); $i++) {
-                if (@in_array($sizes[$i],$_POST['delsize'])) {
+                if (@in_array($sizes[$i], $_POST['delsize'])) {
                     if ($_REQUEST['upload_defsize'] == $sizes[$i]) {
                         $_REQUEST['upload_defsize'] = 'orig';
                     }
-                    array_splice($sizes,$i--,1);
+                    array_splice($sizes, $i--, 1);
                 }
             }
             if (is_numeric($_POST['upload_width']) && $_POST['upload_width'] > 0 &&
                 is_numeric($_POST['upload_height']) && $_POST['upload_height'] > 0) {
                 $size = sanitize($_POST['upload_width'].'x'.$_POST['upload_height'], 3);
-                if (!@in_array($size,$sizes)) {
+                if (!@in_array($size, $sizes)) {
                     $sizes[] = $size;
 
                     $files = $db->get_results($sql = "SELECT a.* FROM " . table_prefix . "files a
@@ -44,12 +44,12 @@ function upload_showpage()
                     if ($files) {
                         misc_data_update('upload_sizes', serialize($sizes));
                         misc_data_update('upload_thumb_format', $_REQUEST['upload_thumb_format']);
-                        misc_data_update('upload_quality', $_REQUEST['upload_quality']<=100 && $_REQUEST['upload_quality']>=1 ? $_REQUEST['upload_quality'] : 80 );
+                        misc_data_update('upload_quality', $_REQUEST['upload_quality']<=100 && $_REQUEST['upload_quality']>=1 ? $_REQUEST['upload_quality'] : 80);
                         $settings = get_upload_settings();
 
                         foreach ($files as $file) {
                             generate_thumbs(
-                        strpos($file->file_name,'http')===0 ? $file->file_name : mnmpath.sanitize($_REQUEST['upload_directory'], 3).'/'.$file->file_name,
+                        strpos($file->file_name, 'http')===0 ? $file->file_name : mnmpath.sanitize($_REQUEST['upload_directory'], 3).'/'.$file->file_name,
                         $file->file_link_id,
                         $settings,
                         $file->file_id,
@@ -61,8 +61,8 @@ function upload_showpage()
 
             $fields = unserialize(base64_decode(get_misc_data('upload_fields')));
             for ($i=0; $i<sizeof($fields); $i++) {
-                if (in_array($fields[$i],$_POST['delfield'])) {
-                    array_splice($fields,$i--,1);
+                if (in_array($fields[$i], $_POST['delfield'])) {
+                    array_splice($fields, $i--, 1);
                 }
             }
             if ($_POST['upload_new_field']) {
@@ -103,8 +103,8 @@ function upload_showpage()
             misc_data_update('upload_thumb_format', $_REQUEST['upload_thumb_format']);
             misc_data_update('upload_t_pre_format', $_REQUEST['upload_thumb_pre_format']);
             misc_data_update('upload_t_post_format', $_REQUEST['upload_thumb_post_format']);
-            misc_data_update('upload_allow_hide', sanitize($_REQUEST['upload_allow_hide'],3));
-            misc_data_update('upload_quality', $_REQUEST['upload_quality']<=100 && $_REQUEST['upload_quality']>=1 ? $_REQUEST['upload_quality'] : 80 );
+            misc_data_update('upload_allow_hide', sanitize($_REQUEST['upload_allow_hide'], 3));
+            misc_data_update('upload_quality', $_REQUEST['upload_quality']<=100 && $_REQUEST['upload_quality']>=1 ? $_REQUEST['upload_quality'] : 80);
             misc_data_update('upload_link', sanitize($_REQUEST['upload_link'], 3));
             misc_data_update('upload_directory', sanitize($_REQUEST['upload_directory'], 3));
             misc_data_update('upload_thdirectory', sanitize($_REQUEST['upload_thdirectory'], 3));
@@ -132,8 +132,8 @@ function upload_showpage()
 
         define('pagename', 'admin_modifyupload');
         $main_smarty->assign('pagename', pagename);
-        $main_smarty->assign('settings', str_replace('"','&#034;',get_upload_settings()));
-        $main_smarty->assign('places',$upload_places);
+        $main_smarty->assign('settings', str_replace('"', '&#034;', get_upload_settings()));
+        $main_smarty->assign('places', $upload_places);
         $main_smarty->assign('tpl_center', upload_tpl_path . 'upload_main');
         $main_smarty->display($template_dir . '/admin/admin.tpl');
     } else {
@@ -179,7 +179,7 @@ function upload_do_comment_submit($vars)
         foreach ($_SESSION['upload_files'] as $number => $file) {
             if ($file['comment']) {
                 $db->query("UPDATE ".table_prefix."files SET file_comment_id=$vars[comment] WHERE file_comment_id=-1 AND (file_id=$file[id] OR file_orig_id=$file[id])");
-                unset ($_SESSION['upload_files'][$number]);
+                unset($_SESSION['upload_files'][$number]);
             }
         }
     }
@@ -192,18 +192,18 @@ function upload_save_files()
     $settings = get_upload_settings();
     $upload_dir = mnmpath . $settings['directory'];
     $last_id = $count = 0;
-    $extensions = preg_split('/[ ,.]+/',$settings['extensions']);
+    $extensions = preg_split('/[ ,.]+/', $settings['extensions']);
 
     // Save additional fields
     $fields = array();
     foreach ($_POST as $k => $v) {
-        if (strpos($k,"field")===0) {
-            $fields[$k] = sanitize($v,3);
+        if (strpos($k, "field")===0) {
+            $fields[$k] = sanitize($v, 3);
         }
     }
 
 
-    if (strstr($settings['external'],'file') && $_FILES["upload_files"]["error"]) {
+    if (strstr($settings['external'], 'file') && $_FILES["upload_files"]["error"]) {
         if (is_dir($upload_dir)) {
             foreach ($_FILES["upload_files"]["error"] as $key => $err) {
                 if ($_FILES["upload_files"]["size"][$key]/1024 > $settings['filesize']) {
@@ -211,11 +211,11 @@ function upload_save_files()
                 } elseif ($err == UPLOAD_ERR_OK) {
                     $tmp_name = $_FILES["upload_files"]["tmp_name"][$key];
                     $name = $_FILES["upload_files"]["name"][$key];
-                    if ($ext = strrchr($name,'.')) {
-                        $name = str_replace($ext,'',$name);
-                        $ext  = substr($ext,1);
+                    if ($ext = strrchr($name, '.')) {
+                        $name = str_replace($ext, '', $name);
+                        $ext  = substr($ext, 1);
                     }
-                    if ($ext && in_array(strtolower($ext),$extensions)) {
+                    if ($ext && in_array(strtolower($ext), $extensions)) {
                         while (file_exists("$upload_dir/$name$i.$ext")) {
                             $i++;
                         }
@@ -232,7 +232,7 @@ function upload_save_files()
 						    file_name='".$db->escape("$name.$ext")."'");
                             $count++;
                             $last_id = $db->insert_id;
-                            $error = generate_thumbs("$upload_dir/$name.$ext",$linkres->id,$settings,$db->insert_id);
+                            $error = generate_thumbs("$upload_dir/$name.$ext", $linkres->id, $settings, $db->insert_id);
                         } else {
                             $error = "Error copying file to $upload_dir/$name";
                         }
@@ -247,13 +247,13 @@ function upload_save_files()
     }
 
     // Add external links here
-    if (strstr($settings['external'],'url') && $_POST["upload_urls"]) {
+    if (strstr($settings['external'], 'url') && $_POST["upload_urls"]) {
         foreach ($_POST["upload_urls"] as $url) {
             if ($count > $settings['maxnumber']) {
                 break;
             }
             $url = trim($url);
-            if (strlen($url)>10 && strpos($url,'http')===0) {
+            if (strlen($url)>10 && strpos($url, 'http')===0) {
                 $db->query("INSERT INTO ".table_prefix."files
 					SET file_size='orig',
 					    file_user_id={$current_user->user_id},
@@ -263,7 +263,7 @@ function upload_save_files()
 					    file_name='".$db->escape($url)."'");
                 $count++;
                 $last_id = $db->insert_id;
-                $error = generate_thumbs($url,$linkres->id,$settings,$last_id);
+                $error = generate_thumbs($url, $linkres->id, $settings, $last_id);
             }
         }
     }
@@ -276,7 +276,7 @@ function upload_save_files()
     }
 }
 
-function generate_thumbs($fname,$link_id,$settings,$orig_id,$only_size='')
+function generate_thumbs($fname, $link_id, $settings, $orig_id, $only_size='')
 {
     global $db, $current_user;
 
@@ -312,20 +312,20 @@ function generate_thumbs($fname,$link_id,$settings,$orig_id,$only_size='')
     $thumb_dir = mnmpath . $settings['thdirectory'];
 
     // load image and get image size
-    $width  = imagesx( $img );
-    $height = imagesy( $img );
+    $width  = imagesx($img);
+    $height = imagesy($img);
     $error  = '';
     foreach ($settings['sizes'] as $size) {
-        if (!strstr($size,'x') || ($only_size && $only_size!=$size)) {
+        if (!strstr($size, 'x') || ($only_size && $only_size!=$size)) {
             continue;
         }
-        list($maxw,$maxh) = explode('x',$size);
+        list($maxw, $maxh) = explode('x', $size);
         if ($maxw <= 0 || $maxh <= 0) {
             continue;
         }
 
     // Thumbnail file name
-    if (preg_match('/([^\/]+)\.[^\/]+$/',$fname,$m) || preg_match('/([^\/]+)$/',$fname,$m)) {
+    if (preg_match('/([^\/]+)\.[^\/]+$/', $fname, $m) || preg_match('/([^\/]+)$/', $fname, $m)) {
         $name = $m[1];
     } else {
         $name = $fname;
@@ -333,7 +333,7 @@ function generate_thumbs($fname,$link_id,$settings,$orig_id,$only_size='')
         $name = "$name$size";
 
     // calculate thumbnail size
-    $c = max($width/$maxw,$height/$maxh);
+    $c = max($width/$maxw, $height/$maxh);
         if ($c > 1) {
             $new_width  = floor($width/$c);
             $new_height = floor($height/$c);
@@ -343,7 +343,7 @@ function generate_thumbs($fname,$link_id,$settings,$orig_id,$only_size='')
         }
 
     // create a new temporary image
-          $tmp_img = imagecreatetruecolor( $new_width, $new_height );
+          $tmp_img = imagecreatetruecolor($new_width, $new_height);
 
           // copy and resize old image into new image
         while (file_exists("$thumb_dir/$name$i.jpg")) {
@@ -351,9 +351,9 @@ function generate_thumbs($fname,$link_id,$settings,$orig_id,$only_size='')
         }
         $name = "$name$i.jpg";
 
-        imagecopyresized( $tmp_img, $img, 0, 0, 0, 0, $new_width, $new_height, $width, $height );
+        imagecopyresized($tmp_img, $img, 0, 0, 0, 0, $new_width, $new_height, $width, $height);
 
-        if (!imagejpeg( $tmp_img, "$thumb_dir/$name",$settings['quality'] )) {
+        if (!imagejpeg($tmp_img, "$thumb_dir/$name", $settings['quality'])) {
             $error .= "Can't create thumbnail $thumb_dir/$name";
         } else {
             $db->query("INSERT INTO ".table_prefix."files
@@ -414,7 +414,7 @@ function upload_get_file_count($link_id)
     global $db;
 
     $sql = "SELECT COUNT(*) FROM " . table_prefix . "files where file_link_id='$link_id' AND file_size='orig'";
-    $row = $db->get_row($sql,ARRAY_N);
+    $row = $db->get_row($sql, ARRAY_N);
     return $row[0];
 }
 
@@ -441,7 +441,7 @@ function upload_track($vars)
 
     $content = $vars['smarty']->_vars['story_content'];
     $link_id = $vars['smarty']->_vars['link_id'];
-    if (preg_match_all('/\{image(\d+)(\_(\d+x\d+))?\}/s',$content,$m)) {
+    if (preg_match_all('/\{image(\d+)(\_(\d+x\d+))?\}/s', $content, $m)) {
         for ($i=0; $i<sizeof($m[1]); $i++) {
             $number = $m[1][$i];
             $size = $m[3][$i];
@@ -450,7 +450,7 @@ function upload_track($vars)
             }
 
             if ($file = $db->get_row($sql = "SELECT * FROM " . table_prefix . "files where file_link_id='$link_id' AND file_size='$size' AND file_number=$number AND file_comment_id=0")) {
-                if (strpos($file->file_name,'http')===0) {
+                if (strpos($file->file_name, 'http')===0) {
                     $image = "<img src='{$file->file_name}'/>";
                 } elseif ($file->file_size=='orig') {
                     $image = "<img src='".my_pligg_base."{$upload_dir}/{$file->file_name}'/>";
@@ -460,14 +460,14 @@ function upload_track($vars)
             } else {
                 $image = '';
             }
-            $content = str_replace($m[0][$i],$image,$content);
+            $content = str_replace($m[0][$i], $image, $content);
         }
     }
 
     $images = $db->get_results($sql = "SELECT * FROM " . table_prefix . "files where file_link_id='$link_id' AND file_comment_id=0");
     if ($images) {
         foreach ($images as $file) {
-            if (strpos($file->file_name,'http')===0) {
+            if (strpos($file->file_name, 'http')===0) {
                 $image = "<img src='{$file->file_name}'/>";
             } elseif ($file->file_size=='orig') {
                 $image = "<img src='".my_pligg_base."{$upload_dir}/{$file->file_name}'/>";
@@ -503,7 +503,7 @@ function upload_comment_track($vars)
             }
 
             if ($file = $db->get_row($sql = "SELECT * FROM " . table_prefix . "files where file_comment_id='$comment_id' AND file_size='$size' AND file_number=$number")) {
-                if (strpos($file->file_name,'http')===0) {
+                if (strpos($file->file_name, 'http')===0) {
                     $image = "<img src='{$file->file_name}'/>";
                 } elseif ($file->file_size=='orig') {
                     $image = "<img src='".my_pligg_base."{$upload_dir}/{$file->file_name}'/>";
@@ -513,14 +513,14 @@ function upload_comment_track($vars)
             } else {
                 $image = '';
             }
-            $content = str_replace($m[0][$i],$image,$content);
+            $content = str_replace($m[0][$i], $image, $content);
         }
     }
 
     $images = $db->get_results($sql = "SELECT * FROM " . table_prefix . "files where file_comment_id='$comment_id'");
     if ($images) {
         foreach ($images as $file) {
-            if (strpos($file->file_name,'http')===0) {
+            if (strpos($file->file_name, 'http')===0) {
                 $image = "<img src='{$file->file_name}'/>";
             } elseif ($file->file_size=='orig') {
                 $image = "<img src='".my_pligg_base."{$upload_dir}/{$file->file_name}'/>";
@@ -602,7 +602,7 @@ function upload_rss_item($vars)
 			FROM " . table_prefix . "files a
 			WHERE a.file_link_id='{$vars['item']->id}' AND a.file_size='orig' AND a.file_comment_id=0
 			ORDER BY file_number";
-    $images = $db->get_results($sql,ARRAY_A);
+    $images = $db->get_results($sql, ARRAY_A);
     if ($images) {
         foreach ($images as $image) {
             print "<media:content url=\"".my_base_url.my_pligg_base."{$upload_directory}/{$image['file_name']}\" medium=\"image\" />\n";
@@ -625,11 +625,10 @@ function upload_comment_rss_item($vars)
 			FROM " . table_prefix . "files a
 			WHERE a.file_comment_id='{$vars['item']->id}' AND a.file_size='orig'
 			ORDER BY file_number";
-    $images = $db->get_results($sql,ARRAY_A);
+    $images = $db->get_results($sql, ARRAY_A);
     if ($images) {
         foreach ($images as $image) {
             print "<media:content url=\"".my_base_url.my_pligg_base."{$upload_directory}/{$image['file_name']}\" medium=\"image\" />\n";
         }
     }
 }
-?>

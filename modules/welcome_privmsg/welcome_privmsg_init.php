@@ -8,9 +8,8 @@ if (defined('mnminclude')) {
     $include_in_pages = array('register');
     $do_not_include_in_pages = array();
 
-    if ( do_we_load_module() ) {
+    if (do_we_load_module()) {
         module_add_action('register_success_pre_redirect', 'welcome_privmsg_send', '');
         include_once(mnmmodules . 'welcome_privmsg/welcome_privmsg_main.php');
     }
 }
-?>

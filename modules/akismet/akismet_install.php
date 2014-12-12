@@ -31,5 +31,3 @@
 		) ENGINE=MyISAM ");
 
     $module_info['db_sql'][] = "INSERT INTO ".table_widgets." (`name`, `version`, `latest_version`, `folder`, `enabled`, `column`, `position`, `display`) VALUES ('Akismet', 0.1, 0, 'akismet', 1, 'right', 7, '')";
-
-?>

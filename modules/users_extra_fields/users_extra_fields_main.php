@@ -96,4 +96,3 @@
         }
         $main_smarty->assign('users_extra_fields_field', $users_extra_fields_field);
     }
-?>

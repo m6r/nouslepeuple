@@ -34,15 +34,15 @@ if ($requestID > 0 && enable_friendly_urls == true) {
 
     $url = getmyurl("storyURL", $link->category_safe_name($link->category), urlencode($link->title_url), $link->id);
 
-    Header( "HTTP/1.1 301 Moved Permanently" );
-    Header( "Location: " . $url );
+    Header("HTTP/1.1 301 Moved Permanently");
+    Header("Location: " . $url);
 
     die();
 }
 
 // if we're using "Friendly URL's for stories"
 // DB 08/01/08
-$requestTitle = sanitize($requestTitle,4);
+$requestTitle = sanitize($requestTitle, 4);
 /////
 if (isset($requestTitle)) {
     $requestID = $db->get_var("SELECT link_id FROM " . table_links . " WHERE `link_title_url` = '$requestTitle';");
@@ -99,7 +99,7 @@ if (is_numeric($requestID)) {
     $main_smarty->assign('navbar_where', $navwhere);
 
     // for the comment form
-    $randkey = rand(1000000,100000000);
+    $randkey = rand(1000000, 100000000);
     $main_smarty->assign('randkey', $randkey);
     $main_smarty->assign('link_id', $link->id);
     $main_smarty->assign('user_id', $current_user->user_id);
@@ -147,24 +147,24 @@ if (is_numeric($requestID)) {
     die();
 }
 
-function get_comments ($fetch = false)
+function get_comments($fetch = false)
 {
-    Global $db, $main_smarty, $current_user, $CommentOrder, $link;
+    global $db, $main_smarty, $current_user, $CommentOrder, $link;
 
     //Set comment order to 1 if it's not set in the admin panel
     if (!isset($CommentOrder)) {
         $CommentOrder = 1;
     }
-    If ($CommentOrder == 1) {
+    if ($CommentOrder == 1) {
         $CommentOrderBy = "comment_votes DESC, comment_date DESC";
     }
-    If ($CommentOrder == 2) {
+    if ($CommentOrder == 2) {
         $CommentOrderBy = "comment_date DESC";
     }
-    If ($CommentOrder == 3) {
+    if ($CommentOrder == 3) {
         $CommentOrderBy = "comment_votes ASC, comment_date DESC";
     }
-    If ($CommentOrder == 4) {
+    if ($CommentOrder == 4) {
         $CommentOrderBy = "comment_date ASC";
     }
 
@@ -203,7 +203,7 @@ function get_comments ($fetch = false)
 }
 
 
-function insert_comment ()
+function insert_comment()
 {
     global $link, $db, $current_user;
 
@@ -239,4 +239,3 @@ function insert_comment ()
         }
     }
 }
-?>

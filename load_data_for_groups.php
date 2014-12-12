@@ -21,4 +21,3 @@
         }
         echo $group_display;
     }
-?>

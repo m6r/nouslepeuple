@@ -95,7 +95,7 @@ function simple_messaging_showpage()
                     $m = new KMessaging(true);
                     foreach ($message as $key => $value) {
                         if ($value == "delete") {
-                            $result = $m->DeleteMessage($key,2);
+                            $result = $m->DeleteMessage($key, 2);
 //							$db->query('DELETE FROM `' . table_messages . '` WHERE `idMsg` = "'.$key.'"');
                         }
                     }
@@ -155,7 +155,7 @@ function simple_messaging_showpage()
                 $m = new KMessaging(true);
                 foreach ($message as $key => $value) {
                     if ($value == "delete") {
-                        $result = $m->DeleteMessage($key,1);
+                        $result = $m->DeleteMessage($key, 1);
                     }
                 }
 
@@ -258,7 +258,7 @@ function simple_messaging_showpage()
         $msg_from_ID = $current_user->user_id;
 
         $message = new KMessaging(true);
-        $msg_result = $message->SendMessage($msg_subject,$msg_body,$msg_from_ID,$msg_to_ID,0);
+        $msg_result = $message->SendMessage($msg_subject, $msg_body, $msg_from_ID, $msg_to_ID, 0);
         if ($msg_result != 0) {
             $main_smarty->config_load(simple_messaging_lang_conf);
             //print 'PLIGG_MESSAGING_Error_'.$msg_result;
@@ -430,4 +430,3 @@ function messaging_get_message_details($msgID)
         die();
     }
 }
-?>

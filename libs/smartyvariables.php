@@ -247,4 +247,3 @@ if ($current_user->user_id > 0 && $current_user->authenticated) {
     $main_smarty->assign('isAdmin', checklevel('admin'));
     $main_smarty->assign('isModerator', checklevel('moderator'));
 }
-?>

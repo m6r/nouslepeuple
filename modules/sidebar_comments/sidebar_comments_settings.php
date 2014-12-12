@@ -13,5 +13,3 @@ if (is_object($main_smarty)) {
     $main_smarty->assign('sidebar_comments_path', sidebar_comments_path);
     $main_smarty->assign('sidebar_comments_tpl_path', sidebar_comments_tpl_path);
 }
-
-?>

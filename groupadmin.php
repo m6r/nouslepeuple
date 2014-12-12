@@ -39,4 +39,3 @@ if (isset($_REQUEST["role"])) {
     //$db->query("UPDATE " . table_group_member . " set member_role='".$role."' WHERE member_user_id 	=".$userid." and member_group_id 	=".$id."");
     die;
 }
-?>

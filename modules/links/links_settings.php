@@ -33,5 +33,3 @@ if (isset($main_smarty) && is_object($main_smarty)) {
     $main_smarty->assign('links_lang_conf', links_lang_conf);
     $main_smarty->assign('links_tpl_path', links_tpl_path);
 }
-
-?>

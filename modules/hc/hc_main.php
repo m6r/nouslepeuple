@@ -78,4 +78,3 @@ function hc_register_check_errors(&$vars)
     }
     return true;
 }
-?>

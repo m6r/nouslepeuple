@@ -22,5 +22,3 @@ if ($_REQUEST['widget']=='pligg_products') {
 if ($main_smarty) {
     $main_smarty->assign('product_count', $product_count);
 }
-
-?>

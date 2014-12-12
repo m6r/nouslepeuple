@@ -84,7 +84,7 @@ function print_comment_form($fetch = false)
     global $link, $current_user, $main_smarty, $the_template;
 
     // misc smarty
-    $main_smarty->assign('randkey', rand(1000000,100000000));
+    $main_smarty->assign('randkey', rand(1000000, 100000000));
     $main_smarty->assign('link_id', $link->id);
     $main_smarty->assign('user_id', $current_user->user_id);
 
@@ -96,10 +96,10 @@ function print_comment_form($fetch = false)
     }
 }
 
-function insert_comment ()
+function insert_comment()
 {
     global $commentownerid, $link, $db, $current_user, $main_smarty, $the_template;
-    check_actions('story_edit_comment',$vars);
+    check_actions('story_edit_comment', $vars);
 
     // Check if is a POST of a comment
     if (sanitize($_POST['link_id'], 3) == $link->id &&
@@ -107,7 +107,7 @@ function insert_comment ()
             sanitize($_POST['user_id'], 3) == $current_user->user_id &&
             is_numeric(sanitize($_POST['randkey'], 3)) &&
             sanitize($_POST['randkey'], 3) > 0 &&
-            sanitize($_POST['comment_content'], 4) != '' ) {
+            sanitize($_POST['comment_content'], 4) != '') {
         require_once(mnminclude.'comment.php');
         $comment = new Comment;
         $comment->id=$link->commentid;
@@ -124,7 +124,7 @@ function insert_comment ()
         }
         $vars['comment'] = $comment->id;
         $vars = array('comment'=>&$comment);
-        check_actions( 'after_comment_edit', $vars ) ;
+        check_actions('after_comment_edit', $vars) ;
         if ($vars['comment']->status) {
             $comment->status = $vars['comment']->status;
         }
@@ -134,5 +134,3 @@ function insert_comment ()
         die;
     }
 }
-
-?>

@@ -23,7 +23,7 @@ if (defined('mnminclude')) {
     $include_in_pages = array('all');
     $do_not_include_in_pages = array();
 
-    if ( do_we_load_module() ) {
+    if (do_we_load_module()) {
         if ($moduleName == 'xml_sitemaps_show_sitemap') {
             module_add_action('module_page', 'xml_sitemaps_show_sitemap', '');
             include_once(mnmmodules . 'xml_sitemaps/xml_sitemaps_main.php');
@@ -32,4 +32,3 @@ if (defined('mnminclude')) {
         include_once(mnmmodules . 'xml_sitemaps/xml_sitemaps_main.php');
     }
 }
-?>

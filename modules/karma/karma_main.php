@@ -53,7 +53,7 @@ function karma_showpage()
 
         define('pagename', 'admin_modify_karma');
         $main_smarty->assign('pagename', pagename);
-        $main_smarty->assign('settings', str_replace('"','&#034;',get_karma_settings()));
+        $main_smarty->assign('settings', str_replace('"', '&#034;', get_karma_settings()));
         $main_smarty->assign('tpl_center', karma_tpl_path . 'karma_main');
         $main_smarty->display($template_dir . '/admin/admin.tpl');
     } else {
@@ -204,5 +204,3 @@ function get_karma_settings()
         'comment_delete' => get_misc_data('karma_comment_delete')
         );
 }
-
-?>

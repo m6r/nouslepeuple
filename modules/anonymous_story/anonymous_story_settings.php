@@ -37,5 +37,3 @@ if (is_object($main_smarty)) {
     $main_smarty->assign('anonymous_story_tpl_path', anonymous_story_tpl_path);
     $main_smarty->assign('URL_anonymous_story', URL_anonymous_story);
 }
-
-?>

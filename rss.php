@@ -221,4 +221,3 @@ function onlyreadables($string)
     }
     return str_replace("~", "", $string);
 }
-?>

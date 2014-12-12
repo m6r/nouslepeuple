@@ -1,6 +1,6 @@
 <?php
 $language = addslashes(strip_tags($_REQUEST['language']));
-include ('header.php');
+include('header.php');
 
 if ($language == 'arabic') {
     include_once('./languages/lang_arabic.php');

@@ -142,7 +142,7 @@ if ($time > 0) {
     if ($cat > 0) {
         $child_cats = '';
         // do we also search the subcategories?
-        if ( Independent_Subcategories == true) {
+        if (Independent_Subcategories == true) {
             $child_array = '';
 
             // get a list of all children and put them in $child_array.
@@ -255,5 +255,3 @@ function onlyreadables($string)
     }
     return str_replace("~", "", $string);
 }
-
-?>

@@ -10,9 +10,9 @@
     include(mnminclude.'search.php');
     include(mnminclude.'smartyvariables.php');
 
-    $_REQUEST['search'] = str_replace(array('://',':/'),array(':\\',':\\'),$_REQUEST['search']);
-    if (strstr($_REQUEST['search'],'/') && $URLMethod == 2) {
-        $post = preg_split('/\//',$_REQUEST['search']);
+    $_REQUEST['search'] = str_replace(array('://', ':/'), array(':\\', ':\\'), $_REQUEST['search']);
+    if (strstr($_REQUEST['search'], '/') && $URLMethod == 2) {
+        $post = preg_split('/\//', $_REQUEST['search']);
         $_GET['search'] = $_REQUEST['search'] = $post[0];
         for ($i=1; $i+1<sizeof($post); $i+=2) {
             $_GET[$post[$i]] = $_REQUEST[$post[$i]] = $post[$i+1];
@@ -20,13 +20,13 @@
 
         $get = array();
         foreach ($_GET as $k => $v) {
-            $get[$k] = stripslashes(htmlentities(strip_tags($v),ENT_QUOTES,'UTF-8'));
+            $get[$k] = stripslashes(htmlentities(strip_tags($v), ENT_QUOTES, 'UTF-8'));
         }
         $get['return'] = addslashes($get['return']);
-        $main_smarty->assign('get',$get);
+        $main_smarty->assign('get', $get);
     }
 
-    $_REQUEST['search'] = str_replace(array(':\\',':\\','|'),array('://',':/','/'),$_REQUEST['search']);
+    $_REQUEST['search'] = str_replace(array(':\\', ':\\', '|'), array('://', ':/', '/'), $_REQUEST['search']);
     #$_GET['search'] = $_REQUEST['search'] = sanitize(str_replace(array(':\\',':\\','|'),array('://',':/','/'),$_REQUEST['search']),2);
     if ($_REQUEST['search'] == '-') {
         $_GET['search'] = $_REQUEST['search'] = '';
@@ -41,7 +41,7 @@
     if (isset($_REQUEST['from'])) {
         $search->newerthan = sanitize($_REQUEST['from'], 3);
     }
-    if (preg_match('/^\s*((http[s]?:\/+)?(www\.)?([\w_\-\d]+\.)+\w{2,4}(\/[\w_\-\d\.]+)*\/?(\?[^\s]*)?)\s*$/i',$_REQUEST['search'],$m)) {
+    if (preg_match('/^\s*((http[s]?:\/+)?(www\.)?([\w_\-\d]+\.)+\w{2,4}(\/[\w_\-\d\.]+)*\/?(\?[^\s]*)?)\s*$/i', $_REQUEST['search'], $m)) {
         $_REQUEST['url'] = $m[1];
     } else {
         $search->searchTerm = $db->escape(sanitize($_REQUEST['search']), 3);
@@ -54,7 +54,7 @@
         $search->isTag = true;
     }
     if (isset($_REQUEST['url'])) {
-        $search->url = sanitize(preg_replace('/^(http[s]?:\/+)?(www\.)?/i','',$_REQUEST['url']), 3);
+        $search->url = sanitize(preg_replace('/^(http[s]?:\/+)?(www\.)?/i', '', $_REQUEST['url']), 3);
     }
 
     // figure out what "page" of the results we're on
@@ -96,18 +96,18 @@ $main_smarty->assign('index_url_downvoted', $request_uri . 'downvoted'  . ($URLM
 $main_smarty->assign('index_url_commented', $request_uri . 'commented'  . ($URLMethod == 2 ? '/' : ''));
 
 //Advanced Search
-if ( isset( $_REQUEST['adv'] ) && $_REQUEST['adv'] == 1 ) {
+if (isset($_REQUEST['adv']) && $_REQUEST['adv'] == 1) {
     $search->adv = true;
-    $search->s_group = sanitize($_REQUEST['sgroup'],2);
-    $search->s_tags = sanitize($_REQUEST['stags'],2);
-    $search->s_story = sanitize($_REQUEST['slink'],2);
-    $search->status = sanitize($_REQUEST['status'],2);
-    $search->s_user = sanitize($_REQUEST['suser'],2);
-    $search->s_cat = sanitize($_REQUEST['scategory'],2);
-    $search->s_comments = sanitize($_REQUEST['scomments'],2);
-    $search->s_date = sanitize($_REQUEST['date'],2);
+    $search->s_group = sanitize($_REQUEST['sgroup'], 2);
+    $search->s_tags = sanitize($_REQUEST['stags'], 2);
+    $search->s_story = sanitize($_REQUEST['slink'], 2);
+    $search->status = sanitize($_REQUEST['status'], 2);
+    $search->s_user = sanitize($_REQUEST['suser'], 2);
+    $search->s_cat = sanitize($_REQUEST['scategory'], 2);
+    $search->s_comments = sanitize($_REQUEST['scomments'], 2);
+    $search->s_date = sanitize($_REQUEST['date'], 2);
 
-    if ( intval( $_REQUEST['sgroup'] ) > 0 ) {
+    if (intval($_REQUEST['sgroup']) > 0) {
         $display_grouplinks = true;
     }
 }
@@ -123,9 +123,9 @@ $main_smarty->assign('posttitle', $main_smarty->get_config_vars('PLIGG_Visual_Br
 $main_smarty = do_sidebar($main_smarty);
 
 // misc smarty
-$main_smarty->assign('searchboxtext',sanitize($_REQUEST['search'],2));
+$main_smarty->assign('searchboxtext', sanitize($_REQUEST['search'], 2));
 $main_smarty->assign('cat_url', getmyurl("maincategory"));
-$main_smarty->assign('URL_rss_page', getmyurl('rsssearch',sanitize($search->searchTerm,2)));
+$main_smarty->assign('URL_rss_page', getmyurl('rsssearch', sanitize($search->searchTerm, 2)));
 
 if (strlen($search->searchTerm) < 3 && strlen($search->url) < 3 && !$search->s_date) {
     $main_smarty->assign('posttitle', $main_smarty->get_config_vars('PLIGG_Visual_Search_Too_Short'));
@@ -155,7 +155,7 @@ if (strlen($search->searchTerm) < 3 && strlen($search->url) < 3 && !$search->s_d
     $pages = do_pages($rows, $page_size, "search", true);
 
     if ($_REQUEST['tag']) {
-        $pages = str_replace('/search/','/tag/',$pages);
+        $pages = str_replace('/search/', '/tag/', $pages);
     }
 
     if (Auto_scroll==2 || Auto_scroll==3) {
@@ -170,4 +170,3 @@ if (strlen($search->searchTerm) < 3 && strlen($search->url) < 3 && !$search->s_d
 // show the template
 $main_smarty->assign('tpl_center', $the_template . '/search_center');
 $main_smarty->display($the_template . '/pligg.tpl');
-?>

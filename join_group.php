@@ -17,10 +17,10 @@ if (isset($_REQUEST['id'])) {
     $gid = $_REQUEST['id'];
     $privacy = $_REQUEST['privacy'];
     if ($_REQUEST['join'] == "true") {
-        joinGroup($gid,$privacy);
+        joinGroup($gid, $privacy);
     }
     if ($_REQUEST['join'] == "false") {
-        unjoinGroup($gid,$privacy);
+        unjoinGroup($gid, $privacy);
     }
     //page redirect
     $redirect = '';
@@ -29,7 +29,7 @@ if (isset($_REQUEST['id'])) {
     die;
 }
 //to activate the group from mail link
-if ( $_REQUEST['activate'] == 'true') {
+if ($_REQUEST['activate'] == 'true') {
     $member_status = 'active';
     $group_id = $_REQUEST['group_id'];
     $user_id = $_REQUEST['user_id'];
@@ -42,7 +42,7 @@ if ( $_REQUEST['activate'] == 'true') {
         $owner = $db->get_var("SELECT group_creator FROM " . table_groups . " WHERE group_id = $group_id");
         $canIhaveAccess = ($owner == $current_user->user_id);
         if (!$canIhaveAccess) {
-            $member = $db->get_row("SELECT * FROM " . table_group_member . " WHERE member_group_id = $group_id AND member_user_id = '".$current_user->user_id ."' " );
+            $member = $db->get_row("SELECT * FROM " . table_group_member . " WHERE member_group_id = $group_id AND member_user_id = '".$current_user->user_id ."' ");
             $canIhaveAccess = ($member->member_status=='active' && $member->member_role=='moderator');
         }
     }
@@ -66,7 +66,7 @@ if ( $_REQUEST['activate'] == 'true') {
     }
     //page redirect
     $requestTitle = $db->get_var("SELECT group_safename FROM " . table_groups . " WHERE group_id = $group_id");
-    $redirect = str_replace("&amp;","&",getmyurl('group_story2', $requestTitle, 'members'));
+    $redirect = str_replace("&amp;", "&", getmyurl('group_story2', $requestTitle, 'members'));
     header("Location: $redirect");
     die;
 }
@@ -85,7 +85,7 @@ if ($_REQUEST['activate'] == 'false') {
         $owner = $db->get_var("SELECT group_creator FROM " . table_groups . " WHERE group_id = $group_id");
         $canIhaveAccess = ($owner == $current_user->user_id);
         if (!$canIhaveAccess) {
-            $member = $db->get_row("SELECT * FROM " . table_group_member . " WHERE member_group_id = $group_id AND member_user_id = '".$current_user->user_id ."' " );
+            $member = $db->get_row("SELECT * FROM " . table_group_member . " WHERE member_group_id = $group_id AND member_user_id = '".$current_user->user_id ."' ");
             $canIhaveAccess = ($member->member_status=='active' && $member->member_role=='moderator');
         }
     }
@@ -109,12 +109,12 @@ if ($_REQUEST['activate'] == 'false') {
     }
     //page redirect
     $requestTitle = $db->get_var("SELECT group_safename FROM " . table_groups . " WHERE group_id = $group_id");
-    $redirect = str_replace("&amp;","&",getmyurl('group_story2', $requestTitle, 'members'));
+    $redirect = str_replace("&amp;", "&", getmyurl('group_story2', $requestTitle, 'members'));
     header("Location: $redirect");
     die;
 }
 //to withdraw join group request
-if ( $_REQUEST['activate'] == 'withdraw') {
+if ($_REQUEST['activate'] == 'withdraw') {
     $group_id = $_REQUEST['group_id'];
     $user_id = $_REQUEST['user_id'];
     if (!is_numeric($user_id) || !is_numeric($group_id)) {
@@ -136,7 +136,7 @@ if ( $_REQUEST['activate'] == 'withdraw') {
     die;
 }
 //to activate the group from mail link
-if (in_array($_REQUEST['action'],array('published','new','discard'))) {
+if (in_array($_REQUEST['action'], array('published', 'new', 'discard'))) {
     $linkid = $_REQUEST['link'];
     if (!is_numeric($linkid)) {
         die();
@@ -153,4 +153,3 @@ if (in_array($_REQUEST['action'],array('published','new','discard'))) {
     //$redirect = getmyurl("group_story", $group_id);
     //header("Location: $redirect");
 }
-?>

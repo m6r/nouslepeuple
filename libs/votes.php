@@ -66,14 +66,14 @@ class Vote
 
 
 
-    function user_list_all_votes($cacheit = TRUE)
+    function user_list_all_votes($cacheit = true)
     {
         global $db, $cached_votes, $current_user;
 
         $cache_results = '';
         $where = '';
 
-        $get_data = FALSE;
+        $get_data = false;
         // by default we won't touch the DB
         // we'll check the cache first, and
         // access the DB only if needed.
@@ -110,7 +110,7 @@ class Vote
                         $where .= ' OR ';
                     }
                     $where .= ' vote_link_id = ' . $linkid;
-                    $get_data = TRUE;
+                    $get_data = true;
                     $i = $i + 1;
                 } else {
                     // if this linkid is already cached, use it
@@ -122,7 +122,7 @@ class Vote
             // we didnt send an array, we just send 1 link
             if (!isset($cached_votes[$this->link][$cache_user])) {
                 // we dont have the data cached so we need to get it
-                $get_data = TRUE;
+                $get_data = true;
 
                 $where = " vote_type='$this->type' AND vote_link_id=$this->link";
             }
@@ -311,7 +311,7 @@ class Vote
         }
         $this->value=intval($this->value);
         if (Voting_Method == 2) {
-            $sql="Select vote_id from " . table_votes . " where vote_type = '$this->type' and vote_user_id = $this->user and vote_link_id = $this->link ".($this->user > 0 ? "" : "AND vote_ip = '$this->ip'" )." LIMIT 1";
+            $sql="Select vote_id from " . table_votes . " where vote_type = '$this->type' and vote_user_id = $this->user and vote_link_id = $this->link ".($this->user > 0 ? "" : "AND vote_ip = '$this->ip'")." LIMIT 1";
         } else {
             $sql="Select vote_id from " . table_votes . " where vote_type = '$this->type' and vote_user_id = $this->user and vote_link_id = $this->link and vote_value = $this->value AND vote_ip = '$this->ip' LIMIT 1";
         }
@@ -322,4 +322,3 @@ class Vote
         }
     }
 }
-?>

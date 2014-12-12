@@ -164,4 +164,3 @@ if ($main_smarty) {
     $main_smarty->assign('mysqlver', $mysqlver);
     $main_smarty->assign('dbsize', $dbsize);
 }
-?>

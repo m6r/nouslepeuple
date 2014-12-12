@@ -70,7 +70,7 @@ if (empty($_POST['phase']) && (!empty($_GET['url']) || is_numeric($_GET['id'])))
     if (!empty($_GET['url'])) {
         $_POST['url'] = $_GET['url'];
     } else {
-        $row = $db->get_row("SELECT * FROM ".table_links." WHERE link_id='".$db->escape($_GET['id'])."' AND link_author='{$current_user->user_id}'",ARRAY_A);
+        $row = $db->get_row("SELECT * FROM ".table_links." WHERE link_id='".$db->escape($_GET['id'])."' AND link_author='{$current_user->user_id}'", ARRAY_A);
         if (!$row['link_id']) {
             define('pagename', 'submit');
             $main_smarty->assign('pagename', pagename);
@@ -81,7 +81,7 @@ if (empty($_POST['phase']) && (!empty($_GET['url']) || is_numeric($_GET['id'])))
         }
         $_POST['url'] = $row['link_url'];
     }
-    $_POST['randkey'] = rand(10000,10000000);
+    $_POST['randkey'] = rand(10000, 10000000);
     if (!empty($_GET['trackback'])) {
         $_POST['trackback'] = $_GET['trackback'];
     }
@@ -115,7 +115,7 @@ exit;
 function do_submit0()
 {
     global $main_smarty, $the_template;
-    $main_smarty->assign('submit_rand', rand(10000,10000000));
+    $main_smarty->assign('submit_rand', rand(10000, 10000000));
     $main_smarty->assign('Submit_Show_URL_Input', Submit_Show_URL_Input);
     $main_smarty->assign('Submit_Require_A_URL', Submit_Require_A_URL);
 
@@ -137,7 +137,7 @@ function do_submit1()
     $url = str_replace('&amp;', '&', $url);
     $url = html_entity_decode($url);
 
-    if (strpos($url,'http')!==0) {
+    if (strpos($url, 'http')!==0) {
         $url = "http://$url";
     }
 
@@ -146,7 +146,7 @@ function do_submit1()
 
     if (Submit_Show_URL_Input == false) {
         $url = "http://";
-        $linkres->randkey = rand(10000,10000000);
+        $linkres->randkey = rand(10000, 10000000);
     }
     $Submit_Show_URL_Input = Submit_Show_URL_Input;
     if ($url == "http://" || $url == "") {
@@ -156,7 +156,7 @@ function do_submit1()
     $edit = false;
     if (is_numeric($_GET['id'])) {
         $linkres->id = $_GET['id'];
-        $linkres->read(FALSE);
+        $linkres->read(false);
         $trackback=$_GET['trackback'];
     } else {
         $linkres->get($url);
@@ -171,7 +171,7 @@ function do_submit1()
         }
 
         if ($_POST['category']) {
-            $cats = explode(',',$_POST['category']);
+            $cats = explode(',', $_POST['category']);
             foreach ($cats as $cat) {
                 if ($cat_id = $db->get_var("SELECT category_id FROM ".table_categories." WHERE category_name='".$db->escape(trim($cat))."'")) {
                     $linkres->category = $cat_id;
@@ -244,12 +244,12 @@ function do_submit1()
     $main_smarty->assign('StorySummary_ContentTruncate', StorySummary_ContentTruncate);
     $main_smarty->assign('SubmitSummary_Allow_Edit', SubmitSummary_Allow_Edit);
     $main_smarty->assign('enable_tags', Enable_Tags);
-    $main_smarty->assign('submit_url_title', str_replace('"',"&#034;",$linkres->url_title));
+    $main_smarty->assign('submit_url_title', str_replace('"', "&#034;", $linkres->url_title));
     $main_smarty->assign('submit_url_description', $linkres->url_description);
     $main_smarty->assign('submit_id', $linkres->id);
     $main_smarty->assign('submit_type', $linkres->type());
     if (isset($link_title)) {
-        $main_smarty->assign('submit_title', str_replace('"',"&#034;",$link_title));
+        $main_smarty->assign('submit_title', str_replace('"', "&#034;", $link_title));
     }
     if (isset($link_content)) {
         $main_smarty->assign('submit_content', $link_content);
@@ -273,7 +273,7 @@ function do_submit1()
     $main_smarty->assign('submit_link_group_id', $linkres->link_group_id);
 
 //	$main_smarty->assign('submit_id', $_GET['id']);
-    $main_smarty->assign('submit_title', str_replace('"',"&#034;",$linkres->title));
+    $main_smarty->assign('submit_title', str_replace('"', "&#034;", $linkres->title));
     $main_smarty->assign('submit_content', str_replace("<br />", "\n", $linkres->content));
     $main_smarty->assign('storylen', utf8_strlen(str_replace("<br />", "\n", $linkres->content)));
     $main_smarty->assign('submit_summary', $linkres->link_summary);
@@ -283,7 +283,7 @@ function do_submit1()
     $main_smarty->assign('tags_words', $linkres->tags);
 
     include_once(mnminclude.'dbtree.php');
-    $array = tree_to_array(0, table_categories, FALSE);
+    $array = tree_to_array(0, table_categories, false);
 
     $array = array_values(array_filter($array, "allowToAuthorCat"));
 
@@ -369,17 +369,17 @@ function do_submit2()
         die($main_smarty->get_config_vars('PLIGG_Visual_Submit2Errors_NoAccess'));
     }
 
-    $linkres->read(FALSE);
+    $linkres->read(false);
 
     if ($linkres->votes($current_user->user_id) == 0 && auto_vote == true) {
         $linkres->insert_vote($current_user->user_id, '10');
         $linkres->store_basic();
-        $linkres->read(FALSE);
+        $linkres->read(false);
     }
 
     if (is_array($_POST['category'])) {
         $linkres->category=sanitize($_POST['category'][0], 3);
-        $linkres->additional_cats=array_slice($_POST['category'],1);
+        $linkres->additional_cats=array_slice($_POST['category'], 1);
     } else {
         $linkres->category=sanitize($_POST['category'], 3);
     }
@@ -494,7 +494,7 @@ function do_submit2()
         return;
     }
 
-    $linkres->read(FALSE);
+    $linkres->read(false);
     $edit = true;
     $link_title = $linkres->title;
     $link_content = $linkres->content;
@@ -520,7 +520,7 @@ function do_submit2()
     $main_smarty->assign('submit_url_title', $linkres->url_title);
     $main_smarty->assign('submit_id', $linkres->id);
     $main_smarty->assign('submit_type', $linkres->type());
-    $main_smarty->assign('submit_title', str_replace('"',"&#034;",$link_title));
+    $main_smarty->assign('submit_title', str_replace('"', "&#034;", $link_title));
     $main_smarty->assign('submit_content', $link_content);
 
     if (isset($trackback)) {
@@ -621,8 +621,8 @@ function link_errors($linkres)
         $main_smarty->assign('submit_error_history', $linkres->status);
         $error = true;
     }
-    $story = preg_replace('/[\s]+/',' ',strip_tags($linkres->content));
-    if (utf8_strlen($linkres->title) < minTitleLength  || utf8_strlen($story) < minStoryLength ) {
+    $story = preg_replace('/[\s]+/', ' ', strip_tags($linkres->content));
+    if (utf8_strlen($linkres->title) < minTitleLength  || utf8_strlen($story) < minStoryLength) {
         $main_smarty->assign('submit_error', 'incomplete');
         $error = true;
     }
@@ -630,12 +630,12 @@ function link_errors($linkres)
         $main_smarty->assign('submit_error', 'long_title');
         $error = true;
     }
-    if (utf8_strlen($linkres->content) > maxStoryLength ) {
+    if (utf8_strlen($linkres->content) > maxStoryLength) {
         $main_smarty->assign('submit_error', 'long_content');
         $error = true;
     }
 
-    if (utf8_strlen($linkres->tags) < minTagsLength && $linkres->tags!="" ) {
+    if (utf8_strlen($linkres->tags) < minTagsLength && $linkres->tags!="") {
         $main_smarty->assign('submit_error', 'short_tags');
         $error = true;
     }
@@ -645,7 +645,7 @@ function link_errors($linkres)
         $error = true;
     }
 
-    if (utf8_strlen($linkres->summary) > maxSummaryLength ) {
+    if (utf8_strlen($linkres->summary) > maxSummaryLength) {
         $main_smarty->assign('submit_error', 'long_summary');
         $error = true;
     }
@@ -688,4 +688,3 @@ function link_catcha_errors($linkerror)
     }
     return $error;
 }
-?>

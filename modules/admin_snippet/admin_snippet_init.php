@@ -8,7 +8,7 @@ if (defined('mnminclude')) {
     $do_not_include_in_pages = array();
 
     $include_in_pages = array('all');
-    if ( do_we_load_module() ) {
+    if (do_we_load_module()) {
         module_add_action_tpl('tpl_header_admin_main_links', admin_snippet_tpl_path . 'admin_snippet_admin_main_link.tpl');
         module_add_action('lib_link_summary_fill_smarty', 'admin_snippet_fill_smarty', '');
         include_once(mnmmodules . 'admin_snippet/admin_snippet_main.php');
@@ -28,12 +28,12 @@ if (defined('mnminclude')) {
         }
         // Set entire list to smarty for eval template
         if (is_object($main_smarty)) {
-            $main_smarty->assign("snippet_actions_tpl",(array)$snippet_actions_tpl);
+            $main_smarty->assign("snippet_actions_tpl", (array)$snippet_actions_tpl);
         }
     }
 
     $include_in_pages = array('module');
-    if ( do_we_load_module() ) {
+    if (do_we_load_module()) {
         $moduleName = $_REQUEST['module'];
 
         if ($moduleName == 'admin_snippet') {
@@ -43,4 +43,3 @@ if (defined('mnminclude')) {
         }
     }
 }
-?>

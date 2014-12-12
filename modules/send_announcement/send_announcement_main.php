@@ -10,7 +10,7 @@ function sendannouncement_showpage()
     $canIhaveAccess = $canIhaveAccess + checklevel('admin');
 
     if ($canIhaveAccess == 0) {
-        header("Location: " .my_base_url.my_pligg_base );
+        header("Location: " .my_base_url.my_pligg_base);
         die();
     }
 
@@ -36,5 +36,3 @@ function sendannouncement_showpage()
     $main_smarty->assign('tpl_center', send_announcement_tpl_path . 'sendannouncement');
     $main_smarty->display($the_template . '/pligg.tpl');
 }
-
-?>

@@ -13,5 +13,3 @@ if (is_object($main_smarty)) {
     $main_smarty->assign('welcome_email_conf', welcome_email_lang_conf);
     $main_smarty->assign('welcome_email_tpl_path', welcome_email_tpl_path);
 }
-
-?>

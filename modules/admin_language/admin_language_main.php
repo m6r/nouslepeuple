@@ -193,7 +193,7 @@ function admin_language_showpage()
                     $l['id'] = trim($m[1]);
                     $l['value'] = htmlspecialchars(str_replace('"', '', trim($m[2])));
                     if (function_exists("iconv") && detect_encoding($l['value'])!='utf-8') {
-                        $l['value'] = iconv('','UTF-8//IGNORE', $l['value']);
+                        $l['value'] = iconv('', 'UTF-8//IGNORE', $l['value']);
                     }
                 } else {
                     $l['error'] = "Can't parse $line";
@@ -233,4 +233,3 @@ function admin_language_showpage()
         header("Location: " . getmyurl('login', $_SERVER['REQUEST_URI']));
     }
 }
-?>

@@ -4,4 +4,3 @@
     $module_info['version'] = 0.1;
     $module_info['requires'][] = array('anonymous', 0.1, 'Anonymous Mode', '');
     $module_info['requires'][] = array('hc', 1, 'Human Check', '');
-?>

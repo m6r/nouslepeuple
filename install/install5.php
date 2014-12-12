@@ -56,14 +56,14 @@ if (!$_POST['adminlogin'] || !$_POST['adminpassword'] || !$_POST['adminemail']) 
 }
 
 if (!$errors) {
-    include_once( '../config.php' );
-    include_once( '../libs/admin_config.php' );
+    include_once('../config.php');
+    include_once('../libs/admin_config.php');
 
 //	echo "Adding the Admin user account...<br />";
     $userip=$db->escape($_SERVER['REMOTE_ADDR']);
     $saltedpass=generateHash($_POST['adminpassword']);
     $sql = "INSERT INTO `" . table_users . "` (`user_id`, `user_login`, `user_level`, `user_modification`, `user_date`, `user_pass`, `user_email`, `user_names`, `user_karma`, `user_url`, `user_lastlogin`, `user_ip`, `user_lastip`, `last_reset_request`, `user_enabled`) VALUES (1, '".$db->escape($_POST['adminlogin'])."', 'admin', now(), now(), '$saltedpass', '".$db->escape($_POST['adminemail'])."', '', '10.00', 'http://pligg.com', now(), '0', '0', now(), '1');";
-    $db->query( $sql );
+    $db->query($sql);
 
     // If user specified a site title, change language files.
     if (isset($_POST['sitetitle']) && $_POST['sitetitle'] != '') {
@@ -72,7 +72,7 @@ if (!$errors) {
         if (glob("../languages/*.conf")) {
             foreach (glob("../languages/*.conf") as $filename) {
                 $filedata = file_get_contents($filename);
-                $filedata = preg_replace('/PLIGG_Visual_Name = \"(.*)\"/iu',$replacement,$filedata);
+                $filedata = preg_replace('/PLIGG_Visual_Name = \"(.*)\"/iu', $replacement, $filedata);
                 // print $filedata;
 
                 // Write the changes to the language files
@@ -136,5 +136,3 @@ if (isset($errors)) {
 
 echo $output;
 echo '</div>';
-
-?>

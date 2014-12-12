@@ -122,7 +122,7 @@ class User
                     $domain = $main_smarty->get_config_vars('PLIGG_Visual_Name');
                     $validation = my_base_url . my_pligg_base . "/validation.php?code=$encode&uid=".$this->username;
                     $str = $main_smarty->get_config_vars('PLIGG_PassEmail_verification_message');
-                    eval('$str = "'.str_replace('"','\"',$str).'";');
+                    eval('$str = "'.str_replace('"', '\"', $str).'";');
                     $message = "$str";
 
                     if (phpnum()>=5) {
@@ -382,7 +382,7 @@ class User
         $main_smarty->assign('user_names', $this->names);
         $main_smarty->assign('user_username', $this->username);
 
-        $users = $db->get_results("SELECT user_karma, COUNT(*) FROM ".table_users." WHERE user_level NOT IN ('Spammer') AND user_karma>0 AND (user_login!='anonymous' OR user_lastip) GROUP BY user_karma ORDER BY user_karma DESC",ARRAY_N);
+        $users = $db->get_results("SELECT user_karma, COUNT(*) FROM ".table_users." WHERE user_level NOT IN ('Spammer') AND user_karma>0 AND (user_login!='anonymous' OR user_lastip) GROUP BY user_karma ORDER BY user_karma DESC", ARRAY_N);
         $ranklist = array();
         $rank = 1;
         if ($users) {
@@ -438,7 +438,7 @@ print_r($main_smarty);
     }
 }
 
-function user_group_read($user_id,$order_by='')
+function user_group_read($user_id, $order_by='')
 {
     global $db, $main_smarty, $view, $user, $rows, $page_size, $offset;
 
@@ -498,7 +498,7 @@ function killspam($id)
         }
     }
 
-    ban_ip($user->user_ip,$user->user_lastip);
+    ban_ip($user->user_ip, $user->user_lastip);
 
     $results = $db->get_results("SELECT * FROM `" . table_groups . "` WHERE group_creator = '$id'");
     if ($results) {
@@ -541,13 +541,13 @@ function killspam($id)
     $results = $db->get_results($sql="SELECT link_id, link_url FROM `" . table_links . "` WHERE `link_author` = $id");
     global $USER_SPAM_RULESET, $FRIENDLY_DOMAINS;
     $filename = mnmpath.$USER_SPAM_RULESET;
-    $lines = file($filename,FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
-    $approved = file(mnmpath.$FRIENDLY_DOMAINS,FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
+    $lines = file($filename, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
+    $approved = file(mnmpath.$FRIENDLY_DOMAINS, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
     if ($results) {
         foreach ($results as $result) {
-            if (preg_match('/:\/\/(www\.)?([^\/]+)(\/|$)/',$result->link_url,$m)) {
+            if (preg_match('/:\/\/(www\.)?([^\/]+)(\/|$)/', $result->link_url, $m)) {
                 $domain = strtoupper($m[2]) . "\n";
-                if (!in_array($domain,$lines) && !in_array($domain,$approved)) {
+                if (!in_array($domain, $lines) && !in_array($domain, $approved)) {
                     $lines[] = $domain;
                     $changed = 1;
                 }
@@ -559,7 +559,7 @@ function killspam($id)
     if ($changed) {
         if (is_writable($filename)) {
             if ($handle = fopen($filename, 'w')) {
-                fwrite($handle,join("\n",$lines));
+                fwrite($handle, join("\n", $lines));
                 fclose($handle);
             }
         }
@@ -581,4 +581,3 @@ function canIChangeUser($user_level)
         die;
     }
 }
-?>

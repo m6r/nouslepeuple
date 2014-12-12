@@ -35,7 +35,7 @@ $blog_name = strip_tags($_POST['blog_name']);
 $charset   = strip_tags($_POST['charset']);
 
 // DB 08/01/08
-if (!preg_match("/^[hf]t[t]?p[s]?:\/\//",$tb_url)) {
+if (!preg_match("/^[hf]t[t]?p[s]?:\/\//", $tb_url)) {
     $tb_url = "";
 }
 /////
@@ -49,7 +49,7 @@ if (!empty($charset)) {
 
 $tb_id = strip_tags($_GET['id']);
 
-if ( !is_numeric( $tb_id ) ) {
+if (!is_numeric($tb_id)) {
     trackback_response(1, 'I really need an ID for this to work.');
 }
 
@@ -59,10 +59,10 @@ if (empty($title) && empty($tb_url) && empty($blog_name)) {
     exit;
 }
 
-if ( !empty($tb_url) && !empty($title) && !empty($tb_url) ) {
+if (!empty($tb_url) && !empty($title) && !empty($tb_url)) {
     header('Content-Type: text/xml; charset=UTF-8');
 
-    $title =  htmlspecialchars( strip_tags( $title ) );
+    $title =  htmlspecialchars(strip_tags($title));
     $title = (strlen($title) > 150) ? substr($title, 0, 150) . '...' : $title;
     $excerpt = strip_tags($excerpt);
     $excerpt = (strlen($excerpt) > 200) ? substr($excerpt, 0, 200) . '...' : $excerpt;
@@ -72,7 +72,7 @@ if ( !empty($tb_url) && !empty($title) && !empty($tb_url) ) {
     $trackres->type='in';
     $trackres->url = $tb_url;
     $dupe = $trackres->read();
-    if ( $dupe ) {
+    if ($dupe) {
         trackback_response(1, $main_smarty->get_config_vars('PLIGG_Visual_Trackback_AlreadyPing'));
     }
 
@@ -83,9 +83,9 @@ if ( !empty($tb_url) && !empty($title) && !empty($tb_url) ) {
 
 
     $permalink=get_permalink($tb_id);
-    $permalink_q=preg_quote($permalink,'/');
+    $permalink_q=preg_quote($permalink, '/');
     $pattern="/<\s*a.*href\s*=[\"'\s]*".$permalink_q."[\"'\s]*.*>.*<\s*\/\s*a\s*>/i";
-    if (!preg_match($pattern,$contents)) {
+    if (!preg_match($pattern, $contents)) {
         trackback_response(1, $main_smarty->get_config_vars('PLIGG_Visual_Trackback_NoReturnLink'));
     }
 
@@ -96,5 +96,3 @@ if ( !empty($tb_url) && !empty($title) && !empty($tb_url) ) {
 
     trackback_response(0);
 }
-
-?>

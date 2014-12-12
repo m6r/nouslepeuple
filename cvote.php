@@ -54,5 +54,3 @@ if (isset($_POST['id'])) {
     $count=$comment->votes;
     echo "$count ~--~".sanitize($_POST['id'], 3);
 }
-
-?>

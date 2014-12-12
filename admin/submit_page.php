@@ -39,7 +39,7 @@ $main_smarty->assign('isAdmin', $canIhaveAccess);
 // sidebar
 $main_smarty = do_sidebar($main_smarty);
 
-    $randkey = rand(1000000,100000000);
+    $randkey = rand(1000000, 100000000);
     $main_smarty->assign('randkey', $randkey);
 
 // pagename
@@ -64,7 +64,7 @@ if ($_REQUEST['process']=='new_page') {
     $page_randkey= $db->escape(trim($_REQUEST['randkey']));
     $sql = "INSERT IGNORE INTO " . table_links . " (link_author, link_status, link_randkey, link_category, link_date, link_published_date, link_votes, link_karma, link_title, link_title_url, link_content, link_field1, link_field2)
 				VALUES (".$current_user->user_id.", 'page', $page_randkey, '0', NOW( ), '', 0, 0, '$page_title', '$page_url', '$page_content', '$page_keywords', '$page_description')";
-    $result = @mysql_query ($sql);
+    $result = @mysql_query($sql);
     if ($result==1) {
         header('Location: '.getmyurl("page", $page_url));
         die();
@@ -73,5 +73,3 @@ if ($_REQUEST['process']=='new_page') {
 // show the template
 $main_smarty->assign('tpl_center', $template_dir . '/admin/page_submit');
 $main_smarty->display($template_dir . '/admin/admin.tpl');
-
-?>

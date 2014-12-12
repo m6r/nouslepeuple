@@ -53,5 +53,3 @@ if (file_exists($install)) {
 } else {
     header('Location: admin_index.php');
 }
-
-?>

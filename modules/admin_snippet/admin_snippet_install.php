@@ -17,4 +17,3 @@
 	  `snippet_content` text,
 	  PRIMARY KEY  (`snippet_id`)
 	) ENGINE=MyISAM DEFAULT CHARSET=utf8");
-?>

@@ -64,5 +64,3 @@
         misc_data_update('status_user_friends', '1');
         misc_data_update('status_user_switch', '1');
     }
-
-?>

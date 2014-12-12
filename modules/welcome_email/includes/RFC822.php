@@ -203,7 +203,7 @@ class Mail_RFC822
      */
     function _splitAddresses($address)
     {
-        if (!empty($this->limit) AND count($this->addresses) == $this->limit) {
+        if (!empty($this->limit) and count($this->addresses) == $this->limit) {
             return '';
         }
 
@@ -628,8 +628,8 @@ class Mail_RFC822
         // Only got addr-spec
         } else {
             // First snip angle brackets if present.
-            if (substr($mailbox,0,1) == '<' && substr($mailbox,-1) == '>') {
-                $addr_spec = substr($mailbox,1,-1);
+            if (substr($mailbox, 0, 1) == '<' && substr($mailbox, -1) == '>') {
+                $addr_spec = substr($mailbox, 1, -1);
             } else {
                 $addr_spec = $mailbox;
             }
@@ -909,5 +909,3 @@ class Mail_RFC822
         }
     }
 }
-
-?>

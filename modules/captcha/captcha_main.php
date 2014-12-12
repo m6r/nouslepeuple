@@ -140,4 +140,3 @@ function captcha_register_check_errors(&$vars)
         $vars['error'] = true;
     }
 }
-?>

@@ -30,5 +30,3 @@ if (isset($main_smarty) && is_object($main_smarty)) {
     $main_smarty->assign('karma_tpl_path', karma_tpl_path);
     $main_smarty->assign('karma_places', $karma_places);
 }
-
-?>

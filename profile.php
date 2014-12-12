@@ -93,7 +93,7 @@ $main_smarty->assign('user_following', $user->getFollowingCount());
 
             $mytmpfile = $_FILES['image_file']['tmp_name'];
 
-            if (!in_array($_FILES['image_file']['type'],$allowedFileTypes)) {
+            if (!in_array($_FILES['image_file']['type'], $allowedFileTypes)) {
                 $error['Type'] = 'Only these file types are allowed : jpeg, gif, png';
             }
 
@@ -222,7 +222,7 @@ function show_profile()
     $languages = array();
     $files = glob("languages/*.conf");
     foreach ($files as $file) {
-        if (preg_match('/lang_(.+?)\.conf/',$file,$m)) {
+        if (preg_match('/lang_(.+?)\.conf/', $file, $m)) {
             $languages[] = $m[1];
         }
     }
@@ -260,12 +260,12 @@ function show_profile()
         $dir = "templates";
         $templates = array();
         foreach (scandir($dir) as $file) {
-            if (strstr($file,".")!==0 && file_exists("$dir/$file/header.tpl")) {
+            if (strstr($file, ".")!==0 && file_exists("$dir/$file/header.tpl")) {
                 $templates[] = $file;
             }
         }
         $main_smarty->assign('templates', $templates);
-        $main_smarty->assign('current_template', sanitize($_COOKIE['template'],3));
+        $main_smarty->assign('current_template', sanitize($_COOKIE['template'], 3));
         $main_smarty->assign('Allow_User_Change_Templates', Allow_User_Change_Templates);
     }
 
@@ -299,7 +299,7 @@ function save_profile()
                     $domain = $main_smarty->get_config_vars('PLIGG_Visual_Name');
                     $validation = my_base_url . my_pligg_base . "/validation.php?code=$encode&uid=".urlencode($user->username)."&email=".urlencode($_POST['email']);
                     $str = $main_smarty->get_config_vars('PLIGG_PassEmail_verification_message');
-                    eval('$str = "'.str_replace('"','\"',$str).'";');
+                    eval('$str = "'.str_replace('"', '\"', $str).'";');
                     $message = "$str";
 
                     if (phpnum()>=5) {
@@ -321,7 +321,7 @@ function save_profile()
                 if (!$mail->Send()) {
                     return false;
                 }
-                    $savemsg = $main_smarty->get_config_vars("PLIGG_Visual_Register_Noemail").' '.sprintf($main_smarty->get_config_vars("PLIGG_Visual_Register_ToDo"),$main_smarty->get_config_vars('PLIGG_PassEmail_From'));
+                    $savemsg = $main_smarty->get_config_vars("PLIGG_Visual_Register_Noemail").' '.sprintf($main_smarty->get_config_vars("PLIGG_Visual_Register_ToDo"), $main_smarty->get_config_vars('PLIGG_PassEmail_From'));
                 } else {
                     $user->email=sanitize($_POST['email'], 2);
                 }
@@ -330,8 +330,8 @@ function save_profile()
 
         // User settings
         if (Allow_User_Change_Templates && file_exists("./templates/".$_POST['template']."/header.tpl")) {
-            $domain = $_SERVER['HTTP_HOST']=='localhost' ? '' : preg_replace('/^www/','',$_SERVER['HTTP_HOST']);
-            setcookie("template", $_POST['template'], time()+60*60*24*30,'/',$domain);
+            $domain = $_SERVER['HTTP_HOST']=='localhost' ? '' : preg_replace('/^www/', '', $_SERVER['HTTP_HOST']);
+            setcookie("template", $_POST['template'], time()+60*60*24*30, '/', $domain);
         }
 
         $sqlGetiCategory = "SELECT category__auto_id from " . table_categories . " where category__auto_id!= 0;";
@@ -345,8 +345,8 @@ function save_profile()
         if (!$select_check) {
             $select_check = array();
         }
-        $diff = array_diff($arr,$select_check);
-        $select_checked = $db->escape(implode(",",$diff));
+        $diff = array_diff($arr, $select_check);
+        $select_checked = $db->escape(implode(",", $diff));
 
         $sql = "UPDATE " . table_users . " set user_categories='$select_checked' WHERE user_id = '{$user->id}'";
         $query = mysql_query($sql);
@@ -411,7 +411,7 @@ function save_profile()
               $user_login=sanitize($_POST['user_login'], 2);
 
               if (preg_match('/\pL/u', 'a')) {    // Check if PCRE was compiled with UTF-8 support
-            if (!preg_match('/^[_\-\d\p{L}\p{M}]+$/iu',$user_login)) { // if username contains invalid characters
+            if (!preg_match('/^[_\-\d\p{L}\p{M}]+$/iu', $user_login)) { // if username contains invalid characters
             $savemsg = $main_smarty->get_config_vars('PLIGG_Visual_Register_Error_UserInvalid');
                 return $savemsg;
             }
@@ -423,7 +423,7 @@ function save_profile()
               }
 
 
-              if (user_exists(trim($user_login)) ) {
+              if (user_exists(trim($user_login))) {
                   $savemsg = $main_smarty->get_config_vars("PLIGG_Visual_Register_Error_UserExists");
                   $user->username= $user_login;
                   return $savemsg;
@@ -468,5 +468,3 @@ function save_profile()
         return 'There was a token error.';
     }
 }
-
-?>

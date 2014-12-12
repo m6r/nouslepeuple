@@ -12,7 +12,7 @@ class PliggDoc
         $this->top=0;
     }
 
-    function add_js($file,$inline=false)
+    function add_js($file, $inline=false)
     {
         $this->js[$this->top]['file']=$file;
         $this->js[$this->top]['inline']=$inline;
@@ -40,12 +40,10 @@ class PliggDoc
             }
         }
         //if(class_exists("main_smarty"))
-        $main_smarty->assign("Jscript",$this->all_script);
+        $main_smarty->assign("Jscript", $this->all_script);
 
         return $this->all_script;
     }
 }
 
 $PliggDoc= new PliggDoc();
-
-?>

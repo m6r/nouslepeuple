@@ -124,13 +124,13 @@ if ($canIhaveAccess == 1) {
                 $main_smarty->assign(username_error, $main_smarty->get_config_vars('PLIGG_Visual_Register_Error_UserTooShort'));
             } elseif (!preg_match('/^[a-zA-Z0-9\-]+$/', $username)) {
                 $main_smarty->assign(username_error, $main_smarty->get_config_vars('PLIGG_Visual_Register_Error_UserInvalid'));
-            } elseif (user_exists(trim($username)) ) {
+            } elseif (user_exists(trim($username))) {
                 $main_smarty->assign(username_error, $main_smarty->get_config_vars('PLIGG_Visual_Register_Error_UserExists'));
             } elseif (!check_email(trim($email))) {
                 $main_smarty->assign(email_error, $main_smarty->get_config_vars('PLIGG_Visual_Register_Error_BadEmail'));
             } elseif (email_exists(trim($email))) {
                 $main_smarty->assign(email_error, $main_smarty->get_config_vars('PLIGG_Visual_Register_Error_EmailExists'));
-            } elseif (strlen($password) < 5 ) {
+            } elseif (strlen($password) < 5) {
                 $main_smarty->assign(password_error, $main_smarty->get_config_vars('PLIGG_Visual_Register_Error_FiveCharPass'));
             } else {
                 $db->query("INSERT IGNORE INTO " . table_users . " (user_login, user_level, user_email, user_pass, user_date, user_modification, user_lastlogin) VALUES ('$username', '$level', '$email', '$saltedpass', NOW(), NOW(), NOW())");
@@ -176,25 +176,25 @@ if ($canIhaveAccess == 1) {
 
             $usersql = mysql_query('SELECT * FROM ' . table_users . ' where user_id="'.sanitize($_GET["user"], 3).'" or user_login="'.sanitize($_GET["user"], 3).'"');
             $userdata = array();
-            while ($rows = mysql_fetch_array ($usersql, MYSQL_ASSOC)) {
-                array_push ($userdata, $rows);
+            while ($rows = mysql_fetch_array($usersql, MYSQL_ASSOC)) {
+                array_push($userdata, $rows);
             }
 
 
             foreach ($userdata as $key => $val) {
                 $userdata[$key]['Avatar'] = get_avatar('large', "", $val['user_login'], $val['user_email']);
-                $created = $db->get_results('SELECT * FROM ' . table_groups . ' where group_status="Enable" AND group_creator='.$userdata[$key]['user_id'],ARRAY_A);
+                $created = $db->get_results('SELECT * FROM ' . table_groups . ' where group_status="Enable" AND group_creator='.$userdata[$key]['user_id'], ARRAY_A);
                 $arr = array();
                 foreach ($created as $group) {
                     $arr[] = $group['group_name'];
                 }
-                $userdata[$key]['created']= join(',',$arr);
-                $belongs = $db->get_results('SELECT * FROM ' . table_group_member . ' LEFT JOIN  ' . table_groups . ' ON member_group_id=group_id where group_status="Enable" AND member_status="active" AND member_user_id='.$userdata[$key]['user_id'],ARRAY_A);
+                $userdata[$key]['created']= join(',', $arr);
+                $belongs = $db->get_results('SELECT * FROM ' . table_group_member . ' LEFT JOIN  ' . table_groups . ' ON member_group_id=group_id where group_status="Enable" AND member_status="active" AND member_user_id='.$userdata[$key]['user_id'], ARRAY_A);
                 $arr = array();
                 foreach ($belongs as $group) {
                     $arr[] = $group['group_name'];
                 }
-                $userdata[$key]['belongs']= join(',',$arr);
+                $userdata[$key]['belongs']= join(',', $arr);
             }
 
             $main_smarty->assign('userdata', $userdata);
@@ -245,8 +245,8 @@ if ($canIhaveAccess == 1) {
 
             $usersql = mysql_query('SELECT * FROM ' . table_users . ' where user_id="'.sanitize($_GET["user_id"], 3).'"');
             $userdata = array();
-            while ($rows = mysql_fetch_array ($usersql, MYSQL_ASSOC)) {
-                array_push ($userdata, $rows);
+            while ($rows = mysql_fetch_array($usersql, MYSQL_ASSOC)) {
+                array_push($userdata, $rows);
             }
 
             canIChangeUser($userdata[0]['user_level']);
@@ -285,7 +285,7 @@ if ($canIhaveAccess == 1) {
                         } elseif (!preg_match('/^[a-zA-Z0-9\-]+$/', $username)) {
                             $main_smarty->assign(username_error, $main_smarty->get_config_vars('PLIGG_Visual_Register_Error_UserInvalid'));
                             $error=1;
-                        } elseif (user_exists(trim($username)) ) {
+                        } elseif (user_exists(trim($username))) {
                             $main_smarty->assign(username_error, $main_smarty->get_config_vars('PLIGG_Visual_Register_Error_UserExists'));
                             $error=1;
                         }
@@ -311,7 +311,7 @@ if ($canIhaveAccess == 1) {
                     $user->email=$email;
 
                     if ($_POST["password"] && $_POST["password"]==$_POST["password2"]) {
-                        if (strlen($password) < 5 ) {
+                        if (strlen($password) < 5) {
                             $main_smarty->assign(password_error, $main_smarty->get_config_vars('PLIGG_Visual_Register_Error_FiveCharPass'));
                             $error=1;
                         } else {
@@ -341,7 +341,7 @@ if ($canIhaveAccess == 1) {
             $CSRF->create('admin_users_edit', true, true);
 
             $main_smarty->assign('userdata', $userdata);
-            $main_smarty->assign('levels', array('normal','admin','moderator','Spammer'));
+            $main_smarty->assign('levels', array('normal', 'admin', 'moderator', 'Spammer'));
 
             // breadcrumbs and page title
             $navwhere['text1'] = $main_smarty->get_config_vars('PLIGG_Visual_Header_AdminPanel');
@@ -388,7 +388,7 @@ if ($canIhaveAccess == 1) {
                     $to = $user->user_email;
                     $subject = $main_smarty->get_config_vars("PLIGG_Visual_Name").' '.$main_smarty->get_config_vars("PLIGG_PassEmail_Subject");
 
-                    $password = substr(md5(uniqid(rand(), true)),0,8);
+                    $password = substr(md5(uniqid(rand(), true)), 0, 8);
                     $saltedPass = generateHash($password);
                     $db->query('UPDATE `' . table_users . "` SET `user_pass` = '$saltedPass' WHERE `user_login` = '".sanitize($_GET["user"], 3)."'");
                     $body = sprintf($main_smarty->get_config_vars("PLIGG_PassEmail_PassBody"),
@@ -610,7 +610,7 @@ if ($canIhaveAccess == 1) {
             global $offset, $page_size;
             // Items per page drop-down
             if (isset($_GET["pagesize"]) && is_numeric($_GET["pagesize"])) {
-                misc_data_update('pagesize',$_GET["pagesize"]);
+                misc_data_update('pagesize', $_GET["pagesize"]);
             }
             $pagesize = get_misc_data('pagesize');
             if ($pagesize <= 0) {
@@ -634,8 +634,8 @@ if ($canIhaveAccess == 1) {
             $rows = $db->get_var("SELECT FOUND_ROWS()");
             $userlist = array();
 
-            while ($row = mysql_fetch_array ($searchsql, MYSQL_ASSOC)) {
-                array_push ($userlist, $row);
+            while ($row = mysql_fetch_array($searchsql, MYSQL_ASSOC)) {
+                array_push($userlist, $row);
             }
             foreach ($userlist as $key => $val) {
                 $userlist[$key]['Avatar'] = get_avatar('large', "", $val['user_login'], $val['user_email']);
@@ -669,7 +669,7 @@ if ($canIhaveAccess == 1) {
 
         // Items per page drop-down
         if (isset($_GET["pagesize"]) && is_numeric($_GET["pagesize"])) {
-            misc_data_update('pagesize',$_GET["pagesize"]);
+            misc_data_update('pagesize', $_GET["pagesize"]);
         }
 
         $pagesize = get_misc_data('pagesize');
@@ -710,8 +710,8 @@ if ($canIhaveAccess == 1) {
         $rows = $db->get_var("SELECT FOUND_ROWS()");
         $userlist = array();
 
-        while ($row = mysql_fetch_array ($users, MYSQL_ASSOC)) {
-            array_push ($userlist, $row);
+        while ($row = mysql_fetch_array($users, MYSQL_ASSOC)) {
+            array_push($userlist, $row);
         }
         foreach ($userlist as $key => $val) {
             $userlist[$key]['Avatar'] = get_avatar('large', "", $val['user_login'], $val['user_email']);
@@ -769,4 +769,3 @@ function showmyerror()
         $main_smarty->display($template_dir . '/admin/admin.tpl');
     }
 }
-?>

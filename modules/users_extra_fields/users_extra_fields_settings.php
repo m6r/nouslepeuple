@@ -15,5 +15,3 @@ if (is_object($main_smarty)) {
     $main_smarty->assign('users_extra_fields_lang_conf', users_extra_fields_lang_conf);
     $main_smarty->assign('users_extra_fields_tpl_path', users_extra_fields_tpl_path);
 }
-
-?>

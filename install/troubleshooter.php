@@ -33,12 +33,12 @@ ob_start();
 phpinfo();
 $info = ob_get_contents();
 ob_end_clean();
-$start = explode("<h2><a name=\"module_mysql\">mysql</a></h2>",$info,1000);
+$start = explode("<h2><a name=\"module_mysql\">mysql</a></h2>", $info, 1000);
 if (count($start) < 2) {
     $mysqlversion = '0';
 } else {
-    $again = explode("<tr><td class=\"e\">Client API version </td><td class=\"v\">",$start[1],1000);
-    $last_time = explode(" </td></tr>",$again[1],1000);
+    $again = explode("<tr><td class=\"e\">Client API version </td><td class=\"v\">", $start[1], 1000);
+    $last_time = explode(" </td></tr>", $again[1], 1000);
     $mysqlversion = $last_time[0];
 }
 $pattern = '/[^0-9-.]/i';
@@ -124,9 +124,9 @@ if (is_writable('../libs/dbconnect.php')) {
 if (is_writable('../settings.php')) {
     $tally = $tally+1;
 }
-$percent = percent($tally,$required);
+$percent = percent($tally, $required);
 
-if ($tally < $required ) {
+if ($tally < $required) {
     echo '<div class="alert alert-warning">
 		<p><strong>Warning:</strong> Your server has only met <strong>'.$tally.'</strong> of  the <strong>'.$required.'</strong> requirements to run Pligg CMS. While not all of the items on this page are required to run Pligg, we suggest that you try to comply with the suggestions made on this page. Please see the list below to discover what issues need to be addressed.</p><br />';
 

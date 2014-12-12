@@ -91,9 +91,9 @@ function safeAddSlashes($string)
 function unixtimestamp($timestamp)
 {
     if (strlen($timestamp) == 14) {
-        $time = substr($timestamp,0,4)."-".substr($timestamp,4,2)."-".substr($timestamp,6,2);
+        $time = substr($timestamp, 0, 4)."-".substr($timestamp, 4, 2)."-".substr($timestamp, 6, 2);
         $time .= " ";
-        $time .=  substr($timestamp,8,2).":".substr($timestamp,10,2).":".substr($timestamp,12,2);
+        $time .=  substr($timestamp, 8, 2).":".substr($timestamp, 10, 2).":".substr($timestamp, 12, 2);
         return strtotime($time);
     } else {
         if (strlen($timestamp) == 0) {
@@ -359,7 +359,7 @@ function utils_makeUrlFriendly($output)
         $output = strtr($output, $translations);
     }
 
-    $output = preg_replace("/\s/e" , "_" , $output);    // Replace spaces with underscores
+    $output = preg_replace("/\s/e", "_", $output);    // Replace spaces with underscores
     $output = str_replace("_", "-", $output);
     $output = str_replace("&amp;", "", $output);
     $output = str_replace("__", "_", $output);
@@ -463,7 +463,7 @@ function remove_error_creating_chars($chars)
     );
 
     foreach ($replace as $key => $value) {
-        $chars = str_replace($key, $value, $chars );
+        $chars = str_replace($key, $value, $chars);
     }
     return $chars;
 }
@@ -546,4 +546,3 @@ function phpnum()
     $version = explode('.', phpversion());
     return (int) $version[0];
 }
-?>

@@ -54,5 +54,3 @@ $main_smarty->assign('pagename', pagename);
 // show the template
 $main_smarty->assign('tpl_center', $the_template . '/tag_cloud_center');
 $main_smarty->display($the_template . '/pligg.tpl');
-
-?>

@@ -50,4 +50,3 @@ $main_smarty->assign('isAdmin', $canIhaveAccess);
 $main_smarty->assign('tpl_center', $the_template . '/live_center');
 $main_smarty->display($the_template . '/pligg.tpl');
 $main_smarty->display($the_template . '/functions/live_js.tpl');
-?>

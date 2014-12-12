@@ -61,4 +61,3 @@ $users = $db->get_results("SELECT user_karma, COUNT(*) FROM " . table_users . " 
             echo $users_table = $main_smarty->fetch(The_Template . "/topusers_data.tpl");
         }
     }
-?>

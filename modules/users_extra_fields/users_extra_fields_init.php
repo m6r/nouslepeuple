@@ -8,7 +8,7 @@ if (defined('mnminclude')) {
     $include_in_pages = array('all');
     $do_not_include_in_pages = array();
 
-    if ( do_we_load_module() ) {
+    if (do_we_load_module()) {
         module_add_action('story_top', 'users_extra_fields_story_top', '');
 
         module_add_action('admin_users_save', 'users_extra_fields_admin_users_save', '');
@@ -65,4 +65,3 @@ if (defined('mnminclude')) {
         include_once(mnmmodules . 'users_extra_fields/users_extra_fields_main.php');
     }
 }
-?>

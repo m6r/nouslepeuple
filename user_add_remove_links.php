@@ -55,4 +55,3 @@ if ($current_user->user_id != 0) {
         }
     }
 }
-?>

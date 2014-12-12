@@ -140,7 +140,3 @@ define('Enable_Extra_Field_15', false);
     define('Field_15_Required', false);
     define('Field_15_Validation_Method', '');
     define('Field_15_Validation_Error_Message', '');
-
-
-
-?>

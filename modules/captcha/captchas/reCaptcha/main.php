@@ -17,7 +17,7 @@
 
         $privatekey = get_misc_data('reCaptcha_prikey');
 
-        $resp = recaptcha_check_answer ($privatekey,
+        $resp = recaptcha_check_answer($privatekey,
                                 $_SERVER["REMOTE_ADDR"],
                                 $_POST["recaptcha_challenge_field"],
                                 $_POST["recaptcha_response_field"]);
@@ -73,4 +73,3 @@
             return true;
         }
     }
-?>
