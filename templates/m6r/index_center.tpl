@@ -4,12 +4,12 @@
 <!-- index_center.tpl -->
 
 {if !$link_summary_output && $pagename == 'index' && count($templatelite.get) == 0}
-	{* Welcome message for new installations *}
-	<div class="well blank_index">
-		<h2>Welcome to Pligg CMS!</h2>
-		<p style="font-size:1.0em;">It looks like you've just set up a new Pligg website. Now would be a good time to submit your first article and then publish it to the homepage.</p>
-		<p><a href="submit.php" class="btn btn-primary">Submit Your First Entry</a></p>
-	</div>
+    {* Welcome message for new installations *}
+    <div class="well blank_index">
+        <h2>Bienvenu sur nous le peuple !</h2>
+        <p style="font-size:1.0em;">Il n'y a pas encore eu de message posté aujourd'hui. C'est le moment de publier un article !</p>
+        <p><a href="submit.php" class="btn btn-primary">Envoyer un article</a></p>
+    </div>
 {/if}
 
 {$link_summary_output}
