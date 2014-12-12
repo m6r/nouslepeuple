@@ -11,8 +11,8 @@ function mailer_start()
     // Usually a module will define Pligg_Mailer
     // If defined, then include call the function thats starts (includes) it
 
-    if (defined('Pligg_Mailer') && function_exists(Pligg_Mailer . '_mailer_start')) {
-        call_user_func(Pligg_Mailer . '_mailer_start');
+    if (defined('Pligg_Mailer') && function_exists(Pligg_Mailer.'_mailer_start')) {
+        call_user_func(Pligg_Mailer.'_mailer_start');
     } else {
         include_once(mnminclude.'mailer.php');
     }
@@ -21,7 +21,7 @@ function mailer_start()
 function check_if_table_exists($table)
 {
     // checks to see if a table in the database exists
-    $result = mysql_query('select * from ' . $table);
+    $result = mysql_query('select * from '.$table);
     if (!$result) {
         return false;
     }
@@ -57,7 +57,7 @@ function get_misc_data($name)
 {
     // returns data from the misc_data table
     global $db;
-    $sql = "SELECT `data` FROM `" . table_misc_data . "` WHERE `name` = '" . $db->escape($name) . "';";
+    $sql = "SELECT `data` FROM `".table_misc_data."` WHERE `name` = '".$db->escape($name)."';";
     $var = $db->get_var($sql);
     return $var;
 }
@@ -68,11 +68,11 @@ function misc_data_update($name, $data)
     global $db;
 
     $name = $db->escape($name);
-    $sql = "SELECT `data` FROM `" . table_misc_data . "` WHERE `name` = '" . $name . "';";
+    $sql = "SELECT `data` FROM `".table_misc_data."` WHERE `name` = '".$name."';";
     if (count($db->get_results($sql)) == 0) {
-        $sql = "INSERT INTO `" . table_misc_data . "` (`data`, `name`) VALUES ('" . $data . "', '" . $name . "');";
+        $sql = "INSERT INTO `".table_misc_data."` (`data`, `name`) VALUES ('".$data."', '".$name."');";
     } else {
-        $sql = "UPDATE `" . table_misc_data . "` SET `data` = '" . $data . "' WHERE `name` = '$name';";
+        $sql = "UPDATE `".table_misc_data."` SET `data` = '".$data."' WHERE `name` = '$name';";
     }
     $db->query($sql);
 }
@@ -109,7 +109,7 @@ function user_exists($username)
     // checks to see if user already exists in database
     global $db;
     $username = $db->escape($username);
-    $res=$db->get_var("SELECT count(*) FROM " . table_users . " WHERE user_login='$username'");
+    $res = $db->get_var("SELECT count(*) FROM ".table_users." WHERE user_login='$username'");
     if ($res>0) {
         return true;
     }
@@ -121,7 +121,7 @@ function email_exists($email)
     // checks to see if email already exists in database
     global $db;
     $email = $db->escape($email);
-    $res=$db->get_var("SELECT count(*) FROM " . table_users . " WHERE user_email='$email'");
+    $res = $db->get_var("SELECT count(*) FROM ".table_users." WHERE user_email='$email'");
     if ($res>0) {
         return $res;
     }
@@ -164,7 +164,7 @@ function check_email_address($email)
     return true;
 }
 
-function txt_time_diff($from, $now=0)
+function txt_time_diff($from, $now = 0)
 {
     global $main_smarty;
 
@@ -173,25 +173,25 @@ function txt_time_diff($from, $now=0)
     }
 
     $txt = '';
-    if ($now==0) {
+    if ($now == 0) {
         $now = time();
     }
 
-    $diff=$now-$from;
+    $diff = $now-$from;
     if ($diff < 0) {
         $diff = -$diff;
         $txt  = '-';
     }
-    $days=intval($diff/86400);
-    $diff=$diff%86400;
-    $hours=intval($diff/3600);
-    $diff=$diff%3600;
-    $minutes=intval($diff/60);
+    $days = intval($diff/86400);
+    $diff = $diff%86400;
+    $hours = intval($diff/3600);
+    $diff = $diff%3600;
+    $minutes = intval($diff/60);
 
     if ($days>1) {
         $txt  .= " $days ".$main_smarty->get_config_vars('PLIGG_Visual_Story_Times_Days');
     } else {
-        if ($days==1) {
+        if ($days == 1) {
             $txt  .= " $days ".$main_smarty->get_config_vars('PLIGG_Visual_Story_Times_Day');
         }
     }
@@ -200,7 +200,7 @@ function txt_time_diff($from, $now=0)
         if ($hours>1) {
             $txt .= " $hours ".$main_smarty->get_config_vars('PLIGG_Visual_Story_Times_Hours');
         } else {
-            if ($hours==1) {
+            if ($hours == 1) {
                 $txt  .= " $hours ".$main_smarty->get_config_vars('PLIGG_Visual_Story_Times_Hour');
             }
         }
@@ -209,24 +209,24 @@ function txt_time_diff($from, $now=0)
             if ($minutes>1) {
                 $txt .= " $minutes ".$main_smarty->get_config_vars('PLIGG_Visual_Story_Times_Minutes');
             } else {
-                if ($minutes==1) {
+                if ($minutes == 1) {
                     $txt  .= " $minutes ".$main_smarty->get_config_vars('PLIGG_Visual_Story_Times_Minute');
                 }
             }
         }
     }
 
-    if ($txt=='') {
-        $txt = ' '. $main_smarty->get_config_vars('PLIGG_Visual_Story_Times_FewSeconds') . ' ';
+    if ($txt == '') {
+        $txt = ' '.$main_smarty->get_config_vars('PLIGG_Visual_Story_Times_FewSeconds').' ';
     }
     return $txt;
 }
 
-function txt_shorter($string, $len=80)
+function txt_shorter($string, $len = 80)
 {
     // shorten a string to 80 characters
     if (strlen($string) > $len) {
-        $string = substr($string, 0, $len-3) . "...";
+        $string = substr($string, 0, $len-3)."...";
     }
     return $string;
 }
@@ -234,7 +234,7 @@ function txt_shorter($string, $len=80)
 function save_text_to_html($string)
 {
     $string = strip_tags(trim($string));
-    $string= htmlspecialchars($string);
+    $string = htmlspecialchars($string);
 //	$string= text_to_html($string);
     $string = preg_replace("/[\r\n]{2,}/", "<br /><br />\n", $string);
     return $string;
@@ -269,7 +269,7 @@ function check_string($which)
 
 function get_current_page()
 {
-    if (($var=check_integer('page'))) {
+    if (($var = check_integer('page'))) {
         return $var;
     } else {
         return 1;
@@ -323,22 +323,22 @@ function checklevel($levl)
 }
 
 
-function makeUrlFriendly($output, $isPage=false)
+function makeUrlFriendly($output, $isPage = false)
 {
     global $db;
 
     if (function_exists('utils_makeUrlFriendly')) {
         $output = utils_makeUrlFriendly($output);
     }
-    if ($isPage===true) {
+    if ($isPage === true) {
         return $output;
     }
 
     // check to see if the story title already exists. If so, add an integer to the end of the title
-    $n = $db->get_var("SELECT COUNT(*) FROM " . table_links . " WHERE link_title_url like '$output%'" .
+    $n = $db->get_var("SELECT COUNT(*) FROM ".table_links." WHERE link_title_url like '$output%'".
                 ($isPage > 0 ? " AND link_id!=$isPage" : ''));
     if ($n > 0) {
-        return $output . '-' . ($n+1);
+        return $output.'-'.($n+1);
     } else {
         return $output;
     }
@@ -405,7 +405,7 @@ function utils_makeUrlFriendly($output)
 
 function remove_error_creating_chars($chars)
 {
-    $replace=array(
+    $replace = array(
     'Á' => 'A',
     'Å' => 'A',
     'Ä' => 'A',
@@ -459,7 +459,7 @@ function remove_error_creating_chars($chars)
     'ÿ' => 'y',
     'Ž' => 'Z',
     'ž' => 'z',
-    '€' => ''
+    '€' => '',
     );
 
     foreach ($replace as $key => $value) {
@@ -468,23 +468,23 @@ function remove_error_creating_chars($chars)
     return $chars;
 }
 
-function loghack($page, $extradata, $silent=false)
+function loghack($page, $extradata, $silent = false)
 {
     // This function will be used for logging hacking attempts.
     // you'd also want IP Address
     // - date / time
     // email or log to file
     if ($silent == false) {
-        die("Hacking attempt on ". $page);
+        die("Hacking attempt on ".$page);
     }
 }
 
 function checkforfield($fieldname, $table)
 {
     // checks to see if field exists in table
-    $result = mysql_query('select * from ' . $table . ' LIMIT 1');
+    $result = mysql_query('select * from '.$table.' LIMIT 1');
     if (!$result) {
-        echo "<HR />ERROR! The table " . $table . " is missing! Are you sure you should be doing an upgrade?<HR />";
+        echo "<HR />ERROR! The table ".$table." is missing! Are you sure you should be doing an upgrade?<HR />";
         return true;
     }
     $i = 0;
@@ -505,9 +505,9 @@ function checkforfield($fieldname, $table)
 function checkforindex($indexname, $table)
 {
     // checks to see if field exists in table
-    $result = mysql_query('SHOW INDEX from ' . $table);
+    $result = mysql_query('SHOW INDEX from '.$table);
     if (!$result) {
-        echo "<HR />ERROR! The table " . $table . " is missing! Are you sure you should be doing an upgrade?<HR />";
+        echo "<HR />ERROR! The table ".$table." is missing! Are you sure you should be doing an upgrade?<HR />";
         return true;
     }
     while ($row = mysql_fetch_array($result)) {
@@ -527,13 +527,13 @@ function object_2_array($result, $cur_depth = 0, $depth_limit = 1000)
     // using this because (array)$user will not work in php 4
     $array = array();
     if (isset($result)) {
-        foreach ($result as $key=>$value) {
+        foreach ($result as $key => $value) {
             if ($cur_depth < $depth_limit && is_object($value)) {
-                $array[$key]=object_2_array($value, $cur_depth + 1, $depth_limit);
+                $array[$key] = object_2_array($value, $cur_depth + 1, $depth_limit);
             } elseif ($cur_depth < $depth_limit && is_array($value)) {
-                $array[$key]=object_2_array($value, $cur_depth + 1, $depth_limit);
+                $array[$key] = object_2_array($value, $cur_depth + 1, $depth_limit);
             } else {
-                $array[$key]=$value;
+                $array[$key] = $value;
             }
         }
     }

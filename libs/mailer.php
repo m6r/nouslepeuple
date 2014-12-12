@@ -63,7 +63,7 @@ class PliggMailer
     function send()
     {
         if ($this->from != '') {
-            $headers = 'From: ' . $this->from;
+            $headers = 'From: '.$this->from;
         } else {
             $headers = '';
         }

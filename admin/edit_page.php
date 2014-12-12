@@ -29,7 +29,7 @@ $canIhaveAccess = $canIhaveAccess + checklevel('moderator');
 if ($canIhaveAccess == 0) {
     //	$main_smarty->assign('tpl_center', '/admin/access_denied');
 //	$main_smarty->display($template_dir . '/admin/admin.tpl');
-    header("Location: " . getmyurl('admin_login', $_SERVER['REQUEST_URI']));
+    header("Location: ".getmyurl('admin_login', $_SERVER['REQUEST_URI']));
     die();
 }
 
@@ -47,11 +47,11 @@ define('pagename', 'edit_page');
 $main_smarty->assign('pagename', pagename);
 if (isset($_REQUEST['link_id'])) {
     if (is_numeric($_REQUEST['link_id'])) {
-        $link_id=$_REQUEST['link_id'];
+        $link_id = $_REQUEST['link_id'];
         if ($link_id) {
             global $db;
             $sql = (" SELECT * from ".table_links." where link_id='$link_id'");
-            $page_id=$db->get_results($sql);
+            $page_id = $db->get_results($sql);
             foreach ($page_id as $page_results) {
                 $main_smarty->assign('page_title', $page_results->link_title);
                 $main_smarty->assign('page_url', $page_results->link_title_url);
@@ -65,34 +65,34 @@ if (isset($_REQUEST['link_id'])) {
 }
 
 // read the mysql database to get the pligg version
-$sql = "SELECT data FROM " . table_misc_data . " WHERE name = 'pligg_version'";
+$sql = "SELECT data FROM ".table_misc_data." WHERE name = 'pligg_version'";
 $pligg_version = $db->get_var($sql);
 $main_smarty->assign('version_number', $pligg_version);
 
-if ($_REQUEST['process']=='edit_page') {
+if ($_REQUEST['process'] == 'edit_page') {
     global $current_user,$db;
     if (!$_REQUEST['page_url']) {
         $_REQUEST['page_url'] = $_REQUEST['page_title'];
     }
-    $page_url=$db->escape(makeUrlFriendly(trim($_REQUEST['page_url']), true));
-    $page_title=$db->escape(trim($_REQUEST['page_title']));
-    $page_content=$db->escape(trim($_REQUEST['page_content']));
-    $page_randkey=$db->escape(trim($_REQUEST['randkey']));
-    $page_keywords= $db->escape(trim($_REQUEST['page_keywords']));
-    $page_description= $db->escape(trim($_REQUEST['page_description']));
+    $page_url = $db->escape(makeUrlFriendly(trim($_REQUEST['page_url']), true));
+    $page_title = $db->escape(trim($_REQUEST['page_title']));
+    $page_content = $db->escape(trim($_REQUEST['page_content']));
+    $page_randkey = $db->escape(trim($_REQUEST['randkey']));
+    $page_keywords = $db->escape(trim($_REQUEST['page_keywords']));
+    $page_description = $db->escape(trim($_REQUEST['page_description']));
     if (isset($_REQUEST['link_id'])) {
         if (is_numeric($_REQUEST['link_id'])) {
-            $link_id=$_REQUEST['link_id'];
+            $link_id = $_REQUEST['link_id'];
 
             // Save old SEO URL if changed
-            $old_url = $db->get_var("SELECT link_title_url FROM " . table_links . " WHERE link_id=$link_id");
+            $old_url = $db->get_var("SELECT link_title_url FROM ".table_links." WHERE link_id=$link_id");
             if ($old_url && $old_url != $page_url) {
                 $db->query("INSERT INTO ".table_old_urls." SET old_link_id=$link_id, old_title_url='$old_url'");
             }
 
             $sql = " UPDATE ".table_links." SET `link_modified` = NOW( ) , `link_title` = '$page_title', `link_title_url` = '$page_url', `link_content` = '$page_content', link_field1='$page_keywords', link_field2='$page_description' WHERE `link_id` =".$link_id." LIMIT 1 ";
             $result = @mysql_query($sql);
-            if ($result==1) {
+            if ($result == 1) {
                 header('Location: '.getmyurl("page", $page_url));
                 die();
             }
@@ -101,4 +101,4 @@ if ($_REQUEST['process']=='edit_page') {
 }
 // show the template
 $main_smarty->assign('tpl_center', '/admin/page_edit');
-$main_smarty->display($template_dir . '/admin/admin.tpl');
+$main_smarty->display($template_dir.'/admin/admin.tpl');

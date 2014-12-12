@@ -28,7 +28,7 @@ if ($language == 'arabic') {
     include_once('./languages/lang_english.php');
 }
 
-$file=dirname(__FILE__) . '/../libs/dbconnect.php';
+$file = dirname(__FILE__).'/../libs/dbconnect.php';
 
 if (!isset($dbuser)) {
     $dbuser = $_POST['dbuser'];
@@ -40,9 +40,9 @@ if (!isset($dbuser)) {
 if ($conn = @mysql_connect($dbhost, $dbuser, $dbpass)) {
     @$_SESSION['checked_step'] = 3;
 
-    $output.= "<p>" . $lang['ConnectionEstab'] . "</p>\n";
+    $output .= "<p>".$lang['ConnectionEstab']."</p>\n";
     if (mysql_select_db($dbname, $conn)) {
-        $output.= "<p><strong>" . $lang['FoundDb'] . "</strong></p>\n";
+        $output .= "<p><strong>".$lang['FoundDb']."</strong></p>\n";
         if ($handle = fopen($file, 'w')) {
             $str  = "<?php\n";
             $str .= "define(\"EZSQL_DB_USER\", '".$dbuser."');"."\n";
@@ -55,7 +55,7 @@ if ($conn = @mysql_connect($dbhost, $dbuser, $dbpass)) {
             $str .= "?>";
 
             if (fwrite($handle, $str)) {
-                $output.= "<p>" . $lang['dbconnect'] . "</p>\n";
+                $output .= "<p>".$lang['dbconnect']."</p>\n";
                 fclose($handle);
             } else {
                 $_SESSION['checked_step'] = 0;
@@ -76,21 +76,21 @@ if ($conn = @mysql_connect($dbhost, $dbuser, $dbpass)) {
 
 if ($check_errors !== false) {
     if (!$errors) {
-        $output.='<div class="instructions"><p>' . $lang['NoErrors'] . '</p>
+        $output .= '<div class="instructions"><p>'.$lang['NoErrors'].'</p>
   	<form id="form2" name="form2" method="post">
   	  <input type="hidden" name="dbuser" value="'.addslashes(strip_tags($_POST['dbuser'])).'" />
   	  <input type="hidden" name="dbpass" value="'.addslashes(strip_tags($_POST['dbpass'])).'" />
   	  <input type="hidden" name="dbname" value="'.addslashes(strip_tags($_POST['dbname'])).'" />
   	  <input type="hidden" name="dbhost" value="'.addslashes(strip_tags($_POST['dbhost'])).'" />
   	  <input type="hidden" name="tableprefix" value="'.addslashes(strip_tags($_POST['tableprefix'])).'" />
-	  <input type="hidden" name="language" value="' . addslashes(strip_tags($_REQUEST['language'])) . '">
+	  <input type="hidden" name="language" value="'.addslashes(strip_tags($_REQUEST['language'])).'">
   	  <input type="hidden" name="step" value="4">
-  	  <input type="submit" class="btn btn-primary" name="Submit" value="' . $lang['Next'] . '" />
+  	  <input type="submit" class="btn btn-primary" name="Submit" value="'.$lang['Next'].'" />
   	  </form></div>';
     } else {
-        $output=DisplayErrors($errors);
-        $output.='<div class="instructions"><form id="thisform">
-    <a class="btn btn-primary" href="install.php?step=2&language='.$language.'">' . $lang['GoBack'] . '</a>
+        $output = DisplayErrors($errors);
+        $output .= '<div class="instructions"><form id="thisform">
+    <a class="btn btn-primary" href="install.php?step=2&language='.$language.'">'.$lang['GoBack'].'</a>
     </form></div>';
     }
     echo $output;

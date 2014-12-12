@@ -24,7 +24,7 @@ class pliggconfig
 			<div class="admin_config_content">
 		<?php
 
-        $sql = "Select * from " . table_config . " where var_page = '$this->var_page'";
+        $sql = "Select * from ".table_config." where var_page = '$this->var_page'";
         $configs = $db->get_results($sql);
         if ($configs) {
             global $db, $main_smarty;
@@ -40,7 +40,7 @@ class pliggconfig
             foreach ($configs as $config) {
                 //				$this->var_id=$config_id;
 //				$this->read();
-                foreach ($config as $k=>$v) {
+                foreach ($config as $k => $v) {
                     $this->$k = $v;
                 }
                 $this->print_summary();
@@ -56,15 +56,15 @@ class pliggconfig
     function read()
     {
         global $db;
-        $config = $db->get_row("SELECT * FROM " . table_config . " WHERE var_id = $this->var_id");
+        $config = $db->get_row("SELECT * FROM ".table_config." WHERE var_id = $this->var_id");
 
-        $this->var_page=$config->var_page;
-        $this->var_name=$config->var_name;
-        $this->var_value=htmlentities($config->var_value);
-        $this->var_defaultvalue=$config->var_defaultvalue;
-        $this->var_optiontext=$config->var_optiontext;
-        $this->var_title=$config->var_title;
-        $this->var_desc=$config->var_desc;
+        $this->var_page = $config->var_page;
+        $this->var_name = $config->var_name;
+        $this->var_value = htmlentities($config->var_value);
+        $this->var_defaultvalue = $config->var_defaultvalue;
+        $this->var_optiontext = $config->var_optiontext;
+        $this->var_title = $config->var_title;
+        $this->var_desc = $config->var_desc;
 
         return true;
     }
@@ -78,7 +78,7 @@ class pliggconfig
         if (strtolower($this->var_value) == 'false') {
             $this->var_value = 'false';
         }
-        $sql = "UPDATE " . table_config . " set var_value = '".$this->var_value."' where var_id = ".$this->var_id;
+        $sql = "UPDATE ".table_config." set var_value = '".$this->var_value."' where var_id = ".$this->var_id;
         $db->query($sql);
         $this->create_file();
 
@@ -100,7 +100,7 @@ class pliggconfig
         echo "<td>".translate($this->var_desc)."</td><td>";
 
         if ($this->var_name == '$my_base_url') {
-            echo translate("It looks like this should be set to")." <strong>"."http://" . $_SERVER["HTTP_HOST"]."</strong><br>";
+            echo translate("It looks like this should be set to")." <strong>"."http://".$_SERVER["HTTP_HOST"]."</strong><br>";
         }
 
         if ($this->var_name == '$my_pligg_base') {
@@ -112,31 +112,31 @@ class pliggconfig
             echo translate("It looks like this should be set to")." <strong>".$path."</strong><br>";
         }
 
-        echo '<input class="form-control admin_config_input emptytext" id="editme' .$this->var_id. '" onclick="show_edit('.$this->var_id.')" value="'.htmlentities($this->var_value, ENT_QUOTES, 'UTF-8').'">';
-        echo '<span class="emptytext" id="showme' .$this->var_id. '" style="display:none;">';
+        echo '<input class="form-control admin_config_input emptytext" id="editme'.$this->var_id.'" onclick="show_edit('.$this->var_id.')" value="'.htmlentities($this->var_value, ENT_QUOTES, 'UTF-8').'">';
+        echo '<span class="emptytext" id="showme'.$this->var_id.'" style="display:none;">';
         if (preg_match('/^\s*(.+),\s*(.+) or (.+)\s*$/', $this->var_optiontext, $m)) {
             echo "<select name=\"var_value\" class=\"form-control\">";
-            for ($ii=1; $ii<=3; $ii++) {
-                echo "<option value='{$m[$ii]}' ".($m[$ii]==$this->var_value ? "selected" : "").">{$m[$ii]}</option>";
+            for ($ii = 1; $ii <= 3; $ii++) {
+                echo "<option value='{$m[$ii]}' ".($m[$ii] == $this->var_value ? "selected" : "").">{$m[$ii]}</option>";
             }
             echo "</select><br />";
         } elseif (preg_match('/^\s*(.+[^\/])\s*\/\s*([^\/].+)\s*$/', $this->var_optiontext, $m) ||
             preg_match('/^\s*(.+) or (.+)\s*$/', $this->var_optiontext, $m)) {
             if (preg_match('/^(\d+)\s*=\s*(.+)$/', $m[1], $m1) &&
             preg_match('/^(\d+)\s*=\s*(.+)$/', $m[2], $m2)) {
-                echo "<select name=\"var_value\" class=\"form-control\"><option value='{$m1[1]}' ".($m1[1]==$this->var_value ? "selected" : "").">{$m1[2]}</option><option value='{$m2[1]}' ".($m2[1]==$this->var_value ? "selected" : "").">{$m2[2]}</option></select><br />";
+                echo "<select name=\"var_value\" class=\"form-control\"><option value='{$m1[1]}' ".($m1[1] == $this->var_value ? "selected" : "").">{$m1[2]}</option><option value='{$m2[1]}' ".($m2[1] == $this->var_value ? "selected" : "").">{$m2[2]}</option></select><br />";
             } else {
-                echo "<select name=\"var_value\" class=\"form-control\"><option value='{$m[1]}' ".($m[1]==$this->var_value ? "selected" : "").">{$m[1]}</option><option value='{$m[2]}' ".($m[2]==$this->var_value ? "selected" : "").">{$m[2]}</option></select><br />";
+                echo "<select name=\"var_value\" class=\"form-control\"><option value='{$m[1]}' ".($m[1] == $this->var_value ? "selected" : "").">{$m[1]}</option><option value='{$m[2]}' ".($m[2] == $this->var_value ? "selected" : "").">{$m[2]}</option></select><br />";
             }
         } elseif (preg_match('/^\s*(\d+)\s*-\s*(\d+)\s*$/', $this->var_optiontext, $m)) {
             echo "<select name=\"var_value\" class=\"form-control\">";
-            for ($ii=$m[1]; $ii<=$m[2]; $ii++) {
-                echo "<option value='$ii' ".($ii==$this->var_value ? "selected" : "").">$ii</option>";
+            for ($ii = $m[1]; $ii <= $m[2]; $ii++) {
+                echo "<option value='$ii' ".($ii == $this->var_value ? "selected" : "").">$ii</option>";
             }
             echo "</select><br />";
         } else {
             echo "<input type=\"text\" class='form-control admin_config_input edit_input' name=\"var_value\" value=\"".htmlentities($this->var_value, ENT_QUOTES, 'UTF-8')."\" ";
-            if (strpos($this->var_optiontext, 'number')===0) {
+            if (strpos($this->var_optiontext, 'number') === 0) {
                 $min = preg_match('/at least (\d+)/', $this->var_optiontext, $m) ? $m[1] : 0;
                 echo "size='5' onblur='check_number({$this->var_id},this,$min)'";
             }
@@ -157,21 +157,21 @@ class pliggconfig
         global $db;
         if ($handle = fopen($filename, 'w')) {
             fwrite($handle, "<?php\n");
-            $usersql = $db->get_results('SELECT * FROM ' . table_prefix . 'config');
+            $usersql = $db->get_results('SELECT * FROM '.table_prefix.'config');
             foreach ($usersql as $row) {
-                $value = $row->var_enclosein . $row->var_value. $row->var_enclosein;
+                $value = $row->var_enclosein.$row->var_value.$row->var_enclosein;
 
                 $write_vars = array('table_prefix', '$my_base_url', '$my_pligg_base', '$dblang', '$language' );
 
                 if (in_array($row->var_name, $write_vars)) {
                     if ($row->var_method == "normal") {
-                        $line =  $row->var_name . " = " . $value . ";";
+                        $line =  $row->var_name." = ".$value.";";
                     }
                     if ($row->var_method == "define") {
-                        $line = "define('" . $row->var_name . "', ". $value . ");";
+                        $line = "define('".$row->var_name."', ".$value.");";
                     }
 
-                    if (fwrite($handle, $line . "\n")) {
+                    if (fwrite($handle, $line."\n")) {
                     } else {
                         echo "<strong>Could not write to '$filename' file</strong>";
                     }
@@ -187,7 +187,7 @@ class pliggconfig
                 $db->use_disk_cache = true;
                 $db->cache_queries = true;
                 $db->cache_timeout = 0;
-                $usersql = $db->get_results('SELECT var_name, var_value, var_method, var_enclosein FROM ' . table_prefix . 'config');
+                $usersql = $db->get_results('SELECT var_name, var_value, var_method, var_enclosein FROM '.table_prefix.'config');
                 $db->cache_queries = false;
             }
         } else {

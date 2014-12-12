@@ -27,7 +27,7 @@ $range_names  = array($main_smarty->get_config_vars('PLIGG_Visual_Tags_All'), $m
 $range_values = array(0, 172800, 604800, 2592000, 31536000);
 
 // show the tag cloud
-$cloud=new TagCloud();
+$cloud = new TagCloud();
 $cloud->smarty_variable = $main_smarty; // pass smarty to the function so we can set some variables
 $cloud->range_values = $range_values;
 if (isset($_GET['categoryID']) && is_numeric($_GET['categoryID'])) {
@@ -52,5 +52,5 @@ define('pagename', 'cloud');
 $main_smarty->assign('pagename', pagename);
 
 // show the template
-$main_smarty->assign('tpl_center', $the_template . '/tag_cloud_center');
-$main_smarty->display($the_template . '/pligg.tpl');
+$main_smarty->assign('tpl_center', $the_template.'/tag_cloud_center');
+$main_smarty->display($the_template.'/pligg.tpl');

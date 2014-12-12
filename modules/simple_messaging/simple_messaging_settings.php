@@ -1,7 +1,7 @@
 <?php
 
 // the path to the module. the probably shouldn't be changed unless you rename the messaging folder(s)
-define('simple_messaging_path', my_pligg_base . '/modules/simple_messaging/');
+define('simple_messaging_path', my_pligg_base.'/modules/simple_messaging/');
 
 // the path to the module. the probably shouldn't be changed unless you rename the module_store folder(s)
     if (!defined('lang_loc')) {
@@ -19,13 +19,13 @@ define('simple_messaging_path', my_pligg_base . '/modules/simple_messaging/');
         }
     }
 
-define('simple_messaging_lang_conf', lang_loc . '/modules/simple_messaging/lang.conf');
-define('simple_messaging_pligg_lang_conf', lang_loc . "/languages/lang_" . pligg_language . ".conf");
+define('simple_messaging_lang_conf', lang_loc.'/modules/simple_messaging/lang.conf');
+define('simple_messaging_pligg_lang_conf', lang_loc."/languages/lang_".pligg_language.".conf");
 
 // the path to the modules templates. this probably shouldn't be changed unless you rename the messaging folder(s)
 define('simple_messaging_tpl_path', '../modules/simple_messaging/templates/');
 // the path to the images folder. this probably shouldn't be changed unless you rename the messaging folder(s)
-define('simple_messaging_img_path', my_pligg_base . '/modules/simple_messaging/images/');
+define('simple_messaging_img_path', my_pligg_base.'/modules/simple_messaging/images/');
 
 define('URL_simple_messaging_inbox', my_pligg_base.'/module.php?module=simple_messaging&view=inbox');
 define('URL_simple_messaging_compose', my_pligg_base.'/module.php?module=simple_messaging&view=compose&to=');

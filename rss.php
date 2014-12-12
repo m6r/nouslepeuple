@@ -20,7 +20,7 @@ $time = isset($_GET['time']) && is_numeric($_GET['time']) ? $_GET['time'] : 0;
 
 if ($time > 0) {
     // Prepare for times
-    $sql = "SELECT link_id, count(*) as votes FROM " . table_votes . ", " . table_links . " WHERE  ";
+    $sql = "SELECT link_id, count(*) as votes FROM ".table_votes.", ".table_links." WHERE  ";
     if ($time > 0) {
         $from = time()-$time;
         $sql .= "vote_date > FROM_UNIXTIME($from) AND ";
@@ -28,7 +28,7 @@ if ($time > 0) {
     $sql .= "vote_link_id=link_id  AND (link_status='published' OR link_status='new') GROUP BY vote_link_id  ORDER BY votes DESC LIMIT $rows";
 
     $last_modified = time();
-    $title = $main_smarty->get_config_vars('PLIGG_Visual_RSS_Recent') . ' ' . txt_time_diff($from);
+    $title = $main_smarty->get_config_vars('PLIGG_Visual_RSS_Recent').' '.txt_time_diff($from);
     $link_date = "";
 } else {
     // All the others
@@ -36,18 +36,18 @@ if ($time > 0) {
     $tmpsearch->searchTerm = isset($_GET['search']) && sanitize($_GET['search'], 3) != '' ? sanitize($_GET['search'], 3) : '';
     $search = $tmpsearch->get_search_clause();
     if ($search) {
-        $status='all';
+        $status = 'all';
     }
 
     switch ($status) {
         case 'published':
             $order_field = 'link_date';
             $link_date = 'date';
-            $title = " | " . $main_smarty->get_config_vars("PLIGG_Visual_Published_News");
+            $title = " | ".$main_smarty->get_config_vars("PLIGG_Visual_Published_News");
             break;
         case 'new':
         case 'new':
-            $title = " | " . $main_smarty->get_config_vars("PLIGG_Visual_Pligg_Queued");
+            $title = " | ".$main_smarty->get_config_vars("PLIGG_Visual_Pligg_Queued");
             $order_field = 'link_date';
             $link_date = "date";
                         $status = 'new';
@@ -55,7 +55,7 @@ if ($time > 0) {
         case 'shared':
             $order_field = 'link_date';
             $link_date = 'date';
-            $title = " | " . $main_smarty->get_config_vars("PLIGG_Visual_Group_Shared");
+            $title = " | ".$main_smarty->get_config_vars("PLIGG_Visual_Group_Shared");
             break;
         case 'all':
             $title = "";
@@ -68,12 +68,12 @@ if ($time > 0) {
             break;
     }
 
-    $from  = "FROM " . table_links .
-            " LEFT JOIN " . table_groups . " ON group_id=link_group_id ";
+    $from  = "FROM ".table_links.
+            " LEFT JOIN ".table_groups." ON group_id=link_group_id ";
 #			" LEFT JOIN " . table_categories . " ON category_id=link_category ".
 #			" LEFT JOIN " . table_users . " ON link_author=user_id ";
     if ($status == 'shared') {
-        $from .= " LEFT JOIN " . table_group_shared . " ON share_link_id=link_id ";
+        $from .= " LEFT JOIN ".table_group_shared." ON share_link_id=link_id ";
     }
     $where = " WHERE (ISNULL(group_privacy) OR group_privacy!='private') ";
     if ($status == 'all') {
@@ -85,7 +85,7 @@ if ($time > 0) {
     }
 
     if ($_REQUEST['category']) {
-        if (!($cat=check_integer('category'))) {
+        if (!($cat = check_integer('category'))) {
             $thecat = get_cached_category_data('category_safe_name', sanitize($_REQUEST['category'], 1));
             $cat = $thecat->category_id;
             if (!$cat) {
@@ -93,19 +93,19 @@ if ($time > 0) {
                 die();
             }
         }
-        $where .= " AND link_category IN (SELECT category_ID from ". table_categories ." where category_id=$cat OR category_parent=$cat )";
-        $category_name = $db->get_var("SELECT category_name FROM " . table_categories . " WHERE category_id = $cat AND category_lang='$dblang'");
-        $title .= " | " . htmlspecialchars($category_name);
+        $where .= " AND link_category IN (SELECT category_ID from ".table_categories." where category_id=$cat OR category_parent=$cat )";
+        $category_name = $db->get_var("SELECT category_name FROM ".table_categories." WHERE category_id = $cat AND category_lang='$dblang'");
+        $title .= " | ".htmlspecialchars($category_name);
     }
 
     if (isset($_REQUEST['group'])) {
-        if (!($group=check_integer('group'))) {
-            $group = $db->get_var("SELECT group_id FROM " . table_groups . " WHERE group_safename = '".$db->escape(strip_tags($_REQUEST['group']))."';");
+        if (!($group = check_integer('group'))) {
+            $group = $db->get_var("SELECT group_id FROM ".table_groups." WHERE group_safename = '".$db->escape(strip_tags($_REQUEST['group']))."';");
         }
 
-        $group_name = $db->get_var("SELECT group_name FROM " . table_groups . " WHERE group_id = '$group'");
+        $group_name = $db->get_var("SELECT group_name FROM ".table_groups." WHERE group_id = '$group'");
         if ($group_name) {
-            $title .= " | " . $group_name;
+            $title .= " | ".$group_name;
             $where .= " AND link_group_id = '$group' ";
         }
     }
@@ -117,7 +117,7 @@ if ($time > 0) {
     }
 
     $order_by = " ORDER BY $order_field DESC ";
-    $last_modified = $db->get_var($sql="SELECT UNIX_TIMESTAMP(max($order_field)) $from $where");
+    $last_modified = $db->get_var($sql = "SELECT UNIX_TIMESTAMP(max($order_field)) $from $where");
     $sql = "SELECT * $from $where $order_by LIMIT $rows";
 }
 
@@ -131,13 +131,13 @@ $link = new Link;
 $links = $db->get_results($sql);
 if ($links) {
     foreach ($links as $dblink) {
-        $link->id=$dblink->link_id;
+        $link->id = $dblink->link_id;
         $cached_links[$dblink->link_id] = $dblink;
         $link->read();
 
         $user = new User($link->author);
         #print_r($link);
-        $category_name = $db->get_var($sql="SELECT category_name FROM " . table_categories . " WHERE category_id = {$link->category}");
+        $category_name = $db->get_var($sql = "SELECT category_name FROM ".table_categories." WHERE category_id = {$link->category}");
         #print $sql;
 
         $link->link_summary = str_replace("\n", "<br />", $link->link_summary);
@@ -148,7 +148,7 @@ if ($links) {
         $link->link_summary = str_replace("â€", "\"", $link->link_summary);
 
         echo "<item>\n";
-        echo "	<title>". htmlspecialchars($link->title) . "</title>\n";
+        echo "	<title>".htmlspecialchars($link->title)."</title>\n";
         echo "	<link>".getmyFullurl("storyURL", $link->category_safe_names($link->category), urlencode($link->title_url), $link->id)."</link>\n";
         $vars = array('link' => $link);
         check_actions('rss_add_data', $vars);
@@ -159,19 +159,19 @@ if ($links) {
         $description = htmlspecialchars($link->content);
         $description = preg_replace('/\r/', ' ', $description);
         $description = preg_replace('/\n/', ' <br />', $description);
-        echo "	<description><![CDATA[ " . $description . " ]]></description>\n";
+        echo "	<description><![CDATA[ ".$description." ]]></description>\n";
         if (!empty($link_date)) {
             echo "	<pubDate>".date('D, d M Y H:i:s T', $link->$link_date-misc_timezone*3600)."</pubDate>\n";
         } else {
             echo "	<pubDate>".date('D, d M Y H:i:s T', time()-misc_timezone*3600)."</pubDate>\n";
         }
-        echo "	<dc:creator>" . htmlspecialchars($user->username) . "</dc:creator>\n";
-        echo "	<category>" . htmlspecialchars($category_name) . "</category>\n";
+        echo "	<dc:creator>".htmlspecialchars($user->username)."</dc:creator>\n";
+        echo "	<category>".htmlspecialchars($category_name)."</category>\n";
         // Calculate total vote count based on votes-downvotes
         $vote_total = $link->votes - $link->reports;
-        echo "	<votes>" . $vote_total . "</votes>\n";
-        echo "	<upvotes>" . $link->votes . "</upvotes>\n";
-        echo "	<downvotes>" . $link->reports . "</downvotes>\n";
+        echo "	<votes>".$vote_total."</votes>\n";
+        echo "	<upvotes>".$link->votes."</upvotes>\n";
+        echo "	<downvotes>".$link->reports."</downvotes>\n";
         echo "	<guid>".getmyFullurl("storyURL", $link->category_safe_names($link->category), urlencode($link->title_url), $link->id)."</guid>\n";
 
         // module system hook
@@ -193,8 +193,8 @@ function do_rss_header($title)
 {
     global $last_modified, $dblang, $main_smarty;
     header('Content-type: text/xml; charset=utf-8', true);
-    echo '<?xml version="1.0"?>' . "\n";
-    echo '<rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:media="http://search.yahoo.com/mrss/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">'. "\n";
+    echo '<?xml version="1.0"?>'."\n";
+    echo '<rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:media="http://search.yahoo.com/mrss/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">'."\n";
     echo '<channel>'."\n";
     echo '<title>'.htmlspecialchars($main_smarty->get_config_vars("PLIGG_Visual_Name")).' '.trim($title).'</title>'."\n";
     echo '<link>'.my_base_url.my_pligg_base.'</link>'."\n";
@@ -210,7 +210,7 @@ function do_rss_footer()
 
 function onlyreadables($string)
 {
-    for ($i=0;$i<strlen($string);$i++) {
+    for ($i = 0;$i<strlen($string);$i++) {
         $chr = $string{$i};
         $ord = ord($chr);
         if ($ord<32 or $ord>126) {

@@ -10,18 +10,18 @@ include('../../libs/link.php');
 include_once('../../libs/utils.php');
 #include('../../libs/smartyvariables.php');
 
-$upload_dir = mnmpath . get_misc_data('upload_directory');
-$thumb_dir  = mnmpath . get_misc_data('upload_thdirectory');
+$upload_dir = mnmpath.get_misc_data('upload_directory');
+$thumb_dir  = mnmpath.get_misc_data('upload_thdirectory');
 $isadmin = checklevel('admin');
 
 // Upload a file
 if ($_POST['id']) {
-    $linkres=new Link;
+    $linkres = new Link;
     $linkres->id = sanitize($_POST['id'], 3);
     if (!is_numeric($linkres->id)) {
         die("Wrong ID");
     }
-    if (!is_numeric($_POST['number']) || $_POST['number']<=0) {
+    if (!is_numeric($_POST['number']) || $_POST['number'] <= 0) {
         die("Wrong number");
     }
     if ($_POST['number'] > get_misc_data('upload_maxnumber')) {
@@ -32,7 +32,7 @@ if ($_POST['id']) {
     $sql = "SELECT * FROM ".table_prefix."files WHERE ".($isadmin ? "" : "file_user_id='{$current_user->user_id}' AND")." file_link_id='{$_POST['id']}' AND file_number='{$_POST['number']}' AND file_comment_id='$_POST[comment]'";
     if ($files = $db->get_results($sql)) {
         foreach ($files as $row) {
-            if ($row->file_size=='orig') {
+            if ($row->file_size == 'orig') {
                 @unlink("$upload_dir/{$row->file_name}");
             } else {
                 @unlink("$thumb_dir/{$row->file_name}");
@@ -76,7 +76,7 @@ elseif ($_GET['id'] && $_GET['number'] && is_numeric($_GET['id']) && is_numeric(
         // Check if file is an image
         $main_smarty->assign("file", $images[0]['file_name']);
         $main_smarty->assign("ispicture", $images[0]['file_ispicture']);
-        if (strpos($images[0]['file_name'], 'http')===0) {
+        if (strpos($images[0]['file_name'], 'http') === 0) {
             $filename = $images[0]['file_name'];
         } else {
             $filename = $upload_dir."/".$images[0]['file_name'];
@@ -98,7 +98,7 @@ elseif ($_GET['delid'] && $_GET['number'] && is_numeric($_GET['delid']) && is_nu
     $sql = "SELECT * FROM ".table_prefix."files WHERE ".($isadmin ? "" : "file_user_id='{$current_user->user_id}' AND")." (file_id='$id' OR file_orig_id='$id')";
     if ($files = $db->get_results($sql)) {
         foreach ($files as $row) {
-            if ($row->file_size=='orig') {
+            if ($row->file_size == 'orig') {
                 unlink("$upload_dir/{$row->file_name}");
             } else {
                 unlink("$thumb_dir/{$row->file_name}");
@@ -114,7 +114,7 @@ elseif ($_GET['delid'] && $_GET['number'] && is_numeric($_GET['delid']) && is_nu
 elseif ($_GET['switchid'] && $_GET['number'] && is_numeric($_GET['switchid']) && is_numeric($_GET['number']) && $_SESSION['upload_files'][$_GET['number']]['id']) {
     $id  = $_SESSION['upload_files'][$_GET['number']]['id'];
     $sql = "UPDATE ".table_prefix."files SET ".
-                ($_GET['mode']=='thumb' ? 'file_hide_thumb=1-file_hide_thumb' : 'file_hide_file=1-file_hide_file').
+                ($_GET['mode'] == 'thumb' ? 'file_hide_thumb=1-file_hide_thumb' : 'file_hide_file=1-file_hide_file').
                 " WHERE ".($isadmin ? "" : "file_user_id='{$current_user->user_id}' AND")." (file_id='$id' OR file_orig_id='$id')";
     mysql_query($sql);
     print "OK";

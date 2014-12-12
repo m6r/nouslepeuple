@@ -16,10 +16,10 @@ if (!defined('mnminclude')) {
     }
 
     // if this query changes, update the 'cache clear' query in /libs/admin_config.php
-    $usersql = $db->get_results('SELECT var_name, var_value, var_method, var_enclosein FROM ' . table_prefix . 'config');
+    $usersql = $db->get_results('SELECT var_name, var_value, var_method, var_enclosein FROM '.table_prefix.'config');
 
     if (!$usersql) {
-        die('Error. The ' . table_prefix . 'config table is empty or does not exist');
+        die('Error. The '.table_prefix.'config table is empty or does not exist');
     }
 
     foreach ($usersql as $row) {

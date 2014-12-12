@@ -22,11 +22,11 @@ if ($_REQUEST['page']) {
     global $db, $main_smarty;
     $page = $db->escape(sanitize($_REQUEST['page'], 4));
 
-    $page_results=$db->get_row($sql = " SELECT * from ".table_links." where link_title_url='$page' and link_status='page'");
+    $page_results = $db->get_row($sql = " SELECT * from ".table_links." where link_title_url='$page' and link_status='page'");
 
     // Search in old urls if not found
     if (!$page_results->link_id) {
-        $page_results=$db->get_row($sql="SELECT * FROM " . table_old_urls . "
+        $page_results = $db->get_row($sql = "SELECT * FROM ".table_old_urls."
 							LEFT JOIN ".table_links." ON old_link_id=link_id AND link_status='page'
 							WHERE `old_title_url` = '$page' AND !ISNULL(link_id)");
     }
@@ -47,5 +47,5 @@ if ($_REQUEST['page']) {
 }
 
 // show the template
-$main_smarty->assign('tpl_center', $the_template . '/page_center');
-$main_smarty->display($the_template . '/pligg.tpl');
+$main_smarty->assign('tpl_center', $the_template.'/page_center');
+$main_smarty->display($the_template.'/pligg.tpl');

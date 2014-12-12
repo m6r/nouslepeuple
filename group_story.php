@@ -17,9 +17,9 @@ if (!is_numeric($requestID)) {
 if ($_REQUEST['title']) {
     $requestTitle = $db->escape(strip_tags($_REQUEST['title']));
     //$requestTitle = sanitize($_GET['title'], 3);
-    $requestID = $db->get_var("SELECT group_id FROM " . table_groups . " WHERE group_safename = '".$requestTitle."';");
+    $requestID = $db->get_var("SELECT group_id FROM ".table_groups." WHERE group_safename = '".$requestTitle."';");
 } elseif ($requestID) {
-    $requestTitle = $db->get_var("SELECT group_safename FROM " . table_groups . " WHERE group_id = '".$requestID."';");
+    $requestTitle = $db->get_var("SELECT group_safename FROM ".table_groups." WHERE group_id = '".$requestID."';");
 }
 // find the name of the current category
 if (isset($_REQUEST['category'])) {
@@ -42,12 +42,12 @@ define('pagename', 'group_story');
 
 $main_smarty->assign('pagename', pagename);
 
-$privacy = $db->get_var("SELECT group_privacy FROM " . table_groups . " WHERE group_id = '$requestID';");
+$privacy = $db->get_var("SELECT group_privacy FROM ".table_groups." WHERE group_id = '$requestID';");
 $view = sanitize(sanitize($_REQUEST["view"], 1), 3);
 if ($requestID > 0) {
     //For Infinit scrolling and continue reading option
 
-    if (($privacy!='private' || isMemberActive($requestID)=='active')) {
+    if (($privacy != 'private' || isMemberActive($requestID) == 'active')) {
         $main_smarty->assign('group_shared_rows', group_shared($requestID, $catID, 1));
         $main_smarty->assign('group_published_rows', group_stories($requestID, $catID, 'published', 1));
         $main_smarty->assign('group_new_rows', group_stories($requestID, $catID, 'new', 1));
@@ -97,7 +97,7 @@ if ($view == '') {
 }
 $main_smarty->assign('groupview', $view);
 
-if (Auto_scroll==2 || Auto_scroll==3) {
+if (Auto_scroll == 2 || Auto_scroll == 3) {
     $main_smarty->assign('groupID', $requestID);
     $main_smarty->assign('viewtype', $view);
 }
@@ -133,8 +133,8 @@ if ($_POST["avatar"] == "uploaded") {
 
     $CSRF->check_expired('edit_group');
     if ($CSRF->check_valid(sanitize($_POST['token'], 3), 'edit_group')) {
-        $user_image_path = "avatars/groups_uploaded" . "/";
-        $user_image_apath = "/" . $user_image_path;
+        $user_image_path = "avatars/groups_uploaded"."/";
+        $user_image_apath = "/".$user_image_path;
         $allowedFileTypes = array("image/jpeg","image/gif","image/png",'image/x-png','image/pjpeg');
         unset($imagename);
         $myfile = $_FILES['image_file']['name'];
@@ -152,15 +152,15 @@ if ($_POST["avatar"] == "uploaded") {
             if (!is_numeric($idname)) {
                 die();
             }
-            $imagename = $idname . "_original.jpg";
-            $newimage = $user_image_path . $imagename ;
+            $imagename = $idname."_original.jpg";
+            $newimage = $user_image_path.$imagename ;
             $result = @move_uploaded_file($_FILES['image_file']['tmp_name'], $newimage);
             if (empty($result)) {
                 $error["result"] = "There was an error moving the uploaded file.";
             } else {
                 $avatar_source = cleanit($_POST['avatarsource']);
 
-                $sql = "UPDATE " . table_groups . " set group_avatar='uploaded' WHERE group_id=$idname";
+                $sql = "UPDATE ".table_groups." set group_avatar='uploaded' WHERE group_id=$idname";
                 $db->query($sql);
                 $main_smarty->assign('Avatar_uploaded', 'Avatar uploaded successfully. You may need to refresh the page to see the new image.');
             /*if($avatar_source != "" && $avatar_source != "useruploaded"){
@@ -172,12 +172,12 @@ if ($_POST["avatar"] == "uploaded") {
             }
         }
     // create large avatar
-    include mnminclude . "class.pThumb.php";
-        $img=new pThumb();
+    include mnminclude."class.pThumb.php";
+        $img = new pThumb();
         $img->pSetSize(group_avatar_size_width, group_avatar_size_height);
         $img->pSetQuality(100);
         $img->pCreate($newimage);
-        $img->pSave($user_image_path . $idname . "_".group_avatar_size_width.".jpg");
+        $img->pSave($user_image_path.$idname."_".group_avatar_size_width.".jpg");
         $img = "";
 
     /*// create small avatar
@@ -194,8 +194,8 @@ if ($_POST["avatar"] == "uploaded") {
 }
 $CSRF->create('edit_group', true, true);
 
-$main_smarty->assign('tpl_center', $the_template . '/group_story_center');
-$main_smarty->display($the_template . '/pligg.tpl');
+$main_smarty->assign('tpl_center', $the_template.'/group_story_center');
+$main_smarty->display($the_template.'/pligg.tpl');
 
 function cleanit($value)
 {

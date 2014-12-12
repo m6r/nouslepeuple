@@ -16,11 +16,11 @@
         }
     }
 
-define('links_lang_conf', lang_loc . '/modules/links/lang.conf');
-define('links_pligg_lang_conf', lang_loc . "/languages/lang_" . pligg_language . ".conf");
+define('links_lang_conf', lang_loc.'/modules/links/lang.conf');
+define('links_pligg_lang_conf', lang_loc."/languages/lang_".pligg_language.".conf");
 
 // the path to the module. the probably shouldn't be changed unless you rename the links folder(s)
-define('links_path', my_pligg_base . '/modules/links/');
+define('links_path', my_pligg_base.'/modules/links/');
 
 // the path to the modules templates. the probably shouldn't be changed unless you rename the links folder(s)
 define('links_tpl_path', '../modules/links/templates/');

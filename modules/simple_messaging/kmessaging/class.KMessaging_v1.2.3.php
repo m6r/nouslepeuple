@@ -371,7 +371,7 @@ var $DBHost = EZSQL_DB_HOST;
             $where = ' AND ';
         }
 
-        $where = ((strlen($receiver) > 0)?'readed&4=0 AND receiver=' . $receiver:'') . $where . ((strlen($sender) > 0)?'readed&2=0 AND sender=' . $sender:'');
+        $where = ((strlen($receiver) > 0)?'readed&4=0 AND receiver='.$receiver:'').$where.((strlen($sender) > 0)?'readed&2=0 AND sender='.$sender:'');
 
         $sql = "SELECT * FROM ".$this->tblName." WHERE $where ORDER BY $order";
         //echo $sql;
@@ -410,16 +410,16 @@ var $DBHost = EZSQL_DB_HOST;
     * @param Int $who 2	Hide from the recipient
     * @desc Delete message
     */
-    function DeleteMessage($msgId, $who=0)
+    function DeleteMessage($msgId, $who = 0)
     {
         if (strlen($msgId) == 0) {
             return 1;
         }
-        if ($who==1) {
+        if ($who == 1) {
             $result = mysql_query("UPDATE ".$this->tblName." SET readed=readed|2 WHERE idMsg=$msgId");
-        } elseif ($who==2) {
+        } elseif ($who == 2) {
             $result = mysql_query("UPDATE ".$this->tblName." SET readed=readed|4 WHERE idMsg=$msgId");
-        } elseif ($who==0) {
+        } elseif ($who == 0) {
             $result = mysql_query("DELETE FROM ".$this->tblName." WHERE idMsg=$msgId");
         }
         if ($result) {

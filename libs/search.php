@@ -43,7 +43,7 @@ class Search
             $main_smarty->assign('searchtext', '');
         }
 
-        $from_where = "FROM " . $this->searchTable . " WHERE ";
+        $from_where = "FROM ".$this->searchTable." WHERE ";
 
         if ($this->filterToStatus == 'all') {
             $from_where .= " link_status IN ('published','new','sticky','supersticky') ";
@@ -131,7 +131,7 @@ class Search
         /////sorojit: for user selected category display
         if ($_COOKIE['mnm_user']) {
             $user_login = $db->escape(sanitize($_COOKIE['mnm_user'], 3));
-            $sqlGeticategory = $db->get_var("SELECT user_categories from " . table_users . " where user_login = '$user_login';");
+            $sqlGeticategory = $db->get_var("SELECT user_categories from ".table_users." where user_login = '$user_login';");
             if ($sqlGeticategory) {
                 $from_where .= " AND link_category NOT IN ($sqlGeticategory)";
                 if (Multiple_Categories) {
@@ -155,9 +155,9 @@ class Search
                     if ($child_array != '') {
                         // build the sql
                         foreach ($child_array as $child_cat_id) {
-                            $child_cat_sql .= ' OR `link_category` = ' . $child_cat_id . ' ';
+                            $child_cat_sql .= ' OR `link_category` = '.$child_cat_id.' ';
                             if (Multiple_Categories) {
-                                $child_cat_sql .= ' OR ac_cat_id = ' . $child_cat_id . ' ';
+                                $child_cat_sql .= ' OR ac_cat_id = '.$child_cat_id.' ';
                             }
                         }
                     }
@@ -165,7 +165,7 @@ class Search
                 if (Multiple_Categories) {
                     $child_cat_sql .= " OR ac_cat_id = $catId ";
                 }
-                $from_where .= " AND (link_category=$catId " . $child_cat_sql . ")";
+                $from_where .= " AND (link_category=$catId ".$child_cat_sql.")";
             }
         }
 
@@ -177,31 +177,31 @@ class Search
 						WHEN 'supersticky' THEN 2
 						WHEN 'sticky' THEN 1
 						ELSE 0
-					END DESC," . $this->orderBy;
+					END DESC,".$this->orderBy;
                 } else {
                     $this->orderBy = "CASE link_status
 						WHEN 'supersticky' THEN 1
 						ELSE 0
-					END DESC," . $this->orderBy;
+					END DESC,".$this->orderBy;
                 }
             }
             if (strpos($this->orderBy, "ORDER BY") != 1) {
-                $this->orderBy = " ORDER BY " . $this->orderBy;
+                $this->orderBy = " ORDER BY ".$this->orderBy;
             }
         }
 
         // always check groups (to hide private groups)
         $from_where = str_replace("WHERE", " LEFT JOIN ".table_groups." ON ".table_links.".link_group_id = ".table_groups.".group_id WHERE", $from_where);
         if (Voting_Method == 2) {
-            $from_where = str_replace("WHERE", " LEFT JOIN ".table_votes. " ON vote_type='links' AND vote_link_id=link_id AND vote_value>0 WHERE", $from_where);
+            $from_where = str_replace("WHERE", " LEFT JOIN ".table_votes." ON vote_type='links' AND vote_link_id=link_id AND vote_value>0 WHERE", $from_where);
         }
 
         // Search on additional categories
         if (Multiple_Categories) {
-            $from_where = str_replace("WHERE", " LEFT JOIN ".table_additional_categories. " ON ac_link_id=link_id WHERE", $from_where);
+            $from_where = str_replace("WHERE", " LEFT JOIN ".table_additional_categories." ON ac_link_id=link_id WHERE", $from_where);
         }
 
-        $groups = $db->get_results("SELECT * FROM " . table_group_member . " WHERE member_user_id = {$current_user->user_id} and member_status = 'active'");
+        $groups = $db->get_results("SELECT * FROM ".table_group_member." WHERE member_user_id = {$current_user->user_id} and member_status = 'active'");
         if ($groups) {
             $group_ids = array();
             foreach ($groups as $group) {
@@ -226,27 +226,27 @@ class Search
                 $usrclause = "";
                 $group = "GROUP BY link_id";
                 if ($catId) {
-                    $this->sql = "SELECT DISTINCT * FROM " . table_links . ", " . table_votes . " WHERE ".$usrclause." vote_link_id=link_id AND vote_value > 0  AND (link_status='published' OR link_status='new') AND link_category=$catId ".$group." ORDER BY link_votes DESC LIMIT $this->offset, $limit"; //link_date
+                    $this->sql = "SELECT DISTINCT * FROM ".table_links.", ".table_votes." WHERE ".$usrclause." vote_link_id=link_id AND vote_value > 0  AND (link_status='published' OR link_status='new') AND link_category=$catId ".$group." ORDER BY link_votes DESC LIMIT $this->offset, $limit"; //link_date
                 } else {
-                    $this->sql = "SELECT DISTINCT * FROM " . table_links . ", " . table_votes . " WHERE ".$usrclause." vote_link_id=link_id AND vote_value > 0  AND (link_status='published' OR link_status='new') ".$group." ORDER BY link_votes DESC LIMIT $this->offset, $limit"; //link_date
+                    $this->sql = "SELECT DISTINCT * FROM ".table_links.", ".table_votes." WHERE ".$usrclause." vote_link_id=link_id AND vote_value > 0  AND (link_status='published' OR link_status='new') ".$group." ORDER BY link_votes DESC LIMIT $this->offset, $limit"; //link_date
                 }
             } else {
                 if ($this->searchTerm == 'downvoted') {
                     $usrclause = "";
                     $group = "GROUP BY link_id";
                     if ($catId) {
-                        $this->sql = "SELECT DISTINCT * FROM " . table_links . ", " . table_votes . " WHERE ".$usrclause." vote_link_id=link_id AND vote_value < 0  AND (link_status='published' OR link_status='new') AND link_category=$catId ".$group." ORDER BY link_votes ASC LIMIT $this->offset, $limit"; //link_date
+                        $this->sql = "SELECT DISTINCT * FROM ".table_links.", ".table_votes." WHERE ".$usrclause." vote_link_id=link_id AND vote_value < 0  AND (link_status='published' OR link_status='new') AND link_category=$catId ".$group." ORDER BY link_votes ASC LIMIT $this->offset, $limit"; //link_date
                     } else {
-                        $this->sql = "SELECT DISTINCT * FROM " . table_links . ", " . table_votes . " WHERE ".$usrclause." vote_link_id=link_id AND vote_value < 0  AND (link_status='published' OR link_status='new') ".$group." ORDER BY link_votes ASC LIMIT $this->offset, $limit"; //link_date
+                        $this->sql = "SELECT DISTINCT * FROM ".table_links.", ".table_votes." WHERE ".$usrclause." vote_link_id=link_id AND vote_value < 0  AND (link_status='published' OR link_status='new') ".$group." ORDER BY link_votes ASC LIMIT $this->offset, $limit"; //link_date
                     }
                 } else {
                     if ($this->searchTerm == "commented") {
                         $usrclause = "";
                         $group = "GROUP BY link_id";
                         if ($catId) {
-                            $this->sql = "SELECT DISTINCT * FROM " . table_links . ", " . table_comments . " WHERE comment_status='published' ".$usrclause." AND comment_link_id=link_id AND (link_status='published' OR link_status='new') AND link_category=$catId ".$group." ORDER BY link_comments DESC LIMIT $this->offset, $limit";
+                            $this->sql = "SELECT DISTINCT * FROM ".table_links.", ".table_comments." WHERE comment_status='published' ".$usrclause." AND comment_link_id=link_id AND (link_status='published' OR link_status='new') AND link_category=$catId ".$group." ORDER BY link_comments DESC LIMIT $this->offset, $limit";
                         } else {
-                            $this->sql = "SELECT DISTINCT * FROM " . table_links . ", " . table_comments . " WHERE comment_status='published' ".$usrclause." AND comment_link_id=link_id AND (link_status='published' OR link_status='new') ".$group." ORDER BY link_comments DESC LIMIT $this->offset, $limit";
+                            $this->sql = "SELECT DISTINCT * FROM ".table_links.", ".table_comments." WHERE comment_status='published' ".$usrclause." AND comment_link_id=link_id AND (link_status='published' OR link_status='new') ".$group." ORDER BY link_comments DESC LIMIT $this->offset, $limit";
                         }
                     } else {
                         $this->sql = "SELECT link_id, link_date, link_published_date, link_votes, link_karma, link_comments $from_where $search_clause {$this->orderBy}";
@@ -297,10 +297,10 @@ class Search
                         if ($child_array != '') {
                             // build the sql
                             foreach ($child_array as $child_cat_id) {
-                                $mult_sql .= " OR `link_category` = " . $child_cat_id . " ";
+                                $mult_sql .= " OR `link_category` = ".$child_cat_id." ";
 
                                 if (Multiple_Categories) {
-                                    $mult_sql .= " OR ac_cat_id = " . $child_cat_id . " ";
+                                    $mult_sql .= " OR ac_cat_id = ".$child_cat_id." ";
                                 }
                             }
                         }
@@ -386,12 +386,12 @@ class Search
             }
 
             if (Voting_Method == 2) {
-                $from_where .= " LEFT JOIN " . table_votes . " ON vote_type='links' AND vote_link_id=link_id AND vote_value>0";
+                $from_where .= " LEFT JOIN ".table_votes." ON vote_type='links' AND vote_link_id=link_id AND vote_value>0";
             }
 
             // Search on additional categories
             if (Multiple_Categories) {
-                $from_where .= " LEFT JOIN ".table_additional_categories. " ON ac_link_id=link_id";
+                $from_where .= " LEFT JOIN ".table_additional_categories." ON ac_link_id=link_id";
             }
 
             if ($this->status != '' && $this->status != 'all') {
@@ -500,8 +500,8 @@ class Search
             $order_clauses = array( 'newest' => 'link_date DESC',
                           'oldest' => 'link_date ASC',
                           'commented' => 'link_comments DESC',
-                          'upvoted' => $rating_column . ' DESC',
-                          'downvoted' => $rating_column . ' ASC'
+                          'upvoted' => $rating_column.' DESC',
+                          'downvoted' => $rating_column.' ASC',
                             );
 
             if (array_key_exists($ords, $order_clauses)) {
@@ -523,7 +523,7 @@ class Search
             $aa = $this->offset;
             $ab = $aa + $this->pagesize;
 
-            foreach ($sortarray as $theitemaa=>$theitemab) {
+            foreach ($sortarray as $theitemaa => $theitemab) {
                 if ($x >= $aa && $x < $ab) {
                     $results[] = $theitemaa;
                 }
@@ -537,7 +537,7 @@ class Search
         return $returnme;
     }
 
-    function get_search_clause($option='')
+    function get_search_clause($option = '')
     {
         global $db;
         if (!empty($this->searchTerm)) {
@@ -547,12 +547,12 @@ class Search
 
             if ($this->isTag == true) {
                 // search the tags table
-                $this->searchTable = table_tags . " INNER JOIN " . table_links . " ON " . table_tags . ".tag_link_id = " . table_links . ".link_id";
+                $this->searchTable = table_tags." INNER JOIN ".table_links." ON ".table_tags.".tag_link_id = ".table_links.".link_id";
 
                 // thanks to jalso for this code
                     $x = explode(",", $words);
                 $sq = "(";
-                foreach ($x as $k=>$v) {
+                foreach ($x as $k => $v) {
                     $sq .= "tag_words = '".trim($x[$k])."'";
                     if ($k != (count($x) - 1)) {
                         $sq .= " OR ";
@@ -560,9 +560,9 @@ class Search
                 }
                 $sq .= ")";
                 if (Voting_Method == 2) {
-                    $where = " AND ".$sq." GROUP BY " . table_links . ".link_id, `link_votes` ORDER BY avg(vote_value) DESC ";
+                    $where = " AND ".$sq." GROUP BY ".table_links.".link_id, `link_votes` ORDER BY avg(vote_value) DESC ";
                 } else {
-                    $where = " AND ".$sq." GROUP BY " . table_links . ".link_id, `link_votes` ORDER BY `link_votes` DESC";
+                    $where = " AND ".$sq." GROUP BY ".table_links.".link_id, `link_votes` ORDER BY `link_votes` DESC";
                 }
                 // ---
             } else {
@@ -688,10 +688,10 @@ class Search
                     }
 
                     $where = " AND ((";
-                    $where .= $this->explode_search('link_url', $words) . ")  OR (";
-                    $where .= $this->explode_search('link_url_title', $words) . " ) OR (";
-                    $where .= $this->explode_search('link_title', $words) . " ) OR (";
-                    $where .= $this->explode_search('link_content', $words) . " ) OR (";
+                    $where .= $this->explode_search('link_url', $words).")  OR (";
+                    $where .= $this->explode_search('link_url_title', $words)." ) OR (";
+                    $where .= $this->explode_search('link_title', $words)." ) OR (";
+                    $where .= $this->explode_search('link_content', $words)." ) OR (";
                     $where .= $this->explode_search('link_tags', $words);
                     $where .= ") $matchfields) ";
                 }
@@ -710,12 +710,12 @@ class Search
         preg_match_all('/"([^"]+)"|([^\s]+)/', $words, $m);
         foreach ($m[1] as $v) {
             if (trim($v)) {
-                $sq .= $search_field . " LIKE '%".$db->escape(trim($v))."%' AND ";
+                $sq .= $search_field." LIKE '%".$db->escape(trim($v))."%' AND ";
             }
         }
         foreach ($m[2] as $v) {
             if (trim($v)) {
-                $sq .= $search_field . " LIKE '%".$db->escape(trim($v))."%' AND ";
+                $sq .= $search_field." LIKE '%".$db->escape(trim($v))."%' AND ";
             }
         }
 //		foreach(explode(' ',$words) as $v){
@@ -784,8 +784,8 @@ class Search
 
         $order_clauses = array( 'newest' => 'link_date DESC',
                           'oldest' => 'link_date ASC',
-                          'mostpopular' => $rating_column . ' DESC',
-                          'leastpopular' => $rating_column . ' ASC'
+                          'mostpopular' => $rating_column.' DESC',
+                          'leastpopular' => $rating_column.' ASC',
                         );
 
         if ($this->filterToStatus == "new") {

@@ -23,7 +23,7 @@ if ($_SERVER['SERVER_ADDR']) {
     if ($canIhaveAccess == 0) {
         //		$main_smarty->assign('tpl_center', '/admin/access_denied');
 //		$main_smarty->display($template_dir . '/admin/admin.tpl');
-        header("Location: " . getmyurl('admin_login', $_SERVER['REQUEST_URI']));
+        header("Location: ".getmyurl('admin_login', $_SERVER['REQUEST_URI']));
         die();
     }
 }
@@ -31,7 +31,7 @@ if ($_SERVER['SERVER_ADDR']) {
 // $message = "";
 
     $query = "SHOW TABLE STATUS";
-    $result=mysql_query($query);
+    $result = mysql_query($query);
     $table_list = "";
     while ($cur_table = mysql_fetch_object($result)) {
         $table_list .= $cur_table->Name.", ";

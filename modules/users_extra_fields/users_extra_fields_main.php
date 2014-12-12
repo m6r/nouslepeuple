@@ -5,7 +5,7 @@
         global $main_smarty, $current_user, $users_extra_fields_field, $link;
         include_once(mnminclude.'user.php');
 
-        $user=new User();
+        $user = new User();
         $user->username = $link->username();
         if (!$user->read()) {
             echo "error 2";
@@ -33,7 +33,7 @@
         if ($users_extra_fields_field) {
             foreach ($users_extra_fields_field as $thefield) {
                 foreach ($thefield as $x => $y) {
-                    $userdata->extra[$thefield['name']]=$_REQUEST[$thefield['name']];
+                    $userdata->extra[$thefield['name']] = $_REQUEST[$thefield['name']];
                 }
             }
         }
@@ -76,7 +76,7 @@
             foreach ($users_extra_fields_field as $thefield) {
                 foreach ($thefield as $x => $y) {
                     if ($thefield['show_to_user'] == true) {
-                        $user->extra[$thefield['name']]=sanitize($_POST[$thefield['name']]);
+                        $user->extra[$thefield['name']] = sanitize($_POST[$thefield['name']]);
                     }
                 }
             }

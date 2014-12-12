@@ -30,7 +30,7 @@ $is_moderator = checklevel('moderator'); // Moderators have a value of '1' for t
 if ($canIhaveAccess == 0) {
     //	$main_smarty->assign('tpl_center', '/admin/access_denied');
 //	$main_smarty->display($template_dir . '/admin/admin.tpl');
-    header("Location: " . getmyurl('admin_login', $_SERVER['REQUEST_URI']));
+    header("Location: ".getmyurl('admin_login', $_SERVER['REQUEST_URI']));
     die();
 }
 
@@ -52,15 +52,15 @@ if ($canIhaveAccess == 1) {
     $main_smarty->assign('pagesize', $pagesize);
 
     // figure out what "page" of the results we're on
-    $offset=(get_current_page()-1)*$pagesize;
+    $offset = (get_current_page()-1)*$pagesize;
 
     // if user is searching
-    if ($_GET["keyword"] && $_GET["keyword"]!= $main_smarty->get_config_vars('PLIGG_Visual_Search_SearchDefaultText')) {
+    if ($_GET["keyword"] && $_GET["keyword"] != $main_smarty->get_config_vars('PLIGG_Visual_Search_SearchDefaultText')) {
         $search_sql = " AND (comment_content LIKE '%".sanitize($_GET["keyword"], 3)."%' OR user_login LIKE '%".sanitize($_GET["keyword"], 3)."%')";
     }
 
     if ($_GET['user']) {
-        $user = mysql_fetch_array(mysql_query("SELECT * FROM " . table_users . " where user_login='".sanitize($_GET['user'], 3)."'"));
+        $user = mysql_fetch_array(mysql_query("SELECT * FROM ".table_users." where user_login='".sanitize($_GET['user'], 3)."'"));
         $user_sql = " AND comment_user_id='".$user['user_id']."'";
     }
 
@@ -87,7 +87,7 @@ if ($canIhaveAccess == 1) {
         $filter_sql = " comment_status != 'spam' AND comment_status != 'discard'";
     }
 
-    $filtered = $db->get_results($sql="SELECT SQL_CALC_FOUND_ROWS * FROM " . table_comments . "
+    $filtered = $db->get_results($sql = "SELECT SQL_CALC_FOUND_ROWS * FROM ".table_comments."
 							LEFT JOIN ".table_users." ON user_id=comment_user_id
 							WHERE $filter_sql $search_sql $user_sql
 							ORDER BY comment_date DESC LIMIT $offset,$pagesize");
@@ -112,7 +112,7 @@ if ($canIhaveAccess == 1) {
             'comment_author' => $dbfiltered->user_login,
             'comment_link_id' => $comment->link,
             'comment_status' => $comment->status,
-            'comment_date' => $dbfiltered->comment_date
+            'comment_date' => $dbfiltered->comment_date,
           );
         }
         $main_smarty->assign('template_comments', $template_comments);
@@ -123,29 +123,29 @@ if ($canIhaveAccess == 1) {
     $navwhere['link1'] = getmyurl('admin', '');
     $navwhere['text2'] = $main_smarty->get_config_vars('PLIGG_Visual_Header_AdminPanel_Comments');
     $main_smarty->assign('navbar_where', $navwhere);
-    $main_smarty->assign('posttitle', " / " . $main_smarty->get_config_vars('PLIGG_Visual_Header_AdminPanel'));
+    $main_smarty->assign('posttitle', " / ".$main_smarty->get_config_vars('PLIGG_Visual_Header_AdminPanel'));
 
     if (isset($_GET['action']) && sanitize($_GET['action'], 3) == "bulkmod" && isset($_POST['admin_acction'])) {
         $CSRF->check_expired('comments_edit');
         $killspammed = array();
-        $admin_acction=$_POST['admin_acction'];
+        $admin_acction = $_POST['admin_acction'];
 
         if ($CSRF->check_valid(sanitize($_POST['token'], 3), 'comments_edit')) {
             foreach ($_POST["comment"] as $key => $value) {
-                $comment_status=$db->get_var('select comment_status from ' . table_comments . '  WHERE comment_id = "'.$key.'"');
+                $comment_status = $db->get_var('select comment_status from '.table_comments.'  WHERE comment_id = "'.$key.'"');
 
-                if ($comment_status!=$admin_acction) {
+                if ($comment_status != $admin_acction) {
                     if ($admin_acction == "published") {
-                        $db->query($sql='UPDATE `' . table_comments . '` SET `comment_status` = "published" WHERE `comment_id` = "'.$key.'"');
+                        $db->query($sql = 'UPDATE `'.table_comments.'` SET `comment_status` = "published" WHERE `comment_id` = "'.$key.'"');
                     } elseif ($admin_acction == "moderated") {
-                        $db->query($sql='UPDATE `' . table_comments . '` SET `comment_status` = "moderated" WHERE `comment_id` = "'.$key.'"');
+                        $db->query($sql = 'UPDATE `'.table_comments.'` SET `comment_status` = "moderated" WHERE `comment_id` = "'.$key.'"');
                     } elseif ($admin_acction == "discard" || $admin_acction == "delete") {
-                        $db->query($sql='UPDATE `' . table_comments . '` SET `comment_status` = "discard" WHERE `comment_id` = "'.$key.'"');
+                        $db->query($sql = 'UPDATE `'.table_comments.'` SET `comment_status` = "discard" WHERE `comment_id` = "'.$key.'"');
 
                         $vars = array('comment_id' => $key);
                         check_actions('comment_discard', $vars);
                     } elseif ($admin_acction == "spam" && !$killspammed[$user_id]) {
-                        $user_id = $db->get_var("SELECT comment_user_id FROM `" . table_comments . "` WHERE `comment_id` = ".$key.";");
+                        $user_id = $db->get_var("SELECT comment_user_id FROM `".table_comments."` WHERE `comment_id` = ".$key.";");
 #					$db->query($sql='UPDATE `' . table_comments . '` SET `comment_status` = "spam" WHERE `comment_id` = "'.$key.'"');
                     killspam($user_id);
                         $killspammed[$user_id] = 1;
@@ -167,7 +167,7 @@ if ($canIhaveAccess == 1) {
     $main_smarty->assign('pagename', pagename);
 
     // read the mysql database to get the pligg version
-    $sql = "SELECT data FROM " . table_misc_data . " WHERE name = 'pligg_version'";
+    $sql = "SELECT data FROM ".table_misc_data." WHERE name = 'pligg_version'";
     $pligg_version = $db->get_var($sql);
     $main_smarty->assign('version_number', $pligg_version);
 
@@ -175,9 +175,9 @@ if ($canIhaveAccess == 1) {
     $main_smarty->assign('tpl_center', '/admin/comments');
 
     if ($is_moderator == '1') {
-        $main_smarty->display($template_dir . '/admin/moderator.tpl');
+        $main_smarty->display($template_dir.'/admin/moderator.tpl');
     } else {
-        $main_smarty->display($template_dir . '/admin/admin.tpl');
+        $main_smarty->display($template_dir.'/admin/admin.tpl');
     }
 } else {
     echo 'not for you! go away!';

@@ -8,9 +8,9 @@
     // this is where you set the modules "name" and "version" that is required
     // if more that one module is required then just make a copy of that line
 
-    $module_info['db_add_table'][]=array(
-    'name' => table_prefix . "files",
-    'sql' => "CREATE TABLE `".table_prefix . "files` (
+    $module_info['db_add_table'][] = array(
+    'name' => table_prefix."files",
+    'sql' => "CREATE TABLE `".table_prefix."files` (
 	  `file_id` int(11) NOT NULL auto_increment,
 	  `file_name` varchar(255) default NULL,
 	  `file_size` varchar(20) default NULL,
@@ -21,16 +21,16 @@
 	  `file_number` tinyint(4) NOT NULL,
 	  `file_ispicture` tinyint(4) NOT NULL,
 	  PRIMARY KEY  (`file_id`)
-	) ENGINE=MyISAM ");
+	) ENGINE=MyISAM ", );
 
     // these are seperate because most people will have the tables already
     // created from a previous install
-    $module_info['db_add_field'][]=array(table_prefix . 'files', 'file_fields', 'TEXT',  '', '', 0, '');
-    $module_info['db_add_field'][]=array(table_prefix . 'files', 'file_hide_thumb', 'TINYINT',  1, "UNSIGNED", 0, '0');
-    $module_info['db_add_field'][]=array(table_prefix . 'files', 'file_hide_file', 'TINYINT',  1, "UNSIGNED", 0, '0');
-    $module_info['db_add_field'][]=array(table_prefix . 'files', 'file_comment_id', 'INT',  11, '', 0, '0');
+    $module_info['db_add_field'][] = array(table_prefix.'files', 'file_fields', 'TEXT',  '', '', 0, '');
+    $module_info['db_add_field'][] = array(table_prefix.'files', 'file_hide_thumb', 'TINYINT',  1, "UNSIGNED", 0, '0');
+    $module_info['db_add_field'][] = array(table_prefix.'files', 'file_hide_file', 'TINYINT',  1, "UNSIGNED", 0, '0');
+    $module_info['db_add_field'][] = array(table_prefix.'files', 'file_comment_id', 'INT',  11, '', 0, '0');
 
-    if (get_misc_data('upload_thumb')=='') {
+    if (get_misc_data('upload_thumb') == '') {
         misc_data_update('upload_thumb', '1');
         misc_data_update('upload_sizes', 'a:1:{i:0;s:7:"200x200";}');
         misc_data_update('upload_display', 'a:1:{s:7:"150x150";s:1:"1";}');

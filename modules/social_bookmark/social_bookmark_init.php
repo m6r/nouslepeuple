@@ -9,6 +9,6 @@
     $include_in_pages = array('all');
     if (do_we_load_module()) {
         if (is_object($main_smarty)) {
-            module_add_action_tpl('tpl_pligg_story_tools_end', social_bookmark_tpl_path . 'social_bookmark_index.tpl');
+            module_add_action_tpl('tpl_pligg_story_tools_end', social_bookmark_tpl_path.'social_bookmark_index.tpl');
         }
     }

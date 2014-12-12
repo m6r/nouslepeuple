@@ -103,7 +103,7 @@ if ($pligg_regfrom != '') {
     $testing = false; // changing to true will populate the form with random variables for testing.
     if ($testing == true) {
         $main_smarty->assign('reg_username', mt_rand(1111111, 9999999));
-        $main_smarty->assign('reg_email', mt_rand(1111111, 9999999) . '@test.com');
+        $main_smarty->assign('reg_email', mt_rand(1111111, 9999999).'@test.com');
         $main_smarty->assign('reg_password', '12345');
         $main_smarty->assign('reg_password2', '12345');
     }
@@ -112,8 +112,8 @@ if ($pligg_regfrom != '') {
 $vars = '';
 check_actions('register_showform', $vars);
 
-$main_smarty->assign('tpl_center', $the_template . '/register_center');
-$main_smarty->display($the_template . '/pligg.tpl');
+$main_smarty->assign('tpl_center', $the_template.'/register_center');
+$main_smarty->display($the_template.'/pligg.tpl');
 
 die();
 
@@ -122,7 +122,7 @@ function register_check_errors($username, $email, $password, $password2, $user_n
     global $main_smarty;
 
     require_once(mnminclude.'check_behind_proxy.php');
-    $userip=check_ip_behind_proxy();
+    $userip = check_ip_behind_proxy();
     if (is_ip_banned($userip)) {
         $form_username_error[] = $main_smarty->get_config_vars('PLIGG_Visual_Register_Error_YourIpIsBanned');
         $error = true;
@@ -286,7 +286,7 @@ function register_add_user($username, $email, $password, $password2, $user_langu
             'username' => $username,
             'password' => $password,
             'email' => $email,
-            'id' => $user->id
+            'id' => $user->id,
         );
 
         check_actions('register_success_pre_redirect', $registration_details);
@@ -298,7 +298,7 @@ function register_add_user($username, $email, $password, $password2, $user_langu
         } elseif (pligg_validate()) {
             header('Location: '.my_base_url.my_pligg_base.'/register_complete.php?user='.$username);
         } else {
-            header('Location: ' . getmyurl('user', $username));
+            header('Location: '.getmyurl('user', $username));
         }
         die();
     }

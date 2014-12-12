@@ -26,6 +26,6 @@ if (count($spam_links) > 0) {
         $link->read(false);
         $link->status = 'discard';
         $link->store();
-        echo 'Discarding link_id: ' . $link_id . '<br />';
+        echo 'Discarding link_id: '.$link_id.'<br />';
     }
 }

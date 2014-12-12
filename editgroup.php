@@ -43,8 +43,8 @@ $CSRF = new csrf();
 if ($_POST["avatar"] == "uploaded") {
     $CSRF->check_expired('edit_group');
     if ($CSRF->check_valid(sanitize($_POST['token'], 3), 'edit_group')) {
-        $user_image_path = "avatars/groups_uploaded" . "/";
-        $user_image_apath = "/" . $user_image_path;
+        $user_image_path = "avatars/groups_uploaded"."/";
+        $user_image_apath = "/".$user_image_path;
         $allowedFileTypes = array("image/jpeg","image/gif","image/png",'image/x-png','image/pjpeg');
         unset($imagename);
         $myfile = $_FILES['image_file']['name'];
@@ -62,15 +62,15 @@ if ($_POST["avatar"] == "uploaded") {
             if (!is_numeric($idname)) {
                 die();
             }
-            $imagename = $idname . "_original.jpg";
-            $newimage = $user_image_path . $imagename ;
+            $imagename = $idname."_original.jpg";
+            $newimage = $user_image_path.$imagename ;
             $result = @move_uploaded_file($_FILES['image_file']['tmp_name'], $newimage);
             if (empty($result)) {
                 $error["result"] = "There was an error moving the uploaded file.";
             } else {
                 $avatar_source = cleanit($_POST['avatarsource']);
 
-                $sql = "UPDATE " . table_groups . " set group_avatar='uploaded' WHERE group_id=$idname";
+                $sql = "UPDATE ".table_groups." set group_avatar='uploaded' WHERE group_id=$idname";
                 $db->query($sql);
                 $main_smarty->assign('Avatar_uploaded', 'Avatar uploaded successfully! You may need to refresh the page to see the new image.');
                 /*if($avatar_source != "" && $avatar_source != "useruploaded"){
@@ -82,12 +82,12 @@ if ($_POST["avatar"] == "uploaded") {
             }
         }
         // create large avatar
-        include mnminclude . "class.pThumb.php";
-        $img=new pThumb();
+        include mnminclude."class.pThumb.php";
+        $img = new pThumb();
         $img->pSetSize(group_avatar_size_width, group_avatar_size_height);
         $img->pSetQuality(100);
         $img->pCreate($newimage);
-        $img->pSave($user_image_path . $idname . "_".group_avatar_size_width.".jpg");
+        $img->pSave($user_image_path.$idname."_".group_avatar_size_width.".jpg");
         $img = "";
     } else {
         $CSRF->show_invalid_error(1);
@@ -118,7 +118,7 @@ if ($_POST["avatar"] == "uploaded") {
 
         if (!$group_title) {
             $errors = $main_smarty->get_config_vars('PLIGG_Visual_Group_Empty_Title');
-        } elseif ($group_vote_to_publish<=0) {
+        } elseif ($group_vote_to_publish <= 0) {
             $errors = $main_smarty->get_config_vars('PLIGG_Visual_Group_Empty_Votes');
         } else {
             $exists = $db->get_var("select COUNT(*) from ".table_groups." WHERE group_name='$group_name' AND group_id != '$requestID'");
@@ -128,7 +128,7 @@ if ($_POST["avatar"] == "uploaded") {
         }
 
         if (!$errors &&
-        $db->query("update ". table_groups ." set group_name = '".$group_title."', group_safename='$group_safename', group_description = '".$group_description."', group_privacy = '".$group_privacy."', group_vote_to_publish = '".$group_vote_to_publish."', group_notify_email=$group_notify_email where group_id = '".$requestID."'")) {
+        $db->query("update ".table_groups." set group_name = '".$group_title."', group_safename='$group_safename', group_description = '".$group_description."', group_privacy = '".$group_privacy."', group_vote_to_publish = '".$group_vote_to_publish."', group_notify_email=$group_notify_email where group_id = '".$requestID."'")) {
             $errors = $main_smarty->get_config_vars('PLIGG_Visual_Group_Saved_Changes');
         }
 
@@ -145,8 +145,8 @@ if (isset($requestID)) {
     group_display($requestID);
 }
 
-$main_smarty->assign('tpl_center', $the_template . '/edit_group_center');
-$main_smarty->display($the_template . '/pligg.tpl');
+$main_smarty->assign('tpl_center', $the_template.'/edit_group_center');
+$main_smarty->display($the_template.'/pligg.tpl');
 
 function cleanit($value)
 {

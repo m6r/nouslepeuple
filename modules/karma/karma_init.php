@@ -9,7 +9,7 @@ if (defined('mnminclude')) {
 
     $include_in_pages = array('all');
     if (do_we_load_module()) {
-        module_add_action_tpl('tpl_header_admin_main_links', karma_tpl_path . 'karma_admin_main_link.tpl');
+        module_add_action_tpl('tpl_header_admin_main_links', karma_tpl_path.'karma_admin_main_link.tpl');
 
         module_add_action('do_submit3', 'karma_do_submit3', '');
         module_add_action('link_published', 'karma_published', '');
@@ -24,7 +24,7 @@ if (defined('mnminclude')) {
         module_add_action('comment_spam', 'karma_comment_spam', '');
         module_add_action('link_remove_vote_post', 'karma_unvote', '');
 
-        include_once(mnmmodules . 'karma/karma_main.php');
+        include_once(mnmmodules.'karma/karma_main.php');
     }
 
     $include_in_pages = array('module');
@@ -33,7 +33,7 @@ if (defined('mnminclude')) {
         if ($moduleName == 'karma') {
             module_add_action('module_page', 'karma_showpage', '');
 
-            include_once(mnmmodules . 'karma/karma_main.php');
+            include_once(mnmmodules.'karma/karma_main.php');
         }
     }
 }

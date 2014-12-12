@@ -43,6 +43,9 @@ return Symfony\CS\Config\Config::create()
         'multiple_use',
         'parenthesis',
         'php_closing_tag',
+        'operators_spaces',
+        'multiline_array_trailing_comma',
+        'concat_without_spaces',
     ))
     ->finder($finder)
 ;

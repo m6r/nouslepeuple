@@ -8,11 +8,11 @@ $widget['desc'] = 'This widget displays the latest downloads available from the 
 $widget['version'] = 2.0;
 
 $product_count = get_misc_data('product_count');
-if ($product_count<=0) {
-    $product_count='3';
+if ($product_count <= 0) {
+    $product_count = '3';
 }
 
-if ($_REQUEST['widget']=='pligg_products') {
+if ($_REQUEST['widget'] == 'pligg_products') {
     if (isset($_REQUEST['products'])) {
         $product_count = sanitize($_REQUEST['products'], 3);
     }

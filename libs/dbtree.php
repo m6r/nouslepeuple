@@ -122,7 +122,7 @@ function tree_to_array($root, $table, $showRoot = true)
     global $db, $cached_categories;
     $row = get_cached_category_data('category__auto_id', $root);
     if (!$row) {
-        $sqlfix = "UPDATE " . table_categories . " SET `category__auto_id` = '0' WHERE `category_name` = 'all' LIMIT 1;";
+        $sqlfix = "UPDATE ".table_categories." SET `category__auto_id` = '0' WHERE `category_name` = 'all' LIMIT 1;";
         $db->query($sqlfix);
 
         $cached_categories = loadCategoriesForCache();
@@ -181,7 +181,7 @@ function tree_to_array($root, $table, $showRoot = true)
         $right[] = $row->rgt;
         $left[] = $row->lft;
         if ($array[$i]['leftrightdiff'] != 1) {
-            for ($j=0;$j<=$array[$i]['leftrightdiff'];$j++) {
+            for ($j = 0;$j <= $array[$i]['leftrightdiff'];$j++) {
                 $array[$i]['subcatalign'] = 1;
             }
         }
@@ -223,7 +223,7 @@ function OrderNew()
                     foreach ($sub_cateogories as $sub_category) {
                         $OrderNum = $OrderNum + 1;
                         //echo $sub_category->category_name.'-'.$sub_category->category_order."<BR>";
-                        $sql = "Update ".table_categories." set category_order = " . $OrderNum . " where category__auto_id = ".$sub_category->category__auto_id.";";
+                        $sql = "Update ".table_categories." set category_order = ".$OrderNum." where category__auto_id = ".$sub_category->category__auto_id.";";
                         //echo $sql . "<BR>";
                         $db->query($sql);
                     }

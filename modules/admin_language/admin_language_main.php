@@ -28,7 +28,7 @@ class LangFiles implements Iterator
     $this->files = array(mnmpath.'/languages/lang_'.pligg_language.'.conf' => '');
 
     // Fill files array from installed modules
-    $modules = $db->get_results('SELECT * from ' . table_modules . ' order by weight asc;');
+    $modules = $db->get_results('SELECT * from '.table_modules.' order by weight asc;');
         foreach ($modules as $module) {
             if (file_exists(mnmmodules.$module->folder.'/lang_'.pligg_language.'.conf')) {
                 $this->files[mnmmodules.$module->folder.'/lang_'.pligg_language.'.conf'] = $module->name;
@@ -68,7 +68,7 @@ class LangFiles implements Iterator
         if ($handle = fopen($filename, 'w')) {
             foreach ($lines as $line) {
                 if (preg_match("/^$id\s*=/", $line, $m)) {
-                    $line = $id . ' = "' . $value . '"' . "\n";
+                    $line = $id.' = "'.$value.'"'."\n";
                     $ret = '';
                 }
 
@@ -192,7 +192,7 @@ function admin_language_showpage()
                 if (preg_match('/^([^=]+)\s*=\s*"?(.+)"?$/', trim($line), $m)) {
                     $l['id'] = trim($m[1]);
                     $l['value'] = htmlspecialchars(str_replace('"', '', trim($m[2])));
-                    if (function_exists("iconv") && detect_encoding($l['value'])!='utf-8') {
+                    if (function_exists("iconv") && detect_encoding($l['value']) != 'utf-8') {
                         $l['value'] = iconv('', 'UTF-8//IGNORE', $l['value']);
                     }
                 } else {
@@ -212,9 +212,9 @@ function admin_language_showpage()
             $navwhere['text1'] = $main_smarty->get_config_vars('PLIGG_Visual_Header_AdminPanel');
             $navwhere['link1'] = getmyurl('admin', '');
             $navwhere['text2'] = "Modify Language";
-            $navwhere['link2'] = my_pligg_base . "/module.php?module=admin_language";
+            $navwhere['link2'] = my_pligg_base."/module.php?module=admin_language";
             $main_smarty->assign('navbar_where', $navwhere);
-            $main_smarty->assign('posttitle', " | " . $main_smarty->get_config_vars('PLIGG_Visual_Header_AdminPanel'));
+            $main_smarty->assign('posttitle', " | ".$main_smarty->get_config_vars('PLIGG_Visual_Header_AdminPanel'));
         // breadcrumbs
 
             //Method for identifying modules rather than pagename
@@ -226,10 +226,10 @@ function admin_language_showpage()
 
             $main_smarty->assign('editinplace_init', $editinplace_init);
 
-            $main_smarty->assign('tpl_center', admin_language_tpl_path . 'admin_language_main');
-            $main_smarty->display($template_dir . '/admin/admin.tpl');
+            $main_smarty->assign('tpl_center', admin_language_tpl_path.'admin_language_main');
+            $main_smarty->display($template_dir.'/admin/admin.tpl');
         }
     } else {
-        header("Location: " . getmyurl('login', $_SERVER['REQUEST_URI']));
+        header("Location: ".getmyurl('login', $_SERVER['REQUEST_URI']));
     }
 }

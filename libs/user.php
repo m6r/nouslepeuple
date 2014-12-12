@@ -51,7 +51,7 @@ class User
     var $extra = '';
 
 
-    function User($id=0)
+    function User($id = 0)
     {
         if ($id>0) {
             $this->id = (int) $id;
@@ -88,16 +88,16 @@ class User
 
         if (!user_exists($this->username)) {
             require_once(mnminclude.'check_behind_proxy.php');
-            $userip=check_ip_behind_proxy();
-            $saltedpass=generateHash($this->pass);
+            $userip = check_ip_behind_proxy();
+            $saltedpass = generateHash($this->pass);
 
             if (pligg_validate()) {
-                if ($db->query("INSERT IGNORE INTO " . table_users . " (user_login, user_email, user_pass, user_date, user_ip, user_categories, user_numero_tel, user_nom, user_prenom, user_genre, user_date_naissance, user_code_postal, user_ville, user_pays, user_signature, user_biographie) VALUES ('"
+                if ($db->query("INSERT IGNORE INTO ".table_users." (user_login, user_email, user_pass, user_date, user_ip, user_categories, user_numero_tel, user_nom, user_prenom, user_genre, user_date_naissance, user_code_postal, user_ville, user_pays, user_signature, user_biographie) VALUES ('"
                                         .$db->escape($this->username)
                                         ."', '".$db->escape($this->email)
                                         ."', '".$saltedpass
                                         ."', now()"
-                                        .", '" .$db->escape($userip)
+                                        .", '".$db->escape($userip)
                                         ."', '"
                                         ."', '".$db->escape($this->numero_tel)
                                         ."', '".$db->escape($this->nom)
@@ -110,22 +110,22 @@ class User
                                         ."', '".$db->escape($this->signature)
                                         ."', '".$db->escape($this->biographie)
                                         ."')")) {
-                    $result = $db->get_row("SELECT user_email, user_pass, user_karma, user_lastlogin FROM " . table_users . " WHERE user_login = '".$this->username."'");
-                    $encode = md5($this->email . $result->user_karma .  $this->username. pligg_hash().$main_smarty->get_config_vars('PLIGG_Visual_Name'));
+                    $result = $db->get_row("SELECT user_email, user_pass, user_karma, user_lastlogin FROM ".table_users." WHERE user_login = '".$this->username."'");
+                    $encode = md5($this->email.$result->user_karma.$this->username.pligg_hash().$main_smarty->get_config_vars('PLIGG_Visual_Name'));
 
                     $username = $this->username;
                     $password = $this->pass;
 
-                    $my_base_url=$my_base_url;
-                    $my_pligg_base=$my_pligg_base;
+                    $my_base_url = $my_base_url;
+                    $my_pligg_base = $my_pligg_base;
 
                     $domain = $main_smarty->get_config_vars('PLIGG_Visual_Name');
-                    $validation = my_base_url . my_pligg_base . "/validation.php?code=$encode&uid=".$this->username;
+                    $validation = my_base_url.my_pligg_base."/validation.php?code=$encode&uid=".$this->username;
                     $str = $main_smarty->get_config_vars('PLIGG_PassEmail_verification_message');
                     eval('$str = "'.str_replace('"', '\"', $str).'";');
                     $message = "$str";
 
-                    if (phpnum()>=5) {
+                    if (phpnum() >= 5) {
                         require("class.phpmailer5.php");
                     } else {
                         require("class.phpmailer4.php");
@@ -151,25 +151,25 @@ class User
                     return false;
                 }
             } else {
-                if ($db->query("INSERT IGNORE INTO " . table_users . " (user_login, user_email, user_pass, user_date, user_ip, user_lastlogin,user_categories, user_numero_tel, user_nom, user_prenom, user_genre, user_date_naissance, user_code_postal, user_ville, user_pays, user_signature, user_biographie) "
-                                        ." VALUES ('" .$db->escape($this->username)
+                if ($db->query("INSERT IGNORE INTO ".table_users." (user_login, user_email, user_pass, user_date, user_ip, user_lastlogin,user_categories, user_numero_tel, user_nom, user_prenom, user_genre, user_date_naissance, user_code_postal, user_ville, user_pays, user_signature, user_biographie) "
+                                        ." VALUES ('".$db->escape($this->username)
                                         ."', '".$db->escape($this->email)
                                         ."', '".$saltedpass
                                         ."', now()"
-                                        .", '" .$db->escape($userip)
+                                        .", '".$db->escape($userip)
                                         ."', now()"
                                         .", '"
                                         ."', '".$db->escape($this->numero_tel)
                                         ."', '".$db->escape($this->nom)
                                         ."', '".$db->escape($this->prenom)
                                         ."', '".$db->escape($this->genre)
-                                        ."', '". ($this->date_naissance ? $this->date_naissance->format('Y-m-d') : '')
+                                        ."', '".($this->date_naissance ? $this->date_naissance->format('Y-m-d') : '')
                                         ."', '".$db->escape($this->code_postal)
                                         ."', '".$db->escape($this->ville)
                                         ."', '".$db->escape($this->pays)
                                         ."', '".$db->escape($this->signature)
                                         ."', '".$db->escape($this->biographie)
-                                        . " ')")) {
+                                        ." ')")) {
                     return true;
                 } else {
                     return false;
@@ -185,7 +185,7 @@ class User
         global $db, $current_user, $cached_users;
 
         if (!$this->date) {
-            $this->date=time();
+            $this->date = time();
         }
         $user_login = $db->escape($this->username);
         $user_level = $this->level;
@@ -209,20 +209,20 @@ class User
         $user_biographie = $db->escape(sanitize($this->biographie, 3));
 
         if (strlen($user_pass) < 128 + SALT_LENGTH) {
-            $saltedpass=generateHash($user_pass);
+            $saltedpass = generateHash($user_pass);
         } else {
-            $saltedpass=$user_pass;
+            $saltedpass = $user_pass;
         }
 
-        if ($this->id===0) {
+        if ($this->id === 0) {
             $this->id = $db->insert_id;
         } else {
             // Username is never updated
-            $sql = "UPDATE " . table_users . " set user_avatar_source='$user_avatar_source' ";
+            $sql = "UPDATE ".table_users." set user_avatar_source='$user_avatar_source' ";
             $extra_vars = $this->extra;
             if (is_array($extra_vars)) {
                 foreach ($extra_vars as $varname => $varvalue) {
-                    $sql .= ", " . $varname . " = '" . $varvalue . "' ";
+                    $sql .= ", ".$varname." = '".$varvalue."' ";
                 }
             }
             $sql .= " , user_login='$user_login', user_occupation='$user_occupation', user_language='$user_language', user_location='$user_location', public_email='$user_public_email', user_level='$user_level', user_karma=$user_karma, user_date=FROM_UNIXTIME($user_date), user_pass='$saltedpass', user_email='$user_email', user_names='$user_names', user_url='$user_url', user_facebook='$user_facebook', user_twitter='$user_twitter', user_linkedin='$user_linkedin', user_googleplus='$user_googleplus', user_skype='$user_skype', user_pinterest='$user_pinterest', user_biographie='$user_biographie' WHERE user_id=$this->id";
@@ -272,7 +272,7 @@ class User
             if (isset($cached_users[$this->id])) {
                 $user = $cached_users[$this->id];
             } else {
-                if (!$user = $db->get_row("SELECT  *  FROM " . table_users . " WHERE $where")) {
+                if (!$user = $db->get_row("SELECT  *  FROM ".table_users." WHERE $where")) {
                     return false;
                 }
 
@@ -294,10 +294,10 @@ class User
                 return true;
             }
             $this->names = $user->user_names;
-            $date=$user->user_date;
-            $this->date=unixtimestamp($date);
-            $date=$user->user_modification;
-            $this->modification=unixtimestamp($date);
+            $date = $user->user_date;
+            $this->date = unixtimestamp($date);
+            $date = $user->user_modification;
+            $this->modification = unixtimestamp($date);
             $this->pass = $user->user_pass;
             $this->public_email = $user->public_email;
             $this->location = $user->user_location;
@@ -353,11 +353,11 @@ class User
             $this->read();
         }
 
-        $this->total_votes = $db->get_var("SELECT count(*) FROM " . table_votes . "," . table_links . " WHERE link_status != 'discard' AND vote_user_id = $this->id $vote_date AND link_id = vote_link_id");
-        $this->published_votes = $db->get_var("SELECT count(*) FROM " . table_votes . "," . table_links . " WHERE vote_user_id = $this->id AND link_id = vote_link_id AND link_status = 'published' AND vote_date < link_published_date $vote_date");
-        $this->total_links = $db->get_var("SELECT count(*) FROM " . table_links . " WHERE link_author = $this->id and (link_status='published' OR link_status='new') $link_date");
-        $this->published_links = $db->get_var("SELECT count(*) FROM " . table_links . " WHERE link_author = $this->id AND link_status = 'published' $link_date");
-        $this->total_comments = $db->get_var("SELECT count(*) FROM " . table_comments . " WHERE comment_status='published' AND comment_user_id = $this->id $comment_date");
+        $this->total_votes = $db->get_var("SELECT count(*) FROM ".table_votes.",".table_links." WHERE link_status != 'discard' AND vote_user_id = $this->id $vote_date AND link_id = vote_link_id");
+        $this->published_votes = $db->get_var("SELECT count(*) FROM ".table_votes.",".table_links." WHERE vote_user_id = $this->id AND link_id = vote_link_id AND link_status = 'published' AND vote_date < link_published_date $vote_date");
+        $this->total_links = $db->get_var("SELECT count(*) FROM ".table_links." WHERE link_author = $this->id and (link_status='published' OR link_status='new') $link_date");
+        $this->published_links = $db->get_var("SELECT count(*) FROM ".table_links." WHERE link_author = $this->id AND link_status = 'published' $link_date");
+        $this->total_comments = $db->get_var("SELECT count(*) FROM ".table_comments." WHERE comment_status='published' AND comment_user_id = $this->id $comment_date");
         return true;
     }
 
@@ -422,7 +422,7 @@ print_r($main_smarty);
     function getFollowersCount()
     {
         global $db;
-        return $db->get_var($sql="SELECT COUNT(*)
+        return $db->get_var($sql = "SELECT COUNT(*)
 					FROM ".table_friends."
 					LEFT JOIN ".table_users." ON friend_from=user_id
 					WHERE friend_to=$this->id AND friend_from!=$this->id AND user_enabled=1");
@@ -438,7 +438,7 @@ print_r($main_smarty);
     }
 }
 
-function user_group_read($user_id, $order_by='')
+function user_group_read($user_id, $order_by = '')
 {
     global $db, $main_smarty, $view, $user, $rows, $page_size, $offset;
 
@@ -451,8 +451,8 @@ function user_group_read($user_id, $order_by='')
     }
     include_once(mnminclude.'smartyvariables.php');
 
-    $groups = $db->get_results($sql="SELECT * FROM " . table_group_member . "
-					LEFT JOIN " . table_groups . " ON group_id=member_group_id
+    $groups = $db->get_results($sql = "SELECT * FROM ".table_group_member."
+					LEFT JOIN ".table_groups." ON group_id=member_group_id
 					WHERE member_user_id = $user_id
 						AND member_status = 'active'
 						AND group_status = 'Enable'
@@ -474,23 +474,23 @@ function killspam($id)
     require_once(mnminclude.'votes.php');
     require_once(mnminclude.'tags.php');
 
-    $user= $db->get_row('SELECT * FROM ' . table_users ." where user_id=$id");
+    $user = $db->get_row('SELECT * FROM '.table_users." where user_id=$id");
     if (!$user->user_id) {
         return;
     }
     canIChangeUser($user->user_level);
 
-    $db->query('UPDATE `' . table_users . "` SET user_enabled=0, `user_pass` = '63205e60098a9758101eeff9df0912ccaaca6fca3e50cdce3', user_level = 'Spammer' WHERE `user_id` = $id");
-    $results = $db->get_results($sql="SELECT comment_id, comment_link_id FROM `" . table_comments . "` WHERE `comment_user_id` = $id");
+    $db->query('UPDATE `'.table_users."` SET user_enabled=0, `user_pass` = '63205e60098a9758101eeff9df0912ccaaca6fca3e50cdce3', user_level = 'Spammer' WHERE `user_id` = $id");
+    $results = $db->get_results($sql = "SELECT comment_id, comment_link_id FROM `".table_comments."` WHERE `comment_user_id` = $id");
     if ($results) {
         foreach ($results as $result) {
-            $db->query($sql='UPDATE `' . table_comments . '` SET `comment_status` = "spam" WHERE `comment_id` = "'.$result->comment_id.'"');
+            $db->query($sql = 'UPDATE `'.table_comments.'` SET `comment_status` = "spam" WHERE `comment_id` = "'.$result->comment_id.'"');
 
             $vars = array('comment_id' => $result->comment_id);
             check_actions('comment_spam', $vars);
 
             $link = new Link;
-            $link->id=$result->comment_link_id;
+            $link->id = $result->comment_link_id;
             $link->read();
 
             $link->recalc_comments();
@@ -500,36 +500,36 @@ function killspam($id)
 
     ban_ip($user->user_ip, $user->user_lastip);
 
-    $results = $db->get_results("SELECT * FROM `" . table_groups . "` WHERE group_creator = '$id'");
+    $results = $db->get_results("SELECT * FROM `".table_groups."` WHERE group_creator = '$id'");
     if ($results) {
         foreach ($results as $result) {
-            $db->query('DELETE FROM `' . table_group_member . '` WHERE member_group_id = '.$result->group_id);
-            $db->query('DELETE FROM `' . table_group_shared . '` WHERE share_group_id = '.$result->group_id);
+            $db->query('DELETE FROM `'.table_group_member.'` WHERE member_group_id = '.$result->group_id);
+            $db->query('DELETE FROM `'.table_group_shared.'` WHERE share_group_id = '.$result->group_id);
         }
     }
-    $db->query("DELETE FROM `" . table_groups . "` WHERE group_creator = '$id'");
+    $db->query("DELETE FROM `".table_groups."` WHERE group_creator = '$id'");
 
-    $results = $db->get_results("SELECT vote_id,vote_link_id FROM `" . table_votes . "` WHERE `vote_user_id` = $id");
+    $results = $db->get_results("SELECT vote_id,vote_link_id FROM `".table_votes."` WHERE `vote_user_id` = $id");
     if ($results) {
         foreach ($results as $result) {
-            $db->query('DELETE FROM `' . table_votes . '` WHERE `vote_id` = "'.$result->vote_id.'"');
+            $db->query('DELETE FROM `'.table_votes.'` WHERE `vote_id` = "'.$result->vote_id.'"');
             $link = new Link;
-            $link->id=$result->vote_link_id;
+            $link->id = $result->vote_link_id;
             $link->read();
 
             $vote = new Vote;
-            $vote->type='links';
-            $vote->link=$result->vote_link_id;
+            $vote->type = 'links';
+            $vote->link = $result->vote_link_id;
 
             if (Voting_Method == 1) {
-                $link->votes=$vote->count();
+                $link->votes = $vote->count();
                 $link->reports = $link->count_all_votes("<0");
             } elseif (Voting_Method == 2) {
-                $link->votes=$vote->rating();
-                $link->votecount=$vote->count();
+                $link->votes = $vote->rating();
+                $link->votecount = $vote->count();
                 $link->reports = $link->count_all_votes("<0");
             } elseif (Voting_Method == 3) {
-                $link->votes=$vote->count();
+                $link->votes = $vote->count();
                 $link->karma = $vote->karma();
                 $link->reports = $link->count_all_votes("<0");
             }
@@ -538,7 +538,7 @@ function killspam($id)
         }
     }
 
-    $results = $db->get_results($sql="SELECT link_id, link_url FROM `" . table_links . "` WHERE `link_author` = $id");
+    $results = $db->get_results($sql = "SELECT link_id, link_url FROM `".table_links."` WHERE `link_author` = $id");
     global $USER_SPAM_RULESET, $FRIENDLY_DOMAINS;
     $filename = mnmpath.$USER_SPAM_RULESET;
     $lines = file($filename, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
@@ -546,7 +546,7 @@ function killspam($id)
     if ($results) {
         foreach ($results as $result) {
             if (preg_match('/:\/\/(www\.)?([^\/]+)(\/|$)/', $result->link_url, $m)) {
-                $domain = strtoupper($m[2]) . "\n";
+                $domain = strtoupper($m[2])."\n";
                 if (!in_array($domain, $lines) && !in_array($domain, $approved)) {
                     $lines[] = $domain;
                     $changed = 1;
@@ -564,11 +564,11 @@ function killspam($id)
             }
         }
     }
-    $db->query($sql='UPDATE `' . table_links . '` SET `link_status` = "spam" WHERE `link_author` = "'.$id.'"');
-    $db->query('DELETE FROM `' . table_saved_links . '` WHERE `saved_user_id` = "'.$id.'"');
-    $db->query('DELETE FROM `' . table_trackbacks . '` WHERE `trackback_user_id` = "'.$id.'"');
-    $db->query('DELETE FROM `' . table_friends . '` WHERE `friend_id` = "'.$id.'"');
-    $db->query('DELETE FROM `' . table_messages . "` WHERE `sender`=$id OR `receiver`=$id");
+    $db->query($sql = 'UPDATE `'.table_links.'` SET `link_status` = "spam" WHERE `link_author` = "'.$id.'"');
+    $db->query('DELETE FROM `'.table_saved_links.'` WHERE `saved_user_id` = "'.$id.'"');
+    $db->query('DELETE FROM `'.table_trackbacks.'` WHERE `trackback_user_id` = "'.$id.'"');
+    $db->query('DELETE FROM `'.table_friends.'` WHERE `friend_id` = "'.$id.'"');
+    $db->query('DELETE FROM `'.table_messages."` WHERE `sender`=$id OR `receiver`=$id");
 }
 
 function canIChangeUser($user_level)

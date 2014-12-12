@@ -17,7 +17,7 @@ function welcome_email_send(&$registration_details)
 
         // Check User Data
         if ($user->read()) {
-            include_once(mnmmodules . 'welcome_email/includes/htmlMimeMail.php');
+            include_once(mnmmodules.'welcome_email/includes/htmlMimeMail.php');
 
             // Current Date/Time of Server
             $thisDate = date("M d, Y");

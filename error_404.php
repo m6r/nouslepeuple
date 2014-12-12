@@ -19,6 +19,6 @@ $main_smarty = do_sidebar($main_smarty);
 
 // show the template
 header("HTTP/1.1 404 Not Found");
-$main_smarty->assign('tpl_center', $the_template . '/error_404_center');
-$main_smarty->display($the_template . '/pligg.tpl');
+$main_smarty->assign('tpl_center', $the_template.'/error_404_center');
+$main_smarty->display($the_template.'/pligg.tpl');
 exit;

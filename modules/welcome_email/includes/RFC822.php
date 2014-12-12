@@ -228,7 +228,7 @@ class Mail_RFC822
 
             // First check there's a colon at all:
             if (strpos($string, ':') === false) {
-                $this->error = 'Invalid address: ' . $string;
+                $this->error = 'Invalid address: '.$string;
                 return false;
             }
 
@@ -245,7 +245,7 @@ class Mail_RFC822
         // Add to the addresses array.
         $this->addresses[] = array(
                                    'address' => trim($string),
-                                   'group'   => $is_group
+                                   'group'   => $is_group,
                                    );
 
         // Remove the now stored address from the initial line, the +1
@@ -311,7 +311,7 @@ class Mail_RFC822
                 || $this->_hasUnclosedBrackets($string, '()')
                 || substr($string, -1) == '\\') {
                 if (isset($parts[$i + 1])) {
-                    $string = $string . $char . $parts[$i + 1];
+                    $string = $string.$char.$parts[$i + 1];
                 } else {
                     $this->error = 'Invalid address spec. Unclosed bracket or quotes';
                     return false;
@@ -364,7 +364,7 @@ class Mail_RFC822
         $this->_hasUnclosedBracketsSub($string, $num_angle_end, $chars[1]);
 
         if ($num_angle_start < $num_angle_end) {
-            $this->error = 'Invalid address spec. Unmatched quote or bracket (' . $chars . ')';
+            $this->error = 'Invalid address spec. Unmatched quote or bracket ('.$chars.')';
             return false;
         } else {
             return ($num_angle_start > $num_angle_end);
@@ -388,7 +388,7 @@ class Mail_RFC822
                 $num--;
             }
             if (isset($parts[$i + 1])) {
-                $parts[$i + 1] = $parts[$i] . $char . $parts[$i + 1];
+                $parts[$i + 1] = $parts[$i].$char.$parts[$i + 1];
             }
         }
 
@@ -427,7 +427,7 @@ class Mail_RFC822
                 }
             }
 
-            $address['address'] = ltrim(substr($address['address'], strlen($groupname . ':')));
+            $address['address'] = ltrim(substr($address['address'], strlen($groupname.':')));
         }
 
         // If a group then split on comma and put into an array.
@@ -436,7 +436,7 @@ class Mail_RFC822
             while (strlen($address['address']) > 0) {
                 $parts       = explode(',', $address['address']);
                 $addresses[] = $this->_splitCheck($parts, ',');
-                $address['address'] = trim(substr($address['address'], strlen(end($addresses) . ',')));
+                $address['address'] = trim(substr($address['address'], strlen(end($addresses).',')));
             }
         } else {
             $addresses[] = $address['address'];
@@ -608,7 +608,7 @@ class Mail_RFC822
             }
         }
 
-        for ($i=0; $i<count(@$comments); $i++) {
+        for ($i = 0; $i<count(@$comments); $i++) {
             $mailbox = str_replace('('.$comments[$i].')', '', $mailbox);
         }
         $mailbox = trim($mailbox);
@@ -694,7 +694,7 @@ class Mail_RFC822
                 return false;
             }
 
-            $addr_spec = substr($route_addr, strlen($route . ':'));
+            $addr_spec = substr($route_addr, strlen($route.':'));
 
             // Validate addr-spec part.
             if (($addr_spec = $this->_validateAddrSpec($addr_spec)) === false) {
@@ -821,7 +821,7 @@ class Mail_RFC822
         if (strpos($addr_spec, '@') !== false) {
             $parts      = explode('@', $addr_spec);
             $local_part = $this->_splitCheck($parts, '@');
-            $domain     = substr($addr_spec, strlen($local_part . '@'));
+            $domain     = substr($addr_spec, strlen($local_part.'@'));
 
         // No @ sign so assume the default domain.
         } else {

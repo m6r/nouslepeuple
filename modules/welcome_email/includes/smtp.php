@@ -170,7 +170,7 @@
                     and substr(trim($error = $this->get_data()), 0, 3) === '250') {
                 return TRUE;
             } else {
-                $this->errors[] = 'HELO command failed, output: ' . trim(substr(trim($error), 3));
+                $this->errors[] = 'HELO command failed, output: '.trim(substr(trim($error), 3));
                 return FALSE;
             }
         }
@@ -186,7 +186,7 @@
                     and substr(trim($error = $this->get_data()), 0, 3) === '250') {
                 return TRUE;
             } else {
-                $this->errors[] = 'EHLO command failed, output: ' . trim(substr(trim($error), 3));
+                $this->errors[] = 'EHLO command failed, output: '.trim(substr(trim($error), 3));
                 return FALSE;
             }
         }
@@ -202,7 +202,7 @@
                     and substr(trim($error = $this->get_data()), 0, 3) === '250') {
                 return TRUE;
             } else {
-                $this->errors[] = 'RSET command failed, output: ' . trim(substr(trim($error), 3));
+                $this->errors[] = 'RSET command failed, output: '.trim(substr(trim($error), 3));
                 return FALSE;
             }
         }
@@ -220,7 +220,7 @@
                 $this->status = SMTP_STATUS_NOT_CONNECTED;
                 return TRUE;
             } else {
-                $this->errors[] = 'QUIT command failed, output: ' . trim(substr(trim($error), 3));
+                $this->errors[] = 'QUIT command failed, output: '.trim(substr(trim($error), 3));
                 return FALSE;
             }
         }
@@ -241,7 +241,7 @@
                 $this->authenticated = true;
                 return TRUE;
             } else {
-                $this->errors[] = 'AUTH command failed: ' . trim(substr(trim($error), 3));
+                $this->errors[] = 'AUTH command failed: '.trim(substr(trim($error), 3));
                 return FALSE;
             }
         }

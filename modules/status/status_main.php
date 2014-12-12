@@ -11,7 +11,7 @@ function status_is_allowed($user)
     if (!strstr($settings['level'], $user->level) &&
         !in_array($user->username, $users) &&
         (!$settings['groups'] ||
-         !$db->get_row($sql="SELECT group_id FROM ".table_groups."
+         !$db->get_row($sql = "SELECT group_id FROM ".table_groups."
 					INNER JOIN ".table_group_member." ON member_group_id=group_id AND member_user_id='{$user->id}' AND member_status='active'
 					WHERE group_name IN ('".join("','", $groups)."')"))) {
         return false;
@@ -29,7 +29,7 @@ function status_comment_submit($vars)
 {
     global $db, $main_smarty;
 
-    if (get_misc_data('status_switch')!='1') {
+    if (get_misc_data('status_switch') != '1') {
         return;
     }
 
@@ -39,9 +39,9 @@ function status_comment_submit($vars)
     }
 
 
-    $user=new User();
+    $user = new User();
     $user->id = $comment->author;
-    $linkres=new Link;
+    $linkres = new Link;
     $linkres->id = $comment->link;
     if ($user->read() && $linkres->read()) {
         if (!status_is_allowed($user) || !$user->extra_field['status_switch'] || !$user->extra_field['status_comment']) {
@@ -55,7 +55,7 @@ function status_comment_submit($vars)
             $linkres->title = substr($linkres->title, 0, max($limit+4-strlen($text)-strlen($user->username)-3, 10)).'...';
         }
         $text = sprintf($text, $user->username, '<a href="'.$linkres->get_internal_url().'">'.$linkres->title.'</a>');
-        $db->query($sql="INSERT INTO ".table_prefix."updates SET update_time=UNIX_TIMESTAMP(),
+        $db->query($sql = "INSERT INTO ".table_prefix."updates SET update_time=UNIX_TIMESTAMP(),
 							    update_type='c',
 							    update_user_id='{$comment->author}',
 							    update_link_id='{$comment->id}',
@@ -68,7 +68,7 @@ function status_story_submit($vars)
 {
     global $db, $main_smarty;
 
-    if (get_misc_data('status_switch')!='1') {
+    if (get_misc_data('status_switch') != '1') {
         return;
     }
 
@@ -77,7 +77,7 @@ function status_story_submit($vars)
         return;
     }
 
-    $user=new User();
+    $user = new User();
     $user->id = $linkres->author;
     if ($user->read()) {
         if (!status_is_allowed($user) || !$user->extra_field['status_switch'] || !$user->extra_field['status_story']) {
@@ -91,7 +91,7 @@ function status_story_submit($vars)
             $linkres->title = substr($linkres->title, 0, max($limit+4-strlen($text)-strlen($user->username)-3, 10)).'...';
         }
         $text = sprintf($text, $user->username, '<a href="'.$linkres->get_internal_url().'">'.$linkres->title.'</a>');
-        $db->query($sql="INSERT INTO ".table_prefix."updates SET update_time=UNIX_TIMESTAMP(),
+        $db->query($sql = "INSERT INTO ".table_prefix."updates SET update_time=UNIX_TIMESTAMP(),
 							    update_type='s',
 							    update_user_id='{$linkres->author}',
 							    update_link_id='{$linkres->id}',
@@ -174,7 +174,7 @@ function status_showpage()
         }
         // breadcrumbs
         $main_smarty->assign('navbar_where', $navwhere);
-        $main_smarty->assign('posttitle', " / " . $main_smarty->get_config_vars('PLIGG_Visual_Header_AdminPanel'));
+        $main_smarty->assign('posttitle', " / ".$main_smarty->get_config_vars('PLIGG_Visual_Header_AdminPanel'));
         // breadcrumbs
         define('modulename', 'status');
         $main_smarty->assign('modulename', modulename);
@@ -183,10 +183,10 @@ function status_showpage()
         $main_smarty->assign('pagename', pagename);
 
         $main_smarty->assign('settings', get_status_settings());
-        $main_smarty->assign('tpl_center', status_tpl_path . 'status_main');
-        $main_smarty->display($template_dir . '/admin/admin.tpl');
+        $main_smarty->assign('tpl_center', status_tpl_path.'status_main');
+        $main_smarty->display($template_dir.'/admin/admin.tpl');
     } else {
-        header("Location: " . getmyurl('login', $_SERVER['REQUEST_URI']));
+        header("Location: ".getmyurl('login', $_SERVER['REQUEST_URI']));
     }
 }
 
@@ -228,7 +228,7 @@ function get_status_settings()
         'user_story' => get_misc_data('status_user_story'),
         'user_comment' => get_misc_data('status_user_comment'),
         'user_group' => get_misc_data('status_user_group'),
-        'user_email' => get_misc_data('status_user_email')
+        'user_email' => get_misc_data('status_user_email'),
         );
 }
 
@@ -236,14 +236,14 @@ function status_profile_save()
 {
     global $user, $users_extra_fields_field;
 
-    $user->extra['status_switch']=sanitize($_POST['status_switch']);
-    $user->extra['status_friends']=sanitize($_POST['status_friends']);
-    $user->extra['status_all_friends']=sanitize($_POST['status_all_friends']);
-    $user->extra['status_friend_list']=sanitize(@join(',', $_POST['status_friend_list']));
-    $user->extra['status_comment']=sanitize($_POST['status_comment']);
-    $user->extra['status_group']=sanitize($_POST['status_group']);
-    $user->extra['status_story']=sanitize($_POST['status_story']);
-    $user->extra['status_email']=sanitize($_POST['status_email']);
+    $user->extra['status_switch'] = sanitize($_POST['status_switch']);
+    $user->extra['status_friends'] = sanitize($_POST['status_friends']);
+    $user->extra['status_all_friends'] = sanitize($_POST['status_all_friends']);
+    $user->extra['status_friend_list'] = sanitize(@join(',', $_POST['status_friend_list']));
+    $user->extra['status_comment'] = sanitize($_POST['status_comment']);
+    $user->extra['status_group'] = sanitize($_POST['status_group']);
+    $user->extra['status_story'] = sanitize($_POST['status_story']);
+    $user->extra['status_email'] = sanitize($_POST['status_email']);
 }
 
 function status_profile_show()

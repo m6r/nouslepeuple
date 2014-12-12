@@ -28,9 +28,9 @@ function admin_snippet_showpage()
             $navwhere['text1'] = $main_smarty->get_config_vars('PLIGG_Visual_Header_AdminPanel');
         $navwhere['link1'] = getmyurl('admin', '');
         $navwhere['text2'] = "Modify Snippet";
-        $navwhere['link2'] = my_pligg_base . "/module.php?module=admin_snippet";
+        $navwhere['link2'] = my_pligg_base."/module.php?module=admin_snippet";
         $main_smarty->assign('navbar_where', $navwhere);
-        $main_smarty->assign('posttitle', " | " . $main_smarty->get_config_vars('PLIGG_Visual_Header_AdminPanel'));
+        $main_smarty->assign('posttitle', " | ".$main_smarty->get_config_vars('PLIGG_Visual_Header_AdminPanel'));
         // breadcrumbs
         //Method for identifying modules rather than pagename
         define('modulename', 'admin_snippet');
@@ -58,7 +58,7 @@ function admin_snippet_showpage()
                 }
             }
 
-            $main_smarty->assign('tpl_center', admin_snippet_tpl_path . 'admin_snippet_edit');
+            $main_smarty->assign('tpl_center', admin_snippet_tpl_path.'admin_snippet_edit');
         // Edit snippet
         } elseif ($_REQUEST['mode'] == 'edit') {
             if ($_POST['submit']) {
@@ -92,7 +92,7 @@ function admin_snippet_showpage()
                 }
                 $main_smarty->assign("snippet", (array)$snippet);
             }
-            $main_smarty->assign('tpl_center', admin_snippet_tpl_path . 'admin_snippet_edit');
+            $main_smarty->assign('tpl_center', admin_snippet_tpl_path.'admin_snippet_edit');
         // Export selected
         } elseif (isset($_POST['export'])) {
             if (sizeof($_POST["snippet_delete"])) {
@@ -184,10 +184,10 @@ function admin_snippet_showpage()
                 }
                 $main_smarty->assign('template_snippets', $template_snippets);
             }
-            $main_smarty->assign('tpl_center', admin_snippet_tpl_path . 'admin_snippet_main');
+            $main_smarty->assign('tpl_center', admin_snippet_tpl_path.'admin_snippet_main');
         }
-        $main_smarty->display($template_dir . '/admin/admin.tpl');
+        $main_smarty->display($template_dir.'/admin/admin.tpl');
     } else {
-        header("Location: " . getmyurl('login', $_SERVER['REQUEST_URI']));
+        header("Location: ".getmyurl('login', $_SERVER['REQUEST_URI']));
     }
 }

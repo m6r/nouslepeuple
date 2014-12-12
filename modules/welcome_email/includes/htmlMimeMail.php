@@ -7,7 +7,7 @@
 * Copyright......: 2001, 2002 Richard Heyes
 */
 
-require_once(dirname(__FILE__) . '/mimePart.php');
+require_once(dirname(__FILE__).'/mimePart.php');
 
 class htmlMimeMail
 {
@@ -112,7 +112,7 @@ class htmlMimeMail
                                     'png'    => 'image/png',
                                     'tif'    => 'image/tiff',
                                     'tiff'    => 'image/tiff',
-                                    'swf'    => 'application/x-shockwave-flash'
+                                    'swf'    => 'application/x-shockwave-flash',
                                   );
 
         /**
@@ -349,8 +349,8 @@ class htmlMimeMail
 
         preg_match_all('/(?:"|\')([^"\']+\.('.implode('|', $extensions).'))(?:"|\')/Ui', $this->html, $images);
 
-        for ($i=0; $i<count($images[1]); $i++) {
-            if (file_exists($images_dir . $images[1][$i])) {
+        for ($i = 0; $i<count($images[1]); $i++) {
+            if (file_exists($images_dir.$images[1][$i])) {
                 $html_images[] = $images[1][$i];
                 $this->html = str_replace($images[1][$i], basename($images[1][$i]), $this->html);
             }
@@ -361,7 +361,7 @@ class htmlMimeMail
             $html_images = array_unique($html_images);
             sort($html_images);
 
-            for ($i=0; $i<count($html_images); $i++) {
+            for ($i = 0; $i<count($html_images); $i++) {
                 if ($image = $this->getFile($images_dir.$html_images[$i])) {
                     $ext = substr($html_images[$i], strrpos($html_images[$i], '.') + 1);
                     $content_type = $this->image_types[strtolower($ext)];
@@ -375,13 +375,13 @@ class htmlMimeMail
 * Adds an image to the list of embedded
 * images.
 */
-    function addHtmlImage($file, $name = '', $c_type='application/octet-stream')
+    function addHtmlImage($file, $name = '', $c_type = 'application/octet-stream')
     {
         $this->html_images[] = array(
                                         'body'   => $file,
                                         'name'   => $name,
                                         'c_type' => $c_type,
-                                        'cid'    => md5(uniqid(time()))
+                                        'cid'    => md5(uniqid(time())),
                                     );
     }
 
@@ -389,13 +389,13 @@ class htmlMimeMail
 /**
 * Adds a file to the list of attachments.
 */
-    function addAttachment($file, $name = '', $c_type='application/octet-stream', $encoding = 'base64')
+    function addAttachment($file, $name = '', $c_type = 'application/octet-stream', $encoding = 'base64')
     {
         $this->attachments[] = array(
                                     'body'        => $file,
                                     'name'        => $name,
                                     'c_type'    => $c_type,
-                                    'encoding'    => $encoding
+                                    'encoding'    => $encoding,
                                   );
     }
 
@@ -538,7 +538,7 @@ class htmlMimeMail
             case !$text and $attachments and !$html:
                 $message = &$this->_addMixedPart();
 
-                for ($i=0; $i<count($this->attachments); $i++) {
+                for ($i = 0; $i<count($this->attachments); $i++) {
                     $this->_addAttachmentPart($message, $this->attachments[$i]);
                 }
                 break;
@@ -547,7 +547,7 @@ class htmlMimeMail
                 $message = &$this->_addMixedPart();
                 $this->_addTextPart($message, $this->text);
 
-                for ($i=0; $i<count($this->attachments); $i++) {
+                for ($i = 0; $i<count($this->attachments); $i++) {
                     $this->_addAttachmentPart($message, $this->attachments[$i]);
                 }
                 break;
@@ -572,7 +572,7 @@ class htmlMimeMail
                     $related = &$message;
                 }
                 $this->_addHtmlPart($related);
-                for ($i=0; $i<count($this->html_images); $i++) {
+                for ($i = 0; $i<count($this->html_images); $i++) {
                     $this->_addHtmlImagePart($related, $this->html_images[$i]);
                 }
                 break;
@@ -586,7 +586,7 @@ class htmlMimeMail
                 } else {
                     $this->_addHtmlPart($message);
                 }
-                for ($i=0; $i<count($this->attachments); $i++) {
+                for ($i = 0; $i<count($this->attachments); $i++) {
                     $this->_addAttachmentPart($message, $this->attachments[$i]);
                 }
                 break;
@@ -601,10 +601,10 @@ class htmlMimeMail
                     $rel = &$this->_addRelatedPart($message);
                 }
                 $this->_addHtmlPart($rel);
-                for ($i=0; $i<count($this->html_images); $i++) {
+                for ($i = 0; $i<count($this->html_images); $i++) {
                     $this->_addHtmlImagePart($rel, $this->html_images[$i]);
                 }
-                for ($i=0; $i<count($this->attachments); $i++) {
+                for ($i = 0; $i<count($this->attachments); $i++) {
                     $this->_addAttachmentPart($message, $this->attachments[$i]);
                 }
                 break;
@@ -637,7 +637,7 @@ class htmlMimeMail
         preg_match_all('/(\w*[\x80-\xFF]+\w*)/', $input, $matches);
         foreach ($matches[1] as $value) {
             $replacement = preg_replace('/([\x80-\xFF])/e', '"=" . strtoupper(dechex(ord("\1")))', $value);
-            $input = str_replace($value, '=?' . $charset . '?Q?' . $replacement . '?=', $input);
+            $input = str_replace($value, '=?'.$charset.'?Q?'.$replacement.'?=', $input);
         }
 
         return $input;
@@ -670,13 +670,13 @@ class htmlMimeMail
 
                 // Get flat representation of headers
                 foreach ($this->headers as $name => $value) {
-                    $headers[] = $name . ': ' . $this->_encodeHeader($value, $this->build_params['head_charset']);
+                    $headers[] = $name.': '.$this->_encodeHeader($value, $this->build_params['head_charset']);
                 }
 
                 $to = $this->_encodeHeader(implode(', ', $recipients), $this->build_params['head_charset']);
 
                 if (!empty($this->return_path)) {
-                    $result = mail($to, $subject, $this->output, implode(CRLF, $headers), '-f' . $this->return_path);
+                    $result = mail($to, $subject, $this->output, implode(CRLF, $headers), '-f'.$this->return_path);
                 } else {
                     $result = mail($to, $subject, $this->output, implode(CRLF, $headers));
                 }
@@ -691,8 +691,8 @@ class htmlMimeMail
                 break;
 
             case 'smtp':
-                require_once(dirname(__FILE__) . '/smtp.php');
-                require_once(dirname(__FILE__) . '/RFC822.php');
+                require_once(dirname(__FILE__).'/smtp.php');
+                require_once(dirname(__FILE__).'/RFC822.php');
                 $smtp = &smtp::connect($this->smtp_params);
 
                 // Parse recipients argument for internet addresses
@@ -717,10 +717,10 @@ class htmlMimeMail
                     if ($name == 'Bcc') {
                         continue;
                     }
-                    $headers[] = $name . ': ' . $this->_encodeHeader($value, $this->build_params['head_charset']);
+                    $headers[] = $name.': '.$this->_encodeHeader($value, $this->build_params['head_charset']);
                 }
                 // Add To header based on $recipients argument
-                $headers[] = 'To: ' . $this->_encodeHeader(implode(', ', $recipients), $this->build_params['head_charset']);
+                $headers[] = 'To: '.$this->_encodeHeader(implode(', ', $recipients), $this->build_params['head_charset']);
 
                 // Add headers to send_params
                 $send_params['headers']    = $headers;
@@ -734,7 +734,7 @@ class htmlMimeMail
                     $from = Mail_RFC822::parseAddressList($this->headers['From']);
                     $send_params['from'] = sprintf('%s@%s', $from[0]->mailbox, $from[0]->host);
                 } else {
-                    $send_params['from'] = 'postmaster@' . $this->smtp_params['helo'];
+                    $send_params['from'] = 'postmaster@'.$this->smtp_params['helo'];
                 }
 
                 // Send it
@@ -769,16 +769,16 @@ class htmlMimeMail
 
         // Return path ?
         if (isset($this->return_path)) {
-            $headers[] = 'Return-Path: ' . $this->return_path;
+            $headers[] = 'Return-Path: '.$this->return_path;
         }
 
         // Get flat representation of headers
         foreach ($this->headers as $name => $value) {
-            $headers[] = $name . ': ' . $value;
+            $headers[] = $name.': '.$value;
         }
-        $headers[] = 'To: ' . implode(', ', $recipients);
+        $headers[] = 'To: '.implode(', ', $recipients);
 
-        return implode(CRLF, $headers) . CRLF . CRLF . $this->output;
+        return implode(CRLF, $headers).CRLF.CRLF.$this->output;
     }
 } // End of class.
 ;

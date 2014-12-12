@@ -14,7 +14,7 @@ include(mnminclude.'search.php');
 include(mnminclude.'user.php');
 include(mnminclude.'group.php');
 include(mnminclude.'smartyvariables.php');
-include_once(mnmmodules . 'status/status_main.php');
+include_once(mnmmodules.'status/status_main.php');
 
 // sidebar
 $main_smarty = do_sidebar($main_smarty);
@@ -26,7 +26,7 @@ $main_smarty->assign('pagename', pagename);
 $isadmin = checklevel('admin');
 $isadmin = checklevel('moderator');
 
-if (is_numeric($_GET['lid']) && $_GET['action']=='likes') {
+if (is_numeric($_GET['lid']) && $_GET['action'] == 'likes') {
     $results = $db->get_results("SELECT * FROM ".table_prefix."likes WHERE like_update_id='{$_GET['lid']}'");
     $user = new User;
     foreach ($results as $row) {
@@ -43,18 +43,18 @@ if (is_numeric($_GET['lid']) && $_GET['action']=='likes') {
 			LEFT JOIN ".table_users." c ON a.update_user_id=c.user_id
 			WHERE update_id={$_GET['id']}";
     $update = $db->get_row($sql);
-    if ($update->update_id && $update->user_level!='Spammer') {
+    if ($update->update_id && $update->user_level != 'Spammer') {
         $main_smarty->assign('posttitle', 'Status Update #'.$_GET['id']);
         $main_smarty->assign('update', get_object_vars($update));
-        $main_smarty->assign('settings', $settings=get_status_settings());
+        $main_smarty->assign('settings', $settings = get_status_settings());
         $main_smarty->assign('current_user', get_object_vars($current_user));
         $main_smarty->assign('current_username', '@'.$current_user->user_login);
         $main_smarty->assign('tpl_center', '../modules/status/templates/status_permalink');
-        $main_smarty->display($the_template . '/pligg.tpl');
+        $main_smarty->display($the_template.'/pligg.tpl');
         exit;
     } else {
         $main_smarty->assign('tpl_center', 'error_404_center');
-        $main_smarty->display($the_template . '/pligg.tpl');
+        $main_smarty->display($the_template.'/pligg.tpl');
         die();
     }
 }
@@ -62,7 +62,7 @@ if (is_numeric($_GET['lid']) && $_GET['action']=='likes') {
 
 $user = new User;
 $user->id = $current_user->user_id;
-if (get_misc_data('status_switch')=='1' && $user->read() && status_is_allowed($user) && $user->extra_field['status_switch']) {
+if (get_misc_data('status_switch') == '1' && $user->read() && status_is_allowed($user) && $user->extra_field['status_switch']) {
     // && strstr(get_misc_data('status_profile_level'),$current_user->user_level))
 // Post an update (reply)
 if ($_POST['status']) {
@@ -81,12 +81,12 @@ if ($_POST['status']) {
     // Check if user is allowed to post to the group
     $groups = $db->get_results("SELECT * FROM ".table_groups." WHERE group_status='Enable' ORDER BY group_name DESC");
         foreach ($groups as $group) {
-            if (strpos($groupname, $group->group_name)===0) {
+            if (strpos($groupname, $group->group_name) === 0) {
                 $group_id = $group->group_id;
                 break;
             }
         }
-        if ($group_id && isMemberActive($group_id)!='active') {
+        if ($group_id && isMemberActive($group_id) != 'active') {
             $_SESSION['status_error'] = '<div class="error_message">You are not a member of the group "'.$group->group_name.'"</div>';
         }
     }
@@ -102,7 +102,7 @@ if ($_POST['status']) {
                     break;
                 }
             }
-            if ($l->user_level!=$level && $level!='all') {
+            if ($l->user_level != $level && $level != 'all') {
                 $_SESSION['status_error'] = '<div class="error_message">There is no such user level "'.$level.'"</div>';
             } else {
                 $level_sql = "update_level='$level',";
@@ -123,7 +123,7 @@ if ($_POST['status']) {
 
     if (!$_SESSION['status_error']) {
         unset($_SESSION['status_text']);
-        $db->query($sql="INSERT INTO ".table_prefix."updates SET update_time=UNIX_TIMESTAMP(),
+        $db->query($sql = "INSERT INTO ".table_prefix."updates SET update_time=UNIX_TIMESTAMP(),
 							    update_type='m',
 							    update_user_id='{$current_user->user_id}',
 							    update_link_id='$id',
@@ -150,7 +150,7 @@ if ($_POST['status']) {
                 $body = sprintf($main_smarty->get_config_vars('PLIGG_Status_Email_Body'),
                     $current_user->user_login,
                     my_base_url.getmyurl('user2', $current_user->user_login, 'profile').'#'.$newid);
-                $headers = 'From: ' . $main_smarty->get_config_vars("PLIGG_Status_From") . "\r\n";
+                $headers = 'From: '.$main_smarty->get_config_vars("PLIGG_Status_From")."\r\n";
                 $headers .= "Content-type: text/html; charset=utf-8\r\n";
 
                 mail($user->email, $subject, $body, $headers);

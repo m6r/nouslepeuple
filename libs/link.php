@@ -58,12 +58,12 @@ class Link
     var $check_saved = true; // check to see if the user has 'saved' this link. sidebarstories doesn't need to check (so don't waste time on it)
     var $get_author_info = true; // get information about the link_author. sidebarstories doesn't need this information (so don't waste time on it)
     var $check_friends = true; // see if the author is a friend of the logged in user.  sidebarstories doesn't need this information (so don't waste time on it)
-    var $vote_from_this_ip=0; // if disable multiple vote from the same ip
-    var $report_from_this_ip=0; // if disable multiple vote from the same ip
+    var $vote_from_this_ip = 0; // if disable multiple vote from the same ip
+    var $report_from_this_ip = 0; // if disable multiple vote from the same ip
 
     function get($url)
     {
-        $url=trim($url);
+        $url = trim($url);
 
         if (CHECK_SPAM && $this->check_spam($url)) {
             $this->valid = false;
@@ -74,13 +74,13 @@ class Link
                 $r = new PliggHTTPRequest($url);
                 $xxx = $r->DownloadToString();
             } else {
-                $this->url='http://';
+                $this->url = 'http://';
                 $xxx = '';
             }
         } else {
             $xxx = "";
             $this->valid = true;
-            $this->url=$url;
+            $this->url = $url;
             return;
         }
 
@@ -95,12 +95,12 @@ class Link
         }
 
         $this->valid = true;
-        $this->url=$url;
+        $this->url = $url;
         if (preg_match('/<title>(.+)<\/title>/', $this->html, $matches)) {
-            $this->url_title=trim($matches[1]);
+            $this->url_title = trim($matches[1]);
         }
         if (preg_match("'<meta name=\"description\" content=\"([^<]*?)\"\s?/?>'i", $this->html, $matches)) {
-            $this->url_description=$matches[1];
+            $this->url_description = $matches[1];
         } else {
             // Fall back on the first <p> tag content
             $start = strpos($this->html, '<p>');
@@ -109,24 +109,24 @@ class Link
             $paragraph = html_entity_decode(strip_tags($paragraph));
             // Make sure that it's over 100 characters in length
             if (strlen($paragraph)>100) {
-                $this->url_description=$paragraph;
+                $this->url_description = $paragraph;
             }
         }
 
         // Detect trackbacks
         if (sanitize($_POST['trackback'], 3) != '') {
-            $this->trackback=trim(sanitize($_POST['trackback'], 3));
+            $this->trackback = trim(sanitize($_POST['trackback'], 3));
         } elseif (preg_match('/trackback:ping="([^"]+)"/i', $this->html, $matches) ||
             preg_match('/trackback:ping +rdf:resource="([^>]+)"/i', $this->html, $matches) ||
             preg_match('/<trackback:ping>([^<>]+)/i', $this->html, $matches)) {
-            $this->trackback=trim($matches[1]);
+            $this->trackback = trim($matches[1]);
         } elseif (preg_match('/<a[^>]+rel="trackback"[^>]*>/i', $this->html, $matches)) {
             if (preg_match('/href="([^"]+)"/i', $matches[0], $matches2)) {
-                $this->trackback=trim($matches2[1]);
+                $this->trackback = trim($matches2[1]);
             }
         } elseif (preg_match('/<a[^>]+href=[^>]+>trackback<\/a>/i', $this->html, $matches)) {
             if (preg_match('/href="([^"]+)"/i', $matches[0], $matches2)) {
-                $this->trackback=trim($matches2[1]);
+                $this->trackback = trim($matches2[1]);
             }
         }
     }
@@ -177,14 +177,14 @@ class Link
         $link_summary = $db->escape($this->link_summary);
 
         // Save old SEO URL if changed
-        $old_url = $db->get_var("SELECT link_title_url FROM " . table_links . " WHERE link_id={$this->id}");
+        $old_url = $db->get_var("SELECT link_title_url FROM ".table_links." WHERE link_id={$this->id}");
         if ($old_url && $old_url != $this->title_url) {
             $db->query("INSERT INTO ".table_old_urls." SET old_link_id={$this->id}, old_title_url='$old_url'");
         }
 
-        $sql = "UPDATE " . table_links . " set link_summary='$link_summary', link_title_url='$link_title_url', link_url='$link_url', link_url_title='$link_url_title', link_title='$link_title', link_content='$link_content', link_tags='$link_tags', link_field1='$link_field1', link_field2='$link_field2', link_field3='$link_field3', link_field4='$link_field4', link_field5='$link_field5', link_field6='$link_field6', link_field7='$link_field7', link_field8='$link_field8', link_field9='$link_field9', link_field10='$link_field10', link_field11='$link_field11', link_field12='$link_field12', link_field13='$link_field13', link_field14='$link_field14', link_field15='$link_field15', link_group_id = $link_group_id WHERE link_id=$this->id";
+        $sql = "UPDATE ".table_links." set link_summary='$link_summary', link_title_url='$link_title_url', link_url='$link_url', link_url_title='$link_url_title', link_title='$link_title', link_content='$link_content', link_tags='$link_tags', link_field1='$link_field1', link_field2='$link_field2', link_field3='$link_field3', link_field4='$link_field4', link_field5='$link_field5', link_field6='$link_field6', link_field7='$link_field7', link_field8='$link_field8', link_field9='$link_field9', link_field10='$link_field10', link_field11='$link_field11', link_field12='$link_field12', link_field13='$link_field13', link_field14='$link_field14', link_field15='$link_field15', link_group_id = $link_group_id WHERE link_id=$this->id";
         if ($this->debug == true) {
-            echo '<hr>Store:'. $sql . '<hr>';
+            echo '<hr>Store:'.$sql.'<hr>';
         }
         //echo "query".$sql;
         $db->query($sql);
@@ -204,7 +204,7 @@ class Link
         }
         /////
         if (!$this->date) {
-            $this->date=time();
+            $this->date = time();
         }
         $link_author = $this->author;
         $link_status = $this->status;
@@ -225,18 +225,18 @@ class Link
         check_actions('link_store_basic_pre_sql', $vars);
 
 
-        if ($this->id===0) {
-            $sql = "INSERT IGNORE INTO " . table_links . " (link_author, link_status, link_randkey, link_category, link_date, link_published_date, link_votes, link_karma, link_title, link_content ,link_group_id) VALUES ($link_author, '$link_status', $link_randkey, $link_category, FROM_UNIXTIME($link_date), FROM_UNIXTIME($link_published_date), $link_votes, $link_karma, '', '',$link_group_id)";
+        if ($this->id === 0) {
+            $sql = "INSERT IGNORE INTO ".table_links." (link_author, link_status, link_randkey, link_category, link_date, link_published_date, link_votes, link_karma, link_title, link_content ,link_group_id) VALUES ($link_author, '$link_status', $link_randkey, $link_category, FROM_UNIXTIME($link_date), FROM_UNIXTIME($link_published_date), $link_votes, $link_karma, '', '',$link_group_id)";
 
             if ($this->debug == true) {
-                echo '<hr>store_basic:Insert:' . $sql . '<hr>';
+                echo '<hr>store_basic:Insert:'.$sql.'<hr>';
             }
             $db->query($sql);
             $this->id = $db->insert_id;
         } else {
-            $sql = "UPDATE " . table_links . " set `link_reports`=$link_reports, `link_comments`=$link_comments, link_author=$link_author, link_status='$link_status', link_randkey=$link_randkey, link_category='$link_category', link_modified=NULL, link_date=FROM_UNIXTIME($link_date), link_published_date=FROM_UNIXTIME($link_published_date), link_votes=$link_votes, link_karma=$link_karma, link_group_id=$link_group_id WHERE link_id=$this->id";
+            $sql = "UPDATE ".table_links." set `link_reports`=$link_reports, `link_comments`=$link_comments, link_author=$link_author, link_status='$link_status', link_randkey=$link_randkey, link_category='$link_category', link_modified=NULL, link_date=FROM_UNIXTIME($link_date), link_published_date=FROM_UNIXTIME($link_published_date), link_votes=$link_votes, link_karma=$link_karma, link_group_id=$link_group_id WHERE link_id=$this->id";
             if ($this->debug == true) {
-                echo '<hr>store_basic:Update:' . $sql . '<hr>';
+                echo '<hr>store_basic:Update:'.$sql.'<hr>';
             }
             $db->query($sql);
 
@@ -266,58 +266,58 @@ class Link
         if (isset($cached_links[$id]) && $usecache == TRUE) {
             $link = $cached_links[$id];
         } else {
-            $link = $db->get_row("SELECT " . table_links . ".* FROM " . table_links . " WHERE link_id = $id");
+            $link = $db->get_row("SELECT ".table_links.".* FROM ".table_links." WHERE link_id = $id");
             $cached_links[$id] = $link;
         }
 
         if ($link) {
-            $this->author=$link->link_author;
-            $this->userid=$link->link_author;
-            $this->status=$link->link_status;
-            $this->votes=$link->link_votes;
-            $this->karma=$link->link_karma;
-            $this->reports=$link->link_reports;
-            $this->comments=$link->link_comments;
-            $this->randkey=$link->link_randkey;
-            $this->category=$link->link_category;
-            $this->url= $link->link_url;
-            $this->url= str_replace('&amp;', '&', $link->link_url);
-            $this->url_title=$link->link_url_title;
-            $this->url_description=$link->link_url_description;
-            $this->title=$link->link_title;
-            $this->title_url=$link->link_title_url;
-            $this->tags=$link->link_tags;
-            $this->content=$link->link_content;
+            $this->author = $link->link_author;
+            $this->userid = $link->link_author;
+            $this->status = $link->link_status;
+            $this->votes = $link->link_votes;
+            $this->karma = $link->link_karma;
+            $this->reports = $link->link_reports;
+            $this->comments = $link->link_comments;
+            $this->randkey = $link->link_randkey;
+            $this->category = $link->link_category;
+            $this->url = $link->link_url;
+            $this->url = str_replace('&amp;', '&', $link->link_url);
+            $this->url_title = $link->link_url_title;
+            $this->url_description = $link->link_url_description;
+            $this->title = $link->link_title;
+            $this->title_url = $link->link_title_url;
+            $this->tags = $link->link_tags;
+            $this->content = $link->link_content;
 // DB 01/08/09
-            $this->date=strtotime($link->link_date);
+            $this->date = strtotime($link->link_date);
 //			$date=$link->link_date;
 //			$this->date=$db->get_var("SELECT UNIX_TIMESTAMP('$date')");
-            $this->published_date=strtotime($link->link_published_date);
+            $this->published_date = strtotime($link->link_published_date);
 //			$date=$link->link_published_date;
 //			$this->published_date=$db->get_var("SELECT UNIX_TIMESTAMP('$date')");
-            $this->modified=strtotime($link->link_modified);
+            $this->modified = strtotime($link->link_modified);
 //			$date=$link->link_modified;
 //			$this->modified=$db->get_var("SELECT UNIX_TIMESTAMP('$date')");
 /////
             $this->fullread = $this->read = true;
             $this->link_summary = $link->link_summary;
 
-            $this->link_field1=$link->link_field1;
-            $this->link_field2=$link->link_field2;
-            $this->link_field3=$link->link_field3;
-            $this->link_field4=$link->link_field4;
-            $this->link_field5=$link->link_field5;
-            $this->link_field6=$link->link_field6;
-            $this->link_field7=$link->link_field7;
-            $this->link_field8=$link->link_field8;
-            $this->link_field9=$link->link_field9;
-            $this->link_field10=$link->link_field10;
-            $this->link_field11=$link->link_field11;
-            $this->link_field12=$link->link_field12;
-            $this->link_field13=$link->link_field13;
-            $this->link_field14=$link->link_field14;
-            $this->link_field15=$link->link_field15;
-            $this->link_group_id=$link->link_group_id;
+            $this->link_field1 = $link->link_field1;
+            $this->link_field2 = $link->link_field2;
+            $this->link_field3 = $link->link_field3;
+            $this->link_field4 = $link->link_field4;
+            $this->link_field5 = $link->link_field5;
+            $this->link_field6 = $link->link_field6;
+            $this->link_field7 = $link->link_field7;
+            $this->link_field8 = $link->link_field8;
+            $this->link_field9 = $link->link_field9;
+            $this->link_field10 = $link->link_field10;
+            $this->link_field11 = $link->link_field11;
+            $this->link_field12 = $link->link_field12;
+            $this->link_field13 = $link->link_field13;
+            $this->link_field14 = $link->link_field14;
+            $this->link_field15 = $link->link_field15;
+            $this->link_group_id = $link->link_group_id;
 
             $this->additional_cats = array();
             if ($results = $db->get_results("SELECT ac_cat_id FROM ".table_additional_categories." WHERE ac_link_id=$id", ARRAY_N)) {
@@ -342,23 +342,23 @@ class Link
         if (!is_numeric($id)) {
             return false;
         }
-        if (($link = $db->get_row("SELECT link_comments, link_author, link_status, link_randkey, link_category, link_date, link_votes, link_karma, link_published_date,link_group_id FROM " . table_links . " WHERE link_id = $id"))) {
-            $this->author=$link->link_author;
-            $this->votes=$link->link_votes;
-            $this->karma=$link->link_karma;
-            $this->status=$link->link_status;
-            $this->randkey=$link->link_randkey;
-            $this->category=$link->link_category;
+        if (($link = $db->get_row("SELECT link_comments, link_author, link_status, link_randkey, link_category, link_date, link_votes, link_karma, link_published_date,link_group_id FROM ".table_links." WHERE link_id = $id"))) {
+            $this->author = $link->link_author;
+            $this->votes = $link->link_votes;
+            $this->karma = $link->link_karma;
+            $this->status = $link->link_status;
+            $this->randkey = $link->link_randkey;
+            $this->category = $link->link_category;
             // DB 01/08/09
-            $this->date=strtotime($link->link_date);
+            $this->date = strtotime($link->link_date);
             //$date=$link->link_date;
             //$this->date=$db->get_var("SELECT UNIX_TIMESTAMP('$date')");
-            $this->published_date=strtotime($link->link_published_date);
+            $this->published_date = strtotime($link->link_published_date);
             //$date=$link->link_published_date;
             //$this->published_date=$db->get_var("SELECT UNIX_TIMESTAMP('$date')");
             /////
-            $this->comments=$link->link_comments;
-            $this->link_group_id=$link->link_group_id;
+            $this->comments = $link->link_comments;
+            $this->link_group_id = $link->link_group_id;
             $this->read = true;
 
             $this->additional_cats = array();
@@ -376,21 +376,21 @@ class Link
     function duplicates($url)
     {
         global $db;
-        $link_url=$db->escape($url);
-        $n = $db->get_var("SELECT count(*) FROM " . table_links . " WHERE link_url = '$link_url' AND link_status != 'discard'");
+        $link_url = $db->escape($url);
+        $n = $db->get_var("SELECT count(*) FROM ".table_links." WHERE link_url = '$link_url' AND link_status != 'discard'");
         return $n;
     }
 
     function duplicates_title($title)
     {
         global $db;
-        $link_title=$db->escape($title);
-        $n = $db->get_var("SELECT count(*) FROM " . table_links . " WHERE link_title = '$link_title' AND link_status != 'discard'");
+        $link_title = $db->escape($title);
+        $n = $db->get_var("SELECT count(*) FROM ".table_links." WHERE link_title = '$link_title' AND link_status != 'discard'");
         return $n;
     }
 
 
-    function print_summary($type='full', $fetch = false, $link_summary_template = 'link_summary.tpl')
+    function print_summary($type = 'full', $fetch = false, $link_summary_template = 'link_summary.tpl')
     {
         global $current_user, $globals, $the_template, $smarty, $ranklist, $db;
 
@@ -402,7 +402,7 @@ class Link
         include_once('../internal/Smarty.class.php');
 
         $main_smarty = new Smarty;
-        $main_smarty->compile_check=false;
+        $main_smarty->compile_check = false;
         // enable caching at your own risk. this code is still experimental
         //$smarty->cache = true;
         $main_smarty->cache_lifetime = 120;
@@ -413,9 +413,9 @@ class Link
 
         $main_smarty->config_dir = "";
         $main_smarty->assign('pligg_language', pligg_language);
-        $main_smarty->config_load(lang_loc . "/languages/lang_" . pligg_language . ".conf");
+        $main_smarty->config_load(lang_loc."/languages/lang_".pligg_language.".conf");
 
-        $anonymous_can_vote = $db->get_var('SELECT var_value from ' . table_config . ' where var_name = "anonymous_vote";');
+        $anonymous_can_vote = $db->get_var('SELECT var_value from '.table_config.' where var_name = "anonymous_vote";');
         $main_smarty->assign('anonymous_vote', $anonymous_can_vote);
 
         if (phpnum() == 4) {
@@ -431,17 +431,17 @@ class Link
         include mnminclude.'extra_fields_smarty.php';
 
         if ($fetch == false) {
-            $main_smarty->display($the_template . '/' . $link_summary_template, 'story' . $this->id . "|" . $current_user->user_id . "|" . $type);
+            $main_smarty->display($the_template.'/'.$link_summary_template, 'story'.$this->id."|".$current_user->user_id."|".$type);
         } else {
-            return $main_smarty->fetch($the_template . '/' . $link_summary_template, 'story' . $this->id . "|" . $current_user->user_id . "|" . $type);
+            return $main_smarty->fetch($the_template.'/'.$link_summary_template, 'story'.$this->id."|".$current_user->user_id."|".$type);
         }
     }
 
-    function fill_smarty($smarty, $type='full')
+    function fill_smarty($smarty, $type = 'full')
     {
-        static $link_index=0;
+        static $link_index = 0;
 
-        $link_index=$this->id;
+        $link_index = $this->id;
         global $current_user, $globals, $the_template, $db, $ranklist;
 
         if (!$ranklist) {
@@ -475,7 +475,7 @@ class Link
         } else {
             $parsed = parse_url($this->url);
             if (isset($parsed['scheme'])) {
-                $url_short = $parsed['scheme'] . "://" . $parsed['host'];
+                $url_short = $parsed['scheme']."://".$parsed['host'];
             }
         }
         $title_short = htmlspecialchars(utf8_wordwrap($this->title, 30, " ", 1));
@@ -576,9 +576,9 @@ class Link
             $smarty->assign('link_rating_width', $this->rating * 25);
 
             $current_user_id = $current_user->user_id;
-            $jsLink = "vote($current_user_id, $this->id, $link_index, '" . md5($current_user_id . $this->randkey) . "', ";
+            $jsLink = "vote($current_user_id, $this->id, $link_index, '".md5($current_user_id.$this->randkey)."', ";
             for ($stars = 1; $stars <= 5; $stars++) {
-                $smarty->assign("link_shakebox_javascript_vote_{$stars}star", $jsLink . ($stars * 2) . ')');
+                $smarty->assign("link_shakebox_javascript_vote_{$stars}star", $jsLink.($stars * 2).')');
             }
 
             $smarty->assign('vote_count', $this->votecount);
@@ -609,7 +609,7 @@ class Link
         if (Enable_Extra_Fields) {
             $main_smarty = $smarty;
             include mnminclude.'extra_fields_smarty.php';
-            $smarty=$main_smarty;
+            $smarty = $main_smarty;
             $smarty->assign('link_field1', $this->link_field1);
             $smarty->assign('link_field2', $this->link_field2);
             $smarty->assign('link_field3', $this->link_field3);
@@ -627,7 +627,7 @@ class Link
             $smarty->assign('link_field15', $this->link_field15);
         }
         $smarty->assign('link_group_id', $this->link_group_id);
-        $smarty->assign('instpath', my_base_url . my_pligg_base . "/");
+        $smarty->assign('instpath', my_base_url.my_pligg_base."/");
         $smarty->assign('UseAvatars', do_we_use_avatars());
         $smarty->assign('Avatar', $avatars = get_avatar('all', "", "", "", $this->userid));
         $smarty->assign('Avatar_ImgSrc', $avatars['large']);
@@ -693,7 +693,7 @@ class Link
             if (isset($cached_saved_links[$this->id])) {
                 $smarty->assign('link_mine', $cached_saved_links[$this->id]);
             } else {
-                $smarty->assign('link_mine', $db->get_row("SELECT * FROM " . table_saved_links . " WHERE saved_user_id=$current_user->user_id AND saved_link_id=$this->id LIMIT 1;"));
+                $smarty->assign('link_mine', $db->get_row("SELECT * FROM ".table_saved_links." WHERE saved_user_id=$current_user->user_id AND saved_link_id=$this->id LIMIT 1;"));
             }
         }
         $smarty->assign('user_url_saved', getmyurl('user2', $current_user->user_login, 'saved'));
@@ -735,14 +735,14 @@ class Link
             $smarty->assign('link_shakebox_reports', $this->reports);
         }
 
-        $jslink = "vote($current_user->user_id,$this->id,$link_index," . "'" . md5($current_user->user_id.$this->randkey) . "',10)";
-        $jsreportlink = "vote($current_user->user_id,$this->id,$link_index," . "'" . md5($current_user->user_id.$this->randkey) . "',-10)";
+        $jslink = "vote($current_user->user_id,$this->id,$link_index,"."'".md5($current_user->user_id.$this->randkey)."',10)";
+        $jsreportlink = "vote($current_user->user_id,$this->id,$link_index,"."'".md5($current_user->user_id.$this->randkey)."',-10)";
         $smarty->assign('link_shakebox_javascript_vote', $jslink);
 
-        $jsunvote = "unvote($current_user->user_id,$this->id,$link_index," . "'" . md5($current_user->user_id.$this->randkey) . "',10)";
+        $jsunvote = "unvote($current_user->user_id,$this->id,$link_index,"."'".md5($current_user->user_id.$this->randkey)."',10)";
         $smarty->assign('link_shakebox_javascript_unvote', $jsunvote);
 
-        $jsunbury = "unvote($current_user->user_id,$this->id,$link_index," . "'" . md5($current_user->user_id.$this->randkey) . "',-10)";
+        $jsunbury = "unvote($current_user->user_id,$this->id,$link_index,"."'".md5($current_user->user_id.$this->randkey)."',-10)";
         $smarty->assign('link_shakebox_javascript_unbury', $jsunbury);
 
         $smarty->assign('link_shakebox_javascript_report', $jsreportlink);
@@ -767,12 +767,12 @@ class Link
                 $c = count($tag_array);
                 $tag_array[$c] = $this->tags;
                 $c++;
-                for ($i=0; $i<=$c; $i++) {
+                for ($i = 0; $i <= $c; $i++) {
                     if (isset($tag_array[$i])) {
                         if ($URLMethod == 1) {
-                            $tags_url_array[$i] = my_pligg_base . "/search.php?search=".urlencode(trim($tag_array[$i]))."&amp;tag=true";
+                            $tags_url_array[$i] = my_pligg_base."/search.php?search=".urlencode(trim($tag_array[$i]))."&amp;tag=true";
                         } elseif ($URLMethod == 2) {
-                            $tags_url_array[$i] = my_pligg_base . "/tag/" . urlencode(trim($tag_array[$i]));
+                            $tags_url_array[$i] = my_pligg_base."/tag/".urlencode(trim($tag_array[$i]));
                         }
                     }
                 }
@@ -808,7 +808,7 @@ class Link
         $current_userid = $current_user->user_id;
         if (!isset($this->group_membered) && $current_userid) {
             //		    $this->group_membered = $db->get_results("SELECT group_id,group_name FROM " . table_groups . " WHERE group_creator = $current_userid and group_status = 'Enable'");
-            $this->group_membered = $db->get_results("SELECT DISTINCT group_id,group_name FROM " . table_groups . " LEFT JOIN ".table_group_member." ON member_group_id=group_id AND member_user_id = $current_userid WHERE group_status = 'Enable' AND member_status='active'");
+            $this->group_membered = $db->get_results("SELECT DISTINCT group_id,group_name FROM ".table_groups." LEFT JOIN ".table_group_member." ON member_group_id=group_id AND member_user_id = $current_userid WHERE group_status = 'Enable' AND member_status='active'");
         }
 
         $output = '';
@@ -824,17 +824,17 @@ class Link
     function truncate_content()
     {
         if (utf8_strlen($this->content) > StorySummary_ContentTruncate) {
-            if (Auto_scroll==true) {
+            if (Auto_scroll == true) {
                 global $main_smarty;
-                $content=    close_tags(utf8_substr($this->content, 0, StorySummary_ContentTruncate));
-                $content.="<div class=\"read_more_article\" storyid=\"".$this->id."\" > ".$main_smarty->get_config_vars('PLIGG_Visual_Read_More')."</div>" ;
-                $content.="<div class=\"read_more_story".$this->id." hide\" >";
-                $content.=close_tags(utf8_substr($this->content, StorySummary_ContentTruncate, utf8_strlen($this->content)));
-                $content.="</div>";
+                $content =    close_tags(utf8_substr($this->content, 0, StorySummary_ContentTruncate));
+                $content .= "<div class=\"read_more_article\" storyid=\"".$this->id."\" > ".$main_smarty->get_config_vars('PLIGG_Visual_Read_More')."</div>" ;
+                $content .= "<div class=\"read_more_story".$this->id." hide\" >";
+                $content .= close_tags(utf8_substr($this->content, StorySummary_ContentTruncate, utf8_strlen($this->content)));
+                $content .= "</div>";
                 // echo $content;
                 return $content;
             } else {
-                return close_tags(utf8_substr($this->content, 0, StorySummary_ContentTruncate)) . "...";
+                return close_tags(utf8_substr($this->content, 0, StorySummary_ContentTruncate))."...";
             }
         }
         return $this->content;
@@ -850,8 +850,8 @@ class Link
         require_once(mnminclude.'votes.php');
 
         $vote = new Vote;
-        $vote->type='links';
-        $vote->link=$linkid;
+        $vote->type = 'links';
+        $vote->link = $linkid;
         return $vote->rating();
     }
 
@@ -860,29 +860,29 @@ class Link
         require_once(mnminclude.'votes.php');
 
         $vote = new Vote;
-        $vote->type='links';
-        $vote->link=$this->id;
+        $vote->type = 'links';
+        $vote->link = $this->id;
         return $vote->anycount();
     }
 
-    function count_all_votes($value="> 0")
+    function count_all_votes($value = "> 0")
     {
         require_once(mnminclude.'votes.php');
 
         $vote = new Vote;
-        $vote->type='links';
-        $vote->link=$this->id;
+        $vote->type = 'links';
+        $vote->link = $this->id;
         return $vote->count_all($value);
     }
 
-    function votes($user, $value="> 0")
+    function votes($user, $value = "> 0")
     {
         require_once(mnminclude.'votes.php');
 
         $vote = new Vote;
-        $vote->type='links';
-        $vote->user=$user;
-        $vote->link=$this->id;
+        $vote->type = 'links';
+        $vote->user = $user;
+        $vote->link = $this->id;
         return $vote->count($value);
     }
 
@@ -891,42 +891,42 @@ class Link
         require_once(mnminclude.'votes.php');
 
         $vote = new Vote;
-        $vote->type='links';
-        $vote->user=$user;
-        $vote->link=$this->id;
+        $vote->type = 'links';
+        $vote->user = $user;
+        $vote->link = $this->id;
         return $vote->reports();
     }
 
     // DB 11/10/08
-    function votes_from_ip($ip='')
+    function votes_from_ip($ip = '')
     {
         require_once(mnminclude.'votes.php');
 
         $vote = new Vote;
-        $vote->type='links';
+        $vote->type = 'links';
         if ($ip) {
-            $vote->ip=$ip;
+            $vote->ip = $ip;
         } else {
             require_once(mnminclude.'check_behind_proxy.php');
-            $vote->ip=check_ip_behind_proxy();
+            $vote->ip = check_ip_behind_proxy();
         }
-        $vote->link=$this->id;
+        $vote->link = $this->id;
         return $vote->count();
     }
 
-    function reports_from_ip($ip='')
+    function reports_from_ip($ip = '')
     {
         require_once(mnminclude.'votes.php');
 
         $vote = new Vote;
-        $vote->type='links';
+        $vote->type = 'links';
         if ($ip) {
-            $vote->ip=$ip;
+            $vote->ip = $ip;
         } else {
             require_once(mnminclude.'check_behind_proxy.php');
-            $vote->ip=check_ip_behind_proxy();
+            $vote->ip = check_ip_behind_proxy();
         }
-        $vote->link=$this->id;
+        $vote->link = $this->id;
         return $vote->reports();
     }
     /////
@@ -936,9 +936,9 @@ class Link
         require_once(mnminclude.'votes.php');
 
         $vote = new Vote;
-        $vote->type='links';
-        $vote->user=$user;
-        $vote->link=$this->id;
+        $vote->type = 'links';
+        $vote->user = $user;
+        $vote->link = $this->id;
         $results = $vote->user_list_all_votes();
 
         $votes = 0;
@@ -960,44 +960,44 @@ class Link
         $this->current_user_votes = $votes;
         $this->current_user_reports = $reports;
 
-        if (votes_per_ip > 0 && $user==0) {
-            $ac_vote_from_IP=$this->votes_from_ip();
-            if ($ac_vote_from_IP<=1) {
-                $ac_vote_from_IP=0;
+        if (votes_per_ip > 0 && $user == 0) {
+            $ac_vote_from_IP = $this->votes_from_ip();
+            if ($ac_vote_from_IP <= 1) {
+                $ac_vote_from_IP = 0;
             }
 
-            $ac_report_from_IP=$this->reports_from_ip();
-            if ($ac_report_from_IP<=1) {
-                $ac_report_from_IP=0;
+            $ac_report_from_IP = $this->reports_from_ip();
+            if ($ac_report_from_IP <= 1) {
+                $ac_report_from_IP = 0;
             }
 
-            $this->vote_from_this_ip=$ac_vote_from_IP;
-            $this->report_from_this_ip=$ac_report_from_IP;
+            $this->vote_from_this_ip = $ac_vote_from_IP;
+            $this->report_from_this_ip = $ac_report_from_IP;
         }
     }
 
-    function remove_vote($user=0, $value=10)
+    function remove_vote($user = 0, $value = 10)
     {
         $vote = new Vote;
-        $vote->type='links';
-        $vote->user=$user;
-        $vote->link=$this->id;
-        $vote->value=$value;
+        $vote->type = 'links';
+        $vote->user = $user;
+        $vote->link = $this->id;
+        $vote->value = $value;
         $vote->remove();
 
         $vote = new Vote;
-        $vote->type='links';
-        $vote->link=$this->id;
+        $vote->type = 'links';
+        $vote->link = $this->id;
         if (Voting_Method == 1) {
-            $this->votes=$vote->count();
+            $this->votes = $vote->count();
             $this->reports = $this->count_all_votes("<0");
         } elseif (Voting_Method == 2) {
-            $this->votes=$vote->rating();
-            $this->votecount=$vote->count();
+            $this->votes = $vote->rating();
+            $this->votecount = $vote->count();
             $this->reports = $this->count_all_votes("<0");
         } elseif (Voting_Method == 3) {
-            $this->votes=$vote->count();
-            $this->votecount=$vote->count();
+            $this->votes = $vote->count();
+            $this->votecount = $vote->count();
             $this->karma = $vote->karma();
             $this->reports = $this->count_all_votes("<0");
         }
@@ -1007,18 +1007,18 @@ class Link
         check_actions('link_remove_vote_post', $vars);
     }
 
-    function insert_vote($user=0, $value=10)
+    function insert_vote($user = 0, $value = 10)
     {
         global $anon_karma;
         require_once(mnminclude.'votes.php');
         if ($value>10) {
-            $value=10;
+            $value = 10;
         }
         $vote = new Vote;
-        $vote->type='links';
-        $vote->user=$user;
-        $vote->link=$this->id;
-        $vote->value=$value;
+        $vote->type = 'links';
+        $vote->user = $user;
+        $vote->link = $this->id;
+        $vote->value = $value;
 //		if($value<10) {$vote->value=($anon_karma/10)*$value;}
         if ($user>0) {
             require_once(mnminclude.'user.php');
@@ -1033,18 +1033,18 @@ class Link
         }
         if ($vote->insert()) {
             $vote = new Vote;
-            $vote->type='links';
-            $vote->link=$this->id;
+            $vote->type = 'links';
+            $vote->link = $this->id;
             if (Voting_Method == 1) {
-                $this->votes=$vote->count();
+                $this->votes = $vote->count();
                 $this->reports = $this->count_all_votes("<0");
             } elseif (Voting_Method == 2) {
-                $this->votes=$vote->rating();
-                $this->votecount=$vote->count();
+                $this->votes = $vote->rating();
+                $this->votecount = $vote->count();
                 $this->reports = $this->count_all_votes("<0");
             } elseif (Voting_Method == 3) {
-                $this->votes=$vote->count();
-                $this->votecount=$vote->count();
+                $this->votes = $vote->count();
+                $this->votecount = $vote->count();
                 $this->karma = $vote->karma();
                 $this->reports = $this->count_all_votes("<0");
             }
@@ -1071,20 +1071,20 @@ class Link
 
         if (Voting_Method == 1) {
             // check to see if we should change the status to publish
-            if ($this->status == 'new' && $this->votes>=$votes) {
+            if ($this->status == 'new' && $this->votes >= $votes) {
                 $now = time();
-                $diff=$now-$this->date;
-                $days=intval($diff/86400);
-                if ($days <=days_to_publish) {
+                $diff = $now-$this->date;
+                $days = intval($diff/86400);
+                if ($days <= days_to_publish) {
                     $this->publish();
                 }
             }
         } elseif (Voting_Method == 2) {
-            if ($this->status == 'new' && $this->votes>=(rating_to_publish * 2) && $this->votecount>=$votes) {
+            if ($this->status == 'new' && $this->votes >= (rating_to_publish * 2) && $this->votecount >= $votes) {
                 $now = time();
-                $diff=$now-$this->date;
-                $days=intval($diff/86400);
-                if ($days <=days_to_publish+1000) {
+                $diff = $now-$this->date;
+                $days = intval($diff/86400);
+                if ($days <= days_to_publish+1000) {
                     $this->publish();
                 }
             }
@@ -1093,11 +1093,11 @@ class Link
             if (!is_numeric($karma)) {
                 $karma = karma_to_publish;
             }
-            if ($this->status == 'new' && $this->karma>=$karma && $this->votecount>=$votes) {
+            if ($this->status == 'new' && $this->karma >= $karma && $this->votecount >= $votes) {
                 $now = time();
-                $diff=$now-$this->date;
-                $days=intval($diff/86400);
-                if ($days <=days_to_publish) {
+                $diff = $now-$this->date;
+                $days = intval($diff/86400);
+                if ($days <= days_to_publish) {
                     $this->publish();
                 }
             }
@@ -1142,7 +1142,7 @@ class Link
         return $main_smarty->get_config_vars('PLIGG_Visual_Submit3Errors_NoCategory');
     }
 
-    function category_name($id=0)
+    function category_name($id = 0)
     {
         // $the_cats is set in /libs/smartyvariables.php
 
@@ -1162,7 +1162,7 @@ class Link
         return $main_smarty->get_config_vars('PLIGG_Visual_Submit3Errors_NoCategory');
     }
 
-    function category_safe_name($id=0)
+    function category_safe_name($id = 0)
     {
         // $the_cats is set in /libs/smartyvariables.php
 
@@ -1233,7 +1233,7 @@ class Link
             return false;
         }
         /////
-        $this->comments = $db->get_var("SELECT count(*) FROM " . table_comments . " WHERE comment_status='published' AND comment_link_id = $this->id");
+        $this->comments = $db->get_var("SELECT count(*) FROM ".table_comments." WHERE comment_status='published' AND comment_link_id = $this->id");
     }
 
 
@@ -1249,7 +1249,7 @@ class Link
             return false;
         }
         /////
-        return $db->get_var("SELECT count(*) FROM " . table_comments . " WHERE comment_status='published' AND comment_link_id = $this->id");
+        return $db->get_var("SELECT count(*) FROM ".table_comments." WHERE comment_status='published' AND comment_link_id = $this->id");
         }
     }
 
@@ -1258,7 +1258,7 @@ class Link
         global $db;
 
         if (buries_to_spam == 1) {
-            $res = $db->get_results("select * from " . table_formulas . " where type = 'report' and enabled = 1;");
+            $res = $db->get_results("select * from ".table_formulas." where type = 'report' and enabled = 1;");
             if (!$res) {
                 return;
             }
@@ -1267,12 +1267,12 @@ class Link
                 $votes = $this->count_all_votes("> 0");
                 $from = $this->date;
                 $now = time();
-                $diff=$now-$from;
-                $hours=($diff/3600);
+                $diff = $now-$from;
+                $hours = ($diff/3600);
                 $hours_since_submit = intval($hours * 100) / 100;
 
-                $evalthis = 'if (' . $formula->formula . '){return "1";}else{return "0";}';
-                if (eval($evalthis) == 1 && $this->status!='spam') {
+                $evalthis = 'if ('.$formula->formula.'){return "1";}else{return "0";}';
+                if (eval($evalthis) == 1 && $this->status != 'spam') {
                     totals_adjust_count($this->status, -1);
                     totals_adjust_count('discard', 1);
 
@@ -1311,7 +1311,7 @@ class Link
             return false;
         }
         /////
-        $sql = 'SELECT `link_id` from `' . table_links . '` WHERE `link_id` = ' . $this->id . ' AND `link_author` = ' . $authorid . ' ORDER BY `link_date` DESC LIMIT 1;';
+        $sql = 'SELECT `link_id` from `'.table_links.'` WHERE `link_id` = '.$this->id.' AND `link_author` = '.$authorid.' ORDER BY `link_date` DESC LIMIT 1;';
         if ($db->get_var($sql)) {
             return true;
         } else {
@@ -1338,10 +1338,10 @@ class Link
         $mk_regex_array = array();
         preg_match_all($regex_url, $text, $mk_regex_array);
 
-        for ($cnt=0; $cnt < count($mk_regex_array[2]); $cnt++) {
+        for ($cnt = 0; $cnt < count($mk_regex_array[2]); $cnt++) {
             $test_domain = rtrim($mk_regex_array[2][$cnt], "\\");
             if (strlen($test_domain) > 3) {
-                $domain_to_test = $test_domain . ".multi.surbl.org";
+                $domain_to_test = $test_domain.".multi.surbl.org";
                 if (strstr(gethostbyname($domain_to_test), '127.0.0')) {
                     logSpam("surbl rejected $test_domain");
                     return true;
@@ -1365,7 +1365,7 @@ class Link
     function check_spam_rules($ruleFile, $text)
     {
         if (!file_exists($ruleFile)) {
-            echo $ruleFile . " does not exist\n";
+            echo $ruleFile." does not exist\n";
             return false;
         }
         $handle = fopen($ruleFile, "r");
@@ -1402,7 +1402,7 @@ class Link
         $date = date('M-d-Y');
         $timestamp = time();
 
-        $message = $date . "\t" . $timestamp . "\t" . $ip . "\t" . $message . "\n";
+        $message = $date."\t".$timestamp."\t".$ip."\t".$message."\n";
 
         $file = fopen($SPAM_LOG_BOOK, "a");
         fwrite($file, $message);
@@ -1459,12 +1459,12 @@ class PliggHTTPRequest
        $crlf = "\r\n";
 
        // generate request
-       $req = 'GET ' . $this->_uri . ' HTTP/1.0' . $crlf
-           .    'Host: ' . $this->_host . $crlf
-           .    $crlf;
+       $req = 'GET '.$this->_uri.' HTTP/1.0'.$crlf
+           .'Host: '.$this->_host.$crlf
+           .$crlf;
 
     // fetch
-    $this->_fp = fsockopen(($this->_protocol == 'https' ? 'tls://' : '') . $this->_host, $this->_port, $errno, $errstr, 20);
+    $this->_fp = fsockopen(($this->_protocol == 'https' ? 'tls://' : '').$this->_host, $this->_port, $errno, $errstr, 20);
        if (!$this->_fp) {
            return("BADURL");
        }
@@ -1478,7 +1478,7 @@ class PliggHTTPRequest
        }
 
        // split header and body
-       $pos = strpos($response, $crlf . $crlf);
+       $pos = strpos($response, $crlf.$crlf);
        if ($pos === false) {
            return($response);
        }

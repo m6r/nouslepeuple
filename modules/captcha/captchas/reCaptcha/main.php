@@ -5,7 +5,7 @@
         global $main_smarty;
 
         $register_step_1_extra = $main_smarty->get_template_vars('register_step_1_extra');
-        $register_step_1_extra .= $main_smarty->fetch(captcha_captchas_path . '/reCaptcha/captcha.tpl');
+        $register_step_1_extra .= $main_smarty->fetch(captcha_captchas_path.'/reCaptcha/captcha.tpl');
         $main_smarty->assign('register_step_1_extra', $register_step_1_extra);
     }
 
@@ -13,7 +13,7 @@
     {
         global $main_smarty, $the_template;
 
-        require_once(captcha_captchas_path . '/reCaptcha/libs/recaptchalib.php');
+        require_once(captcha_captchas_path.'/reCaptcha/libs/recaptchalib.php');
 
         $privatekey = get_misc_data('reCaptcha_prikey');
 

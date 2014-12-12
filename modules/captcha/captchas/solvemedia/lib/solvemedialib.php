@@ -58,11 +58,11 @@ function _adcopy_qsencode($data)
 {
     $req = "";
     foreach ($data as $key => $value) {
-        $req .= $key . '=' . urlencode(stripslashes($value)) . '&';
+        $req .= $key.'='.urlencode(stripslashes($value)).'&';
     }
 
         // Cut the last '&'
-        $req=substr($req, 0, strlen($req)-1);
+        $req = substr($req, 0, strlen($req)-1);
     return $req;
 }
 
@@ -83,7 +83,7 @@ function _adcopy_http_post($host, $path, $data, $port = 80)
     $http_request  = "POST $path HTTP/1.0\r\n";
     $http_request .= "Host: $host\r\n";
     $http_request .= "Content-Type: application/x-www-form-urlencoded;\r\n";
-    $http_request .= "Content-Length: " . strlen($req) . "\r\n";
+    $http_request .= "Content-Length: ".strlen($req)."\r\n";
     $http_request .= "User-Agent: solvemedia/PHP\r\n";
     $http_request .= "\r\n";
     $http_request .= $req;
@@ -142,10 +142,10 @@ function solvemedia_get_html($pubkey, $error = null, $use_ssl = false)
     if ($error) {
         $errorpart = ";error=1";
     }
-    return '<script type="text/javascript" src="'. $server . '/papi/challenge.script?k=' . $pubkey . $errorpart . '"></script>
+    return '<script type="text/javascript" src="'.$server.'/papi/challenge.script?k='.$pubkey.$errorpart.'"></script>
 
 	<noscript>
-  		<iframe src="'. $server . '/papi/challenge.noscript?k=' . $pubkey . $errorpart . '" height="300" width="500" frameborder="0"></iframe><br/>
+  		<iframe src="'.$server.'/papi/challenge.noscript?k='.$pubkey.$errorpart.'" height="300" width="500" frameborder="0"></iframe><br/>
   		<textarea name="adcopy_challenge" rows="3" cols="40"></textarea>
   		<input type="hidden" name="adcopy_response" value="manual_challenge"/>
 	</noscript>';
@@ -210,7 +210,7 @@ function solvemedia_check_answer($privkey, $remoteip, $challenge, $response, $ha
                                                  'privatekey' => $privkey,
                                                  'remoteip'   => $remoteip,
                                                  'challenge'  => $challenge,
-                                                 'response'   => $response
+                                                 'response'   => $response,
                                                  )
                                           );
 
@@ -219,7 +219,7 @@ function solvemedia_check_answer($privkey, $remoteip, $challenge, $response, $ha
 
     if (strlen($hashkey)) {
         # validate message authenticator
-            $hash = sha1($answers[0] . $challenge . $hashkey);
+            $hash = sha1($answers[0].$challenge.$hashkey);
 
         if ($hash != $answers[2]) {
             $adcopy_response->is_valid = false;
@@ -246,7 +246,7 @@ function solvemedia_check_answer($privkey, $remoteip, $challenge, $response, $ha
  */
 function solvemedia_get_signup_url($domain = null, $appname = null)
 {
-    return ADCOPY_SIGNUP . "?" .  _adcopy_qsencode(array('domain' => $domain, 'app' => $appname));
+    return ADCOPY_SIGNUP."?"._adcopy_qsencode(array('domain' => $domain, 'app' => $appname));
 }
 
 

@@ -47,6 +47,6 @@ $canIhaveAccess = $canIhaveAccess + checklevel('moderator');
 $main_smarty->assign('isAdmin', $canIhaveAccess);
 
 // show the template
-$main_smarty->assign('tpl_center', $the_template . '/live_center');
-$main_smarty->display($the_template . '/pligg.tpl');
-$main_smarty->display($the_template . '/functions/live_js.tpl');
+$main_smarty->assign('tpl_center', $the_template.'/live_center');
+$main_smarty->display($the_template.'/pligg.tpl');
+$main_smarty->display($the_template.'/functions/live_js.tpl');

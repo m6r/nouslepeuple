@@ -12,7 +12,7 @@ if (isset($_POST['id'])) {
     check_referrer();
 
     $comment = new Comment;
-    $comment->id=sanitize($_POST['id'], 3);
+    $comment->id = sanitize($_POST['id'], 3);
     if (!is_numeric($comment->id)) {
         die();
     }
@@ -23,10 +23,10 @@ if (isset($_POST['id'])) {
     }
 
     if ($current_user->user_id != sanitize($_POST['user'], 3)) {
-        error($main_smarty->get_config_vars('PLIGG_Visual_Vote_BadUser'). $current_user->user_id . '-'. sanitize($_POST['user'], 3));
+        error($main_smarty->get_config_vars('PLIGG_Visual_Vote_BadUser').$current_user->user_id.'-'.sanitize($_POST['user'], 3));
     }
 
-    $md5=md5(sanitize($_POST['user'], 3).$comment->randkey);
+    $md5 = md5(sanitize($_POST['user'], 3).$comment->randkey);
     if ($md5 !== sanitize($_POST['md5'], 3)) {
         error($main_smarty->get_config_vars('PLIGG_Visual_Vote_BadKey'));
     }
@@ -51,6 +51,6 @@ if (isset($_POST['id'])) {
     }
 
     $comment->store();
-    $count=$comment->votes;
+    $count = $comment->votes;
     echo "$count ~--~".sanitize($_POST['id'], 3);
 }

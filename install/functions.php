@@ -24,21 +24,21 @@ function Message($message, $good)
     } else {
         $yesno = '<b><font color="red">No</font></b>';
     }
-    echo '<tr><td class="normal">'. $message .'</td><td>'. $yesno .'</td></tr>';
+    echo '<tr><td class="normal">'.$message.'</td><td>'.$yesno.'</td></tr>';
 }
 //end old functions
 
 function DisplayErrors($errors)
 {
     foreach ($errors as $error) {
-        $output.="<div class='alert alert-error'><strong>Error:</strong> $error</div>\n";
+        $output .= "<div class='alert alert-error'><strong>Error:</strong> $error</div>\n";
     }
     return $output;
 }
 
 function checkfortable($table)
 {
-    $result = mysql_query('select * from ' . $table);
+    $result = mysql_query('select * from '.$table);
     if (!$result) {
         return false;
     }
@@ -48,8 +48,8 @@ function checkfortable($table)
 function check_lang_conf($version)
 {
     $file = '../libs/lang_english.conf';
-    $data=file_get_contents($file);
-    $lines=explode("\n", $data);
+    $data = file_get_contents($file);
+    $lines = explode("\n", $data);
     foreach ($lines as $line) {
         if (preg_match("#\/\/<VERSION>$version<\/VERSION>#", $line)) {
             return TRUE;
@@ -65,9 +65,9 @@ function percent($num_amount, $num_total)
     return $count;
 }
 
-function getfiles($dirname=".")
+function getfiles($dirname = ".")
 {
-    $pattern="\.default$";
+    $pattern = "\.default$";
     $files = array();
     if ($handle = opendir($dirname)) {
         while (false !== ($file = readdir($handle))) {

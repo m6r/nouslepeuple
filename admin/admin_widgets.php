@@ -15,7 +15,7 @@ $canIhaveAccess = 0;
 $canIhaveAccess = $canIhaveAccess + checklevel('admin');
 
 if ($canIhaveAccess == 0) {
-    header("Location: " . getmyurl('admin_login', $_SERVER['REQUEST_URI']));
+    header("Location: ".getmyurl('admin_login', $_SERVER['REQUEST_URI']));
     die();
 }
 
@@ -24,7 +24,7 @@ define('pagename', 'admin_widgets');
 $main_smarty->assign('pagename', pagename);
 
 // read the mysql database to get the pligg version
-$sql = "SELECT data FROM " . table_misc_data . " WHERE name = 'pligg_version'";
+$sql = "SELECT data FROM ".table_misc_data." WHERE name = 'pligg_version'";
 $pligg_version = $db->get_var($sql);
 $main_smarty->assign('version_number', $pligg_version);
 
@@ -33,7 +33,7 @@ $navwhere['text1'] = $main_smarty->get_config_vars('PLIGG_Visual_Header_AdminPan
 $navwhere['link1'] = getmyurl('admin', '');
 $navwhere['text2'] = $main_smarty->get_config_vars('PLIGG_Visual_Header_AdminPanel_6');
 $main_smarty->assign('navbar_where', $navwhere);
-$main_smarty->assign('posttitle', " / " . $main_smarty->get_config_vars('PLIGG_Visual_Header_AdminPanel_6'));
+$main_smarty->assign('posttitle', " / ".$main_smarty->get_config_vars('PLIGG_Visual_Header_AdminPanel_6'));
 
 // sidebar
 $main_smarty = do_sidebar($main_smarty);
@@ -42,7 +42,7 @@ $main_smarty = do_sidebar($main_smarty);
 if ($canIhaveAccess == 1) {
     if ($_POST["enabled"]) {
         foreach ($_POST["enabled"] as $id => $value) {
-            $sql = "UPDATE " . table_widgets . " set enabled = $value where id=$id";
+            $sql = "UPDATE ".table_widgets." set enabled = $value where id=$id";
             $db->query($sql);
         }
         header("Location: admin_widgets.php");
@@ -51,7 +51,7 @@ if ($canIhaveAccess == 1) {
 
     if ($_GET['action'] == 'disable') {
         $module = $db->escape(sanitize($_REQUEST['module'], 3));
-        $sql = "UPDATE " . table_widgets . " set enabled = 0 where `name` = '" . $module . "';";
+        $sql = "UPDATE ".table_widgets." set enabled = 0 where `name` = '".$module."';";
         //echo $sql;
         $db->query($sql);
 
@@ -62,7 +62,7 @@ if ($canIhaveAccess == 1) {
     }
     if ($_GET['action'] == 'enable') {
         $module = $db->escape(sanitize($_REQUEST['module'], 3));
-        $sql = "UPDATE " . table_widgets . " set enabled = 1 where `name` = '" . $module . "';";
+        $sql = "UPDATE ".table_widgets." set enabled = 1 where `name` = '".$module."';";
         //echo $sql;
         $db->query($sql);
 
@@ -84,7 +84,7 @@ if ($canIhaveAccess == 1) {
             die('no init.php file exists');
         }
 
-        $db->query("INSERT IGNORE INTO " . table_widgets . " (`name`, `version`, `folder`, `enabled`) values ('".$name."', '" . $version . "', '".$widget."', 1);");
+        $db->query("INSERT IGNORE INTO ".table_widgets." (`name`, `version`, `folder`, `enabled`) values ('".$name."', '".$version."', '".$widget."', 1);");
 
         clear_widget_cache();
 
@@ -93,10 +93,10 @@ if ($canIhaveAccess == 1) {
     }
     if ($_GET['action'] == 'remove') {
         $widget = $db->escape(sanitize($_REQUEST['widget'], 3));
-        $sql = "SELECT * FROM " . table_widgets . " WHERE `name` = '" . $widget . "';";
+        $sql = "SELECT * FROM ".table_widgets." WHERE `name` = '".$widget."';";
         $row = $db->get_row($sql);
 
-        $sql = "Delete from " . table_widgets . " where `name` = '" . $widget . "';";
+        $sql = "Delete from ".table_widgets." where `name` = '".$widget."';";
     //echo $sql;
     $db->query($sql);
 
@@ -110,7 +110,7 @@ if ($canIhaveAccess == 1) {
 
 
     $main_smarty->assign('tpl_center', '/admin/widgets');
-    $output = $main_smarty->fetch($template_dir . '/admin/admin.tpl');
+    $output = $main_smarty->fetch($template_dir.'/admin/admin.tpl');
 
     if (!function_exists('clear_widget_cache')) {
         echo "Your template is not compatible with this version of Pligg. Missing the 'clear_widgets_cache' function in admin_widgets_center.tpl.";
@@ -129,15 +129,15 @@ function clear_widget_cache()
         $db->cache_queries = true;
         $db->cache_timeout = 0;
         // if this query is changed, be sure to also change it in modules_init.php
-        $modules = $db->get_results('SELECT * from ' . table_widgets . ' where enabled=1;');
+        $modules = $db->get_results('SELECT * from '.table_widgets.' where enabled=1;');
         $db->cache_queries = false;
     }
 }
 
 function include_widget_settings($name)
 {
-    if (file_exists(mnmpath . '/widgets/'. $name . '/' . 'init.php')) {
-        include_once(mnmpath . '/widgets/' . $name . '/' . 'init.php');
+    if (file_exists(mnmpath.'/widgets/'.$name.'/'.'init.php')) {
+        include_once(mnmpath.'/widgets/'.$name.'/'.'init.php');
 
         return $widget;
     } else {

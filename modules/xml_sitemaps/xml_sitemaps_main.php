@@ -26,7 +26,7 @@ function xml_sitemaps_show_sitemap()
         if (is_numeric($_GET['i'])) {
             create_sitemap_links($_GET['i'], XmlSitemaps_Links_per_sitemap);
         } else {
-            if ($_GET['i']=="main") {
+            if ($_GET['i'] == "main") {
                 create_sitemap_main();
             } else {
                 if (preg_match('/pages(\d+)/', $_GET['i'], $m)) {
@@ -53,7 +53,7 @@ function xml_sitemaps_show_sitemap()
 function create_sitemaps_index($max_rec)
 {
     global $db,$my_base_url,$my_pligg_base;
-    $nr=0;
+    $nr = 0;
 
     if (sitemap_header("index", true)) {
         return true;
@@ -96,7 +96,7 @@ function create_sitemap_users($index, $max_rec)
         return true;
     }
 
-    $sql = "SELECT * FROM " . table_users . " WHERE user_enabled ORDER BY user_modification DESC";
+    $sql = "SELECT * FROM ".table_users." WHERE user_enabled ORDER BY user_modification DESC";
     sitemap_body($sql, 'user_modification', "user", 'user_login', 0.9, $index, $max_rec);
 
     sitemap_footer("users$index");
@@ -111,7 +111,7 @@ function create_sitemap_groups($index, $max_rec)
         return true;
     }
 
-    $sql = "SELECT * FROM " . table_groups . " WHERE group_status='Enable' ORDER BY group_date DESC";
+    $sql = "SELECT * FROM ".table_groups." WHERE group_status='Enable' ORDER BY group_date DESC";
     sitemap_body($sql, 'group_date', "group_story_title", 'group_safename', 1, $index, $max_rec);
 
     sitemap_footer("groups$index");
@@ -148,14 +148,14 @@ function create_sitemap_links($index, $max_rec)
     $links = $db->get_col($sql);
     if ($links) {
         foreach ($links as $link_id) {
-            $link->id=$link_id;
+            $link->id = $link_id;
             $link->read();
             $freq = freq_calc($link->modified);
             echo "<url>\n";
             echo "<loc>".getmyFullurl("storyURL", urlencode($link->category_safe_name($link->category)), urlencode($link->title_url), $link->id)."</loc>\n";
             //c / v  * 30   + vo /v * 10 +  ( 100 / acum-mod  ) * 60
-            $v=(time()-$link->date)/60;
-            $pri=max(0.0001, (($link->comments /$v) * 30  + ($link->votes * 10  / $v) + (100 / max(100, time()-$link->modified))  * 60)/ 100);
+            $v = (time()-$link->date)/60;
+            $pri = max(0.0001, (($link->comments /$v) * 30  + ($link->votes * 10  / $v) + (100 / max(100, time()-$link->modified))  * 60)/ 100);
             echo "<lastmod>";
             echo my_format_date($link->modified);
             echo "</lastmod>\n";
@@ -184,7 +184,7 @@ function create_sitemap_main()
     sitemap_add_page('groups',  "SELECT MAX(UNIX_TIMESTAMP(group_date)) FROM ".table_groups." WHERE group_status='Enable'");
     sitemap_add_page('tagcloud', "SELECT MAX(UNIX_TIMESTAMP(tag_date)) FROM ".table_tags);
     sitemap_add_page('live',    "SELECT MAX(UNIX_TIMESTAMP(link_date)) FROM ".table_links." WHERE link_status='new' OR link_status='published'");
-    sitemap_add_page('topusers', "SELECT MAX(UNIX_TIMESTAMP(user_modification)) FROM " . table_users . " WHERE user_enabled");
+    sitemap_add_page('topusers', "SELECT MAX(UNIX_TIMESTAMP(user_modification)) FROM ".table_users." WHERE user_enabled");
 
     create_entry(mktime(0, 0, 0, 1, 1, date('Y')), getmyFullurl('submit'));
     create_entry(mktime(0, 0, 0, 1, 1, date('Y')), getmyFullurl('advancedsearch'));
@@ -225,7 +225,7 @@ function create_sitemap_main()
 function xml_sitemaps_sites_ping()
 {
     global $my_base_url,$my_pligg_base;
-    $res= "";
+    $res = "";
 
     if (XmlSitemaps_friendly_url) {
         $Url = "$my_base_url$my_pligg_base/sitemapindex.xml";
@@ -254,8 +254,8 @@ function xml_sitemaps_sites_ping()
 //
 function sitemap_call_url($pingUrl)
 {
-    $pingres=fopen($pingUrl, 'r');
-    while ($res=fread($pingres, 8192)) {
+    $pingres = fopen($pingUrl, 'r');
+    while ($res = fread($pingres, 8192)) {
         //		echo $res."\n";
     }
     fclose($pingres);
@@ -271,7 +271,7 @@ function sitemap_index_body($sql, $name, $max_rec)
     global $db,$my_base_url,$my_pligg_base;
 
     // Calculate total data size using given query
-        $db->query($sql1=str_ireplace('select ', 'SELECT SQL_CALC_FOUND_ROWS ', $sql)." LIMIT 0,1");
+        $db->query($sql1 = str_ireplace('select ', 'SELECT SQL_CALC_FOUND_ROWS ', $sql)." LIMIT 0,1");
     $res = $db->get_var("SELECT FOUND_ROWS()");
 
     // Separate into pages if needed
@@ -280,9 +280,9 @@ function sitemap_index_body($sql, $name, $max_rec)
         } else {
             $nr = 0;
         }
-    for ($i=$nr; $i>=0; $i--) {
+    for ($i = $nr; $i >= 0; $i--) {
         // Get last modification timestamp for next part of the data
-        $r=$db->get_var($sql1="SELECT MAX(UNIX_TIMESTAMP(l.date)) FROM ($sql LIMIT ".$i*$max_rec.",$max_rec ) l");
+        $r = $db->get_var($sql1 = "SELECT MAX(UNIX_TIMESTAMP(l.date)) FROM ($sql LIMIT ".$i*$max_rec.",$max_rec ) l");
         echo "<sitemap>\n";
         if (XmlSitemaps_friendly_url) {
             echo "<loc>$my_base_url$my_pligg_base/sitemap-$name$i.xml</loc>\n";
@@ -341,8 +341,8 @@ function sitemap_add_page($name, $sql)
 function sitemap_header($name, $isindex)
 {
     if (XmlSitemaps_use_cache) {
-        $icf="cache/sitemap-$name.xml";
-        if (file_exists($icf) && ($s=stat($icf)) && time()-$s['mtime']<XmlSitemaps_cache_ttl) {
+        $icf = "cache/sitemap-$name.xml";
+        if (file_exists($icf) && ($s = stat($icf)) && time()-$s['mtime']<XmlSitemaps_cache_ttl) {
             echo file_get_contents($icf);
             return true;
         }
@@ -370,8 +370,8 @@ function sitemap_footer($name, $isindex)
     }
 
     if (XmlSitemaps_use_cache) {
-        $icf="cache/sitemap-$name.xml";
-        $ret=ob_get_contents();
+        $icf = "cache/sitemap-$name.xml";
+        $ret = ob_get_contents();
         ob_end_flush();
         file_put_contents($icf, $ret);
     }
@@ -419,7 +419,7 @@ function freq_calc($d)
 
 function my_format_date($mtime)
 {
-    $ret=date('Y-m-d\TH:i:s', $mtime);
-    $ret.=preg_replace('/(\+|\-)([0-9]{2})([0-9]{2})/', '$1$2:$3', date('O', $mtime));
+    $ret = date('Y-m-d\TH:i:s', $mtime);
+    $ret .= preg_replace('/(\+|\-)([0-9]{2})([0-9]{2})/', '$1$2:$3', date('O', $mtime));
     return $ret;
 }

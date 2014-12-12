@@ -39,10 +39,10 @@ function captcha_showpage()
         if ($action == 'configure') {
             if (isset($_REQUEST['captcha']) && !strstr($_REQUEST['captcha'], '/')) {
                 $captcha = $_REQUEST['captcha'];
-                include_once(captcha_captchas_path . '/' . $captcha . '/main.php');
+                include_once(captcha_captchas_path.'/'.$captcha.'/main.php');
                 captcha_configure();
-                $main_smarty->assign('tpl_center', captcha_tpl_path . '../captchas/' . $captcha . '/captcha_configure');
-                $main_smarty->display($template_dir . '/admin/admin.tpl');
+                $main_smarty->assign('tpl_center', captcha_tpl_path.'../captchas/'.$captcha.'/captcha_configure');
+                $main_smarty->display($template_dir.'/admin/admin.tpl');
             }
             die();
         }
@@ -55,7 +55,7 @@ function captcha_showpage()
                 misc_data_update('captcha_reg_en', $value);
             }
 
-            header('Location: ' . URL_captcha);
+            header('Location: '.URL_captcha);
         }
 
         if ($action == 'EnableStory') {
@@ -63,7 +63,7 @@ function captcha_showpage()
             if ($value != '') {
                 misc_data_update('captcha_story_en', $value);
             }
-            header('Location: ' . URL_captcha);
+            header('Location: '.URL_captcha);
         }
 
         if ($action == 'EnableComment') {
@@ -71,7 +71,7 @@ function captcha_showpage()
             if ($value != '') {
                 misc_data_update('captcha_comment_en', $value);
             }
-            header('Location: ' . URL_captcha);
+            header('Location: '.URL_captcha);
         }
 
         $captcha = get_misc_data('captcha_method');
@@ -80,16 +80,16 @@ function captcha_showpage()
         }
         $main_smarty->assign('captcha_method', $captcha);
 
-        $main_smarty->assign('tpl_center', captcha_tpl_path . '/captcha_home');
-        $main_smarty->display($template_dir . '/admin/admin.tpl');
+        $main_smarty->assign('tpl_center', captcha_tpl_path.'/captcha_home');
+        $main_smarty->display($template_dir.'/admin/admin.tpl');
     } else {
-        header("Location: " . getmyurl('login', $_SERVER['REQUEST_URI']));
+        header("Location: ".getmyurl('login', $_SERVER['REQUEST_URI']));
     }
 }
 
 function enable_captcha($captcha)
 {
-    include_once(captcha_captchas_path . '/' . $captcha . '/main.php');
+    include_once(captcha_captchas_path.'/'.$captcha.'/main.php');
 
     if (captcha_can_we_use()) {
         misc_data_update('captcha_method', $captcha);
@@ -109,7 +109,7 @@ function captcha_register(&$vars)
     if ($captcha == '') {
         $captcha = 'recaptcha';
     }
-    include_once(captcha_captchas_path . '/' . $captcha . '/main.php');
+    include_once(captcha_captchas_path.'/'.$captcha.'/main.php');
     captcha_create('', 0);
 }
 
@@ -134,7 +134,7 @@ function captcha_register_check_errors(&$vars)
     $main_smarty->assign('email', $email);
     $main_smarty->assign('password', $password);
 
-    include_once(captcha_captchas_path . '/' . $captcha . '/main.php');
+    include_once(captcha_captchas_path.'/'.$captcha.'/main.php');
     if (captcha_check($vars, 2)) {
     } else {
         $vars['error'] = true;

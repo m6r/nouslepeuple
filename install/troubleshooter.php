@@ -1,10 +1,10 @@
 <?php
 error_reporting(E_ALL^E_NOTICE);
 $page = 'troubleshooter';
-$include='header.php'; if (file_exists($include)) {
+$include = 'header.php'; if (file_exists($include)) {
      include_once($include);
  }
-$include='functions.php'; if (file_exists($include)) {
+$include = 'functions.php'; if (file_exists($include)) {
      require_once($include);
  }
 ?>
@@ -230,7 +230,7 @@ echo '<table class="table table-bordered table-striped">';
 echo '<thead><tr><th colspan="2">Checking <a id="chmod" data-trigger="hover" data-html="true" data-content="<span style=\'font-weight:normal;\'>CHMOD represents the read, write, and execute permissions given to files and directories. Pligg CMS requires that certain files and directories are given a CHMOD status of 0777, allowing Pligg to have access to make changes to files. Any lines that return as an error represent files that need to be updated to CHMOD 0777.<span>" rel="popover" href="http://en.wikipedia.org/wiki/Chmod" data-original-title="CHMOD">CHMOD Settings</a></th></tr></thead>';
 echo '<tbody>';
 
-$file='../admin/backup/';
+$file = '../admin/backup/';
 if (!is_writable($file)) {
     echo '<tr><td style="width:20px;"><i class="fa fa-times"></i></td><td>'.$file.' is not writable! Please chmod this directory to 777.</span></td></tr>';
 }
@@ -238,7 +238,7 @@ if (is_writable($file)) {
     echo '<tr><td style="width:20px;"><i class="fa fa-check"></i></td><td>'.$file.'</span></td></tr>';
 }
 
-$file='../avatars/groups_uploaded/';
+$file = '../avatars/groups_uploaded/';
 if (!is_writable($file)) {
     echo '<tr><td><i class="fa fa-times"></i></td><td>'.$file.' is not writable! Please chmod this directory to 777.</span></td></tr>';
 }
@@ -246,7 +246,7 @@ if (is_writable($file)) {
     echo '<tr><td><i class="fa fa-check"></i></td><td>'.$file.'</span></td></tr>';
 }
 
-$file='../avatars/user_uploaded/';
+$file = '../avatars/user_uploaded/';
 if (!is_writable($file)) {
     echo '<tr><td><i class="fa fa-times"></i></td><td>'.$file.' is not writable! Please chmod this directory to 777.</span></td></tr>';
 }
@@ -254,7 +254,7 @@ if (is_writable($file)) {
     echo '<tr><td><i class="fa fa-check"></i></td><td>'.$file.'</span></td></tr>';
 }
 
-$file='../cache/';
+$file = '../cache/';
 if (!is_writable($file)) {
     echo '<tr><td><i class="fa fa-times"></i></td><td>'.$file.' is not writable! Please chmod this directory to 777.</span></td></tr>';
 }
@@ -262,7 +262,7 @@ if (is_writable($file)) {
     echo '<tr><td><i class="fa fa-check"></i></td><td>'.$file.'</span></td></tr>';
 }
 
-$file='../languages/';
+$file = '../languages/';
 if (!is_writable($file)) {
     echo '<tr><td><i class="fa fa-times"></i></td><td>'.$file.' is not writable! Please chmod this directory and all contained files to 777.</span></td></tr>';
 }
@@ -279,7 +279,7 @@ foreach (glob("../languages/*.conf") as $filename) {
     }
 }
 
-$file='../logs/bannedips.log';
+$file = '../logs/bannedips.log';
 if (file_exists($file)) {
     if (!is_writable($file)) {
         echo '<tr><td><i class="fa fa-times"></i></td><td>'.$file.' is not writable! Please chmod this file to 666.</span></td></tr>';
@@ -289,7 +289,7 @@ if (file_exists($file)) {
     }
 }
 
-$file='../logs/domain-blacklist.log';
+$file = '../logs/domain-blacklist.log';
 if (file_exists($file)) {
     if (!is_writable($file)) {
         echo '<tr><td><i class="fa fa-times"></i></td><td>'.$file.' is not writable! Please chmod this file to 666.</span></td></tr>';
@@ -299,7 +299,7 @@ if (file_exists($file)) {
     }
 }
 
-$file='../logs/domain-whitelist.log';
+$file = '../logs/domain-whitelist.log';
 if (file_exists($file)) {
     if (!is_writable($file)) {
         echo '<tr><td><i class="fa fa-times"></i></td><td>'.$file.' is not writable! Please chmod this file to 666.</span></td></tr>';
@@ -309,7 +309,7 @@ if (file_exists($file)) {
     }
 }
 
-$file='../libs/dbconnect.php';
+$file = '../libs/dbconnect.php';
 if (file_exists($file)) {
     if (!is_writable($file)) {
         echo '<tr><td><i class="fa fa-times"></i></td><td>'.$file.' is not writable! Please chmod this file to 666.</span></td></tr>';
@@ -319,7 +319,7 @@ if (file_exists($file)) {
     }
 }
 
-$file='../settings.php';
+$file = '../settings.php';
 if (file_exists($file)) {
     if (!is_writable($file)) {
         echo '<tr><td><i class="fa fa-times"></i></td><td>'.$file.' is not writable! Please chmod this file to 666.</span></td></tr>';
@@ -378,7 +378,7 @@ echo '<div class="jumbotron" style="padding:25px 10px;"><p style="text-align:cen
 
 ?>
 
-<?php $include='footer.php'; if (file_exists($include)) {
+<?php $include = 'footer.php'; if (file_exists($include)) {
      include_once($include);
  } ?>
 

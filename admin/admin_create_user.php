@@ -31,18 +31,18 @@ $canIhaveAccess = $canIhaveAccess + checklevel('moderator');
 if ($canIhaveAccess == 0) {
     //	$main_smarty->assign('tpl_center', '/admin/access_denied');
 //	$main_smarty->display($template_dir . '/admin/admin.tpl');
-    header("Location: " . getmyurl('admin_login', $_SERVER['REQUEST_URI']));
+    header("Location: ".getmyurl('admin_login', $_SERVER['REQUEST_URI']));
     die();
 }
 
 if (isset($_REQUEST["mode"]) && sanitize($_REQUEST["mode"], 3) == "newuser") {
     $CSRF->check_expired('admin_users_create');
     if ($CSRF->check_valid(sanitize($_POST['token'], 3), 'admin_users_create')) {
-        $username=trim($db->escape($_POST['username']));
-        $password=trim($db->escape($_POST['password']));
-        $email=trim($db->escape($_POST['email']));
-        $level=trim($db->escape($_POST['level']));
-        $saltedpass=generateHash($password);
+        $username = trim($db->escape($_POST['username']));
+        $password = trim($db->escape($_POST['password']));
+        $email = trim($db->escape($_POST['email']));
+        $level = trim($db->escape($_POST['level']));
+        $saltedpass = generateHash($password);
         if (!isset($username) || strlen($username) < 3) {
             $main_smarty->assign(username_error, $main_smarty->get_config_vars('PLIGG_Visual_Register_Error_UserTooShort'));
         } elseif (!preg_match('/^[a-zA-Z0-9\-]+$/', $username)) {
@@ -56,7 +56,7 @@ if (isset($_REQUEST["mode"]) && sanitize($_REQUEST["mode"], 3) == "newuser") {
         } elseif (strlen($password) < 5) {
             $main_smarty->assign(password_error, $main_smarty->get_config_vars('PLIGG_Visual_Register_Error_FiveCharPass'));
         } else {
-            $db->query("INSERT IGNORE INTO " . table_users . " (user_login, user_level, user_email, user_pass, user_date) VALUES ('$username', '$level', '$email', '$saltedpass', now())");
+            $db->query("INSERT IGNORE INTO ".table_users." (user_login, user_level, user_email, user_pass, user_date) VALUES ('$username', '$level', '$email', '$saltedpass', now())");
             echo "User Added successfully";
         }
     } else {

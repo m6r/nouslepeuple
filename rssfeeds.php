@@ -21,5 +21,5 @@ define('pagename', 'rssfeeds');
 $main_smarty->assign('pagename', pagename);
 
 // show the template
-$main_smarty->assign('tpl_center', $the_template . '/rss_feeds_center');
-$main_smarty->display($the_template . '/pligg.tpl');
+$main_smarty->assign('tpl_center', $the_template.'/rss_feeds_center');
+$main_smarty->display($the_template.'/pligg.tpl');

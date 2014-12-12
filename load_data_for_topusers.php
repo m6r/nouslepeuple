@@ -15,7 +15,7 @@
     $page_size = isset($_REQUEST['pagesize']) ? $_REQUEST['pagesize'] : "";
 
 
-$users = $db->get_results("SELECT user_karma, COUNT(*) FROM " . table_users . " WHERE user_karma > 0 $whether_to_show_user GROUP BY user_karma ORDER BY user_karma DESC", ARRAY_N);
+$users = $db->get_results("SELECT user_karma, COUNT(*) FROM ".table_users." WHERE user_karma > 0 $whether_to_show_user GROUP BY user_karma ORDER BY user_karma DESC", ARRAY_N);
 
     $ranklist = array();
     $rank = 1;
@@ -33,7 +33,7 @@ $users = $db->get_results("SELECT user_karma, COUNT(*) FROM " . table_users . " 
 
     if ($users) {
         foreach ($users as $dbuser) {
-            $user->id=$dbuser->user_id;
+            $user->id = $dbuser->user_id;
             $user->read();
             $user->all_stats();
 
@@ -58,6 +58,6 @@ $users = $db->get_results("SELECT user_karma, COUNT(*) FROM " . table_users . " 
             $main_smarty->assign('user_rank', $ranklist[$user->karma]);
             $main_smarty->assign('user_avatar', get_avatar('small', "", $user->username, $user->email));
 
-            echo $users_table = $main_smarty->fetch(The_Template . "/topusers_data.tpl");
+            echo $users_table = $main_smarty->fetch(The_Template."/topusers_data.tpl");
         }
     }

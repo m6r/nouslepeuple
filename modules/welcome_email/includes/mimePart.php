@@ -132,7 +132,7 @@ class Mail_mimePart
         foreach ($params as $key => $value) {
             switch ($key) {
                 case 'content_type':
-                    $headers['Content-Type'] = $value . (isset($charset) ? '; charset="' . $charset . '"' : '');
+                    $headers['Content-Type'] = $value.(isset($charset) ? '; charset="'.$charset.'"' : '');
                     break;
 
                 case 'encoding':
@@ -141,16 +141,16 @@ class Mail_mimePart
                     break;
 
                 case 'cid':
-                    $headers['Content-ID'] = '<' . $value . '>';
+                    $headers['Content-ID'] = '<'.$value.'>';
                     break;
 
                 case 'disposition':
-                    $headers['Content-Disposition'] = $value . (isset($dfilename) ? '; filename="' . $dfilename . '"' : '');
+                    $headers['Content-Disposition'] = $value.(isset($dfilename) ? '; filename="'.$dfilename.'"' : '');
                     break;
 
                 case 'dfilename':
                     if (isset($headers['Content-Disposition'])) {
-                        $headers['Content-Disposition'] .= '; filename="' . $value . '"';
+                        $headers['Content-Disposition'] .= '; filename="'.$value.'"';
                     } else {
                         $dfilename = $value;
                     }
@@ -162,7 +162,7 @@ class Mail_mimePart
 
                 case 'charset':
                     if (isset($headers['Content-Type'])) {
-                        $headers['Content-Type'] .= '; charset="' . $value . '"';
+                        $headers['Content-Type'] .= '; charset="'.$value.'"';
                     } else {
                         $charset = $value;
                     }
@@ -199,32 +199,32 @@ class Mail_mimePart
      */
     function encode()
     {
-        $encoded =& $this->_encoded;
+        $encoded = & $this->_encoded;
 
         if (!empty($this->_subparts)) {
             srand((double)microtime()*1000000);
-            $boundary = '=_' . md5(uniqid(rand()) . microtime());
-            $this->_headers['Content-Type'] .= ';' . MAIL_MIMEPART_CRLF . "\t" . 'boundary="' . $boundary . '"';
+            $boundary = '=_'.md5(uniqid(rand()).microtime());
+            $this->_headers['Content-Type'] .= ';'.MAIL_MIMEPART_CRLF."\t".'boundary="'.$boundary.'"';
 
             // Add body parts to $subparts
             for ($i = 0; $i < count($this->_subparts); $i++) {
                 $headers = array();
                 $tmp = $this->_subparts[$i]->encode();
                 foreach ($tmp['headers'] as $key => $value) {
-                    $headers[] = $key . ': ' . $value;
+                    $headers[] = $key.': '.$value;
                 }
-                $subparts[] = implode(MAIL_MIMEPART_CRLF, $headers) . MAIL_MIMEPART_CRLF . MAIL_MIMEPART_CRLF . $tmp['body'];
+                $subparts[] = implode(MAIL_MIMEPART_CRLF, $headers).MAIL_MIMEPART_CRLF.MAIL_MIMEPART_CRLF.$tmp['body'];
             }
 
-            $encoded['body'] = '--' . $boundary . MAIL_MIMEPART_CRLF .
-                               implode('--' . $boundary . MAIL_MIMEPART_CRLF, $subparts) .
-                               '--' . $boundary.'--' . MAIL_MIMEPART_CRLF;
+            $encoded['body'] = '--'.$boundary.MAIL_MIMEPART_CRLF.
+                               implode('--'.$boundary.MAIL_MIMEPART_CRLF, $subparts).
+                               '--'.$boundary.'--'.MAIL_MIMEPART_CRLF;
         } else {
-            $encoded['body'] = $this->_getEncodedData($this->_body, $this->_encoding) . MAIL_MIMEPART_CRLF;
+            $encoded['body'] = $this->_getEncodedData($this->_body, $this->_encoding).MAIL_MIMEPART_CRLF;
         }
 
         // Add headers to $encoded
-        $encoded['headers'] =& $this->_headers;
+        $encoded['headers'] = & $this->_headers;
 
         return $encoded;
     }
@@ -312,16 +312,16 @@ class Mail_mimePart
                 } elseif ($dec == 9) {
                     ; // Do nothing if a tab.
                 } elseif (($dec == 61) or ($dec < 32) or ($dec > 126)) {
-                    $char = $escape . strtoupper(sprintf('%02s', dechex($dec)));
+                    $char = $escape.strtoupper(sprintf('%02s', dechex($dec)));
                 }
 
                 if ((strlen($newline) + strlen($char)) >= $line_max) {        // MAIL_MIMEPART_CRLF is not counted
-                    $output  .= $newline . $escape . $eol;                    // soft line break; " =\r\n" is okay
+                    $output  .= $newline.$escape.$eol;                    // soft line break; " =\r\n" is okay
                     $newline  = '';
                 }
                 $newline .= $char;
             } // end of for
-            $output .= $newline . $eol;
+            $output .= $newline.$eol;
         }
         $output = substr($output, 0, -1 * strlen($eol)); // Don't want last crlf
         return $output;

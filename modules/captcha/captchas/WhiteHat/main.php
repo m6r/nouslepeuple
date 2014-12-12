@@ -10,7 +10,7 @@
         unset($_SESSION['security_code']);
 
         $register_step_1_extra = $main_smarty->get_template_vars('register_step_1_extra');
-        $register_step_1_extra .= $main_smarty->fetch(captcha_captchas_path . '/WhiteHat/captcha.tpl');
+        $register_step_1_extra .= $main_smarty->fetch(captcha_captchas_path.'/WhiteHat/captcha.tpl');
         $main_smarty->assign('register_step_1_extra', $register_step_1_extra);
     }
 

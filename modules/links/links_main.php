@@ -61,7 +61,7 @@ function links_showpage()
         }
         // breadcrumbs
         $main_smarty->assign('navbar_where', $navwhere);
-        $main_smarty->assign('posttitle', " / " . $main_smarty->get_config_vars('PLIGG_Visual_Header_AdminPanel'));
+        $main_smarty->assign('posttitle', " / ".$main_smarty->get_config_vars('PLIGG_Visual_Header_AdminPanel'));
         // breadcrumbs
         define('modulename', 'links');
         $main_smarty->assign('modulename', modulename);
@@ -70,9 +70,9 @@ function links_showpage()
         $main_smarty->assign('pagename', pagename);
 
         $main_smarty->assign('settings', links_settings());
-        $main_smarty->assign('tpl_center', links_tpl_path . 'links_main');
-        $main_smarty->display($template_dir . '/admin/admin.tpl');
+        $main_smarty->assign('tpl_center', links_tpl_path.'links_main');
+        $main_smarty->display($template_dir.'/admin/admin.tpl');
     } else {
-        header("Location: " . getmyurl('login', $_SERVER['REQUEST_URI']));
+        header("Location: ".getmyurl('login', $_SERVER['REQUEST_URI']));
     }
 }

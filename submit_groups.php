@@ -47,7 +47,7 @@ if (enable_group == "true" && (group_submit_level == $current_user_level || grou
     }
     $group_author = $current_user->user_id;
     $group_members = 1;
-    $g_date=time();
+    $g_date = time();
     $group_date = $g_date;
     $group_published_date = 943941600;
     $group_name = $group_title;
@@ -75,7 +75,7 @@ if (enable_group == "true" && (group_submit_level == $current_user_level || grou
         $errors = '';
         if (!$group_name) {
             $errors = $main_smarty->get_config_vars('PLIGG_Visual_Group_Empty_Title');
-        } elseif ($group_vote_to_publish<=0) {
+        } elseif ($group_vote_to_publish <= 0) {
             $errors = $main_smarty->get_config_vars('PLIGG_Visual_Group_Empty_Votes');
         } else {
             $exists = $db->get_var("select COUNT(*) from ".table_groups." WHERE group_name='$group_name'");
@@ -86,7 +86,7 @@ if (enable_group == "true" && (group_submit_level == $current_user_level || grou
 
         if (!$errors) {
             //to insert a group
-        $insert_group = "INSERT IGNORE INTO " . table_groups . " (group_creator, group_status, group_members, group_date, group_safename, group_name, group_description, group_privacy, group_vote_to_publish, group_notify_email) VALUES ($group_author, '$group_status', $group_members,FROM_UNIXTIME($group_date),'$group_safename','$group_name', '$group_description', '$group_privacy', '$group_vote_to_publish', '$group_notify_email')";
+        $insert_group = "INSERT IGNORE INTO ".table_groups." (group_creator, group_status, group_members, group_date, group_safename, group_name, group_description, group_privacy, group_vote_to_publish, group_notify_email) VALUES ($group_author, '$group_status', $group_members,FROM_UNIXTIME($group_date),'$group_safename','$group_name', '$group_description', '$group_privacy', '$group_vote_to_publish', '$group_notify_email')";
             $result = $db->query($insert_group);
 
         //get linkid inserted above
@@ -94,7 +94,7 @@ if (enable_group == "true" && (group_submit_level == $current_user_level || grou
         //echo 'sdgfdsgds'.$in_id;
 
         //to make group creator a member
-        $insert_member = "INSERT IGNORE INTO ". table_group_member ." (`member_user_id` , `member_group_id`, `member_role`) VALUES (".$group_author.", ".$in_id.",'moderator' )";
+        $insert_member = "INSERT IGNORE INTO ".table_group_member." (`member_user_id` , `member_group_id`, `member_role`) VALUES (".$group_author.", ".$in_id.",'moderator' )";
             $db->query($insert_member);
 
             if (isset($_POST['group_mailer'])) {
@@ -119,7 +119,7 @@ if (enable_group == "true" && (group_submit_level == $current_user_level || grou
 
                     foreach ($v1 as $t) {
                         //echo $t;
-                    $str='';
+                    $str = '';
                         $from = "email@example.com";
                         $subject = $main_smarty->get_config_vars('PLIGG_InvitationEmail_Subject');
                         $to = $t;
@@ -161,5 +161,5 @@ $main_smarty->assign('error', $errors);
 $main_smarty->assign('pagename', pagename);
 
 // show the template
-$main_smarty->assign('tpl_center', $the_template . '/submit_groups_center');
-$main_smarty->display($the_template . '/pligg.tpl');
+$main_smarty->assign('tpl_center', $the_template.'/submit_groups_center');
+$main_smarty->display($the_template.'/pligg.tpl');

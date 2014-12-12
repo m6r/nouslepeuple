@@ -21,7 +21,7 @@ $canIhaveAccess = $canIhaveAccess + checklevel('admin');
 if ($canIhaveAccess == 0) {
     //	$main_smarty->assign('tpl_center', '/admin/access_denied');
 //	$main_smarty->display($template_dir . '/admin/admin.tpl');
-    header("Location: " . getmyurl('admin_login', $_SERVER['REQUEST_URI']));
+    header("Location: ".getmyurl('admin_login', $_SERVER['REQUEST_URI']));
     die();
 }
 
@@ -30,14 +30,14 @@ $navwhere['text1'] = $main_smarty->get_config_vars('PLIGG_Visual_Header_AdminPan
 $navwhere['link1'] = getmyurl('admin', '');
 $navwhere['text2'] = $main_smarty->get_config_vars('PLIGG_Visual_Header_AdminPanel_Editor');
 $main_smarty->assign('navbar_where', $navwhere);
-$main_smarty->assign('posttitle', " / " . $main_smarty->get_config_vars('PLIGG_Visual_Header_AdminPanel'));
+$main_smarty->assign('posttitle', " / ".$main_smarty->get_config_vars('PLIGG_Visual_Header_AdminPanel'));
 
 // pagename
 define('pagename', 'admin_editor');
 $main_smarty->assign('pagename', pagename);
 
 // read the mysql database to get the pligg version
-$sql = "SELECT data FROM " . table_misc_data . " WHERE name = 'pligg_version'";
+$sql = "SELECT data FROM ".table_misc_data." WHERE name = 'pligg_version'";
 $pligg_version = $db->get_var($sql);
 $main_smarty->assign('version_number', $pligg_version);
 
@@ -77,7 +77,7 @@ if ($_SERVER['REQUEST_METHOD'] != 'POST') {
         $data_to_save = $_POST["updatedfile"];
         $data_to_save = str_ireplace("<END-TA-DO-NOT-EDIT>", "</textarea>", $data_to_save);
         $data_to_save = stripslashes($data_to_save);
-        if (fwrite($file2ed, $data_to_save)!==FALSE) {
+        if (fwrite($file2ed, $data_to_save) !== FALSE) {
             $error = "<h3>File Saved</h3><p><a href=\"\">Click here to go back to the editor.</a></p>";
             fclose($file2ed);
         } else {
@@ -92,7 +92,7 @@ if ($_SERVER['REQUEST_METHOD'] != 'POST') {
 
 // show the template
 $main_smarty->assign('tpl_center', '/admin/template_editor');
-$main_smarty->display($template_dir . '/admin/admin.tpl');
+$main_smarty->display($template_dir.'/admin/admin.tpl');
 
 
 function directoryToArray($directory, $recursive)
@@ -102,12 +102,12 @@ function directoryToArray($directory, $recursive)
     if ($handle = opendir($directory)) {
         while (false !== ($file = readdir($handle))) {
             if ($file != "." && $file != ".." && $file != $me && substr($file, 0, 1) != '.') {
-                if (is_dir($directory. "/" . $file)) {
+                if (is_dir($directory."/".$file)) {
                     if ($recursive) {
-                        $array_items = array_merge($array_items, directoryToArray($directory. "/" . $file, $recursive));
+                        $array_items = array_merge($array_items, directoryToArray($directory."/".$file, $recursive));
                     }
                 } else {
-                    $file = $directory . "/" . $file;
+                    $file = $directory."/".$file;
                     $array_items[] = preg_replace("/\/\//si", "/", $file);
                 }
             }

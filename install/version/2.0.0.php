@@ -5,7 +5,7 @@
 // error_reporting(E_ALL);
 
 // Check for the current version within each upgrade file
-$sql = "SELECT data FROM " . table_misc_data . " WHERE name = 'pligg_version'";
+$sql = "SELECT data FROM ".table_misc_data." WHERE name = 'pligg_version'";
 $pligg_version = $db->get_var($sql);
 
 // Check if you need to run the one time upgrade to Pligg 2.0.0
@@ -19,14 +19,14 @@ if ($pligg_version == '2.0.0rc2') {
     echo '<li>Correcting group member user levels</li>';
 
     // Add friendly domain whitelist (for those who missed it in the RC1 upgrade file)
-    $result = $db->get_results("select * from `" . table_config . "` where `var_name` = '\$FRIENDLY_DOMAINS';");
+    $result = $db->get_results("select * from `".table_config."` where `var_name` = '\$FRIENDLY_DOMAINS';");
     if (count($result) == 0) {
-        $db->query("INSERT INTO `" . table_config . "` VALUES (NULL, 'Misc', '\$FRIENDLY_DOMAINS', 'logs/domain-whitelist.log', 'logs/domain-whitelist.log', 'Text file', 'Local Domain Whitelist File', 'File containing a list of domains that cannot be banned.', 'normal', NULL)");
+        $db->query("INSERT INTO `".table_config."` VALUES (NULL, 'Misc', '\$FRIENDLY_DOMAINS', 'logs/domain-whitelist.log', 'logs/domain-whitelist.log', 'Text file', 'Local Domain Whitelist File', 'File containing a list of domains that cannot be banned.', 'normal', NULL)");
         echo '<li>Added whitelist location to Antispam settings</li>';
     }
 
     // Update version number
-    $sql = "UPDATE `" . table_misc_data . "` SET `data` = '2.0.0' WHERE `name` = 'pligg_version';";
+    $sql = "UPDATE `".table_misc_data."` SET `data` = '2.0.0' WHERE `name` = 'pligg_version';";
     $db->query($sql);
     echo '<li>Updated version number to 2.0.0</li>';
 

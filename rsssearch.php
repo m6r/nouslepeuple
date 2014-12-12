@@ -13,7 +13,7 @@ $_REQUEST['search'] = str_replace(array('://', ':/'), array(':\\', ':\\'), $_REQ
 if (strstr($_REQUEST['search'], '/') && $URLMethod == 2) {
     $post = split('/', $_REQUEST['search']);
     $_GET['search'] = $_REQUEST['search'] = $post[0];
-    for ($i=1; $i+1<sizeof($post); $i+=2) {
+    for ($i = 1; $i+1<sizeof($post); $i += 2) {
         $_REQUEST[$post[$i]] = $post[$i+1];
     }
 }
@@ -24,7 +24,7 @@ $_GET['search'] = $_REQUEST['search'] = str_replace(array(':\\', ':\\'), array('
 $vars = '';
 //check_actions('search_top', $vars);
 
-$search=new Search();
+$search = new Search();
     if (isset($_REQUEST['from'])) {
         $search->newerthan = sanitize($_REQUEST['from'], 3);
     }
@@ -89,11 +89,11 @@ $linksum_sql = $search->sql;
 
 
 if ($_GET['tag']) {
-    $title = " | " . $main_smarty->get_config_vars("PLIGG_Visual_Search_Tags");
+    $title = " | ".$main_smarty->get_config_vars("PLIGG_Visual_Search_Tags");
 } else {
-    $title = " | " . $main_smarty->get_config_vars("PLIGG_Visual_Search_Keywords");
+    $title = " | ".$main_smarty->get_config_vars("PLIGG_Visual_Search_Keywords");
 }
-$title .= " | " . sanitize($_GET['search'], 4);
+$title .= " | ".sanitize($_GET['search'], 4);
 
 do_rss_header($title);
 
@@ -101,9 +101,9 @@ $link = new Link;
 $links = $db->get_col($linksum_sql);
 if ($links) {
     foreach ($links as $link_id) {
-        $link->id=$link_id;
+        $link->id = $link_id;
         $link->read();
-        $category_name = $db->get_var("SELECT category_name FROM " . table_categories . " WHERE category_id = $link->category AND category_lang='$dblang'");
+        $category_name = $db->get_var("SELECT category_name FROM ".table_categories." WHERE category_id = $link->category AND category_lang='$dblang'");
 
         $link->link_summary = str_replace("\n", "<br />", $link->link_summary);
         $link->link_summary = str_replace("òÀÙ", "'", $link->link_summary);
@@ -113,7 +113,7 @@ if ($links) {
         $link->link_summary = str_replace("òÀÝ", "\"", $link->link_summary);
 
         echo "<item>\n";
-        echo "<title><![CDATA[". $link->title . "]]></title>\n";
+        echo "<title><![CDATA[".$link->title."]]></title>\n";
         echo "<link>".getmyFullurl("storyURL", $link->category_safe_names($link->category), urlencode($link->title_url), $link->id)."</link>\n";
         echo "<comments>".getmyFullurl("storyURL", $link->category_safe_names($link->category), urlencode($link->title_url), $link->id)."</comments>\n";
         if (!empty($link_date)) {
@@ -121,10 +121,10 @@ if ($links) {
         } else {
             echo "<pubDate>".date('D, d M Y H:i:s T', time()-misc_timezone*3600)."</pubDate>\n";
         }
-        echo "<dc:creator>" . $link->username($link->author) . "</dc:creator>\n";
-        echo "<category>" . htmlspecialchars($category_name) . "</category>\n";
+        echo "<dc:creator>".$link->username($link->author)."</dc:creator>\n";
+        echo "<category>".htmlspecialchars($category_name)."</category>\n";
         echo "<guid>".getmyFullurl("storyURL", $link->category_safe_names($link->category), urlencode($link->title_url), $link->id)."</guid>\n";
-        echo "<description><![CDATA[" . $link->link_summary . "<br/><br/>".$link->votes." ".$main_smarty->get_config_vars('PLIGG_Visual_RSS_Votes')." ]]></description>\n";
+        echo "<description><![CDATA[".$link->link_summary."<br/><br/>".$link->votes." ".$main_smarty->get_config_vars('PLIGG_Visual_RSS_Votes')." ]]></description>\n";
         echo "</item>\n\n";
     }
 }
@@ -135,12 +135,12 @@ function do_rss_header($title)
 {
     global $last_modified, $dblang, $main_smarty;
     header('Content-type: text/xml; charset=utf-8', true);
-    echo '<?phpxml version="1.0" encoding="utf-8"?'.'>' . "\n";
+    echo '<?phpxml version="1.0" encoding="utf-8"?'.'>'."\n";
     echo '<rss version="2.0" '."\n";
     echo 'xmlns:content="http://purl.org/rss/1.0/modules/content/"'."\n";
     echo 'xmlns:wfw="http://wellformedweb.org/CommentAPI/"'."\n";
     echo 'xmlns:dc="http://purl.org/dc/elements/1.1/"'."\n";
-    echo '>'. "\n";
+    echo '>'."\n";
     echo '<channel>'."\n";
     echo '<title>'.htmlspecialchars($main_smarty->get_config_vars("PLIGG_Visual_Name")).$title.'</title>'."\n";
     echo '<link>'.my_base_url.my_pligg_base.'</link>'."\n";
@@ -156,7 +156,7 @@ function do_rss_footer()
 
 function onlyreadables($string)
 {
-    for ($i=0;$i<strlen($string);$i++) {
+    for ($i = 0;$i<strlen($string);$i++) {
         $chr = $string{$i};
         $ord = ord($chr);
         if ($ord<32 or $ord>126) {

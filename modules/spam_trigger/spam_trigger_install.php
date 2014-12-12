@@ -16,7 +16,7 @@
         }
     }
 
-    if (get_misc_data('spam_trigger_light')=='') {
+    if (get_misc_data('spam_trigger_light') == '') {
         misc_data_update('spam_trigger_light', 'arsehole
 ass-pirate
 ass pirate

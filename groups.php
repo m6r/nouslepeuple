@@ -40,7 +40,7 @@ if ($_REQUEST["sortby"]) {
     $main_smarty->assign('sortby', $sortby);
 }
 
-$rows = $db->get_var("SELECT count(*) FROM " . table_groups . " WHERE group_status='Enable'");
+$rows = $db->get_var("SELECT count(*) FROM ".table_groups." WHERE group_status='Enable'");
 $main_smarty->assign('total_row_for_group', $rows);
 
 
@@ -57,7 +57,7 @@ function group_read($from_where, $order_by)
 {
     global $db, $main_smarty, $view, $user, $rows, $page_size, $offset;
     // figure out what "page" of the results we're on
-    $offset=(get_current_page()-1)*$page_size;
+    $offset = (get_current_page()-1)*$page_size;
 
     // pagesize set in the admin panel
     $search->pagesize = $page_size;
@@ -67,8 +67,8 @@ function group_read($from_where, $order_by)
     }
     include_once(mnminclude.'smartyvariables.php');
     global $db,$main_smarty;
-    $rows = $db->get_var("SELECT count(*) FROM " . table_groups . " WHERE ".$from_where." ");
-    $group = $db->get_results("SELECT distinct(group_id) as group_id FROM " . table_groups . " WHERE ".$from_where." ORDER BY group_status DESC, ".$order_by." LIMIT $offset,$page_size ");
+    $rows = $db->get_var("SELECT count(*) FROM ".table_groups." WHERE ".$from_where." ");
+    $group = $db->get_results("SELECT distinct(group_id) as group_id FROM ".table_groups." WHERE ".$from_where." ORDER BY group_status DESC, ".$order_by." LIMIT $offset,$page_size ");
 
     if ($group) {
         foreach ($group as $groupid) {
@@ -77,7 +77,7 @@ function group_read($from_where, $order_by)
         $main_smarty->assign('group_display', $group_display);
     }
 
-    if (Auto_scroll==2 || Auto_scroll==3) {
+    if (Auto_scroll == 2 || Auto_scroll == 3) {
         $main_smarty->assign("scrollpageSize", $page_size);
     } else {
         $main_smarty->assign('group_pagination', do_pages($rows, $page_size, "groups", true));
@@ -93,5 +93,5 @@ function group_read($from_where, $order_by)
 
 
 // show the template
-$main_smarty->assign('tpl_center', $the_template . '/group_center');
-$main_smarty->display($the_template . '/pligg.tpl');
+$main_smarty->assign('tpl_center', $the_template.'/group_center');
+$main_smarty->display($the_template.'/pligg.tpl');

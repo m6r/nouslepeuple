@@ -1,7 +1,7 @@
 <?php
 
 // the path to the module. the probably shouldn't be changed unless you rename the hc folder(s)
-define('hc_path', my_pligg_base . '/modules/hc/');
+define('hc_path', my_pligg_base.'/modules/hc/');
 
 // the language path for the module
     if (!defined('lang_loc')) {
@@ -19,8 +19,8 @@ define('hc_path', my_pligg_base . '/modules/hc/');
         }
     }
 
-define('hc_lang_conf', lang_loc . '/modules/hc/lang.conf');
-define('hc_pligg_lang_conf', lang_loc . "/languages/lang_" . pligg_language . ".conf");
+define('hc_lang_conf', lang_loc.'/modules/hc/lang.conf');
+define('hc_pligg_lang_conf', lang_loc."/languages/lang_".pligg_language.".conf");
 
 // the path to the modules templates. the probably shouldn't be changed unless you rename the hc folder(s)
 define('hc_tpl_path', '../modules/hc/templates/');
@@ -32,7 +32,7 @@ define('hc_lib_path', './modules/hc/libs/');
 define('hc_hcs_path', './modules/hc/');
 
 // the path to the images. the probably shouldn't be changed unless you rename the hc folder(s)
-define('hc_img_path',  my_pligg_base . '/modules/hc/images/');
+define('hc_img_path',  my_pligg_base.'/modules/hc/images/');
 
 $hc_single_step = (get_misc_data('reg_single_step') == '') ? false : get_misc_data('reg_single_step');
 $hc_single_step = ($hc_single_step == 'true') ? true : false;

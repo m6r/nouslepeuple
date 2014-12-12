@@ -16,7 +16,7 @@ check_referrer();
 $CSRF = new csrf();
 
 
-$offset=(get_current_page()-1)*$page_size;
+$offset = (get_current_page()-1)*$page_size;
 $main_smarty = do_sidebar($main_smarty);
 
 define('pagename', 'user');
@@ -36,7 +36,7 @@ $main_smarty->assign('pagename', pagename);
     }
 
 if (Allow_User_Change_Templates && file_exists("./templates/".$_POST['template']."/header.tpl")) {
-    $domain = $_SERVER['HTTP_HOST']=='localhost' ? '' : preg_replace('/^www/', '', $_SERVER['HTTP_HOST']);
+    $domain = $_SERVER['HTTP_HOST'] == 'localhost' ? '' : preg_replace('/^www/', '', $_SERVER['HTTP_HOST']);
     setcookie("template", $_POST['template'], time()+60*60*24*30, '/', $domain);
 }
 
@@ -48,20 +48,20 @@ if (!$CSRF->check_valid(sanitize($_POST['token'], 3), 'user_settings')) {
 
 $login_user = $db->escape($login);
 //$login_user = $_GET['login'];
-$sqlGetiUserId = $db->get_var("SELECT user_id from " . table_users . " where user_login = '" . $login_user. "';");
+$sqlGetiUserId = $db->get_var("SELECT user_id from ".table_users." where user_login = '".$login_user."';");
 $select_check = $_POST['chack'];
         /* $geturl = $_SERVER['HTTP_REFERER'];
         $url = strtolower(end(explode('/', $geturl)));
         $vowels = array($url);
         $Get_URL = str_replace($vowels, "", $geturl); */
-if ($_SERVER['HTTP_REFERER'] && strpos($_SERVER['HTTP_REFERER'], $my_base_url.$my_pligg_base)===0) {
+if ($_SERVER['HTTP_REFERER'] && strpos($_SERVER['HTTP_REFERER'], $my_base_url.$my_pligg_base) === 0) {
     $geturl = $_SERVER['HTTP_REFERER'];
 } else {
     $geturl = sanitize($_SERVER['HTTP_REFERER'], 3);
 }
 $url = strtolower(end(explode('/', $geturl)));
 
-    $sqlGetiCategory = "SELECT category__auto_id from " . table_categories . " where category__auto_id!= 0;";
+    $sqlGetiCategory = "SELECT category__auto_id from ".table_categories." where category__auto_id!= 0;";
     $sqlGetiCategoryQ = mysql_query($sqlGetiCategory);
     $arr = array();
     while ($row = mysql_fetch_array($sqlGetiCategoryQ, MYSQL_NUM)) {
@@ -75,7 +75,7 @@ $url = strtolower(end(explode('/', $geturl)));
 
     $select_checked = $db->escape(implode(",", $diff));
 
-    $sql = "UPDATE " . table_users . " set user_categories='$select_checked' WHERE user_id = '$sqlGetiUserId'";
+    $sql = "UPDATE ".table_users." set user_categories='$select_checked' WHERE user_id = '$sqlGetiUserId'";
     $query = mysql_query($sql);
     $to_page = preg_replace("/&err=.+$/", "", $geturl);
     header("location:".$to_page."");

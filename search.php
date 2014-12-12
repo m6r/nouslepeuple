@@ -14,7 +14,7 @@
     if (strstr($_REQUEST['search'], '/') && $URLMethod == 2) {
         $post = preg_split('/\//', $_REQUEST['search']);
         $_GET['search'] = $_REQUEST['search'] = $post[0];
-        for ($i=1; $i+1<sizeof($post); $i+=2) {
+        for ($i = 1; $i+1<sizeof($post); $i += 2) {
             $_GET[$post[$i]] = $_REQUEST[$post[$i]] = $post[$i+1];
         }
 
@@ -81,7 +81,7 @@ $search->pagesize = $page_size;
     }
 
 $sort_uri = $URLMethod == 2 ? 'order/' : '&order=';
-$request_uri = preg_replace('/' . str_replace('/', '\/', $sort_uri) . '.*$/', '', $_SERVER['REQUEST_URI']) . $sort_uri;
+$request_uri = preg_replace('/'.str_replace('/', '\/', $sort_uri).'.*$/', '', $_SERVER['REQUEST_URI']).$sort_uri;
 $main_smarty->assign('index_url_recent', $request_uri);
 /*
 $main_smarty->assign('index_url_today', $request_uri . 'today' . ($URLMethod == 2 ? '/' : ''));
@@ -91,9 +91,9 @@ $main_smarty->assign('index_url_month', $request_uri . 'month'  . ($URLMethod ==
 $main_smarty->assign('index_url_year', $request_uri . 'year'  . ($URLMethod == 2 ? '/' : ''));
 $main_smarty->assign('index_url_alltime', $request_uri . 'alltime'  . ($URLMethod == 2 ? '/' : ''));
 */
-$main_smarty->assign('index_url_upvoted', $request_uri . 'upvoted'  . ($URLMethod == 2 ? '/' : ''));
-$main_smarty->assign('index_url_downvoted', $request_uri . 'downvoted'  . ($URLMethod == 2 ? '/' : ''));
-$main_smarty->assign('index_url_commented', $request_uri . 'commented'  . ($URLMethod == 2 ? '/' : ''));
+$main_smarty->assign('index_url_upvoted', $request_uri.'upvoted'.($URLMethod == 2 ? '/' : ''));
+$main_smarty->assign('index_url_downvoted', $request_uri.'downvoted'.($URLMethod == 2 ? '/' : ''));
+$main_smarty->assign('index_url_commented', $request_uri.'commented'.($URLMethod == 2 ? '/' : ''));
 
 //Advanced Search
 if (isset($_REQUEST['adv']) && $_REQUEST['adv'] == 1) {
@@ -114,10 +114,10 @@ if (isset($_REQUEST['adv']) && $_REQUEST['adv'] == 1) {
 //end Advanced Search
 
 // breadcrumbs and page title
-$navwhere['text1'] = $main_smarty->get_config_vars('PLIGG_Visual_Breadcrumb_Search') . stripslashes($search->searchTerm);
+$navwhere['text1'] = $main_smarty->get_config_vars('PLIGG_Visual_Breadcrumb_Search').stripslashes($search->searchTerm);
 $navwhere['link1'] = getmyurl('search', urlencode($search->searchTerm));
 $main_smarty->assign('navbar_where', $navwhere);
-$main_smarty->assign('posttitle', $main_smarty->get_config_vars('PLIGG_Visual_Breadcrumb_Search') . stripslashes($search->searchTerm));
+$main_smarty->assign('posttitle', $main_smarty->get_config_vars('PLIGG_Visual_Breadcrumb_Search').stripslashes($search->searchTerm));
 
 //sidebar
 $main_smarty = do_sidebar($main_smarty);
@@ -148,7 +148,7 @@ if (strlen($search->searchTerm) < 3 && strlen($search->url) < 3 && !$search->s_d
 
     include('./libs/link_summary.php'); // this is the code that show the links / stories
     if ($rows == false) {
-        $main_smarty->assign('posttitle', $main_smarty->get_config_vars('PLIGG_Visual_Search_NoResults') . ' ' . stripslashes($search->searchTerm) . stripslashes($search->url));
+        $main_smarty->assign('posttitle', $main_smarty->get_config_vars('PLIGG_Visual_Search_NoResults').' '.stripslashes($search->searchTerm).stripslashes($search->url));
         $main_smarty->assign('pagename', 'noresults');
     }
 
@@ -158,7 +158,7 @@ if (strlen($search->searchTerm) < 3 && strlen($search->url) < 3 && !$search->s_d
         $pages = str_replace('/search/', '/tag/', $pages);
     }
 
-    if (Auto_scroll==2 || Auto_scroll==3) {
+    if (Auto_scroll == 2 || Auto_scroll == 3) {
         $main_smarty->assign("scrollpageSize", $page_size);
     } else {
         $main_smarty->assign('search_pagination', $pages);
@@ -168,5 +168,5 @@ if (strlen($search->searchTerm) < 3 && strlen($search->url) < 3 && !$search->s_d
 }
 
 // show the template
-$main_smarty->assign('tpl_center', $the_template . '/search_center');
-$main_smarty->display($the_template . '/pligg.tpl');
+$main_smarty->assign('tpl_center', $the_template.'/search_center');
+$main_smarty->display($the_template.'/pligg.tpl');

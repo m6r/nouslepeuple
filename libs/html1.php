@@ -44,8 +44,8 @@ function who_voted($storyid, $avatar_size, $condition)
     }
 
     $sql = "SELECT user_login, user_email
-			FROM " . table_votes . "
-			INNER JOIN " . table_users . " ON vote_user_id=user_id
+			FROM ".table_votes."
+			INNER JOIN ".table_users." ON vote_user_id=user_id
 			WHERE vote_value $condition AND vote_link_id=$storyid AND vote_type='links' AND user_level NOT IN('Spammer')";
     $voters = $db->get_results($sql);
     $voters = object_2_array($voters);
@@ -64,7 +64,7 @@ function related_stories($storyid, $related_tags, $category)
         die();
     }
 
-    $related_tags="'".preg_replace('/,\s*/', "','", addslashes($related_tags))."'"; // This gives us the proper string structure for IN SQL statement
+    $related_tags = "'".preg_replace('/,\s*/', "','", addslashes($related_tags))."'"; // This gives us the proper string structure for IN SQL statement
 
     // Select 20 stories that share tags with the current story and order them by number of tags they share
         $sql = "SELECT tag_link_id, COUNT(tag_link_id) AS relevance
@@ -77,21 +77,21 @@ function related_stories($storyid, $related_tags, $category)
     $related_story = object_2_array($related_story);
     $stories = array();
     foreach ($related_story as $id => $rs) {
-        $rs2=new Link;
-        $rs2->id=$rs['tag_link_id'];
-        if ($rs2->read() && ($rs2->status=='new' || $rs2->status=='published')) {
-            $related_story[$id]=array_merge($related_story[$id], array(
+        $rs2 = new Link;
+        $rs2->id = $rs['tag_link_id'];
+        if ($rs2->read() && ($rs2->status == 'new' || $rs2->status == 'published')) {
+            $related_story[$id] = array_merge($related_story[$id], array(
                                 'link_id' => $rs2->id,
                                 'link_category' => $rs2->category,
                                 'link_title' => $rs2->title,
-                                'link_title_url' => $rs2->title_url
+                                'link_title_url' => $rs2->title_url,
                                 ));
             if ($rs2->title_url == "") {
                 $related_story[$id]['url'] = getmyurl("story", $rs2->id);
             } else {
                 $related_story[$id]['url'] = getmyurl("storyURL", $rs2->category_safe_names(), urlencode($rs2->title_url), $rs2->id);
             }
-            $stories[]=$related_story[$id];
+            $stories[] = $related_story[$id];
         }
     }
     return $stories;
@@ -166,16 +166,16 @@ function do_we_use_avatars()
 function latest_avatar($client_url, $server_path)
 {
     clearstatcache();
-    return $client_url . '?cache_timestamp=' . filemtime($server_path);
+    return $client_url.'?cache_timestamp='.filemtime($server_path);
 }
 
-function get_avatar($size = "large", $avatarsource, $user_name = "", $user_email = "", $user_id="")
+function get_avatar($size = "large", $avatarsource, $user_name = "", $user_email = "", $user_id = "")
 {
     // returns the location of a user's avatar
     global $globals;
 
     include_once(mnminclude.'user.php');
-    $user=new User();
+    $user = new User();
     if ($user_name != "") {
         $user->username = $user_name;
     } else {
@@ -204,25 +204,25 @@ function get_avatar($size = "large", $avatarsource, $user_name = "", $user_email
     }
 
     // use the user uploaded avatars ?
-    $avatars = array( 'large' => my_base_url . my_pligg_base . Default_Gravatar_Large,
-              'small' => my_base_url . my_pligg_base . Default_Gravatar_Small
+    $avatars = array( 'large' => my_base_url.my_pligg_base.Default_Gravatar_Large,
+              'small' => my_base_url.my_pligg_base.Default_Gravatar_Small,
             );
     if (Enable_User_Upload_Avatar == true && $avatarsource == "useruploaded") {
         if ($imgsize) {
-            $imgsrc = my_base_url . my_pligg_base . '/avatars/user_uploaded/' . $user_id . "_" . $imgsize . ".jpg";
-            if (file_exists(mnmpath.'avatars/user_uploaded/'.$user_id . "_" . $imgsize . ".jpg")) {
-                return latest_avatar($imgsrc, mnmpath.'avatars/user_uploaded/'.$user_id . "_" . $imgsize . ".jpg");
-            } elseif (file_exists(mnmpath.'avatars/user_uploaded/'. $user_name . "_" . $imgsize . ".jpg")) {
-                $imgsrc = my_base_url . my_pligg_base . '/avatars/user_uploaded/' . $user_name . "_" . $imgsize . ".jpg";
-                return latest_avatar($imgsrc, mnmpath.'avatars/user_uploaded/'.$user_name . "_" . $imgsize . ".jpg");
+            $imgsrc = my_base_url.my_pligg_base.'/avatars/user_uploaded/'.$user_id."_".$imgsize.".jpg";
+            if (file_exists(mnmpath.'avatars/user_uploaded/'.$user_id."_".$imgsize.".jpg")) {
+                return latest_avatar($imgsrc, mnmpath.'avatars/user_uploaded/'.$user_id."_".$imgsize.".jpg");
+            } elseif (file_exists(mnmpath.'avatars/user_uploaded/'.$user_name."_".$imgsize.".jpg")) {
+                $imgsrc = my_base_url.my_pligg_base.'/avatars/user_uploaded/'.$user_name."_".$imgsize.".jpg";
+                return latest_avatar($imgsrc, mnmpath.'avatars/user_uploaded/'.$user_name."_".$imgsize.".jpg");
             }
         } else {
             $dir = mnmpath.'avatars/user_uploaded/';
             if ($dh = opendir($dir)) {
                 while (($file = readdir($dh)) !== false) {
                     if (preg_match("/^$user_id\_(.+)\.jpg\$/", $file, $m)) {
-                        $imgsrc = my_base_url . my_pligg_base . '/avatars/user_uploaded/' . $file;
-                        $avatars[$m[1]] = latest_avatar($imgsrc, $dir . $file);
+                        $imgsrc = my_base_url.my_pligg_base.'/avatars/user_uploaded/'.$file;
+                        $avatars[$m[1]] = latest_avatar($imgsrc, $dir.$file);
                         if ($m[1] == Avatar_Large) {
                             $avatars['large'] = $avatars[$m[1]];
                         } elseif ($m[1] == Avatar_Small) {
@@ -239,10 +239,10 @@ function get_avatar($size = "large", $avatarsource, $user_name = "", $user_email
     }
 
     if ($size == "large") {
-        return my_base_url . my_pligg_base . Default_Gravatar_Large;
+        return my_base_url.my_pligg_base.Default_Gravatar_Large;
     }
     if ($size == "small") {
-        return my_base_url . my_pligg_base . Default_Gravatar_Small;
+        return my_base_url.my_pligg_base.Default_Gravatar_Small;
     }
 }
 
@@ -332,16 +332,16 @@ function do_sidebar($var_smarty, $navwhere = '')
         $login_user = $db->escape(sanitize($_COOKIE['mnm_user'], 3));
         if ($login_user) {
             /////// for user set category----sorojit.
-            $sqlGeticategory = $db->get_var("SELECT user_categories from " . table_users . " where user_login = '$login_user';");
+            $sqlGeticategory = $db->get_var("SELECT user_categories from ".table_users." where user_login = '$login_user';");
             if ($sqlGeticategory) {
                 $sqlGeticategory = " AND category__auto_id NOT IN ($sqlGeticategory) ";
             }
         }
         $right = array();
-        $array1 = "SELECT * from " . table_categories . " where category__auto_id>0 $sqlGeticategory ORDER BY lft";
+        $array1 = "SELECT * from ".table_categories." where category__auto_id>0 $sqlGeticategory ORDER BY lft";
         $result1 = mysql_query($array1);
         while ($row = mysql_fetch_object($result1)) {
-            $a[]=$row;
+            $a[] = $row;
         }
         $result = $a;
         $i = 0;
@@ -436,11 +436,11 @@ function force_authentication()
 
         if (strpos($current_url, '/admin/') !== false) {
             // Admin panel login
-            header("Location: " . getmyurl('admin_login', $_SERVER['REQUEST_URI']));
+            header("Location: ".getmyurl('admin_login', $_SERVER['REQUEST_URI']));
             die;
         } else {
             // Normal login
-            header("Location: " . getmyurl('login', $_SERVER['REQUEST_URI']));
+            header("Location: ".getmyurl('login', $_SERVER['REQUEST_URI']));
             die;
         }
     }
@@ -455,28 +455,28 @@ function do_pages($total, $page_size, $thepage, $fetch = false)
     $index_limit = 10;
 
     $current = get_current_page();
-    $total_pages=ceil($total/$page_size);
-    $start=max($current-intval($index_limit/2), 1);
-    $end=$start+$index_limit-1;
+    $total_pages = ceil($total/$page_size);
+    $start = max($current-intval($index_limit/2), 1);
+    $end = $start+$index_limit-1;
 
     $output = '';
 
     if ($total_pages != '1') { // If there is only 1 page, don't display any pagination at all
         if ($URLMethod == 1) {
-            $query=preg_replace('/page=[0-9]+/', '', sanitize($_SERVER['QUERY_STRING'], 3));
-            $query=preg_replace('/^&*(.*)&*$/', "$1", $query);
+            $query = preg_replace('/page=[0-9]+/', '', sanitize($_SERVER['QUERY_STRING'], 3));
+            $query = preg_replace('/^&*(.*)&*$/', "$1", $query);
             if (!empty($query)) {
                 $query = "&amp;$query";
             }
 
             $output .= '<div class="pagination_wrapper"><ul class="pagination">';
 
-            if ($current==1) {
+            if ($current == 1) {
                 // There are no previous pages, so don't show the "previous" link.
                 //$output .= '<li class="disabled"><span>&#171; '.$main_smarty->get_config_vars("PLIGG_Visual_Page_Previous"). '</span></li>';
             } else {
                 $i = $current-1;
-                if ((pagename == "index" || pagename == "published")  && $i==1) {
+                if ((pagename == "index" || pagename == "published")  && $i == 1) {
                     $output .= '<li><a href="'.($query ? '?' : './').$query.'">&#171; '.$main_smarty->get_config_vars("PLIGG_Visual_Page_Previous").'</a></li>';
                 } else {
                     $output .= '<li><a href="?page='.$i.$query.'">&#171; '.$main_smarty->get_config_vars("PLIGG_Visual_Page_Previous").'</a></li>';
@@ -485,7 +485,7 @@ function do_pages($total, $page_size, $thepage, $fetch = false)
 
             if ($start>1) {
                 $i = 1;
-                if ((pagename == "index" || pagename == "published")  && $i==1) {
+                if ((pagename == "index" || pagename == "published")  && $i == 1) {
                     $output .= '<li><a href="'.($query ? '?' : './').$query.'">'.$i.'</a></li>';
                 } else {
                     $output .= '<li><a href="?page='.$i.$query.'">'.$i.'</a></li>';
@@ -493,10 +493,10 @@ function do_pages($total, $page_size, $thepage, $fetch = false)
                 $output .= '<li class="active"><a href="#">...</a></li>';
             }
 
-            for ($i=$start;$i<=$end && $i<= $total_pages;$i++) {
-                if ($i==$current) {
+            for ($i = $start;$i <= $end && $i <= $total_pages;$i++) {
+                if ($i == $current) {
                     $output .= '<li class="active"><a href="#">'.$i.'</a></li>';
-                } elseif ((pagename == "index" || pagename == "published")  && $i==1) {
+                } elseif ((pagename == "index" || pagename == "published")  && $i == 1) {
                     $output .= '<li><a href="'.($query ? '?' : './').$query.'" class="pages">'.$i.'</a></li>';
                 } else {
                     $output .= '<li><a href="?page='.$i.$query.'" class="pages">'.$i.'</a></li>';
@@ -511,7 +511,7 @@ function do_pages($total, $page_size, $thepage, $fetch = false)
 
             if ($current<$total_pages) {
                 $i = $current+1;
-                $output .= '<li><a href="?page='.$i.$query.'"> '.$main_smarty->get_config_vars("PLIGG_Visual_Page_Next"). ' &#187;' . '</a></li>';
+                $output .= '<li><a href="?page='.$i.$query.'"> '.$main_smarty->get_config_vars("PLIGG_Visual_Page_Next").' &#187;'.'</a></li>';
             } else {
                 // There are no pages left, so don't add a "next" link.
                 //$output .= '<li><a href="?page='.$i.$query.'">'.$main_smarty->get_config_vars("PLIGG_Visual_Page_Next"). ' &#187;' . '</a></li>';
@@ -520,27 +520,27 @@ function do_pages($total, $page_size, $thepage, $fetch = false)
         }
 
         if ($URLMethod == 2) {
-            $query=preg_replace('(login=)', '/', str_replace('amp;', '&', sanitize($_SERVER['QUERY_STRING'], 3)));    //remove login= from query string //
-            $query=preg_replace('(view=)', '/', $query);                        //remove view= from query string //
-            $query=preg_replace('(part=)', '', $query);
-            $query=preg_replace('(order)', '', $query);
-            $query=preg_replace('/page[=\/][0-9]+/', '', $query);            //remove page arguments to because its hardcoded in html   //
-            $query=preg_replace('/tag=true/', '', $query);                //remove tag=true in tag query because its handled in .htaccess and hidden for a cleaner look//
-            $query=preg_replace('/title=([^&]*)/', '/$1', $query);            //main line to recompose arg to place in url //
-            $query=preg_replace('/([^&]+)=([^&]*)/', '/$1/$2/', $query);            //main line to recompose arg to place in url //
-            $query=preg_replace('/&/', '', $query);                            //whack any ampersands	//
-            $query=preg_replace('/module\/pagestatistics/', '', $query);
-            $query=preg_replace('/search\/(.*)/', '$1'. '/', $query);
-            if ($thepage!=group_story) {
-                $query=preg_replace('/(?<!s)category\/(.*)/', '$1'. '/', $query);
+            $query = preg_replace('(login=)', '/', str_replace('amp;', '&', sanitize($_SERVER['QUERY_STRING'], 3)));    //remove login= from query string //
+            $query = preg_replace('(view=)', '/', $query);                        //remove view= from query string //
+            $query = preg_replace('(part=)', '', $query);
+            $query = preg_replace('(order)', '', $query);
+            $query = preg_replace('/page[=\/][0-9]+/', '', $query);            //remove page arguments to because its hardcoded in html   //
+            $query = preg_replace('/tag=true/', '', $query);                //remove tag=true in tag query because its handled in .htaccess and hidden for a cleaner look//
+            $query = preg_replace('/title=([^&]*)/', '/$1', $query);            //main line to recompose arg to place in url //
+            $query = preg_replace('/([^&]+)=([^&]*)/', '/$1/$2/', $query);            //main line to recompose arg to place in url //
+            $query = preg_replace('/&/', '', $query);                            //whack any ampersands	//
+            $query = preg_replace('/module\/pagestatistics/', '', $query);
+            $query = preg_replace('/search\/(.*)/', '$1'.'/', $query);
+            if ($thepage != group_story) {
+                $query = preg_replace('/(?<!s)category\/(.*)/', '$1'.'/', $query);
             }
-            $query=preg_replace('/\/+/', '/', $query);
-            $query=preg_replace('/^\//', '', $query);
-            $query=preg_replace('/\/$/', '', $query);
+            $query = preg_replace('/\/+/', '/', $query);
+            $query = preg_replace('/^\//', '', $query);
+            $query = preg_replace('/\/$/', '', $query);
 
             $output .= '<div class="pagination_wrapper"><ul class="pagination">';
 
-            if ($current==1) {
+            if ($current == 1) {
                 // There are no previous pages, so don't show the "previous" link.
                 //$output .= '<li class="disabled"><span>&#171; '.$main_smarty->get_config_vars("PLIGG_Visual_Page_Previous"). '</span></li>';
             } else {
@@ -581,8 +581,8 @@ function do_pages($total, $page_size, $thepage, $fetch = false)
                 }
                 $output .= '<li class="active"><a href="#">...</a></li>';
             }
-            for ($i=$start;$i<=$end && $i<= $total_pages;$i++) {
-                if ($i==$current) {
+            for ($i = $start;$i <= $end && $i <= $total_pages;$i++) {
+                if ($i == $current) {
                     $output .= '<li class="active"><a href="#">'.$i.'</a></li>';
                 } else {
                     if (pagename == "admin_users") {
@@ -626,22 +626,22 @@ function do_pages($total, $page_size, $thepage, $fetch = false)
             if ($current<$total_pages) {
                 $i = $current+1;
                 if (pagename == "admin_users") {
-                    $output .= '<li><a href="'.my_pligg_base.'/admin/'.pagename.'.php?page='.$i.'"> '.$main_smarty->get_config_vars("PLIGG_Visual_Page_Next"). ' &#187;' . '</a></li>';
+                    $output .= '<li><a href="'.my_pligg_base.'/admin/'.pagename.'.php?page='.$i.'"> '.$main_smarty->get_config_vars("PLIGG_Visual_Page_Next").' &#187;'.'</a></li>';
                 } elseif (pagename == "admin_links") {
-                    $output .= '<li><a href="'.my_pligg_base.'/admin/'.pagename.'.php?page='.$i.'"> '.$main_smarty->get_config_vars("PLIGG_Visual_Page_Next"). ' &#187;' . '</a></li>';
+                    $output .= '<li><a href="'.my_pligg_base.'/admin/'.pagename.'.php?page='.$i.'"> '.$main_smarty->get_config_vars("PLIGG_Visual_Page_Next").' &#187;'.'</a></li>';
                 } elseif (pagename == "live_published") {
-                    $output .= '<li><a href="'.my_pligg_base.'/live/published/'.$query.'/page/'.$i.'"> '.$main_smarty->get_config_vars("PLIGG_Visual_Page_Next"). ' &#187;' . '</a></li>';
+                    $output .= '<li><a href="'.my_pligg_base.'/live/published/'.$query.'/page/'.$i.'"> '.$main_smarty->get_config_vars("PLIGG_Visual_Page_Next").' &#187;'.'</a></li>';
                 } elseif (pagename == "live_unpublished") {
-                    $output .= '<li><a href="'.my_pligg_base.'/live/new/'.$query.'/page/'.$i.'"> '.$main_smarty->get_config_vars("PLIGG_Visual_Page_Next"). ' &#187;' . '</a></li>';
+                    $output .= '<li><a href="'.my_pligg_base.'/live/new/'.$query.'/page/'.$i.'"> '.$main_smarty->get_config_vars("PLIGG_Visual_Page_Next").' &#187;'.'</a></li>';
                 } elseif (pagename == "live_comments") {
-                    $output .= '<li><a href="'.my_pligg_base.'/live/comments/'.$query.'/page/'.$i.'"> '.$main_smarty->get_config_vars("PLIGG_Visual_Page_Next"). ' &#187;' . '</a></li>';
+                    $output .= '<li><a href="'.my_pligg_base.'/live/comments/'.$query.'/page/'.$i.'"> '.$main_smarty->get_config_vars("PLIGG_Visual_Page_Next").' &#187;'.'</a></li>';
                 } elseif (pagename == "index" || pagename == "published") {
-                    $output .= '<li><a href="'.my_pligg_base.'/'.$query.'/page/'.$i.'"> '.$main_smarty->get_config_vars("PLIGG_Visual_Page_Next"). ' &#187;' . '</a></li>';
+                    $output .= '<li><a href="'.my_pligg_base.'/'.$query.'/page/'.$i.'"> '.$main_smarty->get_config_vars("PLIGG_Visual_Page_Next").' &#187;'.'</a></li>';
                 } else {
-                    $output .= '<li><a href="'.my_pligg_base.'/'.pagename.'/'.$query.'/page/'.$i.'"> '.$main_smarty->get_config_vars("PLIGG_Visual_Page_Next"). ' &#187;' . '</a></li>';
+                    $output .= '<li><a href="'.my_pligg_base.'/'.pagename.'/'.$query.'/page/'.$i.'"> '.$main_smarty->get_config_vars("PLIGG_Visual_Page_Next").' &#187;'.'</a></li>';
                 }
             } else {
-                $output .= '<li class="active"><a href="#">'.$main_smarty->get_config_vars("PLIGG_Visual_Page_Next"). ' &#187;' . '</a></li>';
+                $output .= '<li class="active"><a href="#">'.$main_smarty->get_config_vars("PLIGG_Visual_Page_Next").' &#187;'.'</a></li>';
             }
 
             $output .= "</ul></div>";
@@ -663,15 +663,15 @@ function generateHash($plainText, $salt = null)
     } else {
         $salt = substr($salt, 0, SALT_LENGTH);
     }
-    return $salt . hash('sha512', $salt . $plainText);
+    return $salt.hash('sha512', $salt.$plainText);
 }
 
-function getmyFullurl($x, $var1="", $var2="", $var3="")
+function getmyFullurl($x, $var1 = "", $var2 = "", $var3 = "")
 {
-    return my_base_url . getmyurl($x, $var1, $var2, $var3);
+    return my_base_url.getmyurl($x, $var1, $var2, $var3);
 }
 
-function getmyurl($x, $var1="", $var2="", $var3="")
+function getmyurl($x, $var1 = "", $var2 = "", $var3 = "")
 {
     global $URLMethod;
 
@@ -697,27 +697,27 @@ function getmyurl($x, $var1="", $var2="", $var3="")
         if ($x == "index") {
             $ret = "/index.php";
         } elseif ($x == "maincategory") {
-            $ret = "/index.php?category=" . $var1;
+            $ret = "/index.php?category=".$var1;
         } elseif ($x == "newcategory") {
-            $ret = "/new.php?category=" . $var1;
+            $ret = "/new.php?category=".$var1;
         } elseif ($x == "discardedcategory") {
-            $ret = "/discarded.php?category=" . $var1;
+            $ret = "/discarded.php?category=".$var1;
         } elseif ($x == "editlink") {
-            $ret = "/editlink.php?id=" . $var1;
+            $ret = "/editlink.php?id=".$var1;
         } elseif ($x == "edit") {
-            $ret = "/edit.php?id=" . $var1 . "&amp;commentid=" . $var2;
+            $ret = "/edit.php?id=".$var1."&amp;commentid=".$var2;
         } elseif ($x == "user") {
-            $ret = "/user.php?login=" . $var1 . ($var2 ? '&amp;view='.$var2 : '');
+            $ret = "/user.php?login=".$var1.($var2 ? '&amp;view='.$var2 : '');
         } elseif ($x == "user_inbox") {
-            $ret = "/user.php?view=" . $var1;
+            $ret = "/user.php?view=".$var1;
         } elseif ($x == "user_add_remove") {
-            $ret = "/user.php?login=" . $var2. "&amp;view=" . $var1;
+            $ret = "/user.php?login=".$var2."&amp;view=".$var1;
         } elseif ($x == "user_add_links") {
-            $ret = "/user_add_remove_links.php?action=add&amp;link=" . $var1;
+            $ret = "/user_add_remove_links.php?action=add&amp;link=".$var1;
         } elseif ($x == "user_remove_links") {
-            $ret = "/user_add_remove_links.php?action=remove&amp;link=" . $var1;
+            $ret = "/user_add_remove_links.php?action=remove&amp;link=".$var1;
         } elseif ($x == "user_friends") {
-            $ret = "/user.php?login=" . $var1. "&amp;view=" . $var2;
+            $ret = "/user.php?login=".$var1."&amp;view=".$var2;
         } elseif ($x == "index_sort") {
             $ret = "/index.php?part=".$var1.($var2 ? "&amp;category=".$var2 : '');
         } elseif ($x == "new_sort") {
@@ -727,37 +727,37 @@ function getmyurl($x, $var1="", $var2="", $var3="")
         } elseif ($x == "user2") {
             $ret = "/user.php?login=".$var1.($var2 ? "&amp;view=".$var2 : '');
         } elseif ($x == "search") {
-            $ret = "/search.php?search=" . $var1;
+            $ret = "/search.php?search=".$var1;
         } elseif ($x == "advancedsearch") {
             $ret = "/advancedsearch.php";
         } elseif ($x == "search_url") {
-            $ret = "/search.php?search=" . $var1;
+            $ret = "/search.php?search=".$var1;
         } elseif ($x == "admin_login") {
-            $ret = "/admin/admin_login.php?return=" . $var1;
+            $ret = "/admin/admin_login.php?return=".$var1;
         } elseif ($x == "login") {
-            $ret = "/login.php?return=" . $var1;
+            $ret = "/login.php?return=".$var1;
         } elseif ($x == "logout") {
-            $ret = "/login.php?op=logout&return=" . $var1;
+            $ret = "/login.php?op=logout&return=".$var1;
         } elseif ($x == "user_edit") {
             $ret = "/profile.php?login=$var1";
         } elseif ($x == "register") {
             $ret = "/register.php";
         } elseif ($x == "category") {
-            $ret = "/index.php?category=" . $var1;
+            $ret = "/index.php?category=".$var1;
         } elseif ($x == "submit") {
             $ret = "/submit.php";
         } elseif ($x == "story") {
-            $ret = "/story.php?id=" . $var1;
+            $ret = "/story.php?id=".$var1;
         } elseif ($x == "storytitle") {
-            $ret = "/story.php?title=" . $var1;
+            $ret = "/story.php?title=".$var1;
         } elseif ($x == "storycattitle") {
-            $ret = "/story.php?title=" . $var2;
+            $ret = "/story.php?title=".$var2;
         } elseif ($x == "out") {
-            $ret = "/out.php?id=" . $var1;
+            $ret = "/out.php?id=".$var1;
         } elseif ($x == "outtitle") {
-            $ret = "/out.php?title=" . $var1;
+            $ret = "/out.php?title=".$var1;
         } elseif ($x == "outurl") {
-            $ret = "/out.php?url=" . rawurlencode($var1);
+            $ret = "/out.php?url=".rawurlencode($var1);
         } elseif ($x == "root") {
             $ret = "/index.php";
         } elseif ($x == "new") {
@@ -773,7 +773,7 @@ function getmyurl($x, $var1="", $var2="", $var3="")
         } elseif ($x == "loginNoVar") {
             $ret = "/login.php";
         } elseif ($x == "rssTime") {
-            $ret = "/rss.php?time=" . $var1;
+            $ret = "/rss.php?time=".$var1;
         } elseif ($x == "about") {
             $ret = "/faq-".$var1.".php";
         } elseif ($x == "bugreport") {
@@ -787,19 +787,19 @@ function getmyurl($x, $var1="", $var2="", $var3="")
         } elseif ($x == "rssall") {
             $ret = "/rss.php?status=all";
         } elseif ($x == "rsscategory") {
-            $ret = "/rss.php?category=". $var1;
+            $ret = "/rss.php?category=".$var1;
         } elseif ($x == "rsscategorynew") {
-            $ret = "/rss.php?status=new&amp;category=". $var1;
+            $ret = "/rss.php?status=new&amp;category=".$var1;
         } elseif ($x == "rsssearch") {
-            $ret = "/rss.php?search=". $var1;
+            $ret = "/rss.php?search=".$var1;
         } elseif ($x == "rssuser") {
-            $ret = "/userrss.php?user=". $var1. "&amp;status=" . $var2;
+            $ret = "/userrss.php?user=".$var1."&amp;status=".$var2;
         } elseif ($x == "storyrss") {
-            $ret = "/storyrss.php?title=". $var1;
+            $ret = "/storyrss.php?title=".$var1;
         } elseif ($x == "trackback") {
-            $ret = "/trackback.php?id=" . $var1;
+            $ret = "/trackback.php?id=".$var1;
         } elseif ($x == "page") {
-            $ret = "/page.php?page=" . $var1;
+            $ret = "/page.php?page=".$var1;
         } elseif ($x == "new_cat") {
             $ret = "/?category=";
         } elseif ($x == "discarded_cat") {
@@ -807,27 +807,27 @@ function getmyurl($x, $var1="", $var2="", $var3="")
         } elseif ($x == "admin") {
             $ret = "/admin/index.php";
         } elseif ($x == "admin_modify") {
-            $ret = "/admin/linkadmin.php?id=" . $var1 . "&amp;action=main";
+            $ret = "/admin/linkadmin.php?id=".$var1."&amp;action=main";
         } elseif ($x == "admin_modify_do") {
-            $ret = "/admin/linkadmin.php?id=" . $var1 . "&amp;action=do" . $var2;
+            $ret = "/admin/linkadmin.php?id=".$var1."&amp;action=do".$var2;
         } elseif ($x == "admin_modify_edo") {
-            $ret = "/admin/linkadmin.php?id=" . $var1 . "&amp;action=edo" . $var2;
+            $ret = "/admin/linkadmin.php?id=".$var1."&amp;action=edo".$var2;
         } elseif ($x == "admin_sticky") {
-            $ret = "/admin/linkadmin.php?id=" . $var1 . "&amp;action=sticky";
+            $ret = "/admin/linkadmin.php?id=".$var1."&amp;action=sticky";
         } elseif ($x == "admin_supersticky") {
-            $ret = "/admin/linkadmin.php?id=" . $var1 . "&amp;action=supersticky";
+            $ret = "/admin/linkadmin.php?id=".$var1."&amp;action=supersticky";
         } elseif ($x == "admin_discard") {
-            $ret = "/admin/linkadmin.php?id=" . $var1 . "&amp;action=discard";
+            $ret = "/admin/linkadmin.php?id=".$var1."&amp;action=discard";
         } elseif ($x == "admin_new") {
-            $ret = "/admin/linkadmin.php?id=" . $var1 . "&amp;action=new";
+            $ret = "/admin/linkadmin.php?id=".$var1."&amp;action=new";
         } elseif ($x == "admin_published") {
-            $ret = "/admin/linkadmin.php?id=" . $var1 . "&amp;action=published";
+            $ret = "/admin/linkadmin.php?id=".$var1."&amp;action=published";
         } elseif ($x == "editcomment") {
-            $ret = "/edit.php?id=" . $var2 . "&amp;commentid=" . $var1;
+            $ret = "/edit.php?id=".$var2."&amp;commentid=".$var1;
         } elseif ($x == "tagcloud") {
             $ret = "/cloud.php";
         } elseif ($x == "tagcloud_range") {
-            $ret = "/cloud.php?range=" . $var1;
+            $ret = "/cloud.php?range=".$var1;
         } elseif ($x == "live_comments") {
             $ret = "/live_comments.php";
         } elseif ($x == "live_published") {
@@ -835,15 +835,15 @@ function getmyurl($x, $var1="", $var2="", $var3="")
         } elseif ($x == "live_unpublished") {
             $ret = "/live_unpublished.php";
         } elseif ($x == "tag") {
-            $ret = "/search.php?search=" . $var1 . "&amp;tag=true";
+            $ret = "/search.php?search=".$var1."&amp;tag=true";
         } elseif ($x == "tag2") {
-            $ret = "/search.php?search=" . $var1 . "&amp;tag=true&amp;from=" . $var2;
+            $ret = "/search.php?search=".$var1."&amp;tag=true&amp;from=".$var2;
         } elseif ($x == "live") {
             $ret = "/live.php";
         } elseif ($x == "template") {
             $ret = "/settemplate.php";
         } elseif ($x == "settemplate") {
-            $ret = "/settemplate.php?template=" .$var1;
+            $ret = "/settemplate.php?template=".$var1;
         }
 
         //group links
@@ -852,99 +852,99 @@ function getmyurl($x, $var1="", $var2="", $var3="")
         } elseif ($x == "submit_groups") {
             $ret = "/submit_groups.php";
         } elseif ($x == "group_story") {
-            $ret = "/group_story.php?id=" . $var1;
+            $ret = "/group_story.php?id=".$var1;
         } elseif ($x == "group_story_title") {
-            $ret = "/group_story.php?title=" . $var1;
+            $ret = "/group_story.php?title=".$var1;
         } elseif ($x == "group_story2") {
             $ret = "/group_story.php?title=".$var1."&amp;view=".$var2.($var3 ? "&amp;$var3=" : '');
         } elseif ($x == "join_group") {
-            $ret = "/join_group.php?id=" . $var1 . "&amp;privacy=".$var2."&amp;join=true";
+            $ret = "/join_group.php?id=".$var1."&amp;privacy=".$var2."&amp;join=true";
         } elseif ($x == "unjoin_group") {
-            $ret = "/join_group.php?id=" . $var1 . "&amp;privacy=".$var2."&amp;join=false";
+            $ret = "/join_group.php?id=".$var1."&amp;privacy=".$var2."&amp;join=false";
         } elseif ($x == "join_group_withdraw") {
-            $ret = "/join_group.php?group_id=" . $var1 . "&amp;user_id=".$var2."&amp;activate=withdraw";
+            $ret = "/join_group.php?group_id=".$var1."&amp;user_id=".$var2."&amp;activate=withdraw";
         } elseif ($x == "group_admin") {
-            $ret = "/groupadmin.php?id=" . $var1 . "&amp;role=admin&amp;userid=" . $var3;
+            $ret = "/groupadmin.php?id=".$var1."&amp;role=admin&amp;userid=".$var3;
         } elseif ($x == "group_normal") {
-            $ret = "/groupadmin.php?id=" . $var1 . "&amp;role=normal&amp;userid=" . $var3;
+            $ret = "/groupadmin.php?id=".$var1."&amp;role=normal&amp;userid=".$var3;
         } elseif ($x == "group_moderator") {
-            $ret = "/groupadmin.php?id=" . $var1 . "&amp;role=moderator&amp;userid=" . $var3;
+            $ret = "/groupadmin.php?id=".$var1."&amp;role=moderator&amp;userid=".$var3;
         } elseif ($x == "group_flagged") {
-            $ret = "/groupadmin.php?id=" . $var1 . "&amp;role=flagged&amp;userid=" . $var3;
+            $ret = "/groupadmin.php?id=".$var1."&amp;role=flagged&amp;userid=".$var3;
         } elseif ($x == "group_banned") {
-            $ret = "/groupadmin.php?id=" . $var1 . "&amp;role=banned&amp;userid=" . $var3;
+            $ret = "/groupadmin.php?id=".$var1."&amp;role=banned&amp;userid=".$var3;
         } elseif ($x == "group_avatar") {
-            $ret = "/group_avatar.php?id=" . $var1;
+            $ret = "/group_avatar.php?id=".$var1;
         } elseif ($x == "group_sort") {
             $ret = "/groups.php?sortby=".$var1.$var2;
         } elseif ($x == "user_add_links_private") {
-            $ret = "/user_add_remove_links.php?action=addprivate&amp;link=" . $var1;
+            $ret = "/user_add_remove_links.php?action=addprivate&amp;link=".$var1;
         } elseif ($x == "user_add_links_public") {
-            $ret = "/user_add_remove_links.php?action=addpublic&amp;link=" . $var1;
+            $ret = "/user_add_remove_links.php?action=addpublic&amp;link=".$var1;
         } elseif ($x == "group_story_links_publish") {
-            $ret = "/join_group.php?action=publish&amp;link=" . $var1;
+            $ret = "/join_group.php?action=publish&amp;link=".$var1;
         } elseif ($x == "group_story_links_new") {
-            $ret = "/join_group.php?action=new&amp;link=" . $var1;
+            $ret = "/join_group.php?action=new&amp;link=".$var1;
         } elseif ($x == "group_story_links_discard") {
-            $ret = "/join_group.php?action=discard&amp;link=" . $var1;
+            $ret = "/join_group.php?action=discard&amp;link=".$var1;
         } elseif ($x == "admin_categories_tasks") {
-            $ret = "/admin_categories_tasks.php?action=" . $var1;
+            $ret = "/admin_categories_tasks.php?action=".$var1;
         } elseif ($x == "editgroup") {
-            $ret = "/editgroup.php?id=" . $var1;
+            $ret = "/editgroup.php?id=".$var1;
         } elseif ($x == "deletegroup") {
-            $ret = "/deletegroup.php?id=" . $var1;
+            $ret = "/deletegroup.php?id=".$var1;
         }
     }
     if ($URLMethod == 2) {
         if ($x == "maincategory") {
-            $ret = "/" . $var1;
+            $ret = "/".$var1;
         } elseif ($x == "newcategory") {
-            $ret = "/new/" . $var1;
+            $ret = "/new/".$var1;
         } elseif ($x == "discardedcategory") {
-            $ret = "/discarded/" . $var1 . "/";
+            $ret = "/discarded/".$var1."/";
         }
 //		elseif ($x == "newcategory") $ret = "/new/category/" . $var1 . "/";
 //		elseif ($x == "maincategory") $ret = "/category/" . $var1 . "/";
 //		elseif ($x == "discardedcategory") $ret = "/discarded/category/" . $var1 . "/";
         elseif ($x == "editlink") {
-            $ret = "/story/" . $var1 . "/edit/";
+            $ret = "/story/".$var1."/edit/";
         } elseif ($x == "edit") {
-            $ret = "/story/" . $var1 . "/editcomment/" . $var2 . "/";
+            $ret = "/story/".$var1."/editcomment/".$var2."/";
         } elseif ($x == "user") {
-            $ret = "/user/" . $var1 . ($var1 ? '/' : '');
+            $ret = "/user/".$var1.($var1 ? '/' : '');
         } elseif ($x == "user_friends") {
-            $ret = "/user/" . $var1. "/" . $var2 . "/";
+            $ret = "/user/".$var1."/".$var2."/";
         } elseif ($x == "user_add_remove") {
-            $ret = "/user/" . $var2. "/" . $var1 . "/";
+            $ret = "/user/".$var2."/".$var1."/";
         } elseif ($x == "user_add_links") {
-            $ret = "/user/add/link/" . $var1 . "/";
+            $ret = "/user/add/link/".$var1."/";
         } elseif ($x == "user_remove_links") {
-            $ret = "/user/remove/link/" . $var1 . "/";
+            $ret = "/user/remove/link/".$var1."/";
         } elseif ($x == "user_inbox") {
             $ret = "/inbox/";
         } elseif ($x == "userblank") {
             $ret = "/user/";
         } elseif ($x == "user2") {
-            $ret = "/user/" . $var1 . "/" . $var2 . "/";
+            $ret = "/user/".$var1."/".$var2."/";
         } elseif ($x == "index") {
             $ret = "/";
         } elseif ($x == "index_sort") {
-            $ret = "/".$var1.($var2 ? '/'.$var2 : '') . "/";
+            $ret = "/".$var1.($var2 ? '/'.$var2 : '')."/";
         }
 //		elseif ($x == "index_sort") $ret = "/".$var1.($var2 ? '/category/'.$var2 : '') . "/";
 //		elseif ($x == "new_sort") $ret = "/new/".$var1.($var2 ? '/category/'.$var2 : '') . "/";
         elseif ($x == "new_sort") {
-            $ret = "/new/".$var1.($var2 ? '/'.$var2 : '') . "/";
+            $ret = "/new/".$var1.($var2 ? '/'.$var2 : '')."/";
         } elseif ($x == "search") {
-            $ret = "/search" . ($var1 ? '/'.$var1 : '') . "/";
+            $ret = "/search".($var1 ? '/'.$var1 : '')."/";
         } elseif ($x == "advancedsearch") {
             $ret = "/advanced-search/";
         } elseif ($x == "search_url") {
-            $ret = "/search/" . urlencode(str_replace('/', '|', $var1)) . "/";
+            $ret = "/search/".urlencode(str_replace('/', '|', $var1))."/";
         } elseif ($x == "admin_login") {
-            $ret = "/admin/admin_login.php?return=" . urlencode($var1);
+            $ret = "/admin/admin_login.php?return=".urlencode($var1);
         } elseif ($x == "login") {
-            $ret = "/login.php?return=" . urlencode($var1);
+            $ret = "/login.php?return=".urlencode($var1);
         } elseif ($x == "logout") {
             $ret = "/login.php?op=logout&return=".my_pligg_base;
         } elseif ($x == "register") {
@@ -952,19 +952,19 @@ function getmyurl($x, $var1="", $var2="", $var3="")
         } elseif ($x == "submit") {
             $ret = "/submit/";
         } elseif ($x == "story") {
-            $ret = "/story/" . $var1 . "/";
+            $ret = "/story/".$var1."/";
         } elseif ($x == "storytitle") {
-            $ret = "/story/" . $var1 . "/";
+            $ret = "/story/".$var1."/";
         } elseif ($x == "storycattitle") {
-            $ret = "/" . $var1 . "/" . $var2 ."/";
+            $ret = "/".$var1."/".$var2."/";
         }
 //		elseif ($x == "storycattitle") $ret = "/category/" . $var1 . "/" . $var2 ."/";
         elseif ($x == "out") {
-            $ret = "/out/" . $var1 . "/";
+            $ret = "/out/".$var1."/";
         } elseif ($x == "outtitle") {
-            $ret = "/out/" . $var1 . "/";
+            $ret = "/out/".$var1."/";
         } elseif ($x == "outurl") {
-            $ret = "/out/" . $var1 . "/";
+            $ret = "/out/".$var1."/";
         } elseif ($x == "root") {
             $ret = "/";
         } elseif ($x == "new") {
@@ -978,9 +978,9 @@ function getmyurl($x, $var1="", $var2="", $var3="")
         } elseif ($x == "loginNoVar") {
             $ret = "/login/";
         } elseif ($x == "rssTime") {
-            $ret = "/rss.php?time=" . $var1;
+            $ret = "/rss.php?time=".$var1;
         } elseif ($x == "about") {
-            $ret = "/about/".$var1 . "/";
+            $ret = "/about/".$var1."/";
         } elseif ($x == "rss") {
             $ret = "/rss/";
         } elseif ($x == "rssuser") {
@@ -988,27 +988,27 @@ function getmyurl($x, $var1="", $var2="", $var3="")
         } elseif ($x == "rssnew") {
             $ret = "/new/rss/";
         } elseif ($x == "rssall") {
-            $ret = "/rss/" . $var1 . "/";
+            $ret = "/rss/".$var1."/";
         } elseif ($x == "rsscategory") {
-            $ret = "/rss/category/" . $var1;
+            $ret = "/rss/category/".$var1;
         } elseif ($x == "rsscategorynew") {
-            $ret = "/rss/category/new/" . $var1;
+            $ret = "/rss/category/new/".$var1;
         } elseif ($x == "rsssearch") {
-            $ret = "/search/" . $var1 . "/rss/";
+            $ret = "/search/".$var1."/rss/";
         } elseif ($x == "rsspage") {
-            $ret = ($var2 ? "/$var2" : '') . ($var1 ? "/$var1" : '') . ($var3 ? "/group/$var3" : '') . "/rss/";
+            $ret = ($var2 ? "/$var2" : '').($var1 ? "/$var1" : '').($var3 ? "/group/$var3" : '')."/rss/";
         } elseif ($x == "rssgroup") {
-            $ret = "/group/$var1" . ($var2 ? "/$var2" : '') . "/rss/";
+            $ret = "/group/$var1".($var2 ? "/$var2" : '')."/rss/";
         } elseif ($x == "storyrss") {
             $ret = "/$var2/$var1/rss/";
         } elseif ($x == "page") {
-            $ret = "/static/" . $var1 . "/";
+            $ret = "/static/".$var1."/";
         } elseif ($x == "editcomment") {
-            $ret = "/story/" . $var2 . "/editcomment/" . $var1 . "/";
+            $ret = "/story/".$var2."/editcomment/".$var1."/";
         } elseif ($x == "tagcloud") {
             $ret = "/tagcloud/";
         } elseif ($x == "tagcloud_range") {
-            $ret = "/tagcloud/range/" . $var1 . "/";
+            $ret = "/tagcloud/range/".$var1."/";
         } elseif ($x == "live_comments") {
             $ret = "/live/comments/";
         } elseif ($x == "live_published") {
@@ -1016,83 +1016,83 @@ function getmyurl($x, $var1="", $var2="", $var3="")
         } elseif ($x == "live_unpublished") {
             $ret = "/live/new/";
         } elseif ($x == "tag") {
-            $ret = "/tag/" . $var1 . "/";
+            $ret = "/tag/".$var1."/";
         } elseif ($x == "tag2") {
-            $ret = "/tag/" . $var1 . "/" . $var2 . "/";
+            $ret = "/tag/".$var1."/".$var2."/";
         } elseif ($x == "live") {
             $ret = "/live/";
         } elseif ($x == "template") {
             $ret = "/settemplate/";
         } elseif ($x == "settemplate") {
-            $ret = "/settemplate/" .$var1 . "/";
+            $ret = "/settemplate/".$var1."/";
         } elseif ($x == "admin") {
             $ret = "/admin/";
         } elseif ($x == "admin_modify") {
-            $ret = "/story/" . $var1 . "/modify/main/";
+            $ret = "/story/".$var1."/modify/main/";
         } elseif ($x == "admin_modify_do") {
-            $ret = "/story/" . $var1 . "/modify/do" . $var2 . "/";
+            $ret = "/story/".$var1."/modify/do".$var2."/";
         } elseif ($x == "admin_modify_edo") {
-            $ret = "/story/" . $var1 . "/modify/edo" . $var2 . "/";
+            $ret = "/story/".$var1."/modify/edo".$var2."/";
         } elseif ($x == "admin_sticky") {
-            $ret = "/story/" . $var1 . "/modify/sticky/";
+            $ret = "/story/".$var1."/modify/sticky/";
         } elseif ($x == "admin_supersticky") {
-            $ret = "/story/" . $var1 . "/modify/supersticky/";
+            $ret = "/story/".$var1."/modify/supersticky/";
         } elseif ($x == "admin_discard") {
-            $ret = "/story/" . $var1 . "/modify/discard/";
+            $ret = "/story/".$var1."/modify/discard/";
         } elseif ($x == "admin_new") {
-            $ret = "/story/" . $var1 . "/modify/new/";
+            $ret = "/story/".$var1."/modify/new/";
         } elseif ($x == "admin_published") {
-            $ret = "/story/" . $var1 . "/modify/published/";
+            $ret = "/story/".$var1."/modify/published/";
         } elseif ($x == "groups") {
             $ret = "/groups/";
         } elseif ($x == "submit_groups") {
             $ret = "/groups/submit/";
         } elseif ($x == "group_story") {
-            $ret = "/groups/id/" . $var1 . "/";
+            $ret = "/groups/id/".$var1."/";
         } elseif ($x == "group_story_title") {
-            $ret = "/groups/" . $var1 . "/";
+            $ret = "/groups/".$var1."/";
         } elseif ($x == "group_story2") {
-            $ret = "/groups/" . $var1 . "/" . $var2 . ($var3 ? "/$var3/" : '');
+            $ret = "/groups/".$var1."/".$var2.($var3 ? "/$var3/" : '');
         } elseif ($x == "join_group") {
-            $ret = "/groups/join/" . $var1 . "/privacy/".$var2 . "/";
+            $ret = "/groups/join/".$var1."/privacy/".$var2."/";
         } elseif ($x == "unjoin_group") {
-            $ret = "/groups/unjoin/" . $var1 . "/privacy/".$var2 . "/";
+            $ret = "/groups/unjoin/".$var1."/privacy/".$var2."/";
         } elseif ($x == "join_group_withdraw") {
-            $ret = "/groups/withdraw/" . $var1 . "/user_id/".$var2 . "/";
+            $ret = "/groups/withdraw/".$var1."/user_id/".$var2."/";
         } elseif ($x == "group_admin") {
-            $ret = "/groups/member/admin/id/" . $var1 . "/role/admin/userid/" . $var3 . "/";
+            $ret = "/groups/member/admin/id/".$var1."/role/admin/userid/".$var3."/";
         } elseif ($x == "group_normal") {
-            $ret = "/groups/member/normal/id/" . $var1 . "/role/normal/userid/" . $var3 . "/";
+            $ret = "/groups/member/normal/id/".$var1."/role/normal/userid/".$var3."/";
         } elseif ($x == "group_moderator") {
-            $ret = "/groups/member/moderator/" . $var1 . "/role/moderator/userid/" . $var3 . "/";
+            $ret = "/groups/member/moderator/".$var1."/role/moderator/userid/".$var3."/";
         } elseif ($x == "group_flagged") {
-            $ret = "/groups/member/flagged/" . $var1 . "/role/flagged/userid/" . $var3 . "/";
+            $ret = "/groups/member/flagged/".$var1."/role/flagged/userid/".$var3."/";
         } elseif ($x == "group_banned") {
-            $ret = "/groups/member/banned/id/" . $var1 . "/role/banned/userid/" . $var3 . "/";
+            $ret = "/groups/member/banned/id/".$var1."/role/banned/userid/".$var3."/";
         } elseif ($x == "group_avatar") {
-            $ret = "/group_avatar/" . $var1 . "/";
+            $ret = "/group_avatar/".$var1."/";
         } elseif ($x == "group_sort") {
-            $ret = "/groups/". $var1 .($var2 ? "/$var2" : ''). "/";
+            $ret = "/groups/".$var1.($var2 ? "/$var2" : '')."/";
         } elseif ($x == "user_add_links_private") {
-            $ret = "/user_add_remove_links/action/addprivate/link/" . $var1 . "/";
+            $ret = "/user_add_remove_links/action/addprivate/link/".$var1."/";
         } elseif ($x == "user_add_links_public") {
-            $ret = "/user_add_remove_links/action/addpublic/link/" . $var1 . "/";
+            $ret = "/user_add_remove_links/action/addpublic/link/".$var1."/";
         } elseif ($x == "editgroup") {
-            $ret = "/groups/edit/" . $var1 . "/";
+            $ret = "/groups/edit/".$var1."/";
         } elseif ($x == "deletegroup") {
-            $ret = "/groups/delete/" . $var1 . "/";
+            $ret = "/groups/delete/".$var1."/";
         } elseif ($x == "group_story_links_publish") {
-            $ret = "/join_group/action/published/link/" . $var1 . "/";
+            $ret = "/join_group/action/published/link/".$var1."/";
         } elseif ($x == "group_story_links_new") {
-            $ret = "/join_group/action/new/link/" . $var1 . "/";
+            $ret = "/join_group/action/new/link/".$var1."/";
         } elseif ($x == "group_story_links_discard") {
-            $ret = "/join_group/action/discard/link/" . $var1 . "/";
+            $ret = "/join_group/action/discard/link/".$var1."/";
         } elseif ($x == "admin_categories_tasks") {
-            $ret = "/admin_categories_tasks/action/" . $var1 . "/";
+            $ret = "/admin_categories_tasks/action/".$var1."/";
         }
     }
 
-    return my_pligg_base . preg_replace('/\/+/', '/', $ret);
+    return my_pligg_base.preg_replace('/\/+/', '/', $ret);
 }
 
 function SetSmartyURLs($main_smarty)
@@ -1167,23 +1167,23 @@ function SetSmartyURLs($main_smarty)
 function friend_MD5($userA, $userB)
 {
     include_once(mnminclude.'user.php');
-    $user=new User();
+    $user = new User();
     $user->username = $userA;
     if (!$user->read()) {
-        echo "a-" . $userA . "error 2";
+        echo "a-".$userA."error 2";
         die;
     }
-    $userAdata = $user->username . $user->date;
+    $userAdata = $user->username.$user->date;
 
-    $user=new User();
+    $user = new User();
     $user->username = $userB;
     if (!$user->read()) {
-        echo "b-" . $userB . "error 2";
+        echo "b-".$userB."error 2";
         die;
     }
-    $userBdata = $user->username . $user->date;
+    $userBdata = $user->username.$user->date;
 
-    $themd5 = md5($userAdata . $userBdata);
+    $themd5 = md5($userAdata.$userBdata);
     return $themd5;
 }
 
@@ -1192,13 +1192,13 @@ function totals_regenerate()
     global $db, $cached_totals;
 
     $name = 'new';
-    $count = $db->get_var("SELECT count(*) FROM " . table_links . " WHERE link_status='$name';");
-    $db->query("UPDATE `" . table_totals . "` set `total` = $count where `name` = '$name';");
+    $count = $db->get_var("SELECT count(*) FROM ".table_links." WHERE link_status='$name';");
+    $db->query("UPDATE `".table_totals."` set `total` = $count where `name` = '$name';");
     $cached_totals[$name] = $count;
 
     $name = 'published';
-    $count = $db->get_var("SELECT count(*) FROM " . table_links . " WHERE link_status='$name';");
-    $db->query("UPDATE `" . table_totals . "` set `total` = $count where `name` = '$name';");
+    $count = $db->get_var("SELECT count(*) FROM ".table_links." WHERE link_status='$name';");
+    $db->query("UPDATE `".table_totals."` set `total` = $count where `name` = '$name';");
     $cached_totals[$name] = $count;
 
     if (caching == 1) {
@@ -1207,7 +1207,7 @@ function totals_regenerate()
         $db->use_disk_cache = true;
         $db->cache_queries = true;
         $db->cache_timeout = 0;
-        $totals = $db->get_results("SELECT * FROM `" . table_totals . "`");
+        $totals = $db->get_results("SELECT * FROM `".table_totals."`");
         $db->cache_queries = false;
     }
 
@@ -1228,7 +1228,7 @@ function totals_adjust_count($name, $adjust)
         $db->use_disk_cache = true;
         $db->cache_queries = true;
         $db->cache_timeout = 0;
-        $totals = $db->get_results("SELECT * FROM `" . table_totals . "`");
+        $totals = $db->get_results("SELECT * FROM `".table_totals."`");
         $db->cache_queries = false;
     }
 
@@ -1250,7 +1250,7 @@ function get_story_count($name)
                 $db->cache_queries = true;
             }
 
-            $totals = $db->get_results("SELECT * FROM `" . table_totals . "`");
+            $totals = $db->get_results("SELECT * FROM `".table_totals."`");
 
             $db->cache_queries = false;
 
@@ -1260,7 +1260,7 @@ function get_story_count($name)
             return $cached_totals[$name];
         }
     } else {
-        return $db->get_var("SELECT count(*) FROM " . table_links . " WHERE link_status='$name';");
+        return $db->get_var("SELECT count(*) FROM ".table_links." WHERE link_status='$name';");
     }
 }
 
@@ -1287,7 +1287,7 @@ function close_tags($html)
         return $html;
     }
 
-    for ($i=count($opened_tags)-1; $i>=0; $i--) {
+    for ($i = count($opened_tags)-1; $i >= 0; $i--) {
         if (!in_array($opened_tags[$i], $single_tags)) {
             if (!in_array($opened_tags[$i], $closed_tags)) {
                 $html .= '</'.$opened_tags[$i].'>';
@@ -1302,7 +1302,7 @@ function close_tags($html)
 // CSFR/XSFR protection
 // updated
 //
-function check_referrer($post_url=false)
+function check_referrer($post_url = false)
 {
     global $my_base_url, $my_pligg_base, $xsfr_first_page, $_GET, $_POST;
 
@@ -1316,13 +1316,13 @@ function check_referrer($post_url=false)
             $_SERVER['HTTP_REFERER'] = sanitize($_SERVER['HTTP_REFERER'], 3);
 
             // update checks if HTTP_REFERER and posted url are the same!
-            if (strpos($_SERVER['HTTP_REFERER'], $post_url)!==false) {
+            if (strpos($_SERVER['HTTP_REFERER'], $post_url) !== false) {
                 return true;
             }
 
 
             //if (strpos(preg_replace('/^.+:\/\/(www\.)?/','',$_SERVER['HTTP_REFERER']).'/',preg_replace('/^.+:\/\/(www\.)?/','',$my_base_url).$base)!==0)
-            if (strpos(preg_replace('/^.+:\/\/(www\.)?/', '', $_SERVER['HTTP_REFERER']).'/', preg_replace('/^.+:\/\/(www\.)?/', '', $my_base_url))!==0) {
+            if (strpos(preg_replace('/^.+:\/\/(www\.)?/', '', $_SERVER['HTTP_REFERER']).'/', preg_replace('/^.+:\/\/(www\.)?/', '', $my_base_url)) !== 0) {
                 unset($_SESSION['xsfr']);
                 die("Wrong Referrer '{$_SERVER['HTTP_REFERER']}'");
             }
@@ -1338,21 +1338,21 @@ function translate($str)
 {
     global $language, $main_smarty, $english_language;
 
-    if ($language=='english') {
+    if ($language == 'english') {
         return $str;
     }
-    if (sizeof($english_language)==0) {
+    if (sizeof($english_language) == 0) {
         $path = dirname(__FILE__);
         if (strrpos($path, '/')) {
             $path = substr($path, 0, strrpos($path, '/'));
         } elseif (strrpos($path, '\\')) {
             $path = substr($path, 0, strrpos($path, '\\'));
         }
-        if (!file_exists($path . '/languages/lang_english.conf')) {
+        if (!file_exists($path.'/languages/lang_english.conf')) {
             return $str;
         }
 
-        $strings = parse_ini_file($path .  '/languages/lang_english.conf');
+        $strings = parse_ini_file($path.'/languages/lang_english.conf');
         foreach ($strings as $key => $value) {
             $english_language[strtoupper(str_replace('&quot;', '"', $value))] = $main_smarty->get_config_vars($key);
         }
@@ -1383,7 +1383,7 @@ function js_urldecode($str)
 
     preg_match_all("/(?:%u.{4})|&#x.{4};|&#\d+;|.+/U", $str, $r);
     $ar = $r[0];
-    foreach ($ar as $k=>$v) {
+    foreach ($ar as $k => $v) {
         if (substr($v, 0, 2) == "%u") {
             $ar[$k] = c2UTF8(intval(substr($v, -4), 16));
         } elseif (substr($v, 0, 3) == "&#x") {
@@ -1480,7 +1480,7 @@ function is_utf8($string)
 { // v1.01
     if (strlen($string) > _is_utf8_split) {
         // Based on: http://mobile-website.mobi/php-utf8-vs-iso-8859-1-59
-        for ($i=0, $s=_is_utf8_split, $j=ceil(strlen($string)/_is_utf8_split);$i < $j;$i++, $s+=_is_utf8_split) {
+        for ($i = 0, $s = _is_utf8_split, $j = ceil(strlen($string)/_is_utf8_split);$i < $j;$i++, $s += _is_utf8_split) {
             if (is_utf8(substr($string, $s, _is_utf8_split))) {
                 return true;
             }
@@ -1513,7 +1513,7 @@ function is_utf8($string)
 // to use this function to empty a directory, write:
 // recursive_remove_directory('path/to/full_directory',TRUE);
 
-function recursive_remove_directory($directory, $empty=true)
+function recursive_remove_directory($directory, $empty = true)
 {
     // if the path has a slash at the end we remove it here
     if (substr($directory, -1) == '../cache') {

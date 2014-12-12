@@ -22,7 +22,7 @@ if (isset($_GET['title']) && sanitize($_GET['title'], 3) != '') {
     $requestTitle = sanitize(sanitize($_GET['title'], 3), 4);
 }
 if (isset($requestTitle)) {
-    $requestID = $db->get_var($sql = "SELECT link_id FROM " . table_links . " WHERE `link_title_url` = '".$db->escape($requestTitle)."';");
+    $requestID = $db->get_var($sql = "SELECT link_id FROM ".table_links." WHERE `link_title_url` = '".$db->escape($requestTitle)."';");
 }
 
 $rows = isset($_GET['rows']) && is_numeric($_GET['rows']) ? $_GET['rows'] : 40;
@@ -31,8 +31,8 @@ $time = isset($_GET['time']) && is_numeric($_GET['time']) ? $_GET['time'] : 0;
 if (is_numeric($requestID)) {
     $id = $requestID;
     $link = new Link;
-    $link->id=$requestID;
-    if (!$link->read() || ($link->status=='spam' && !checklevel('admin') && !checklevel('moderator'))) {
+    $link->id = $requestID;
+    if (!$link->read() || ($link->status == 'spam' && !checklevel('admin') && !checklevel('moderator'))) {
         // check for redirects
         include(mnminclude.'redirector.php');
         $x = new redirector($_SERVER['REQUEST_URI']);
@@ -46,8 +46,8 @@ if (is_numeric($requestID)) {
     do_rss_header($link);
 
     // get all parent comments
-    $sql = "SELECT * FROM " . table_comments . "
-			LEFT JOIN " . table_users . " ON comment_user_id=user_id
+    $sql = "SELECT * FROM ".table_comments."
+			LEFT JOIN ".table_users." ON comment_user_id=user_id
 			WHERE comment_status='published' AND comment_link_id=$link->id";
     if ($time > 0) {
         $from = time()-$time;
@@ -63,7 +63,7 @@ if (is_numeric($requestID)) {
         require_once(mnminclude.'comment.php');
         $comment = new Comment;
         foreach ($comments as $dbcomment) {
-            $comment->id=$dbcomment->comment_id;
+            $comment->id = $dbcomment->comment_id;
             $cached_comments[$dbcomment->comment_id] = $dbcomment;
             $comment->read();
 
@@ -72,14 +72,14 @@ if (is_numeric($requestID)) {
             echo "	<link>".getmyFullurl("storyURL", $link->category_safe_names($link->category), urlencode($link->title_url), $link->id)."#c".$comment->id."</link>\n";
             $vars = array('link' => $link);
             check_actions('rss_add_data', $vars);
-            echo '	<source url="'.getmyFullurl("storyURL", $link->category_safe_names($link->category), $link->title_url, $link->id).'"><![CDATA['. $link->title .']]></source>';
-            echo "\n	<description><![CDATA[" . $comment->content . "]]></description>\n";
+            echo '	<source url="'.getmyFullurl("storyURL", $link->category_safe_names($link->category), $link->title_url, $link->id).'"><![CDATA['.$link->title.']]></source>';
+            echo "\n	<description><![CDATA[".$comment->content."]]></description>\n";
             if (!empty($comment->date)) {
                 echo "	<pubDate>".date('D, d M Y H:i:s T', $comment->date-misc_timezone*3600)."</pubDate>\n";
             } else {
                 echo "	<pubDate>".date('D, d M Y H:i:s T', time()-misc_timezone*3600)."</pubDate>\n";
             }
-            echo "	<author>" . $dbcomment->user_login . "</author>\n";
+            echo "	<author>".$dbcomment->user_login."</author>\n";
             echo "	<votes>".$comment->votes."</votes>\n";
             echo "	<guid isPermaLink='false'>".$comment->id."</guid>\n";
 
@@ -108,12 +108,12 @@ function do_rss_header($link)
 {
     global $last_modified, $dblang, $main_smarty;
 #	header('Content-type: text/xml; charset=utf-8', true);
-    echo '<?xml version="1.0" encoding="utf-8"?'.'>' . "\n";
+    echo '<?xml version="1.0" encoding="utf-8"?'.'>'."\n";
     echo '<rss version="2.0" '."\n";
     echo 'xmlns:content="http://purl.org/rss/1.0/modules/content/"'."\n";
     echo 'xmlns:wfw="http://wellformedweb.org/CommentAPI/"'."\n";
     echo 'xmlns:dc="http://purl.org/dc/elements/1.1/"'."\n";
-    echo '>'. "\n";
+    echo '>'."\n";
     echo '<channel>'."\n";
     echo '<title>'.htmlspecialchars($main_smarty->get_config_vars("PLIGG_Visual_Name"))." - ".$link->title.'</title>'."\n";
     echo "<link>".getmyFullurl("storyURL", $link->category_safe_names($link->category), urlencode($link->title_url), $link->id)."</link>\n";
@@ -134,7 +134,7 @@ function do_rss_footer()
 
 function onlyreadables($string)
 {
-    for ($i=0;$i<strlen($string);$i++) {
+    for ($i = 0;$i<strlen($string);$i++) {
         $chr = $string{$i};
         $ord = ord($chr);
         if ($ord<32 or $ord>126) {

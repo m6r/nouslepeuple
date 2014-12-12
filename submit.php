@@ -75,8 +75,8 @@ if (empty($_POST['phase']) && (!empty($_GET['url']) || is_numeric($_GET['id'])))
             define('pagename', 'submit');
             $main_smarty->assign('pagename', pagename);
             $main_smarty->assign('submit_error', 'badkey');
-            $main_smarty->assign('tpl_center', $the_template . '/submit_errors_center');
-            $main_smarty->display($the_template . '/pligg.tpl');
+            $main_smarty->assign('tpl_center', $the_template.'/submit_errors_center');
+            $main_smarty->display($the_template.'/pligg.tpl');
             die();
         }
         $_POST['url'] = $row['link_url'];
@@ -122,10 +122,10 @@ function do_submit0()
     define('pagename', 'submit');
     $main_smarty->assign('pagename', pagename);
 
-    $main_smarty->assign('tpl_center', $the_template . '/submit_step_1_center');
+    $main_smarty->assign('tpl_center', $the_template.'/submit_step_1_center');
     $vars = '';
     check_actions('do_submit0', $vars);
-    $main_smarty->display($the_template . '/pligg.tpl');
+    $main_smarty->display($the_template.'/pligg.tpl');
 }
 
 // submit step 1
@@ -137,11 +137,11 @@ function do_submit1()
     $url = str_replace('&amp;', '&', $url);
     $url = html_entity_decode($url);
 
-    if (strpos($url, 'http')!==0) {
+    if (strpos($url, 'http') !== 0) {
         $url = "http://$url";
     }
 
-    $linkres=new Link;
+    $linkres = new Link;
     $linkres->randkey = sanitize($_POST['randkey'], 3);
 
     if (Submit_Show_URL_Input == false) {
@@ -157,7 +157,7 @@ function do_submit1()
     if (is_numeric($_GET['id'])) {
         $linkres->id = $_GET['id'];
         $linkres->read(false);
-        $trackback=$_GET['trackback'];
+        $trackback = $_GET['trackback'];
     } else {
         $linkres->get($url);
         if ($_POST['title']) {
@@ -179,7 +179,7 @@ function do_submit1()
                 }
             }
         }
-        $trackback=$linkres->trackback;
+        $trackback = $linkres->trackback;
     }
     $main_smarty->assign('randkey', $linkres->randkey);
     $main_smarty->assign('submit_url', $url);
@@ -207,14 +207,14 @@ function do_submit1()
         $linkres->valid = false;
     }
 
-    $vars = array("url" => $url,'linkres'=>$linkres);
+    $vars = array("url" => $url,'linkres' => $linkres);
     check_actions('submit_validating_url', $vars);
     $linkres = $vars['linkres'];
 
     if (!$linkres->valid) {
         $main_smarty->assign('submit_error', 'invalidurl');
-        $main_smarty->assign('tpl_center', $the_template . '/submit_errors_center');
-        $main_smarty->display($the_template . '/pligg.tpl');
+        $main_smarty->assign('tpl_center', $the_template.'/submit_errors_center');
+        $main_smarty->display($the_template.'/pligg.tpl');
         return;
     }
 
@@ -222,12 +222,12 @@ function do_submit1()
         if (!is_numeric($_GET['id']) && $linkres->duplicates($url) > 0) {
             $main_smarty->assign('submit_search', getmyurl("search_url", htmlentities($url)));
             $main_smarty->assign('submit_error', 'dupeurl');
-            $main_smarty->assign('tpl_center', $the_template . '/submit_errors_center');
+            $main_smarty->assign('tpl_center', $the_template.'/submit_errors_center');
 
             define('pagename', 'submit');
             $main_smarty->assign('pagename', pagename);
 
-            $main_smarty->display($the_template . '/pligg.tpl');
+            $main_smarty->display($the_template.'/pligg.tpl');
             return;
         }
     }
@@ -237,8 +237,8 @@ function do_submit1()
 
     totals_adjust_count('discard', 1);
     //echo 'id'.$current_user->user_id;
-    $linkres->status='discard';
-    $linkres->author=$current_user->user_id;
+    $linkres->status = 'discard';
+    $linkres->author = $current_user->user_id;
     $linkres->store();
 
     $main_smarty->assign('StorySummary_ContentTruncate', StorySummary_ContentTruncate);
@@ -299,7 +299,7 @@ function do_submit1()
     //to display group drop down
     if (enable_group == "true") {
         $output = '';
-        $group_membered = $db->get_results("SELECT group_id,group_name FROM " . table_groups . "
+        $group_membered = $db->get_results("SELECT group_id,group_name FROM ".table_groups."
 			LEFT JOIN ".table_group_member." ON member_group_id=group_id
 			WHERE member_user_id = $current_user->user_id AND group_status = 'Enable'
 				AND member_status='active'
@@ -310,7 +310,7 @@ function do_submit1()
             $output .= "<select name='link_group_id' tabindex='3' class='form-control submit_group_select'>";
             $output .= "<option value = ''>".$main_smarty->get_config_vars('PLIGG_Visual_Group_Select_Group')."</option>";
             foreach ($group_membered as $results) {
-                $output .= "<option value = ".$results->group_id. ($linkres->link_group_id ? ' selected' : '') . ">".$results->group_name."</option>";
+                $output .= "<option value = ".$results->group_id.($linkres->link_group_id ? ' selected' : '').">".$results->group_name."</option>";
             }
             $output .= "</select>";
         }
@@ -321,8 +321,8 @@ function do_submit1()
         check_actions('register_showform', $vars);
     }
 
-    $main_smarty->assign('tpl_extra_fields', $the_template . '/submit_extra_fields');
-    $main_smarty->assign('tpl_center', $the_template . '/submit_step_2_center');
+    $main_smarty->assign('tpl_extra_fields', $the_template.'/submit_extra_fields');
+    $main_smarty->assign('tpl_center', $the_template.'/submit_step_2_center');
 
     define('pagename', 'submit');
     $main_smarty->assign('pagename', pagename);
@@ -330,7 +330,7 @@ function do_submit1()
     $vars = '';
     check_actions('do_submit1', $vars);
     $_SESSION['step'] = 1;
-    $main_smarty->display($the_template . '/pligg.tpl');
+    $main_smarty->display($the_template.'/pligg.tpl');
 }
 
 // submit step 2
@@ -356,10 +356,10 @@ function do_submit2()
         // No action
     }
 
-    $linkres=new Link;
+    $linkres = new Link;
     $linkres->id = sanitize($_POST['id'], 3);
 
-    if ($_SESSION['step']!=1) {
+    if ($_SESSION['step'] != 1) {
         die('Wrong step');
     }
     if (!is_numeric($linkres->id)) {
@@ -378,10 +378,10 @@ function do_submit2()
     }
 
     if (is_array($_POST['category'])) {
-        $linkres->category=sanitize($_POST['category'][0], 3);
-        $linkres->additional_cats=array_slice($_POST['category'], 1);
+        $linkres->category = sanitize($_POST['category'][0], 3);
+        $linkres->additional_cats = array_slice($_POST['category'], 1);
     } else {
-        $linkres->category=sanitize($_POST['category'], 3);
+        $linkres->category = sanitize($_POST['category'], 3);
     }
 
     $thecat = get_cached_category_data('category_id', $linkres->category);
@@ -446,17 +446,17 @@ function do_submit2()
         $linkres->link_summary = sanitize($_POST['summarytext'], 4, $Story_Content_Tags_To_Allow);
         //$linkres->link_summary = close_tags(str_replace("\n", "<br />", $linkres->link_summary));
         if (utf8_strlen($linkres->link_summary) > StorySummary_ContentTruncate) {
-            loghack('SubmitAStory-SummaryGreaterThanLimit', 'username: ' . sanitize($_POST["username"], 3).'|email: '.sanitize($_POST["email"], 3), true);
+            loghack('SubmitAStory-SummaryGreaterThanLimit', 'username: '.sanitize($_POST["username"], 3).'|email: '.sanitize($_POST["email"], 3), true);
             $linkres->link_summary = utf8_substr($linkres->link_summary, 0, StorySummary_ContentTruncate - 1);
             //$linkres->link_summary = close_tags(str_replace("\n", "<br />", $linkres->link_summary));
         }
     }
 
     //get link_group_id
-    if ((isset($_REQUEST['link_group_id']))&&($_REQUEST['link_group_id']!='')) {
+    if ((isset($_REQUEST['link_group_id'])) && ($_REQUEST['link_group_id'] != '')) {
         $linkres->link_group_id = intval($_REQUEST['link_group_id']);
     } else {
-        $linkres->link_group_id=0;
+        $linkres->link_group_id = 0;
     }
 
     $linkres->store();
@@ -529,8 +529,8 @@ function do_submit2()
         $main_smarty->assign('submit_trackback', '');
     }
 
-    $main_smarty->assign('tpl_extra_fields', $the_template . '/submit_extra_fields');
-    $main_smarty->assign('tpl_center', $the_template . '/submit_step_3_center');
+    $main_smarty->assign('tpl_extra_fields', $the_template.'/submit_extra_fields');
+    $main_smarty->assign('tpl_center', $the_template.'/submit_step_3_center');
 
 
     $vars = '';
@@ -539,7 +539,7 @@ function do_submit2()
     if (Submit_Complete_Step2) {
         do_submit3();
     } else {
-        $main_smarty->display($the_template . '/pligg.tpl');
+        $main_smarty->display($the_template.'/pligg.tpl');
     }
 }
 
@@ -548,13 +548,13 @@ function do_submit3()
 {
     global $db, $dblang;
 
-    $linkres=new Link;
+    $linkres = new Link;
     $linkres->id = sanitize($_POST['id'], 3);
 
     if (!is_numeric($linkres->id)) {
         die();
     }
-    if (!Submit_Complete_Step2 && $_SESSION['step']!=2) {
+    if (!Submit_Complete_Step2 && $_SESSION['step'] != 2) {
         die('Wrong step');
     }
 
@@ -563,15 +563,15 @@ function do_submit3()
     totals_adjust_count($linkres->status, -1);
     totals_adjust_count('new', 1);
 
-    $linkres->status='new';
+    $linkres->status = 'new';
 
-    $vars = array('linkres'=>&$linkres);
+    $vars = array('linkres' => &$linkres);
     check_actions('do_submit3', $vars);
     $linkres->status = $vars['linkres']->status;
-    if ($vars['linkres']->status=='discard') {
+    if ($vars['linkres']->status == 'discard') {
         $vars = array('link_id' => $linkres->id);
         check_actions('story_discard', $vars);
-    } elseif ($vars['linkres']->status=='spam') {
+    } elseif ($vars['linkres']->status == 'spam') {
         $vars = array('link_id' => $linkres->id);
         check_actions('story_spam', $vars);
     }
@@ -585,20 +585,20 @@ function do_submit3()
     if (isset($_POST['trackback']) && sanitize($_POST['trackback'], 3) != '') {
         require_once(mnminclude.'trackback.php');
         $trackres = new Trackback;
-        $trackres->url=sanitize($_POST['trackback'], 3);
-        $trackres->link=$linkres->id;
-        $trackres->title=$linkres->title;
-        $trackres->author=$linkres->author;
-        $trackres->content=$linkres->content;
+        $trackres->url = sanitize($_POST['trackback'], 3);
+        $trackres->link = $linkres->id;
+        $trackres->title = $linkres->title;
+        $trackres->author = $linkres->author;
+        $trackres->content = $linkres->content;
         $res = $trackres->send();
     }
 
-    $vars = array('linkres'=>$linkres);
+    $vars = array('linkres' => $linkres);
     check_actions('submit_pre_redirect', $vars);
     if ($vars['redirect']) {
         header('Location: '.$vars['redirect']);
     } elseif ($linkres->link_group_id == 0) {
-        header("Location: " . getmyurl('new'));
+        header("Location: ".getmyurl('new'));
     } else {
         $redirect = getmyurl("group_story", $linkres->link_group_id);
         header("Location: $redirect");
@@ -635,7 +635,7 @@ function link_errors($linkres)
         $error = true;
     }
 
-    if (utf8_strlen($linkres->tags) < minTagsLength && $linkres->tags!="") {
+    if (utf8_strlen($linkres->tags) < minTagsLength && $linkres->tags != "") {
         $main_smarty->assign('submit_error', 'short_tags');
         $error = true;
     }
@@ -666,8 +666,8 @@ function link_errors($linkres)
 
     if ($error == true) {
         $main_smarty->assign('link_id', $linkres->id);
-        $main_smarty->assign('tpl_center', $the_template . '/submit_errors_center');
-        $main_smarty->display($the_template . '/pligg.tpl');
+        $main_smarty->assign('tpl_center', $the_template.'/submit_errors_center');
+        $main_smarty->display($the_template.'/pligg.tpl');
         die();
     }
 
@@ -681,8 +681,8 @@ function link_catcha_errors($linkerror)
 
     if ($linkerror == 'captcha_error') { // if no category is selected
         $main_smarty->assign('submit_error', 'register_captcha_error');
-        $main_smarty->assign('tpl_center', $the_template . '/submit_errors_center');
-        $main_smarty->display($the_template . '/pligg.tpl');
+        $main_smarty->assign('tpl_center', $the_template.'/submit_errors_center');
+        $main_smarty->display($the_template.'/pligg.tpl');
 #		$main_smarty->display($the_template . '/submit_errors.tpl');
         $error = true;
     }

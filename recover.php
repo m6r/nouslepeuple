@@ -18,31 +18,31 @@ $main_smarty->assign('posttitle', $main_smarty->get_config_vars('PLIGG_Visual_Br
 $main_smarty = do_sidebar($main_smarty);
 
 // initialize error message variable
-$errorMsg="";
+$errorMsg = "";
 
 // if user requests to logout
 if ($my_pligg_base) {
-    if (strpos($_GET['return'], $my_pligg_base)!==0) {
-        $_GET['return']=$my_pligg_base . '/';
+    if (strpos($_GET['return'], $my_pligg_base) !== 0) {
+        $_GET['return'] = $my_pligg_base.'/';
     }
-    if (strpos($_POST['return'], $my_pligg_base)!==0) {
-        $_POST['return']=$my_pligg_base . '/';
+    if (strpos($_POST['return'], $my_pligg_base) !== 0) {
+        $_POST['return'] = $my_pligg_base.'/';
     }
 }
 
-$id=sanitize($_REQUEST['id'], 3);
-$n=sanitize($_REQUEST['n'], 3);
-$idTemp=base64_decode($id);
-$username=sanitize($idTemp, 3);
+$id = sanitize($_REQUEST['id'], 3);
+$n = sanitize($_REQUEST['n'], 3);
+$idTemp = base64_decode($id);
+$username = sanitize($idTemp, 3);
 
-$sql="SELECT * FROM `" . table_users . "` where `user_login` = '".$username."' AND `last_reset_request` = FROM_UNIXTIME('".$n."') AND user_level!='Spammer'";
+$sql = "SELECT * FROM `".table_users."` where `user_login` = '".$username."' AND `last_reset_request` = FROM_UNIXTIME('".$n."') AND user_level!='Spammer'";
 
 $user = $db->get_row($sql);
 
 if ($user) {
     if ((isset($_POST["processrecover"]) && is_numeric($_POST["processrecover"]))) {
-        if ($_POST["processrecover"]==1) {
-            $error=false;
+        if ($_POST["processrecover"] == 1) {
+            $error = false;
 
             $password = sanitize($_POST["reg_password"], 3);
             $password2 = sanitize($_POST["reg_password2"], 3);
@@ -55,7 +55,7 @@ if ($user) {
                 $error = true;
             }
 
-            if ($error==false) {
+            if ($error == false) {
                 $saltedlogin = generateHash($username);
 
                 $to = $user->user_email;
@@ -64,24 +64,24 @@ if ($user) {
                 $body = sprintf(
                     $main_smarty->get_config_vars("PLIGG_PassEmail_PassBody"),
                     $main_smarty->get_config_vars("PLIGG_Visual_Name"),
-                    $my_base_url . $my_pligg_base . '/login.php',
+                    $my_base_url.$my_pligg_base.'/login.php',
                     $user->user_login,
                     $password
                 );
 
-                $headers = 'From: ' . $main_smarty->get_config_vars("PLIGG_PassEmail_From") . "\r\n";
+                $headers = 'From: '.$main_smarty->get_config_vars("PLIGG_PassEmail_From")."\r\n";
                 $headers .= "Content-type: text/html; charset=utf-8\r\n";
 
                 if (mail($to, $subject, $body, $headers)) {
                     $saltedPass = generateHash($password);
-                    $db->query('UPDATE `' . table_users . "` SET `user_pass` = '$saltedPass' WHERE `user_login` = '".$user->user_login."'");
-                    $db->query('UPDATE `' . table_users . '` SET `last_reset_request` = FROM_UNIXTIME('.time().') WHERE `user_login` = "'.$user->user_login.'"');
+                    $db->query('UPDATE `'.table_users."` SET `user_pass` = '$saltedPass' WHERE `user_login` = '".$user->user_login."'");
+                    $db->query('UPDATE `'.table_users.'` SET `last_reset_request` = FROM_UNIXTIME('.time().') WHERE `user_login` = "'.$user->user_login.'"');
 
                     $current_user->Authenticate($user->user_login, $password);
                     $return =  my_pligg_base.'/';
                     if (strpos($_SERVER['SERVER_SOFTWARE'], "IIS") && strpos(php_sapi_name(), "cgi") >= 0) {
-                        echo '<SCRIPT LANGUAGE="JavaScript">window.location="' . $return . '";</script>';
-                        echo $main_smarty->get_config_vars('PLIGG_Visual_IIS_Logged_In') . '<a href = "'.$return.'">' . $main_smarty->get_config_vars('PLIGG_Visual_IIS_Continue') . '</a>';
+                        echo '<SCRIPT LANGUAGE="JavaScript">window.location="'.$return.'";</script>';
+                        echo $main_smarty->get_config_vars('PLIGG_Visual_IIS_Logged_In').'<a href = "'.$return.'">'.$main_smarty->get_config_vars('PLIGG_Visual_IIS_Continue').'</a>';
                     } else {
                         header('Location: '.$return);
                     }
@@ -108,5 +108,5 @@ $main_smarty->assign('n', $n);
 
 
 // show the template
-$main_smarty->assign('tpl_center', $the_template . '/recover_password_center');
-$main_smarty->display($the_template . '/pligg.tpl');
+$main_smarty->assign('tpl_center', $the_template.'/recover_password_center');
+$main_smarty->display($the_template.'/pligg.tpl');

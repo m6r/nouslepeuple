@@ -28,9 +28,9 @@ $main_smarty->assign('posttitle', $main_smarty->get_config_vars('PLIGG_Visual_Br
 $offset = (get_current_page() - 1) * $top_users_size;
 
 $select = "SELECT * ";
-$from_where = " FROM " . table_comments . "
-		LEFT JOIN " . table_links . " ON comment_link_id=link_id
-		LEFT JOIN " . table_users . " ON comment_user_id=user_id WHERE comment_status='published' AND link_status='published'";
+$from_where = " FROM ".table_comments."
+		LEFT JOIN ".table_links." ON comment_link_id=link_id
+		LEFT JOIN ".table_users." ON comment_user_id=user_id WHERE comment_status='published' AND link_status='published'";
 $order_by = " ORDER BY comment_id DESC";
 
 // pagename
@@ -69,5 +69,5 @@ $main_smarty->assign('live_pagination', do_pages($rows, $top_users_size, "commen
 $main_smarty = do_sidebar($main_smarty);
 
 // show the template
-$main_smarty->assign('tpl_center', $the_template . '/live_comments_center');
-$main_smarty->display($the_template . '/pligg.tpl');
+$main_smarty->assign('tpl_center', $the_template.'/live_comments_center');
+$main_smarty->display($the_template.'/pligg.tpl');

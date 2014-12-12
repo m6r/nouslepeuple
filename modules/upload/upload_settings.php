@@ -1,6 +1,6 @@
 <?php
 // the path to the module. the probably shouldn't be changed unless you rename the upload folder(s)
-define('upload_path', my_pligg_base . '/modules/upload/');
+define('upload_path', my_pligg_base.'/modules/upload/');
 
 // the path to the module. the probably shouldn't be changed unless you rename the module_store folder(s)
     if (!defined('lang_loc')) {
@@ -18,8 +18,8 @@ define('upload_path', my_pligg_base . '/modules/upload/');
         }
     }
 
-define('upload_lang_conf', lang_loc . '/modules/upload/lang.conf');
-define('upload_pligg_lang_conf', lang_loc . "/languages/lang_" . pligg_language . ".conf");
+define('upload_lang_conf', lang_loc.'/modules/upload/lang.conf');
+define('upload_pligg_lang_conf', lang_loc."/languages/lang_".pligg_language.".conf");
 
 // the path to the modules templates. the probably shouldn't be changed unless you rename the upload folder(s)
 define('upload_tpl_path', '../modules/upload/templates/');
@@ -45,13 +45,13 @@ $upload_places = array(
 "tpl_pligg_story_related_start",
 "tpl_pligg_story_related_end",
 "tpl_pligg_story_comments_start",
-"tpl_pligg_story_comments_end"
+"tpl_pligg_story_comments_end",
 );
 
 
 $comment_places = array(
 "tpl_pligg_story_comments_single_start",
-"tpl_pligg_story_comments_single_end"
+"tpl_pligg_story_comments_single_end",
 );
 
 // don't touch anything past this line.

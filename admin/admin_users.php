@@ -43,12 +43,12 @@ $PliggDoc->get_js();
 if ($canIhaveAccess == 0) {
     //	$main_smarty->assign('tpl_center', '/admin/access_denied');
 //	$main_smarty->display($template_dir . '/admin/admin.tpl');
-    header("Location: " . getmyurl('admin_login', $_SERVER['REQUEST_URI']));
+    header("Location: ".getmyurl('admin_login', $_SERVER['REQUEST_URI']));
     die();
 }
 
 // read the mysql database to get the pligg version
-$sql = "SELECT data FROM " . table_misc_data . " WHERE name = 'pligg_version'";
+$sql = "SELECT data FROM ".table_misc_data." WHERE name = 'pligg_version'";
 $pligg_version = $db->get_var($sql);
 $main_smarty->assign('version_number', $pligg_version);
 
@@ -68,18 +68,18 @@ if ($canIhaveAccess == 1) {
 
                 foreach ($_POST["enabled"] as $id => $valuea) {
                     $_GET['id'] = $id = $db->escape($id);
-                    $user= $db->get_row('SELECT * FROM ' . table_users ." where user_id=$id");
+                    $user = $db->get_row('SELECT * FROM '.table_users." where user_id=$id");
 
-                    if ($value==3) {
-                        if ($user->user_level!="Spammer") {
+                    if ($value == 3) {
+                        if ($user->user_level != "Spammer") {
                             killspam($id);
                         }
-                    } elseif ($value==2) {
+                    } elseif ($value == 2) {
                         if ($user->user_enabled != 0) {
                             canIChangeUser($user->user_level);
                             $db->query("UPDATE ".table_users." SET user_enabled='0', user_level=IF(user_level='Spammer','normal',user_level) WHERE user_id='".$db->escape($id)."'");
                         }
-                    } elseif ($value==1) {
+                    } elseif ($value == 1) {
                         if ($user->user_enabled != 1) {
                             canIChangeUser($user->user_level);
                             $db->query("UPDATE ".table_users." SET user_enabled='1', user_level=IF(user_level='Spammer','normal',user_level) WHERE user_id='".$db->escape($id)."'");
@@ -108,16 +108,16 @@ if ($canIhaveAccess == 1) {
         $CSRF->check_expired('admin_users_create');
 
         if ($CSRF->check_valid(sanitize($_POST['token'], 3), 'admin_users_create')) {
-            $username=trim($db->escape($_POST['username']));
-            $password=trim($db->escape($_POST['password']));
-            $email=trim($db->escape($_POST['email']));
-            $saltedpass=generateHash($password);
+            $username = trim($db->escape($_POST['username']));
+            $password = trim($db->escape($_POST['password']));
+            $email = trim($db->escape($_POST['email']));
+            $saltedpass = generateHash($password);
 
             // Only Admin accounts can create moderators and other admins
             if ($amIadmin) {
-                $level=trim($db->escape($_POST['level']));
+                $level = trim($db->escape($_POST['level']));
             } else {
-                $level='normal';
+                $level = 'normal';
             }
 
             if (!isset($username) || strlen($username) < 3) {
@@ -133,7 +133,7 @@ if ($canIhaveAccess == 1) {
             } elseif (strlen($password) < 5) {
                 $main_smarty->assign(password_error, $main_smarty->get_config_vars('PLIGG_Visual_Register_Error_FiveCharPass'));
             } else {
-                $db->query("INSERT IGNORE INTO " . table_users . " (user_login, user_level, user_email, user_pass, user_date, user_modification, user_lastlogin) VALUES ('$username', '$level', '$email', '$saltedpass', NOW(), NOW(), NOW())");
+                $db->query("INSERT IGNORE INTO ".table_users." (user_login, user_level, user_email, user_pass, user_date, user_modification, user_lastlogin) VALUES ('$username', '$level', '$email', '$saltedpass', NOW(), NOW(), NOW())");
                 header("Location:  ".my_pligg_base."/admin/admin_users.php");
                 die();
             }
@@ -152,10 +152,10 @@ if ($canIhaveAccess == 1) {
             $navwhere['text1'] = $main_smarty->get_config_vars('PLIGG_Visual_Header_AdminPanel');
             $navwhere['link1'] = getmyurl('admin', '');
             $navwhere['text2'] = $main_smarty->get_config_vars('PLIGG_Visual_Header_AdminPanel_1');
-            $navwhere['link2'] = my_pligg_base . "/admin/admin_users.php";
+            $navwhere['link2'] = my_pligg_base."/admin/admin_users.php";
             $navwhere['text3'] = $main_smarty->get_config_vars('PLIGG_Visual_Breadcrumb_User_Killspam');
             $main_smarty->assign('navbar_where', $navwhere);
-            $main_smarty->assign('posttitle', " / " . $main_smarty->get_config_vars('PLIGG_Visual_Header_AdminPanel'));
+            $main_smarty->assign('posttitle', " / ".$main_smarty->get_config_vars('PLIGG_Visual_Header_AdminPanel'));
 
             // misc smarty
             $main_smarty->assign('pagename', pagename);
@@ -166,7 +166,7 @@ if ($canIhaveAccess == 1) {
 
             // show the template
             $main_smarty->assign('tpl_center', '/admin/user_create');
-            $main_smarty->display($template_dir . '/admin/help.tpl');
+            $main_smarty->display($template_dir.'/admin/help.tpl');
             exit;
         }
         if (sanitize($_GET["mode"], 3) == "view") { // view single user
@@ -174,7 +174,7 @@ if ($canIhaveAccess == 1) {
             // code to prevent CSRF
             $CSRF->create('admin_users_resetpass', true, true);
 
-            $usersql = mysql_query('SELECT * FROM ' . table_users . ' where user_id="'.sanitize($_GET["user"], 3).'" or user_login="'.sanitize($_GET["user"], 3).'"');
+            $usersql = mysql_query('SELECT * FROM '.table_users.' where user_id="'.sanitize($_GET["user"], 3).'" or user_login="'.sanitize($_GET["user"], 3).'"');
             $userdata = array();
             while ($rows = mysql_fetch_array($usersql, MYSQL_ASSOC)) {
                 array_push($userdata, $rows);
@@ -183,48 +183,48 @@ if ($canIhaveAccess == 1) {
 
             foreach ($userdata as $key => $val) {
                 $userdata[$key]['Avatar'] = get_avatar('large', "", $val['user_login'], $val['user_email']);
-                $created = $db->get_results('SELECT * FROM ' . table_groups . ' where group_status="Enable" AND group_creator='.$userdata[$key]['user_id'], ARRAY_A);
+                $created = $db->get_results('SELECT * FROM '.table_groups.' where group_status="Enable" AND group_creator='.$userdata[$key]['user_id'], ARRAY_A);
                 $arr = array();
                 foreach ($created as $group) {
                     $arr[] = $group['group_name'];
                 }
-                $userdata[$key]['created']= join(',', $arr);
-                $belongs = $db->get_results('SELECT * FROM ' . table_group_member . ' LEFT JOIN  ' . table_groups . ' ON member_group_id=group_id where group_status="Enable" AND member_status="active" AND member_user_id='.$userdata[$key]['user_id'], ARRAY_A);
+                $userdata[$key]['created'] = join(',', $arr);
+                $belongs = $db->get_results('SELECT * FROM '.table_group_member.' LEFT JOIN  '.table_groups.' ON member_group_id=group_id where group_status="Enable" AND member_status="active" AND member_user_id='.$userdata[$key]['user_id'], ARRAY_A);
                 $arr = array();
                 foreach ($belongs as $group) {
                     $arr[] = $group['group_name'];
                 }
-                $userdata[$key]['belongs']= join(',', $arr);
+                $userdata[$key]['belongs'] = join(',', $arr);
             }
 
             $main_smarty->assign('userdata', $userdata);
-            $linkcount=$db->get_var('SELECT count(*) FROM ' . table_links . ' where link_author="'.$userdata[0]['user_id'].'"');
+            $linkcount = $db->get_var('SELECT count(*) FROM '.table_links.' where link_author="'.$userdata[0]['user_id'].'"');
             $main_smarty->assign('linkcount', $linkcount);
-            $commentcount=$db->get_var('SELECT count(*) FROM ' . table_comments . ' where comment_user_id="'.$userdata[0]['user_id'].'"');
+            $commentcount = $db->get_var('SELECT count(*) FROM '.table_comments.' where comment_user_id="'.$userdata[0]['user_id'].'"');
             $main_smarty->assign('commentcount', $commentcount);
 
             // breadcrumbs and page title
             $navwhere['text1'] = $main_smarty->get_config_vars('PLIGG_Visual_Header_AdminPanel');
             $navwhere['link1'] = getmyurl('admin', '');
             $navwhere['text2'] = $main_smarty->get_config_vars('PLIGG_Visual_Header_AdminPanel_1');
-            $navwhere['link2'] = my_pligg_base . "/admin/admin_users.php";
+            $navwhere['link2'] = my_pligg_base."/admin/admin_users.php";
             $navwhere['text3'] = $main_smarty->get_config_vars('PLIGG_Visual_Breadcrumb_View_User');
             $main_smarty->assign('navbar_where', $navwhere);
-            $main_smarty->assign('posttitle', " / " . $main_smarty->get_config_vars('PLIGG_Visual_Header_AdminPanel'));
+            $main_smarty->assign('posttitle', " / ".$main_smarty->get_config_vars('PLIGG_Visual_Header_AdminPanel'));
 
             // pagename
             define('pagename', 'admin_users');
             $main_smarty->assign('pagename', pagename);
 
-            $user=new User();
+            $user = new User();
 
             $user->username = sanitize($userdata[0]['user_login'], 3);
             if (!$user->read()) {
                 $main_smarty->assign('tpl_center', '/admin/user_does_not_exist');
                 if ($is_moderator == '1') {
-                    $main_smarty->display($template_dir . '/admin/moderator.tpl');
+                    $main_smarty->display($template_dir.'/admin/moderator.tpl');
                 } else {
-                    $main_smarty->display($template_dir . '/admin/admin.tpl');
+                    $main_smarty->display($template_dir.'/admin/admin.tpl');
                 }
             }
 
@@ -235,15 +235,15 @@ if ($canIhaveAccess == 1) {
             // show the template
             $main_smarty->assign('tpl_center', '/admin/user_view');
             if ($is_moderator == '1') {
-                $main_smarty->display($template_dir . '/admin/moderator.tpl');
+                $main_smarty->display($template_dir.'/admin/moderator.tpl');
             } else {
-                $main_smarty->display($template_dir . '/admin/admin.tpl');
+                $main_smarty->display($template_dir.'/admin/admin.tpl');
             }
         }
 
         if (sanitize($_GET["mode"], 3) == "edit") { // edit user
 
-            $usersql = mysql_query('SELECT * FROM ' . table_users . ' where user_id="'.sanitize($_GET["user_id"], 3).'"');
+            $usersql = mysql_query('SELECT * FROM '.table_users.' where user_id="'.sanitize($_GET["user_id"], 3).'"');
             $userdata = array();
             while ($rows = mysql_fetch_array($usersql, MYSQL_ASSOC)) {
                 array_push($userdata, $rows);
@@ -251,7 +251,7 @@ if ($canIhaveAccess == 1) {
 
             canIChangeUser($userdata[0]['user_level']);
 
-            $user=new User();
+            $user = new User();
             $user->username = sanitize($userdata[0]['user_login'], 3);
 
             if (!$user->read()) {
@@ -259,9 +259,9 @@ if ($canIhaveAccess == 1) {
                 $main_smarty->assign('user', $user);
                 $main_smarty->assign('tpl_center', '/admin/user_does_not_exist');
                 if ($is_moderator == '1') {
-                    $main_smarty->display($template_dir . '/admin/moderator.tpl');
+                    $main_smarty->display($template_dir.'/admin/moderator.tpl');
                 } else {
-                    $main_smarty->display($template_dir . '/admin/admin.tpl');
+                    $main_smarty->display($template_dir.'/admin/admin.tpl');
                 }
                 die;
             }
@@ -270,34 +270,34 @@ if ($canIhaveAccess == 1) {
             if (isset($_POST['token'])) {
                 $CSRF->check_expired('admin_users_edit');
                 if ($CSRF->check_valid(sanitize($_POST['token'], 3), 'admin_users_edit')) {
-                    $user_old = $db->get_row('SELECT * FROM ' . table_users . ' where user_id="'.sanitize($_GET["user_id"], 3).'"');
+                    $user_old = $db->get_row('SELECT * FROM '.table_users.' where user_id="'.sanitize($_GET["user_id"], 3).'"');
 
-                    $username=trim(sanitize($_POST["login"], 3));
-                    $email=trim(sanitize($_POST["email"], 3));
-                    $password=$_POST['password'];
+                    $username = trim(sanitize($_POST["login"], 3));
+                    $email = trim(sanitize($_POST["email"], 3));
+                    $password = $_POST['password'];
 
-                    $error=0;
+                    $error = 0;
 
-                    if ($user_old->user_login!=$username) {
+                    if ($user_old->user_login != $username) {
                         if (!isset($username) || strlen($username) < 3) {
                             $main_smarty->assign(username_error, $main_smarty->get_config_vars('PLIGG_Visual_Register_Error_UserTooShort'));
-                            $error=1;
+                            $error = 1;
                         } elseif (!preg_match('/^[a-zA-Z0-9\-]+$/', $username)) {
                             $main_smarty->assign(username_error, $main_smarty->get_config_vars('PLIGG_Visual_Register_Error_UserInvalid'));
-                            $error=1;
+                            $error = 1;
                         } elseif (user_exists(trim($username))) {
                             $main_smarty->assign(username_error, $main_smarty->get_config_vars('PLIGG_Visual_Register_Error_UserExists'));
-                            $error=1;
+                            $error = 1;
                         }
                     }
 
-                    if ($user_old->user_email!=$email) {
+                    if ($user_old->user_email != $email) {
                         if (!check_email(trim($email))) {
                             $main_smarty->assign(email_error, $main_smarty->get_config_vars('PLIGG_Visual_Register_Error_BadEmail'));
-                            $error=1;
+                            $error = 1;
                         } elseif (email_exists(trim($email))) {
                             $main_smarty->assign(email_error, $main_smarty->get_config_vars('PLIGG_Visual_Register_Error_EmailExists'));
-                            $error=1;
+                            $error = 1;
                         }
                     }
 
@@ -306,30 +306,30 @@ if ($canIhaveAccess == 1) {
 
                     check_actions('admin_users_save', $vars);
 
-                    $user->username=$username;
-                    $user->level=trim(sanitize($_POST["level"], 3));
-                    $user->email=$email;
+                    $user->username = $username;
+                    $user->level = trim(sanitize($_POST["level"], 3));
+                    $user->email = $email;
 
-                    if ($_POST["password"] && $_POST["password"]==$_POST["password2"]) {
+                    if ($_POST["password"] && $_POST["password"] == $_POST["password2"]) {
                         if (strlen($password) < 5) {
                             $main_smarty->assign(password_error, $main_smarty->get_config_vars('PLIGG_Visual_Register_Error_FiveCharPass'));
-                            $error=1;
+                            $error = 1;
                         } else {
                             $user->pass = $_POST["password"];
                         }
                     }
 
-                    if ($error==0) {
-                        $user->id=$_GET["user_id"];
+                    if ($error == 0) {
+                        $user->id = $_GET["user_id"];
                         echo "save";
                         $user->store();
                         header("Location: ".my_pligg_base."/admin/admin_users.php?mode=view&user=".$_GET["user_id"]."");
                     }
 
-                    if ($error==1) {
-                        $userdata[0]['user_login']=$username;
-                        $userdata[0]['user_email']=$email;
-                        $userdata[0]['cng_lavel']=$userdata->level;
+                    if ($error == 1) {
+                        $userdata[0]['user_login'] = $username;
+                        $userdata[0]['user_email'] = $email;
+                        $userdata[0]['cng_lavel'] = $userdata->level;
                     }
                 } else {
                     showmyerror('userdoesntexist');
@@ -347,10 +347,10 @@ if ($canIhaveAccess == 1) {
             $navwhere['text1'] = $main_smarty->get_config_vars('PLIGG_Visual_Header_AdminPanel');
             $navwhere['link1'] = getmyurl('admin', '');
             $navwhere['text2'] = $main_smarty->get_config_vars('PLIGG_Visual_Header_AdminPanel_1');
-            $navwhere['link2'] = my_pligg_base . "/admin/admin_users.php";
+            $navwhere['link2'] = my_pligg_base."/admin/admin_users.php";
             $navwhere['text3'] = $main_smarty->get_config_vars('PLIGG_Visual_Breadcrumb_Edit_User');
             $main_smarty->assign('navbar_where', $navwhere);
-            $main_smarty->assign('posttitle', " / " . $main_smarty->get_config_vars('PLIGG_Visual_Header_AdminPanel'));
+            $main_smarty->assign('posttitle', " / ".$main_smarty->get_config_vars('PLIGG_Visual_Header_AdminPanel'));
 
             // pagename
             define('pagename', 'admin_users');
@@ -364,9 +364,9 @@ if ($canIhaveAccess == 1) {
             // show the template
             $main_smarty->assign('tpl_center', '/admin/user_edit');
             if ($is_moderator == '1') {
-                $main_smarty->display($template_dir . '/admin/moderator.tpl');
+                $main_smarty->display($template_dir.'/admin/moderator.tpl');
             } else {
-                $main_smarty->display($template_dir . '/admin/admin.tpl');
+                $main_smarty->display($template_dir.'/admin/admin.tpl');
             }
         }
 
@@ -379,7 +379,7 @@ if ($canIhaveAccess == 1) {
 
 //			if ($CSRF->check_valid(sanitize($_GET['token'], 3), 'admin_users_resetpass'))
             if ($CSRF->check_valid(sanitize($_GET['token'], 3), 'admin_users_edit')) {
-                $user= $db->get_row('SELECT * FROM ' . table_users . ' where user_login="'.sanitize($_GET["user"], 3).'"');
+                $user = $db->get_row('SELECT * FROM '.table_users.' where user_login="'.sanitize($_GET["user"], 3).'"');
 
                 canIChangeUser($user->user_level);
 
@@ -390,14 +390,14 @@ if ($canIhaveAccess == 1) {
 
                     $password = substr(md5(uniqid(rand(), true)), 0, 8);
                     $saltedPass = generateHash($password);
-                    $db->query('UPDATE `' . table_users . "` SET `user_pass` = '$saltedPass' WHERE `user_login` = '".sanitize($_GET["user"], 3)."'");
+                    $db->query('UPDATE `'.table_users."` SET `user_pass` = '$saltedPass' WHERE `user_login` = '".sanitize($_GET["user"], 3)."'");
                     $body = sprintf($main_smarty->get_config_vars("PLIGG_PassEmail_PassBody"),
                         $main_smarty->get_config_vars("PLIGG_Visual_Name"),
-                        $my_base_url . $my_pligg_base . '/login.php',
+                        $my_base_url.$my_pligg_base.'/login.php',
                         $_GET["user"],
                         $password);
 
-                    $headers = 'From: ' . $main_smarty->get_config_vars("PLIGG_PassEmail_From") . "\r\n";
+                    $headers = 'From: '.$main_smarty->get_config_vars("PLIGG_PassEmail_From")."\r\n";
                     $headers .= "Content-type: text/html; charset=utf-8\r\n";
 
                     mail($to, $subject, $body, $headers);
@@ -406,10 +406,10 @@ if ($canIhaveAccess == 1) {
                     $navwhere['text1'] = $main_smarty->get_config_vars('PLIGG_Visual_Header_AdminPanel');
                     $navwhere['link1'] = getmyurl('admin', '');
                     $navwhere['text2'] = $main_smarty->get_config_vars('PLIGG_Visual_Header_AdminPanel_1');
-                    $navwhere['link2'] = my_pligg_base . "/admin/admin_users.php";
+                    $navwhere['link2'] = my_pligg_base."/admin/admin_users.php";
                     $navwhere['text3'] = $main_smarty->get_config_vars('PLIGG_Visual_Breadcrumb_User_Reset_Pass');
                     $main_smarty->assign('navbar_where', $navwhere);
-                    $main_smarty->assign('posttitle', " / " . $main_smarty->get_config_vars('PLIGG_Visual_Header_AdminPanel'));
+                    $main_smarty->assign('posttitle', " / ".$main_smarty->get_config_vars('PLIGG_Visual_Header_AdminPanel'));
 
                     // pagename
                     define('pagename', 'admin_users');
@@ -417,7 +417,7 @@ if ($canIhaveAccess == 1) {
 
                     // show the template
                     $main_smarty->assign('tpl_center', '/admin/user_password_reset');
-                    $main_smarty->display($template_dir . '/admin/admin.tpl');
+                    $main_smarty->display($template_dir.'/admin/admin.tpl');
                 } else {
                     showmyerror('userdoesntexist');
                 }
@@ -438,7 +438,7 @@ if ($canIhaveAccess == 1) {
             if (sanitize($_GET["user"], 3) == "admin") {
                 echo "You can't disable this user";
             } else {
-                $user= $db->get_row('SELECT * FROM ' . table_users . ' where user_login="'.sanitize($_GET["user"], 3).'"');
+                $user = $db->get_row('SELECT * FROM '.table_users.' where user_login="'.sanitize($_GET["user"], 3).'"');
 
                 canIChangeUser($user->user_level);
 
@@ -447,10 +447,10 @@ if ($canIhaveAccess == 1) {
                     $navwhere['text1'] = $main_smarty->get_config_vars('PLIGG_Visual_Header_AdminPanel');
                     $navwhere['link1'] = getmyurl('admin', '');
                     $navwhere['text2'] = $main_smarty->get_config_vars('PLIGG_Visual_Header_AdminPanel_1');
-                    $navwhere['link2'] = my_pligg_base . "/admin/admin_users.php";
+                    $navwhere['link2'] = my_pligg_base."/admin/admin_users.php";
                     $navwhere['text3'] = $main_smarty->get_config_vars('PLIGG_Visual_Breadcrumb_User_Disable');
                     $main_smarty->assign('navbar_where', $navwhere);
-                    $main_smarty->assign('posttitle', " / " . $main_smarty->get_config_vars('PLIGG_Visual_Header_AdminPanel'));
+                    $main_smarty->assign('posttitle', " / ".$main_smarty->get_config_vars('PLIGG_Visual_Header_AdminPanel'));
 
                     $main_smarty->assign('user', sanitize($_GET["user"], 3));
 
@@ -461,9 +461,9 @@ if ($canIhaveAccess == 1) {
                     // show the template
                     $main_smarty->assign('tpl_center', '/admin/user_disable');
                     if ($is_moderator == '1') {
-                        $main_smarty->display($template_dir . '/admin/moderator.tpl');
+                        $main_smarty->display($template_dir.'/admin/moderator.tpl');
                     } else {
-                        $main_smarty->display($template_dir . '/admin/admin.tpl');
+                        $main_smarty->display($template_dir.'/admin/admin.tpl');
                     }
                 } else {
                     showmyerror('userdoesntexist');
@@ -477,7 +477,7 @@ if ($canIhaveAccess == 1) {
             // code to prevent CSRF
 
             if ($CSRF->check_valid(sanitize($_GET['token'], 3), 'admin_users_disable')) {
-                $user= $db->get_row('SELECT * FROM ' . table_users . ' where user_login="'.sanitize($_GET["user"], 3).'"');
+                $user = $db->get_row('SELECT * FROM '.table_users.' where user_login="'.sanitize($_GET["user"], 3).'"');
 
                 canIChangeUser($user->user_level);
 
@@ -490,16 +490,16 @@ if ($canIhaveAccess == 1) {
                 if ($user) {
                     //					$db->query('UPDATE `' . table_users . '` SET `user_pass` = "'.$str.'" WHERE `user_login` = "'.sanitize($_GET["user"], 3).'"');
 //					$db->query('UPDATE `' . table_users . '` SET `user_email` = "'.$user->user_email.'-disable" WHERE `user_login` = "'.sanitize($_GET["user"], 3).'"');
-                    $db->query('UPDATE `' . table_users . '` SET `user_enabled` = 0 WHERE `user_login` = "'.sanitize($_GET["user"], 3).'"');
+                    $db->query('UPDATE `'.table_users.'` SET `user_enabled` = 0 WHERE `user_login` = "'.sanitize($_GET["user"], 3).'"');
 
                     // breadcrumbs and page titles
                     $navwhere['text1'] = $main_smarty->get_config_vars('PLIGG_Visual_Header_AdminPanel');
                     $navwhere['link1'] = getmyurl('admin', '');
                     $navwhere['text2'] = $main_smarty->get_config_vars('PLIGG_Visual_Header_AdminPanel_1');
-                    $navwhere['link2'] = my_pligg_base . "/admin/admin_users.php";
+                    $navwhere['link2'] = my_pligg_base."/admin/admin_users.php";
                     $navwhere['text3'] = $main_smarty->get_config_vars('PLIGG_Visual_Breadcrumb_User_Disable_2');
                     $main_smarty->assign('navbar_where', $navwhere);
-                    $main_smarty->assign('posttitle', " / " . $main_smarty->get_config_vars('PLIGG_Visual_Header_AdminPanel'));
+                    $main_smarty->assign('posttitle', " / ".$main_smarty->get_config_vars('PLIGG_Visual_Header_AdminPanel'));
 
                     // pagename
                     define('pagename', 'admin_users');
@@ -517,21 +517,21 @@ if ($canIhaveAccess == 1) {
         }
 
         if (sanitize($_GET["mode"], 3) == "enable") {
-            $user= $db->get_row('SELECT * FROM ' . table_users . ' where user_login="'.sanitize($_GET["user"], 3).'"');
+            $user = $db->get_row('SELECT * FROM '.table_users.' where user_login="'.sanitize($_GET["user"], 3).'"');
 
             canIChangeUser($user->user_level);
 
             if ($user) {
-                $db->query('UPDATE `' . table_users . '` SET `user_enabled` = 1 WHERE `user_login` = "'.sanitize($_GET["user"], 3).'"');
+                $db->query('UPDATE `'.table_users.'` SET `user_enabled` = 1 WHERE `user_login` = "'.sanitize($_GET["user"], 3).'"');
 
                     // breadcrumbs and page titles
                     $navwhere['text1'] = $main_smarty->get_config_vars('PLIGG_Visual_Header_AdminPanel');
                 $navwhere['link1'] = getmyurl('admin', '');
                 $navwhere['text2'] = $main_smarty->get_config_vars('PLIGG_Visual_Header_AdminPanel_1');
-                $navwhere['link2'] = my_pligg_base . "/admin/admin_users.php";
+                $navwhere['link2'] = my_pligg_base."/admin/admin_users.php";
                 $navwhere['text3'] = $main_smarty->get_config_vars('PLIGG_Visual_Breadcrumb_User_Disable_2');
                 $main_smarty->assign('navbar_where', $navwhere);
-                $main_smarty->assign('posttitle', " / " . $main_smarty->get_config_vars('PLIGG_Visual_Header_AdminPanel'));
+                $main_smarty->assign('posttitle', " / ".$main_smarty->get_config_vars('PLIGG_Visual_Header_AdminPanel'));
 
                     // pagename
                     define('pagename', 'admin_users');
@@ -554,7 +554,7 @@ if ($canIhaveAccess == 1) {
             if (sanitize($_GET["user"], 3) == "admin") {
                 echo "You can't killspam this user";
             } else {
-                $user= $db->get_row('SELECT * FROM ' . table_users . ' where user_login="'.sanitize($_GET["user"], 3).'"');
+                $user = $db->get_row('SELECT * FROM '.table_users.' where user_login="'.sanitize($_GET["user"], 3).'"');
 
                 canIChangeUser($user->user_level);
 
@@ -563,10 +563,10 @@ if ($canIhaveAccess == 1) {
                     $navwhere['text1'] = $main_smarty->get_config_vars('PLIGG_Visual_Header_AdminPanel');
                     $navwhere['link1'] = getmyurl('admin', '');
                     $navwhere['text2'] = $main_smarty->get_config_vars('PLIGG_Visual_Header_AdminPanel_1');
-                    $navwhere['link2'] = my_pligg_base . "/admin/admin_users.php";
+                    $navwhere['link2'] = my_pligg_base."/admin/admin_users.php";
                     $navwhere['text3'] = $main_smarty->get_config_vars('PLIGG_Visual_Breadcrumb_User_Killspam');
                     $main_smarty->assign('navbar_where', $navwhere);
-                    $main_smarty->assign('posttitle', " / " . $main_smarty->get_config_vars('PLIGG_Visual_Header_AdminPanel'));
+                    $main_smarty->assign('posttitle', " / ".$main_smarty->get_config_vars('PLIGG_Visual_Header_AdminPanel'));
 
                     // misc smarty
                     $main_smarty->assign('pagename', pagename);
@@ -580,9 +580,9 @@ if ($canIhaveAccess == 1) {
                     // show the template
                     $main_smarty->assign('tpl_center', '/admin/user_killspam');
                     if ($is_moderator == '1') {
-                        $main_smarty->display($template_dir . '/admin/moderator.tpl');
+                        $main_smarty->display($template_dir.'/admin/moderator.tpl');
                     } else {
-                        $main_smarty->display($template_dir . '/admin/admin.tpl');
+                        $main_smarty->display($template_dir.'/admin/admin.tpl');
                     }
                 } else {
                     showmyerror('userdoesntexist');
@@ -596,7 +596,7 @@ if ($canIhaveAccess == 1) {
             // code to prevent CSRF
 
             if ($CSRF->check_valid(sanitize($_GET['token'], 3), 'admin_users_killspam')) {
-                $user= $db->get_row('SELECT * FROM ' . table_users .' where user_login="'.sanitize($_GET["user"], 3).'"');
+                $user = $db->get_row('SELECT * FROM '.table_users.' where user_login="'.sanitize($_GET["user"], 3).'"');
                 killspam($user->user_id);
                 header("Location: ".my_pligg_base."/admin/admin_users.php");
                 die();
@@ -624,13 +624,13 @@ if ($canIhaveAccess == 1) {
                 $filter_sql = " user_level!='Spammer' ";
             }
 
-            if ($_GET["keyword"] && $_GET["keyword"]!= $main_smarty->get_config_vars('PLIGG_Visual_Search_SearchDefaultText')) {
+            if ($_GET["keyword"] && $_GET["keyword"] != $main_smarty->get_config_vars('PLIGG_Visual_Search_SearchDefaultText')) {
                 $search_sql = "AND (user_login LIKE '%".sanitize($_GET["keyword"], 3)."%' OR user_email LIKE '%".sanitize($_GET["keyword"], 3)."%')";
             }
 
             // figure out what "page" of the results we're on
-            $offset=(get_current_page()-1)*$pagesize;
-            $searchsql = mysql_query($sql="SELECT SQL_CALC_FOUND_ROWS * FROM " . table_users . " where $filter_sql $search_sql ORDER BY `user_date` LIMIT $offset,$pagesize");
+            $offset = (get_current_page()-1)*$pagesize;
+            $searchsql = mysql_query($sql = "SELECT SQL_CALC_FOUND_ROWS * FROM ".table_users." where $filter_sql $search_sql ORDER BY `user_date` LIMIT $offset,$pagesize");
             $rows = $db->get_var("SELECT FOUND_ROWS()");
             $userlist = array();
 
@@ -646,10 +646,10 @@ if ($canIhaveAccess == 1) {
             $navwhere['text1'] = $main_smarty->get_config_vars('PLIGG_Visual_Header_AdminPanel');
             $navwhere['link1'] = getmyurl('admin', '');
             $navwhere['text2'] = $main_smarty->get_config_vars('PLIGG_Visual_Header_AdminPanel_1');
-            $navwhere['link2'] = my_pligg_base . "/admin/admin_users.php";
-            $navwhere['text3'] = $main_smarty->get_config_vars('PLIGG_Visual_Breadcrumb_Search'). sanitize($_GET["keyword"], 3);
+            $navwhere['link2'] = my_pligg_base."/admin/admin_users.php";
+            $navwhere['text3'] = $main_smarty->get_config_vars('PLIGG_Visual_Breadcrumb_Search').sanitize($_GET["keyword"], 3);
             $main_smarty->assign('navbar_where', $navwhere);
-            $main_smarty->assign('posttitle', " / " . $main_smarty->get_config_vars('PLIGG_Visual_Header_AdminPanel'));
+            $main_smarty->assign('posttitle', " / ".$main_smarty->get_config_vars('PLIGG_Visual_Header_AdminPanel'));
 
             // pagename
             define('pagename', 'admin_users');
@@ -658,9 +658,9 @@ if ($canIhaveAccess == 1) {
             // show the template
             $main_smarty->assign('tpl_center', '/admin/users');
             if ($is_moderator == '1') {
-                $main_smarty->display($template_dir . '/admin/moderator.tpl');
+                $main_smarty->display($template_dir.'/admin/moderator.tpl');
             } else {
-                $main_smarty->display($template_dir . '/admin/admin.tpl');
+                $main_smarty->display($template_dir.'/admin/admin.tpl');
             }
         }
     } else { // No options are selected, so show the list of users.
@@ -705,8 +705,8 @@ if ($canIhaveAccess == 1) {
         }
 
         // figure out what "page" of the results we're on
-        $offset=(get_current_page()-1)*$pagesize;
-        $users = mysql_query("SELECT SQL_CALC_FOUND_ROWS * FROM " . table_users . " $filter_sql ORDER BY `user_date` DESC LIMIT $offset,$pagesize");
+        $offset = (get_current_page()-1)*$pagesize;
+        $users = mysql_query("SELECT SQL_CALC_FOUND_ROWS * FROM ".table_users." $filter_sql ORDER BY `user_date` DESC LIMIT $offset,$pagesize");
         $rows = $db->get_var("SELECT FOUND_ROWS()");
         $userlist = array();
 
@@ -723,9 +723,9 @@ if ($canIhaveAccess == 1) {
         $navwhere['text1'] = $main_smarty->get_config_vars('PLIGG_Visual_Header_AdminPanel');
         $navwhere['link1'] = getmyurl('admin', '');
         $navwhere['text2'] = $main_smarty->get_config_vars('PLIGG_Visual_Header_AdminPanel_1');
-        $navwhere['link2'] = my_pligg_base . "/admin/admin_users.php";
+        $navwhere['link2'] = my_pligg_base."/admin/admin_users.php";
         $main_smarty->assign('navbar_where', $navwhere);
-        $main_smarty->assign('posttitle', " / " . $main_smarty->get_config_vars('PLIGG_Visual_Header_AdminPanel'));
+        $main_smarty->assign('posttitle', " / ".$main_smarty->get_config_vars('PLIGG_Visual_Header_AdminPanel'));
 
         // pagename
         define('pagename', 'admin_users');
@@ -734,9 +734,9 @@ if ($canIhaveAccess == 1) {
         // show the template
         $main_smarty->assign('tpl_center', '/admin/users');
         if ($is_moderator == '1') {
-            $main_smarty->display($template_dir . '/admin/moderator.tpl');
+            $main_smarty->display($template_dir.'/admin/moderator.tpl');
         } else {
-            $main_smarty->display($template_dir . '/admin/admin.tpl');
+            $main_smarty->display($template_dir.'/admin/admin.tpl');
         }
     }
 } else {
@@ -752,10 +752,10 @@ function showmyerror()
     $navwhere['text1'] = $main_smarty->get_config_vars('PLIGG_Visual_Header_AdminPanel');
     $navwhere['link1'] = getmyurl('admin', '');
     $navwhere['text2'] = $main_smarty->get_config_vars('PLIGG_Visual_Header_AdminPanel_1');
-    $navwhere['link2'] = my_pligg_base . "/admin/admin_users.php";
+    $navwhere['link2'] = my_pligg_base."/admin/admin_users.php";
     $navwhere['text3'] = $main_smarty->get_config_vars('PLIGG_Visual_Breadcrumb_User_Does_Not_Exist');
     $main_smarty->assign('navbar_where', $navwhere);
-    $main_smarty->assign('posttitle', " / " . $main_smarty->get_config_vars('PLIGG_Visual_Header_AdminPanel'));
+    $main_smarty->assign('posttitle', " / ".$main_smarty->get_config_vars('PLIGG_Visual_Header_AdminPanel'));
 
     // pagename	define('pagename', 'admin_users');
 
@@ -764,8 +764,8 @@ function showmyerror()
     // show the template
     $main_smarty->assign('tpl_center', '/admin/user_does_not_exist');
     if ($is_moderator == '1') {
-        $main_smarty->display($template_dir . '/admin/moderator.tpl');
+        $main_smarty->display($template_dir.'/admin/moderator.tpl');
     } else {
-        $main_smarty->display($template_dir . '/admin/admin.tpl');
+        $main_smarty->display($template_dir.'/admin/admin.tpl');
     }
 }

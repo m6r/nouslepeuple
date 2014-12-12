@@ -18,7 +18,7 @@
     51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 */
 // the path to the module. the probably shouldn't be changed unless you rename the xml_sitemaps folder(s)
-define('xml_sitemaps_path', my_pligg_base . '/modules/xml_sitemaps/');
+define('xml_sitemaps_path', my_pligg_base.'/modules/xml_sitemaps/');
 
 // the path to the module. the probably shouldn't be changed unless you rename the xml_sitemaps folder(s)
 define('xml_sitemaps_lang_conf', '/modules/xml_sitemaps/lang.conf');

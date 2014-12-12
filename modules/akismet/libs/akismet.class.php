@@ -145,12 +145,12 @@ class AkismetHttpClient extends AkismetObject
 
         if ($this->con && !$this->isError(AKISMET_SERVER_NOT_FOUND)) {
             $request  =
-                    strToUpper($type)." /{$this->akismetVersion}/$path HTTP/1.0\r\n" .
-                    "Host: ".((!empty($this->apiKey)) ? $this->apiKey."." : null)."{$this->host}\r\n" .
-                    "Content-Type: application/x-www-form-urlencoded; charset=utf-8\r\n" .
-                    "Content-Length: ".strlen($request)."\r\n" .
-                    "User-Agent: Akismet PHP4 Class\r\n" .
-                    "\r\n" .
+                    strToUpper($type)." /{$this->akismetVersion}/$path HTTP/1.0\r\n".
+                    "Host: ".((!empty($this->apiKey)) ? $this->apiKey."." : null)."{$this->host}\r\n".
+                    "Content-Type: application/x-www-form-urlencoded; charset=utf-8\r\n".
+                    "Content-Length: ".strlen($request)."\r\n".
+                    "User-Agent: Akismet PHP4 Class\r\n".
+                    "\r\n".
                     $request
                 ;
             $response = "";
@@ -213,7 +213,7 @@ class Akismet extends AkismetObject
             'SERVER_ADMIN',
             'QUERY_STRING',
             'PHP_SELF',
-            'argv'
+            'argv',
         );
 
     var $blogUrl = "";
@@ -326,7 +326,7 @@ class Akismet extends AkismetObject
                 'author' => 'comment_author',
                 'email' => 'comment_author_email',
                 'website' => 'comment_author_url',
-                'body' => 'comment_content'
+                'body' => 'comment_content',
             );
 
         foreach ($format as $short => $long) {
@@ -359,7 +359,7 @@ class Akismet extends AkismetObject
         $query_string = '';
 
         foreach ($this->comment as $key => $data) {
-            $query_string .= $key . '=' . urlencode(stripslashes($data)) . '&';
+            $query_string .= $key.'='.urlencode(stripslashes($data)).'&';
         }
 
         return $query_string;

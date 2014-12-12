@@ -83,7 +83,7 @@ class Akismet
                             'DOCUMENT_ROOT',
                             'SERVER_ADMIN',
                             'QUERY_STRING',
-                            'PHP_SELF' );
+                            'PHP_SELF', );
 
     /**
      *	@param	string	$blogURL			The URL of your blog.
@@ -128,18 +128,18 @@ class Akismet
     public function isKeyValid()
     {
         // Check to see if the key is valid
-        $response = $this->sendRequest('key=' . $this->wordPressAPIKey . '&blog=' . $this->blogURL, $this->akismetServer, '/' . $this->akismetVersion . '/verify-key');
+        $response = $this->sendRequest('key='.$this->wordPressAPIKey.'&blog='.$this->blogURL, $this->akismetServer, '/'.$this->akismetVersion.'/verify-key');
         return $response[1] == 'valid';
     }
 
     // makes a request to the Akismet service
     private function sendRequest($request, $host, $path)
     {
-        $http_request  = "POST " . $path . " HTTP/1.0\r\n";
-        $http_request .= "Host: " . $host . "\r\n";
+        $http_request  = "POST ".$path." HTTP/1.0\r\n";
+        $http_request .= "Host: ".$host."\r\n";
         $http_request .= "Content-Type: application/x-www-form-urlencoded; charset=utf-8\r\n";
-        $http_request .= "Content-Length: " . strlen($request) . "\r\n";
-        $http_request .= "User-Agent: Akismet PHP5 Class " . $this->version . " | Akismet/1.11\r\n";
+        $http_request .= "Content-Length: ".strlen($request)."\r\n";
+        $http_request .= "User-Agent: Akismet PHP5 Class ".$this->version." | Akismet/1.11\r\n";
         $http_request .= "\r\n";
         $http_request .= $request;
 
@@ -166,7 +166,7 @@ class Akismet
 
         foreach ($this->comment as $key => $data) {
             if (!is_array($data)) {
-                $query_string .= $key . '=' . urlencode(stripslashes($data)) . '&';
+                $query_string .= $key.'='.urlencode(stripslashes($data)).'&';
             }
         }
 
@@ -183,7 +183,7 @@ class Akismet
      */
     public function isCommentSpam()
     {
-        $response = $this->sendRequest($this->getQueryString(), $this->wordPressAPIKey . '.rest.akismet.com', '/' . $this->akismetVersion . '/comment-check');
+        $response = $this->sendRequest($this->getQueryString(), $this->wordPressAPIKey.'.rest.akismet.com', '/'.$this->akismetVersion.'/comment-check');
 
         if ($response[1] == 'invalid' && !$this->isKeyValid()) {
             throw new exception('The Wordpress API key passed to the Akismet constructor is invalid.  Please obtain a valid one from http://wordpress.com/api-keys/');
@@ -199,7 +199,7 @@ class Akismet
      */
     public function submitSpam()
     {
-        $this->sendRequest($this->getQueryString(), $this->wordPressAPIKey . '.' . $this->akismetServer, '/' . $this->akismetVersion . '/submit-spam');
+        $this->sendRequest($this->getQueryString(), $this->wordPressAPIKey.'.'.$this->akismetServer, '/'.$this->akismetVersion.'/submit-spam');
     }
 
     /**
@@ -209,7 +209,7 @@ class Akismet
      */
     public function submitHam()
     {
-        $this->sendRequest($this->getQueryString(), $this->wordPressAPIKey . '.' . $this->akismetServer, '/' . $this->akismetVersion . '/submit-ham');
+        $this->sendRequest($this->getQueryString(), $this->wordPressAPIKey.'.'.$this->akismetServer, '/'.$this->akismetVersion.'/submit-ham');
     }
 
     /**
@@ -364,7 +364,7 @@ class SocketWriteRead
         $fs = fsockopen($this->host, $this->port, $this->errorNumber, $this->errorString, 3);
 
         if ($this->errorNumber != 0) {
-            throw new Exception('Error connecting to host: ' . $this->host . ' Error number: ' . $this->errorNumber . ' Error message: ' . $this->errorString);
+            throw new Exception('Error connecting to host: '.$this->host.' Error number: '.$this->errorNumber.' Error message: '.$this->errorString);
         }
 
         if ($fs !== false) {

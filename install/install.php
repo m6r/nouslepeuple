@@ -5,7 +5,7 @@ error_reporting(E_ALL ^ E_NOTICE ^ E_WARNING ^ E_STRICT);
 $page = 'install';
 
 if (isset($_REQUEST['step'])) {
-    $step=addslashes(strip_tags($_REQUEST['step']));
+    $step = addslashes(strip_tags($_REQUEST['step']));
 }
 
 //check for no steps, start on step1
@@ -18,16 +18,16 @@ if ($step == 0) {
     include('install_language.php');
 }
 
-$include='header.php';
+$include = 'header.php';
 if (file_exists($include)) {
     include_once($include);
 }
-$include='functions.php';
+$include = 'functions.php';
 if (file_exists($include)) {
     require_once($include);
 }
 
-echo '<div class="steps"><legend>' . $lang['Step'] . ' '.$step.'</legend></div>';
+echo '<div class="steps"><legend>'.$lang['Step'].' '.$step.'</legend></div>';
 echo '<div class="installercontent">';
 
 // intro
@@ -60,6 +60,6 @@ if ($step == 5) {
 
 echo '</div>';
 
-$include='footer.php'; if (file_exists($include)) {
+$include = 'footer.php'; if (file_exists($include)) {
      include_once($include);
  }

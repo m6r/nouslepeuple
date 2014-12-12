@@ -28,7 +28,7 @@ $offset = (get_current_page() - 1) * $top_users_size;
 
 // always check groups (to hide private groups)
 $from = " LEFT JOIN ".table_groups." ON ".table_links.".link_group_id = ".table_groups.".group_id ";
-$groups = $db->get_results("SELECT * FROM " . table_group_member . " WHERE member_user_id = {$current_user->user_id} and member_status = 'active'");
+$groups = $db->get_results("SELECT * FROM ".table_group_member." WHERE member_user_id = {$current_user->user_id} and member_status = 'active'");
 if ($groups) {
     $group_ids = array();
     foreach ($groups as $group) {
@@ -42,8 +42,8 @@ if ($groups) {
 }
 
 $select = "SELECT * ";
-$from_where = " FROM " . table_links . "
-		LEFT JOIN " . table_users . " ON link_author=user_id
+$from_where = " FROM ".table_links."
+		LEFT JOIN ".table_users." ON link_author=user_id
 		$from
 		WHERE link_status = 'new' $where";
 $order_by = " ORDER BY link_id DESC";
@@ -86,5 +86,5 @@ $main_smarty->assign('live_pagination', do_pages($rows, $top_users_size, "unpubl
 $main_smarty = do_sidebar($main_smarty);
 
 // show the template
-$main_smarty->assign('tpl_center', $the_template . '/live_unpublished_center');
-$main_smarty->display($the_template . '/pligg.tpl');
+$main_smarty->assign('tpl_center', $the_template.'/live_unpublished_center');
+$main_smarty->display($the_template.'/pligg.tpl');

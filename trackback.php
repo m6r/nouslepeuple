@@ -55,7 +55,7 @@ if (!is_numeric($tb_id)) {
 
 if (empty($title) && empty($tb_url) && empty($blog_name)) {
     // If it doesn't look like a trackback at all...
-    header('Location: ' . getmyFullurl("story", $tb_id));
+    header('Location: '.getmyFullurl("story", $tb_id));
     exit;
 }
 
@@ -63,35 +63,35 @@ if (!empty($tb_url) && !empty($title) && !empty($tb_url)) {
     header('Content-Type: text/xml; charset=UTF-8');
 
     $title =  htmlspecialchars(strip_tags($title));
-    $title = (strlen($title) > 150) ? substr($title, 0, 150) . '...' : $title;
+    $title = (strlen($title) > 150) ? substr($title, 0, 150).'...' : $title;
     $excerpt = strip_tags($excerpt);
-    $excerpt = (strlen($excerpt) > 200) ? substr($excerpt, 0, 200) . '...' : $excerpt;
+    $excerpt = (strlen($excerpt) > 200) ? substr($excerpt, 0, 200).'...' : $excerpt;
 
     $trackres = new Trackback;
-    $trackres->link=$tb_id;
-    $trackres->type='in';
+    $trackres->link = $tb_id;
+    $trackres->type = 'in';
     $trackres->url = $tb_url;
     $dupe = $trackres->read();
     if ($dupe) {
         trackback_response(1, $main_smarty->get_config_vars('PLIGG_Visual_Trackback_AlreadyPing'));
     }
 
-    $contents=@file_get_contents($tb_url);
+    $contents = @file_get_contents($tb_url);
     if (!$contents) {
         trackback_response(1, $main_smarty->get_config_vars('PLIGG_Visual_Trackback_BadURL'));
     }
 
 
-    $permalink=get_permalink($tb_id);
-    $permalink_q=preg_quote($permalink, '/');
-    $pattern="/<\s*a.*href\s*=[\"'\s]*".$permalink_q."[\"'\s]*.*>.*<\s*\/\s*a\s*>/i";
+    $permalink = get_permalink($tb_id);
+    $permalink_q = preg_quote($permalink, '/');
+    $pattern = "/<\s*a.*href\s*=[\"'\s]*".$permalink_q."[\"'\s]*.*>.*<\s*\/\s*a\s*>/i";
     if (!preg_match($pattern, $contents)) {
         trackback_response(1, $main_smarty->get_config_vars('PLIGG_Visual_Trackback_NoReturnLink'));
     }
 
-    $trackres->title=$title;
-    $trackres->content=$excerpt;
-    $trackres->status='ok';
+    $trackres->title = $title;
+    $trackres->content = $excerpt;
+    $trackres->status = 'ok';
     $trackres->store();
 
     trackback_response(0);

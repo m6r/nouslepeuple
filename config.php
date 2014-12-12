@@ -57,7 +57,7 @@ define("mnmpath", dirname(__FILE__).'/');
 define("mnminclude", dirname(__FILE__).'/libs/');
 define("mnmmodules", dirname(__FILE__).'/modules/');
 
-include_once mnminclude . 'pre_install_check.php';
+include_once mnminclude.'pre_install_check.php';
 include_once 'settings.php';
 
 function sanit($var)
@@ -66,12 +66,12 @@ function sanit($var)
 }
 
 if ($my_base_url == '') {
-    define('my_base_url', "http://" . $_SERVER["HTTP_HOST"]);
+    define('my_base_url', "http://".$_SERVER["HTTP_HOST"]);
 
     if (isset($_REQUEST['action'])) {
         $action = sanit($_REQUEST['action']);
     } else {
-        $action="";
+        $action = "";
     }
 
     $pos = strrpos($_SERVER["SCRIPT_NAME"], "/");
@@ -95,23 +95,23 @@ if (isset($_COOKIE['template'])) {
 }
 
 // template check
-$file = dirname(__FILE__) . '/templates/' . $thetemp . "/pligg.tpl";
+$file = dirname(__FILE__).'/templates/'.$thetemp."/pligg.tpl";
 unset($errors);
 if (!file_exists($file)) {
-    $errors[]='You may have typed the template name wrong or "'. $thetemp . '" does not exist. Click <a href = "admin/admin_config.php?page=Template">here</a> to fix it.';
+    $errors[] = 'You may have typed the template name wrong or "'.$thetemp.'" does not exist. Click <a href = "admin/admin_config.php?page=Template">here</a> to fix it.';
 }
 
 if (isset($errors)) {
     // Name of the default Pligg template
     $thetemp = "bootstrap";
-    $file = dirname(__FILE__) . '/templates/' . $thetemp . "/pligg.tpl";
+    $file = dirname(__FILE__).'/templates/'.$thetemp."/pligg.tpl";
     if (!file_exists($file)) {
         echo 'The default template "Bootstrap" does not exist anymore. Please fix this by reuploading the Bootstrap template!';
         die();
     }
 
     foreach ($errors as $error) {
-        $output.="<p><b>Error:</b> $error</p>\n";
+        $output .= "<p><b>Error:</b> $error</p>\n";
     }
 
     if (strpos($_SERVER['SCRIPT_NAME'], "admin_config.php") == 0 && strpos($_SERVER['SCRIPT_NAME'], "login.php") == 0) {
@@ -184,21 +184,21 @@ if (!isset($include_login) || $include_login !== false) {
     include_once mnminclude.'login.php';
 }
 
-if (!file_exists(dirname(__FILE__) . '/languages/lang_'.$language.'.conf')) {
+if (!file_exists(dirname(__FILE__).'/languages/lang_'.$language.'.conf')) {
     // If the user language file does not exist, attempt to use the site default
     $language = $settings_language; // Back where we started. The settings.php file value.
 }
-if (!file_exists(dirname(__FILE__) . '/languages/lang_'.$language.'.conf')) {
+if (!file_exists(dirname(__FILE__).'/languages/lang_'.$language.'.conf')) {
     // If all else fails, default to the english language file
     $language = 'english';
 }
 define('pligg_language', $language);
 
-if (!file_exists(dirname(__FILE__) . '/languages/lang_'.$language.'.conf')) {
-    die('The language file /languages/lang_' . $language . '.conf does not exist. Either this file is missing or the server does not have permission to read it. Make sure that you renamed the file /languages/lang_' . $language . '.conf.default to /languages/lang_' . $language . '.conf.');
+if (!file_exists(dirname(__FILE__).'/languages/lang_'.$language.'.conf')) {
+    die('The language file /languages/lang_'.$language.'.conf does not exist. Either this file is missing or the server does not have permission to read it. Make sure that you renamed the file /languages/lang_'.$language.'.conf.default to /languages/lang_'.$language.'.conf.');
 }
 
-include_once(mnmmodules . 'modules_init.php');
+include_once(mnmmodules.'modules_init.php');
 include mnminclude.'utf8/utf8.php';
 include_once(mnminclude.'dbtree.php');
 

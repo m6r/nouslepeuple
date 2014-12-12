@@ -22,7 +22,7 @@ $canIhaveAccess = $canIhaveAccess + checklevel('admin');
 if ($current_user->user_id != get_group_creator($_REQUEST['id']) && $canIhaveAccess == 0) {
     //	$main_smarty->assign('tpl_center', '/templates/admin/admin_access_denied');
 //	$main_smarty->display($template_dir . '/admin/admin.tpl');
-    header("Location: " . getmyurl('login', $_SERVER['REQUEST_URI']));
+    header("Location: ".getmyurl('login', $_SERVER['REQUEST_URI']));
     die();
 }
 

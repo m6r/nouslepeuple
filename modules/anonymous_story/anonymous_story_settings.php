@@ -1,7 +1,7 @@
 <?php
 
 // the path to the module. the probably shouldn't be changed unless you rename the embed_videos folder(s)
-define('anonymous_story_path', my_pligg_base . '/modules/anonymous_story/');
+define('anonymous_story_path', my_pligg_base.'/modules/anonymous_story/');
 
 // the language path for the module
     if (!defined('lang_loc')) {
@@ -19,8 +19,8 @@ define('anonymous_story_path', my_pligg_base . '/modules/anonymous_story/');
         }
     }
 
-define('anonymous_story_lang_conf', lang_loc . '/modules/anonymous_story/lang.conf');
-define('anonymous_story_pligg_lang_conf', lang_loc . "/languages/lang_" . pligg_language . ".conf");
+define('anonymous_story_lang_conf', lang_loc.'/modules/anonymous_story/lang.conf');
+define('anonymous_story_pligg_lang_conf', lang_loc."/languages/lang_".pligg_language.".conf");
 
 // the path to the modules templates. the probably shouldn't be changed unless you rename the embed_videos folder(s)
 define('anonymous_story_tpl_path', '../modules/anonymous_story/templates/');

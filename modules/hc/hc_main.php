@@ -21,7 +21,7 @@ function hc_register(&$vars)
     $number1 = md5(mt_rand($q_1_low, $q_1_high));
     do {
         $number2 = md5(mt_rand($q_2_low, $q_2_high));
-    } while ($number2==$number1);
+    } while ($number2 == $number1);
     $number3 = md5(mt_rand($q_2_low, $q_2_high));
 
     $_SESSION['titlename'] = $number1;
@@ -39,10 +39,10 @@ function add_header_comment($tpl_source, &$smarty)
     return str_replace(
         array('name="title"',
               'name="comment_content"',
-              'name="bodytext"'),
+              'name="bodytext"', ),
         array('name="{$templatelite.session.titlename}"',
               'name="{$templatelite.session.commentname}"',
-              'name="{$templatelite.session.bodyname}"'),
+              'name="{$templatelite.session.bodyname}"', ),
         $tpl_source);
 }
 

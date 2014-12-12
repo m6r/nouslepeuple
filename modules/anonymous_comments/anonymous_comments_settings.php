@@ -1,7 +1,7 @@
 <?php
 
 // the path to the module. the probably shouldn't be changed unless you rename the embed_videos folder(s)
-define('anonymous_comments_path', my_pligg_base . '/modules/anonymous_comments/');
+define('anonymous_comments_path', my_pligg_base.'/modules/anonymous_comments/');
 
 // the language path for the module
     if (!defined('lang_loc')) {
@@ -19,8 +19,8 @@ define('anonymous_comments_path', my_pligg_base . '/modules/anonymous_comments/'
         }
     }
 
-define('anonymous_comments_lang_conf', lang_loc . '/modules/anonymous_comments/lang.conf');
-define('anonymous_comments_pligg_lang_conf', lang_loc . "/languages/lang_" . pligg_language . ".conf");
+define('anonymous_comments_lang_conf', lang_loc.'/modules/anonymous_comments/lang.conf');
+define('anonymous_comments_pligg_lang_conf', lang_loc."/languages/lang_".pligg_language.".conf");
 
 // the path to the modules templates. the probably shouldn't be changed unless you rename the embed_videos folder(s)
 define('anonymous_comments_tpl_path', '../modules/anonymous_comments/templates/');

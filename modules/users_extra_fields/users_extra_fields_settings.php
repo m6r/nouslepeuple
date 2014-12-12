@@ -1,7 +1,7 @@
 <?php
 
 // the path to the module. the probably shouldn't be changed unless you rename the users_extra_fields folder(s)
-define('users_extra_fields_path', my_pligg_base . '/modules/users_extra_fields/');
+define('users_extra_fields_path', my_pligg_base.'/modules/users_extra_fields/');
 // the path to the module. the probably shouldn't be changed unless you rename the users_extra_fields folder(s)
 define('users_extra_fields_lang_conf', '/modules/users_extra_fields/lang.conf');
 // the path to the modules templates. the probably shouldn't be changed unless you rename the users_extra_fields folder(s)

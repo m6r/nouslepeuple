@@ -1,6 +1,6 @@
 <?php
 // the path to the module. the probably shouldn't be changed unless you rename the spam_trigger folder(s)
-define('spam_trigger_path', my_pligg_base . '/modules/spam_trigger/');
+define('spam_trigger_path', my_pligg_base.'/modules/spam_trigger/');
 
 // the path to the module. the probably shouldn't be changed unless you rename the module_store folder(s)
     if (!defined('lang_loc')) {
@@ -18,8 +18,8 @@ define('spam_trigger_path', my_pligg_base . '/modules/spam_trigger/');
         }
     }
 
-define('spam_trigger_lang_conf', lang_loc . '/modules/spam_trigger/lang.conf');
-define('spam_trigger_pligg_lang_conf', lang_loc . "/languages/lang_" . pligg_language . ".conf");
+define('spam_trigger_lang_conf', lang_loc.'/modules/spam_trigger/lang.conf');
+define('spam_trigger_pligg_lang_conf', lang_loc."/languages/lang_".pligg_language.".conf");
 
 // the path to the modules templates. the probably shouldn't be changed unless you rename the spam_trigger folder(s)
 define('spam_trigger_tpl_path', '../modules/spam_trigger/templates/');

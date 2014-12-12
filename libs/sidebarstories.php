@@ -20,7 +20,7 @@ class SidebarStories
     {
         global $main_smarty, $db, $cached_links, $current_user;
         include_once(mnminclude.'search.php');
-        $search=new Search();
+        $search = new Search();
         $search->orderBy = $this->orderBy;
         $search->pagesize = $this->pagesize;
         $search->filterToStatus = $this->filterToStatus;
@@ -60,7 +60,7 @@ class SidebarStories
             // setup the link cache
             $i = 0;
             // if this query changes also change it in the read() function in /libs/link.php
-            $sql = "SELECT " . table_links . ".* FROM " . table_links . " WHERE ";
+            $sql = "SELECT ".table_links.".* FROM ".table_links." WHERE ";
             foreach ($the_results as $link_id) {
                 // first make sure we don't already have it cached
                 if (!isset($cached_links[$link_id])) {
@@ -91,14 +91,14 @@ class SidebarStories
 
         if ($links) {
             foreach ($links as $link_id) {
-                $link->id=$link_id;
+                $link->id = $link_id;
                 $link->check_saved = false;
                 $link->get_author_info = false;
                 $link->check_friends = false;
                 $link->read();
 
                 if (is_numeric($this->TitleLengthLimit) && strlen($link->title) > $this->TitleLengthLimit) {
-                    $link->title = utf8_substr($link->title, 0, $this->TitleLengthLimit) . '...';
+                    $link->title = utf8_substr($link->title, 0, $this->TitleLengthLimit).'...';
                 }
 
                 $main_smarty = $link->fill_smarty($main_smarty);

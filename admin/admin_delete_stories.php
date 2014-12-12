@@ -19,7 +19,7 @@ $canIhaveAccess = 0;
 $canIhaveAccess = $canIhaveAccess + checklevel('admin');
 
 if ($canIhaveAccess == 0) {
-    header("Location: " . getmyurl('admin_login', $_SERVER['REQUEST_URI']));
+    header("Location: ".getmyurl('admin_login', $_SERVER['REQUEST_URI']));
     die();
 }
 
@@ -31,52 +31,52 @@ function delete_storylink($linkid)
     }
 
 
-    $query="SELECT * FROM " . table_links . " WHERE link_id = '$linkid'";
-    if (! $result=mysql_query($query)) {
+    $query = "SELECT * FROM ".table_links." WHERE link_id = '$linkid'";
+    if (! $result = mysql_query($query)) {
         error_page(mysql_error());
     } else {
         $sql_array = mysql_fetch_object($result);
     }
 
     # delete the story link
-    $query="DELETE FROM " . table_links . " WHERE link_id = '$linkid'";
-    if (! $result=mysql_query($query)) {
+    $query = "DELETE FROM ".table_links." WHERE link_id = '$linkid'";
+    if (! $result = mysql_query($query)) {
         error_page(mysql_error());
     }
 
     # delete the story comments
-    $query="DELETE FROM " . table_comments . " WHERE comment_link_id = '$linkid'";
-    if (! $result=mysql_query($query)) {
+    $query = "DELETE FROM ".table_comments." WHERE comment_link_id = '$linkid'";
+    if (! $result = mysql_query($query)) {
         error_page(mysql_error());
     }
 
     # delete the saved links
-    $query="DELETE FROM " . table_saved_links . " WHERE saved_link_id = '$linkid'";
-    if (! $result=mysql_query($query)) {
+    $query = "DELETE FROM ".table_saved_links." WHERE saved_link_id = '$linkid'";
+    if (! $result = mysql_query($query)) {
         error_page(mysql_error());
     }
 
     # delete the story tags
-    $query="DELETE FROM " . table_tags . " WHERE tag_link_id = '$linkid'";
-    if (! $result=mysql_query($query)) {
+    $query = "DELETE FROM ".table_tags." WHERE tag_link_id = '$linkid'";
+    if (! $result = mysql_query($query)) {
         error_page(mysql_error());
     }
 
     # delete the story trackbacks
-    $query="DELETE FROM " . table_trackbacks . " WHERE trackback_link_id = '$linkid'";
-    if (! $result=mysql_query($query)) {
+    $query = "DELETE FROM ".table_trackbacks." WHERE trackback_link_id = '$linkid'";
+    if (! $result = mysql_query($query)) {
         error_page(mysql_error());
     }
 
     # delete the story votes
-    $query="DELETE FROM " . table_votes . " WHERE vote_link_id = '$linkid'";
-    if (! $result=mysql_query($query)) {
+    $query = "DELETE FROM ".table_votes." WHERE vote_link_id = '$linkid'";
+    if (! $result = mysql_query($query)) {
         error_page(mysql_error());
     }
 
     # delete additional categories
-    $query="DELETE FROM ".table_additional_categories." WHERE ac_link_id = '$linkid'";
-    if (! $result=mysql_query($query)) {
+    $query = "DELETE FROM ".table_additional_categories." WHERE ac_link_id = '$linkid'";
+    if (! $result = mysql_query($query)) {
         error_page(mysql_error());
     }
 
@@ -86,7 +86,7 @@ function delete_storylink($linkid)
 }
 
 
-$sql_query = "SELECT * FROM " . table_links . " WHERE link_status = 'discard'";
+$sql_query = "SELECT * FROM ".table_links." WHERE link_status = 'discard'";
 
 $result_storylinks = mysql_query($sql_query);
 $num_rows = mysql_num_rows($result_storylinks);
@@ -95,18 +95,18 @@ $num_rows = mysql_num_rows($result_storylinks);
                 }
 
 # set discards total to zero
-$query="UPDATE " . table_totals . " SET total = '0' WHERE name = 'discard'";
+$query = "UPDATE ".table_totals." SET total = '0' WHERE name = 'discard'";
 if (!mysql_query($query)) {
     error_page(mysql_error());
 }
 
-$query="DELETE FROM " . table_tag_cache;
+$query = "DELETE FROM ".table_tag_cache;
 if (!mysql_query($query)) {
     error_page(mysql_error());
 }
 
 # Redwine - Sidebar tag cache fix
-$sql="INSERT INTO ".table_tag_cache." select tag_words, count(DISTINCT link_id) as count FROM ".table_tags.", ".table_links." WHERE tag_lang='en' and link_id = tag_link_id and (link_status='published' OR link_status='new') GROUP BY tag_words order by count desc";
+$sql = "INSERT INTO ".table_tag_cache." select tag_words, count(DISTINCT link_id) as count FROM ".table_tags.", ".table_links." WHERE tag_lang='en' and link_id = tag_link_id and (link_status='published' OR link_status='new') GROUP BY tag_words order by count desc";
 if (!mysql_query($sql)) {
     error_page(mysql_error());
 }
@@ -123,7 +123,7 @@ if (!mysql_query($sql)) {
 		<div class="modal-body">
 			<?php
                 $query = "SHOW TABLE STATUS";
-                $result=mysql_query($query);
+                $result = mysql_query($query);
                 $table_list = "";
                 while ($cur_table = mysql_fetch_object($result)) {
                     $table_list .= $cur_table->Name.", ";

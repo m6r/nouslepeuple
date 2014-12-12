@@ -7,13 +7,13 @@ if (!defined('mnminclude')) {
 
 function isIPIn($ip, $net, $mask)
 {
-    $lnet=ip2long($net);
-    $lip=ip2long($ip);
-    $binnet=str_pad(decbin($lnet), 32, "0", STR_PAD_LEFT);
-    $firstpart=substr($binnet, 0, $mask);
-    $binip=str_pad(decbin($lip), 32, "0", STR_PAD_LEFT);
-    $firstip=substr($binip, 0, $mask);
-    return(strcmp($firstpart, $firstip)==0);
+    $lnet = ip2long($net);
+    $lip = ip2long($ip);
+    $binnet = str_pad(decbin($lnet), 32, "0", STR_PAD_LEFT);
+    $firstpart = substr($binnet, 0, $mask);
+    $binip = str_pad(decbin($lip), 32, "0", STR_PAD_LEFT);
+    $firstip = substr($binip, 0, $mask);
+    return(strcmp($firstpart, $firstip) == 0);
 }
 
 
@@ -21,7 +21,7 @@ function isPrivateIP($ip)
 {
     $privates = array("127.0.0.0/24", "10.0.0.0/8", "172.16.0.0/12", "192.168.0.0/16");
     foreach ($privates as $k) {
-        list($net, $mask)=preg_split("/", $k);
+        list($net, $mask) = preg_split("/", $k);
         if (isIPIn($ip, $net, $mask)) {
             return true;
         }

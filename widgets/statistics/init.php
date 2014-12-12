@@ -9,55 +9,55 @@ $widget['version'] = 0.2;
 
 $sw_version = get_misc_data('sw_version');
 if ($sw_version == '') {
-    $sw_version='1';
+    $sw_version = '1';
 }
 $sw_members = get_misc_data('sw_members');
 if ($sw_members == '') {
-    $sw_members='1';
+    $sw_members = '1';
 }
 $sw_groups = get_misc_data('sw_groups');
 if ($sw_groups == '') {
-    $sw_groups='1';
+    $sw_groups = '1';
 }
 $sw_links = get_misc_data('sw_links');
 if ($sw_links == '') {
-    $sw_links='1';
+    $sw_links = '1';
 }
 $sw_published = get_misc_data('sw_published');
 if ($sw_published == '') {
-    $sw_published='1';
+    $sw_published = '1';
 }
 $sw_new = get_misc_data('sw_new');
 if ($sw_new == '') {
-    $sw_new='1';
+    $sw_new = '1';
 }
 $sw_votes = get_misc_data('sw_votes');
 if ($sw_votes == '') {
-    $sw_votes='1';
+    $sw_votes = '1';
 }
 $sw_comments = get_misc_data('sw_comments');
 if ($sw_comments == '') {
-    $sw_comments='1';
+    $sw_comments = '1';
 }
 $sw_newuser = get_misc_data('sw_newuser');
 if ($sw_newuser == '') {
-    $sw_newuser='1';
+    $sw_newuser = '1';
 }
 $phpver = get_misc_data('phpver');
 if ($phpver == '') {
-    $phpver='1';
+    $phpver = '1';
 }
 $mysqlver = get_misc_data('mysqlver');
 if ($mysqlver == '') {
-    $mysqlver='1';
+    $mysqlver = '1';
 }
 $sw_dbsize = get_misc_data('sw_dbsize');
 if ($sw_dbsize == '') {
-    $sw_dbsize='1';
+    $sw_dbsize = '1';
 }
 
 
-if ($_REQUEST['widget']=='statistics') {
+if ($_REQUEST['widget'] == 'statistics') {
     if (isset($_REQUEST['version'])) {
         $sw_version = sanitize($_REQUEST['version'], 3);
     }

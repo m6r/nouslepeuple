@@ -7,12 +7,12 @@ if (!defined('mnminclude')) {
 
 class Vote
 {
-    var $type='';
-    var $user=-1;
-    var $value=1;
-    var $karma=0;
+    var $type = '';
+    var $user = -1;
+    var $value = 1;
+    var $karma = 0;
     var $link;
-    var $ip='';
+    var $ip = '';
 
     function Vote()
     {
@@ -27,7 +27,7 @@ class Vote
         }
 
         $where = "vote_type='$this->type' AND vote_link_id=$this->link AND vote_value $value";
-        $sum=$db->get_var("SELECT sum(vote_value) FROM " . table_votes . " WHERE $where");
+        $sum = $db->get_var("SELECT sum(vote_value) FROM ".table_votes." WHERE $where");
         $sum = $this->adjust($sum);
         return $sum;
     }
@@ -38,7 +38,7 @@ class Vote
         return $vote_sum / 10;
     }
 
-    function reports($value="< 0")
+    function reports($value = "< 0")
     {
         global $db;
         if (!is_numeric($this->link)) {
@@ -54,11 +54,11 @@ class Vote
             /////
             if ($this->ip == '') {
                 require_once(mnminclude.'check_behind_proxy.php');
-                $this->ip=check_ip_behind_proxy();
+                $this->ip = check_ip_behind_proxy();
             }
             $where .= " AND vote_ip='$this->ip'";
         }
-        $count=$db->get_var("SELECT count(*) FROM " . table_votes . " WHERE $where");
+        $count = $db->get_var("SELECT count(*) FROM ".table_votes." WHERE $where");
         return $count;
     }
 
@@ -91,7 +91,7 @@ class Vote
         if ($cache_user == 0 || !empty($this->ip)) {
             if ($this->ip == '') {
                 require_once(mnminclude.'check_behind_proxy.php');
-                $this->ip=check_ip_behind_proxy();
+                $this->ip = check_ip_behind_proxy();
                 $cache_user = $this->ip;
             }
         }
@@ -109,7 +109,7 @@ class Vote
                     if ($i > 0) {
                         $where .= ' OR ';
                     }
-                    $where .= ' vote_link_id = ' . $linkid;
+                    $where .= ' vote_link_id = '.$linkid;
                     $get_data = true;
                     $i = $i + 1;
                 } else {
@@ -135,7 +135,7 @@ class Vote
         }
 
         if ($get_data == TRUE) {
-            $sql = $db->get_results("SELECT * FROM " . table_votes . " WHERE $where");
+            $sql = $db->get_results("SELECT * FROM ".table_votes." WHERE $where");
 
             if ($cacheit == TRUE) {
                 if ($sql) {
@@ -191,11 +191,11 @@ class Vote
     {
         global $db;
         $where = "vote_type='$this->type' AND vote_link_id=$this->link";
-        $sql=$db->get_results("SELECT * FROM " . table_votes . " WHERE $where");
+        $sql = $db->get_results("SELECT * FROM ".table_votes." WHERE $where");
         return $sql;
     }
 
-    function count($value="> 0")
+    function count($value = "> 0")
     {
         global $db;
         $where = "vote_type='$this->type' AND vote_link_id=$this->link AND vote_value $value";
@@ -205,12 +205,12 @@ class Vote
         if ($this->user == 0 || !empty($this->ip)) {
             if ($this->ip == '') {
                 require_once(mnminclude.'check_behind_proxy.php');
-                $this->ip=check_ip_behind_proxy();
+                $this->ip = check_ip_behind_proxy();
             }
             $where .= " AND vote_ip='$this->ip'";
         }
-        $sql = "SELECT count(*) FROM " . table_votes . " WHERE $where";
-        $count=$db->get_var($sql);
+        $sql = "SELECT count(*) FROM ".table_votes." WHERE $where";
+        $count = $db->get_var($sql);
         return $count;
     }
 
@@ -224,24 +224,24 @@ class Vote
         if ($this->user == 0 || !empty($this->ip)) {
             if ($this->ip == '') {
                 require_once(mnminclude.'check_behind_proxy.php');
-                $this->ip=check_ip_behind_proxy();
+                $this->ip = check_ip_behind_proxy();
             }
             $where .= " AND vote_ip='$this->ip'";
         }
-        $sql = "SELECT SUM(vote_karma) FROM " . table_votes . " WHERE $where";
+        $sql = "SELECT SUM(vote_karma) FROM ".table_votes." WHERE $where";
         return $db->get_var($sql)+0;
     }
 
-    function count_all($value="> 0")
+    function count_all($value = "> 0")
     {
         global $db;
         $where = "vote_type='$this->type' AND vote_link_id=$this->link AND vote_value $value";
-        $sql = "SELECT count(*) FROM " . table_votes . " WHERE $where";
-        $count=$db->get_var($sql);
+        $sql = "SELECT count(*) FROM ".table_votes." WHERE $where";
+        $count = $db->get_var($sql);
         return $count;
     }
 
-    function total_count($value="> 0")
+    function total_count($value = "> 0")
     {
         global $db;
         $where = "vote_type='$this->type' AND vote_link_id=$this->link AND vote_value $value";
@@ -251,24 +251,24 @@ class Vote
         if ($this->user == 0 || !empty($this->ip)) {
             if ($this->ip == '') {
                 require_once(mnminclude.'check_behind_proxy.php');
-                $this->ip=check_ip_behind_proxy();
+                $this->ip = check_ip_behind_proxy();
             }
             $where .= " AND vote_ip='$this->ip'";
         }
-        $count=$db->get_var("SELECT vote_value FROM " . table_votes . " WHERE $where");
+        $count = $db->get_var("SELECT vote_value FROM ".table_votes." WHERE $where");
         return $count;
     }
 
-    function rating($value="> 0")
+    function rating($value = "> 0")
     {
         global $db;
         $where = "vote_type='$this->type' AND vote_link_id=$this->link AND vote_value $value";
-        $sql = "SELECT avg(vote_value) FROM " . table_votes . " WHERE $where";
-        $rating=$db->get_var($sql);
+        $sql = "SELECT avg(vote_value) FROM ".table_votes." WHERE $where";
+        $rating = $db->get_var($sql);
         return $rating;
     }
 
-    function anycount($value="<> 0")
+    function anycount($value = "<> 0")
     {
         global $db;
         $where = "vote_type='$this->type' AND vote_link_id=$this->link AND vote_value $value";
@@ -278,11 +278,11 @@ class Vote
         if ($this->user == 0 || !empty($this->ip)) {
             if ($this->ip == '') {
                 require_once(mnminclude.'check_behind_proxy.php');
-                $this->ip=check_ip_behind_proxy();
+                $this->ip = check_ip_behind_proxy();
             }
             $where .= " AND vote_ip='$this->ip'";
         }
-        $count=$db->get_var("SELECT count(*) FROM " . table_votes . " WHERE $where");
+        $count = $db->get_var("SELECT count(*) FROM ".table_votes." WHERE $where");
         return $count;
     }
 
@@ -291,12 +291,12 @@ class Vote
         global $db, $the_template;
         if (empty($this->ip)) {
             require_once(mnminclude.'check_behind_proxy.php');
-            $this->ip=check_ip_behind_proxy();
+            $this->ip = check_ip_behind_proxy();
         }
-        $this->value=intval($this->value);
-        $sql="INSERT IGNORE INTO " . table_votes . " (vote_type, vote_user_id, vote_link_id, vote_value, vote_ip, vote_karma) VALUES ('$this->type', $this->user, $this->link, $this->value, '$this->ip', '{$this->karma}')";
+        $this->value = intval($this->value);
+        $sql = "INSERT IGNORE INTO ".table_votes." (vote_type, vote_user_id, vote_link_id, vote_value, vote_ip, vote_karma) VALUES ('$this->type', $this->user, $this->link, $this->value, '$this->ip', '{$this->karma}')";
 
-        $vars = array('vote'=>&$this);
+        $vars = array('vote' => &$this);
         check_actions('vote_post_insert', $vars);
 
         return $db->query($sql);
@@ -307,17 +307,17 @@ class Vote
         global $db, $the_template;
         if (empty($this->ip)) {
             require_once(mnminclude.'check_behind_proxy.php');
-            $this->ip=check_ip_behind_proxy();
+            $this->ip = check_ip_behind_proxy();
         }
-        $this->value=intval($this->value);
+        $this->value = intval($this->value);
         if (Voting_Method == 2) {
-            $sql="Select vote_id from " . table_votes . " where vote_type = '$this->type' and vote_user_id = $this->user and vote_link_id = $this->link ".($this->user > 0 ? "" : "AND vote_ip = '$this->ip'")." LIMIT 1";
+            $sql = "Select vote_id from ".table_votes." where vote_type = '$this->type' and vote_user_id = $this->user and vote_link_id = $this->link ".($this->user > 0 ? "" : "AND vote_ip = '$this->ip'")." LIMIT 1";
         } else {
-            $sql="Select vote_id from " . table_votes . " where vote_type = '$this->type' and vote_user_id = $this->user and vote_link_id = $this->link and vote_value = $this->value AND vote_ip = '$this->ip' LIMIT 1";
+            $sql = "Select vote_id from ".table_votes." where vote_type = '$this->type' and vote_user_id = $this->user and vote_link_id = $this->link and vote_value = $this->value AND vote_ip = '$this->ip' LIMIT 1";
         }
         $the_vote = $db->get_var($sql);
         if ($the_vote) {
-            $sql = "Delete from "    . table_votes . " where vote_id = " . $the_vote;
+            $sql = "Delete from ".table_votes." where vote_id = ".$the_vote;
             return $db->query($sql);
         }
     }

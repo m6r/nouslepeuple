@@ -31,7 +31,7 @@ if (isset($_REQUEST['category'])) {
 }
 
 // start a new search
-$search=new Search();
+$search = new Search();
 
 // order by newest first
 $search->orderBy = "link_date DESC, link_id ASC";
@@ -97,14 +97,14 @@ if (isset($_REQUEST['category'])) {
     $main_smarty->assign('meta_keywords', $category_data->category_keywords);
 
     // breadcrumbs and page title for the category we're looking at
-    $main_smarty->assign('title', ''.$main_smarty->get_config_vars('PLIGG_Visual_Pligg_Queued') .$thecat . '');
+    $main_smarty->assign('title', ''.$main_smarty->get_config_vars('PLIGG_Visual_Pligg_Queued').$thecat.'');
     $navwhere['text1'] = $main_smarty->get_config_vars('PLIGG_Visual_Pligg_Queued');
     $navwhere['link1'] = getmyurl('new', '');
     $navwhere['text2'] = $thecat;
     $main_smarty->assign('navbar_where', $navwhere);
     $main_smarty->assign('pretitle', $thecat);
     $main_smarty->assign('posttitle', $main_smarty->get_config_vars('PLIGG_Visual_Pligg_Queued'));
-    $main_smarty->assign('page_header', $thecat . $main_smarty->get_config_vars('PLIGG_Visual_Pligg_Queued'));
+    $main_smarty->assign('page_header', $thecat.$main_smarty->get_config_vars('PLIGG_Visual_Pligg_Queued'));
 } else {
     $navwhere['text1'] = $main_smarty->get_config_vars('PLIGG_Visual_Breadcrumb_Queued');
     $navwhere['link1'] = getmyurl('new', '');
@@ -136,12 +136,12 @@ $fetch_link_summary = true;
 include('./libs/link_summary.php'); // this is the code that show the links / stories
 
 //For Infinite scrolling and continue reading option
-if (Auto_scroll==2 || Auto_scroll==3) {
+if (Auto_scroll == 2 || Auto_scroll == 3) {
     $main_smarty->assign("scrollpageSize", $page_size);
 } else {
     $main_smarty->assign('link_pagination', do_pages($rows, $page_size, "new", true));
 }
 
 // show the template
-$main_smarty->assign('tpl_center', $the_template . '/new_center');
-$main_smarty->display($the_template . '/pligg.tpl');
+$main_smarty->assign('tpl_center', $the_template.'/new_center');
+$main_smarty->display($the_template.'/pligg.tpl');

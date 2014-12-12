@@ -10,6 +10,6 @@ if (defined('mnminclude')) {
 
     if (do_we_load_module()) {
         module_add_action('anonymous_story_user_id', 'get_anonymous_story_user_id', '');
-        include_once(mnmmodules . 'anonymous_story/anonymous_story_main.php');
+        include_once(mnmmodules.'anonymous_story/anonymous_story_main.php');
     }
 }

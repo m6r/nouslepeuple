@@ -15,7 +15,7 @@ $canIhaveAccess = $canIhaveAccess + checklevel('admin');
 if ($canIhaveAccess == 0) {
     //    $main_smarty->assign('tpl_center', '/admin/access_denied');
 //    $main_smarty->display($template_dir . '/admin/admin.tpl');
-        header("Location: " . getmyurl('admin_login', $_SERVER['REQUEST_URI']));
+        header("Location: ".getmyurl('admin_login', $_SERVER['REQUEST_URI']));
 
 
     die();
@@ -29,7 +29,7 @@ $main_smarty = do_sidebar($main_smarty);
             $user = new User;
 
 
-            $user->id=$user_id;
+            $user->id = $user_id;
 
 
             $user->read();

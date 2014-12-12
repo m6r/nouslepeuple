@@ -29,10 +29,10 @@ if (isset($_GET['template'])) {
         header('Location: ./index.php');
         die();
     } else {
-        $main_smarty->assign('message', '<div class="alert alert-error">Warning: <strong>"' . sanitize($_GET['template'], 3) . '"</strong> does not seem to exist!</div>');
+        $main_smarty->assign('message', '<div class="alert alert-error">Warning: <strong>"'.sanitize($_GET['template'], 3).'"</strong> does not seem to exist!</div>');
     }
 }
 
 // show the template
-$main_smarty->assign('tpl_center', $the_template . '/settemplate_center');
-$main_smarty->display($the_template . '/pligg.tpl');
+$main_smarty->assign('tpl_center', $the_template.'/settemplate_center');
+$main_smarty->display($the_template.'/pligg.tpl');

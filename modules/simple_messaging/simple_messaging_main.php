@@ -18,15 +18,15 @@ function get_new_messages()
                         $msg_first = $array[$key]['id'];
                     }
                     if ($i > 1) {
-                        $array[$key]['prev_message_id'] = 'my_message' . ($i - 1);
+                        $array[$key]['prev_message_id'] = 'my_message'.($i - 1);
                     }
                     if ($i < $message_count) {
-                        $array[$key]['next_message_id'] = 'my_message' . ($i + 1);
+                        $array[$key]['next_message_id'] = 'my_message'.($i + 1);
                     }
                     $array[$key]['count'] = $i;
-                    $array[$key]['my_message_id'] = 'my_message' . $i;
+                    $array[$key]['my_message_id'] = 'my_message'.$i;
 
-                    $user=new User();
+                    $user = new User();
                     $user->id = $array[$key]['sender'];
                     if (!$user->read()) {
                         echo "Message Error 1";
@@ -57,7 +57,7 @@ function simple_messaging_showpage()
     if (isset($_REQUEST['view'])) {
         $view = sanitize($_REQUEST['view'], 3);
     } else {
-        $view='';
+        $view = '';
     }
 
     $navwhere['text1'] = 'Messaging';
@@ -74,7 +74,7 @@ function simple_messaging_showpage()
             $main_smarty->assign('messages', $message_count);
 
             foreach ($array as $key => $val) {
-                $user=new User();
+                $user = new User();
                 $user->id = $array[$key]['sender'];
                 if (!$user->read()) {
                     echo "Message Error 2";
@@ -115,8 +115,8 @@ function simple_messaging_showpage()
         define('modulepage', 'simple_messaging_inbox');
         $main_smarty->assign('modulepage', modulepage);
 
-        $main_smarty->assign('tpl_center', simple_messaging_tpl_path . 'inbox');
-        $main_smarty->display($the_template . '/pligg.tpl');
+        $main_smarty->assign('tpl_center', simple_messaging_tpl_path.'inbox');
+        $main_smarty->display($the_template.'/pligg.tpl');
     }
 
 
@@ -132,7 +132,7 @@ function simple_messaging_showpage()
             $main_smarty->assign('messages', $message_count);
 
             foreach ($array as $key => $val) {
-                $user=new User();
+                $user = new User();
                 $user->id = $array[$key]['receiver'];
                 if (!$user->read()) {
                     echo "Message Error 3";
@@ -173,8 +173,8 @@ function simple_messaging_showpage()
         define('modulepage', 'simple_messaging_sentbox');
         $main_smarty->assign('modulepage', modulepage);
 
-        $main_smarty->assign('tpl_center', simple_messaging_tpl_path . 'sent');
-        $main_smarty->display($the_template . '/pligg.tpl');
+        $main_smarty->assign('tpl_center', simple_messaging_tpl_path.'sent');
+        $main_smarty->display($the_template.'/pligg.tpl');
     }
 
 
@@ -185,14 +185,14 @@ function simple_messaging_showpage()
         if (isset($_REQUEST['return'])) {
             $return = sanitize($_REQUEST['return'], 3);
         } else {
-            $return='';
+            $return = '';
         }
         $main_smarty->assign('return', $return);
 
         if (isset($_REQUEST['to'])) {
             $msgToName = sanitize($_REQUEST['to'], 3);
         } else {
-            $msgToName='';
+            $msgToName = '';
         }
         $main_smarty->assign('msgToName', $msgToName);
 
@@ -209,8 +209,8 @@ function simple_messaging_showpage()
         define('modulepage', 'simple_messaging_compose');
         $main_smarty->assign('modulepage', modulepage);
 
-        $main_smarty->assign('tpl_center', simple_messaging_tpl_path . 'compose');
-        $main_smarty->display($the_template . '/pligg.tpl');
+        $main_smarty->assign('tpl_center', simple_messaging_tpl_path.'compose');
+        $main_smarty->display($the_template.'/pligg.tpl');
     }
 
 
@@ -227,31 +227,31 @@ function simple_messaging_showpage()
         if (isset($_REQUEST['return'])) {
             $return = html_entity_decode(urldecode(sanitize($_REQUEST['return'], 3)));
         } else {
-            $return='';
+            $return = '';
         }
 
         if (isset($_REQUEST['msg_subject'])) {
             $msg_subject = sanitize($_REQUEST['msg_subject'], 3);
         } else {
-            $msg_subject='';
+            $msg_subject = '';
         }
         if (isset($_REQUEST['msg_body'])) {
             $msg_body = sanitize($_REQUEST['msg_body'], 3);
         } else {
-            $msg_body='';
+            $msg_body = '';
         }
         if (isset($_REQUEST['msg_to'])) {
             $msg_to = sanitize($_REQUEST['msg_to'], 3);
         } else {
-            $msg_to='';
+            $msg_to = '';
         }
 
-        $user_to=new User();
+        $user_to = new User();
         $user_to->username = $msg_to;
         if (!$user_to->read()) {
             $main_smarty->assign('message', 'The person you are trying to send a message to does not exist!');
-            $main_smarty->assign('tpl_center', simple_messaging_tpl_path . 'error');
-            $main_smarty->display($the_template . '/pligg.tpl');
+            $main_smarty->assign('tpl_center', simple_messaging_tpl_path.'error');
+            $main_smarty->display($the_template.'/pligg.tpl');
             die;
         }
         $msg_to_ID = $user_to->id;
@@ -266,20 +266,20 @@ function simple_messaging_showpage()
 
             $main_smarty->assign('message', $main_smarty->get_config_vars('PLIGG_MESSAGING_Error_'.$msg_result));
             $main_smarty->config_load(simple_messaging_pligg_lang_conf);
-            $main_smarty->assign('tpl_center', simple_messaging_tpl_path . 'error');
-            $main_smarty->display($the_template . '/pligg.tpl');
+            $main_smarty->assign('tpl_center', simple_messaging_tpl_path.'error');
+            $main_smarty->display($the_template.'/pligg.tpl');
             die;
         } else {
             // The message has been put in the database successfully, so let's alert the recipient by email:
-            $email_to =  $db->get_var("SELECT user_email FROM `" . table_users . "` WHERE `user_id` = '$user_to->id';");
-            $email_from =  $db->get_var("SELECT user_login FROM `" . table_users . "` WHERE `user_id` = '$current_user->user_id';");
-            $email_subject = "You've got a message in your " . $main_smarty->get_config_vars("PLIGG_Visual_Name") . " inbox";
-            $email_message = "Hi " . $user_to->username . ",\r\n\r\nYou've been sent a private message from " . $email_from . ". \r\n\r\nTo see the message, go to your " . $main_smarty->get_config_vars("PLIGG_Visual_Name") . " inbox here: " .  my_base_url . URL_simple_messaging_inbox . "\r\n\r\nThank you, \r\n" . $main_smarty->get_config_vars("PLIGG_Visual_Name") . " Admin";
-            $email_headers = "From: " . Send_From_Email . "\r\nReply-To: " . Send_From_Email . "\r\n";
+            $email_to =  $db->get_var("SELECT user_email FROM `".table_users."` WHERE `user_id` = '$user_to->id';");
+            $email_from =  $db->get_var("SELECT user_login FROM `".table_users."` WHERE `user_id` = '$current_user->user_id';");
+            $email_subject = "You've got a message in your ".$main_smarty->get_config_vars("PLIGG_Visual_Name")." inbox";
+            $email_message = "Hi ".$user_to->username.",\r\n\r\nYou've been sent a private message from ".$email_from.". \r\n\r\nTo see the message, go to your ".$main_smarty->get_config_vars("PLIGG_Visual_Name")." inbox here: ".my_base_url.URL_simple_messaging_inbox."\r\n\r\nThank you, \r\n".$main_smarty->get_config_vars("PLIGG_Visual_Name")." Admin";
+            $email_headers = "From: ".Send_From_Email."\r\nReply-To: ".Send_From_Email."\r\n";
             @mail($email_to, $email_subject, $email_message, $email_headers);
 
             // show 'message sent', click to continue or wait 5..4..3..2..1.. then redirect
-            header('Location: ' . $return);
+            header('Location: '.$return);
             die();
         }
     }
@@ -291,14 +291,14 @@ function simple_messaging_showpage()
         if (isset($_REQUEST['msg_id'])) {
             $msg_id = sanitize($_REQUEST['msg_id'], 3);
         } else {
-            $msg_id='';
+            $msg_id = '';
         }
         $main_smarty->assign('msg_id', $msg_id);
 
         $array = messaging_get_message_details($msg_id);
         $main_smarty->assign('msg_array', $array);
-        $main_smarty->assign('js_reply', "lightbox_do_on_activate('view_message~!~action=reply~!~replyID=" . $array['id'] . "~!~view=small_msg_compose~!~login=" . $array['sender_name'] . "');");
-        $main_smarty->assign('js_delete', "lightbox_do_on_activate('view_message~!~view=small_msg_confirm_delete~!~msgid=" . $array['id'] . "');");
+        $main_smarty->assign('js_reply', "lightbox_do_on_activate('view_message~!~action=reply~!~replyID=".$array['id']."~!~view=small_msg_compose~!~login=".$array['sender_name']."');");
+        $main_smarty->assign('js_delete', "lightbox_do_on_activate('view_message~!~view=small_msg_confirm_delete~!~msgid=".$array['id']."');");
 
         $main_smarty->assign('user_url_friends', getmyurl('user_friends', $login, 'following'));
         $main_smarty->assign('user_url_friends2', getmyurl('user_friends', $login, 'followers'));
@@ -309,8 +309,8 @@ function simple_messaging_showpage()
         define('modulepage', 'viewmsg');
         $main_smarty->assign('modulepage', modulepage);
 
-        $main_smarty->assign('tpl_center', simple_messaging_tpl_path . 'show_message');
-        $main_smarty->display($the_template . '/pligg.tpl');
+        $main_smarty->assign('tpl_center', simple_messaging_tpl_path.'show_message');
+        $main_smarty->display($the_template.'/pligg.tpl');
     }
 
     if ($view == "viewsentmsg") {
@@ -320,7 +320,7 @@ function simple_messaging_showpage()
         if (isset($_REQUEST['msg_id'])) {
             $msg_id = sanitize($_REQUEST['msg_id'], 3);
         } else {
-            $msg_id='';
+            $msg_id = '';
         }
         $main_smarty->assign('msg_id', $msg_id);
 
@@ -333,8 +333,8 @@ function simple_messaging_showpage()
         define('modulepage', 'viewsentmsg');
         $main_smarty->assign('modulepage', modulepage);
 
-        $main_smarty->assign('tpl_center', simple_messaging_tpl_path . 'show_sent_message');
-        $main_smarty->display($the_template . '/pligg.tpl');
+        $main_smarty->assign('tpl_center', simple_messaging_tpl_path.'show_sent_message');
+        $main_smarty->display($the_template.'/pligg.tpl');
     }
 
     if ($view == "delmsg") {
@@ -344,13 +344,13 @@ function simple_messaging_showpage()
         if (isset($_REQUEST['msg_id'])) {
             $msg_id = sanitize($_REQUEST['msg_id'], 3);
         } else {
-            $msg_id='';
+            $msg_id = '';
         }
 
         $array = messaging_get_message_details($msg_id);
         $message = new KMessaging(true);
         $result = $message->DeleteMessage($msg_id);
-        header('Location: ' . URL_simple_messaging_inbox);
+        header('Location: '.URL_simple_messaging_inbox);
         die();
     }
 
@@ -361,14 +361,14 @@ function simple_messaging_showpage()
         if (isset($_REQUEST['msg_id'])) {
             $msg_id = sanitize($_REQUEST['msg_id'], 3);
         } else {
-            $msg_id='';
+            $msg_id = '';
         }
         $main_smarty->assign('msg_id', $msg_id);
 
         $array = messaging_get_message_details($msg_id);
         $main_smarty->assign('msgToName', $array['sender_name']);
-        $main_smarty->assign('msg_subject', 're: ' . $array['title']);
-        $main_smarty->assign('return', URL_simple_messaging_viewmsg . $msg_id);
+        $main_smarty->assign('msg_subject', 're: '.$array['title']);
+        $main_smarty->assign('return', URL_simple_messaging_viewmsg.$msg_id);
 
         $main_smarty->assign('user_url_friends', getmyurl('user_friends', $login, 'following'));
         $main_smarty->assign('user_url_friends2', getmyurl('user_friends', $login, 'followers'));
@@ -379,8 +379,8 @@ function simple_messaging_showpage()
         define('modulepage', 'reply');
         $main_smarty->assign('modulepage', modulepage);
 
-        $main_smarty->assign('tpl_center', simple_messaging_tpl_path . 'compose');
-        $main_smarty->display($the_template . '/pligg.tpl');
+        $main_smarty->assign('tpl_center', simple_messaging_tpl_path.'compose');
+        $main_smarty->display($the_template.'/pligg.tpl');
     }
 }
 
@@ -402,11 +402,11 @@ function messaging_get_message_details($msgID)
     // check to make sure this is our message
     if ($array['receiver'] == $current_user->user_id) {
         $message->MarkAsRead($msgID);
-        $thisuser=new User();
+        $thisuser = new User();
         $thisuser->id = $array['sender'];
         if (!$thisuser->read()) {
             $main_smarty->assign('message', 'The person you are trying to send a message to does not exist!');
-            $main_smarty->display(messaging_tpl_path . 'error.tpl');
+            $main_smarty->display(messaging_tpl_path.'error.tpl');
             die();
         }
         $array['sender_name'] = $thisuser->username;
@@ -414,11 +414,11 @@ function messaging_get_message_details($msgID)
         return $array;
     } elseif ($array['sender'] == $current_user->user_id) {
         $message->MarkAsRead($msgID);
-        $thisuser=new User();
+        $thisuser = new User();
         $thisuser->id = $array['receiver'];
         if (!$thisuser->read()) {
             $main_smarty->assign('message', 'This person doesn\'t seem to exist!');
-            $main_smarty->display(messaging_tpl_path . 'error.tpl');
+            $main_smarty->display(messaging_tpl_path.'error.tpl');
             die();
         }
         $array['sender_name'] = $current_user->user_login;
@@ -426,7 +426,7 @@ function messaging_get_message_details($msgID)
         return $array;
     } else {
         $main_smarty->assign('message', 'This is not your message!');
-        $main_smarty->display(messaging_tpl_path . 'error.tpl');
+        $main_smarty->display(messaging_tpl_path.'error.tpl');
         die();
     }
 }

@@ -21,9 +21,9 @@
     $module_info['db_sql'][] = "UPDATE ".table_users." SET status_switch=1, status_friends=1, status_story=1, status_comment=1, status_email=1, status_all_friends=1";
 
     // Add new table
-    $module_info['db_add_table'][]=array(
-    'name' => table_prefix . "updates",
-    'sql' => "CREATE TABLE `".table_prefix . "updates` (
+    $module_info['db_add_table'][] = array(
+    'name' => table_prefix."updates",
+    'sql' => "CREATE TABLE `".table_prefix."updates` (
 	  `update_id` int(11) NOT NULL auto_increment,
 	  `update_time` int(11) default NULL,
 	  `update_type` char(1) NOT NULL,
@@ -35,18 +35,18 @@
 	  `update_text` text NOT NULL,
 	  PRIMARY KEY  (`update_id`),
 	  FULLTEXT KEY `update_text` (`update_text`)
-	) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci");
+	) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci", );
 
-    $module_info['db_add_table'][]=array(
-    'name' => table_prefix . "likes",
-    'sql' => "CREATE TABLE `".table_prefix . "likes` (
+    $module_info['db_add_table'][] = array(
+    'name' => table_prefix."likes",
+    'sql' => "CREATE TABLE `".table_prefix."likes` (
 	  `like_update_id` int(11) NOT NULL,
 	  `like_user_id` int(11) NOT NULL,
 	  PRIMARY KEY  (`like_update_id`, `like_user_id`)
-	) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci");
+	) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci", );
 
     // Set default module settings
-    if (get_misc_data('status_switch')=='') {
+    if (get_misc_data('status_switch') == '') {
         misc_data_update('status_switch', '0');
         misc_data_update('status_show_permalin', '1');
         misc_data_update('status_permalinks', '1');

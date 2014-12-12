@@ -16,6 +16,6 @@ if (defined('mnminclude')) {
         module_add_action('story_insert_comment', 'hc_register_check_errors', '');
         module_add_action('story_edit_comment', 'hc_register_check_errors', '');
 
-        include_once(mnmmodules . 'hc/hc_main.php');
+        include_once(mnmmodules.'hc/hc_main.php');
     }
 }

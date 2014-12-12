@@ -1,7 +1,7 @@
 <?php
 
 // the path to the module. the probably shouldn't be changed unless you rename the captcha folder(s)
-define('captcha_path', my_pligg_base . '/modules/captcha/');
+define('captcha_path', my_pligg_base.'/modules/captcha/');
 
 // the language path for the module
     if (!defined('lang_loc')) {
@@ -19,8 +19,8 @@ define('captcha_path', my_pligg_base . '/modules/captcha/');
         }
     }
 
-define('captcha_lang_conf', lang_loc . '/modules/captcha/lang.conf');
-define('captcha_pligg_lang_conf', lang_loc . "/languages/lang_" . pligg_language . ".conf");
+define('captcha_lang_conf', lang_loc.'/modules/captcha/lang.conf');
+define('captcha_pligg_lang_conf', lang_loc."/languages/lang_".pligg_language.".conf");
 
 // the path to the modules templates. the probably shouldn't be changed unless you rename the captcha folder(s)
 define('captcha_tpl_path', '../modules/captcha/templates/');
@@ -32,7 +32,7 @@ define('captcha_lib_path', './modules/captcha/libs/');
 define('captcha_captchas_path', './modules/captcha/captchas/');
 
 // the path to the images. the probably shouldn't be changed unless you rename the captcha folder(s)
-define('captcha_img_path',  my_pligg_base . '/modules/captcha/images/');
+define('captcha_img_path',  my_pligg_base.'/modules/captcha/images/');
 
 $captcha_single_step = (get_misc_data('reg_single_step') == '') ? false : get_misc_data('reg_single_step');
 $captcha_single_step = ($captcha_single_step == 'true') ? true : false;

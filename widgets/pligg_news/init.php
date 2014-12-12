@@ -9,10 +9,10 @@ $widget['version'] = 0.1;
 
 $news_count = get_misc_data('news_count');
 if ($news_count <= 0) {
-    $news_count='3';
+    $news_count = '3';
 }
 
-if ($_REQUEST['widget']=='pligg_news') {
+if ($_REQUEST['widget'] == 'pligg_news') {
     if (isset($_REQUEST['stories'])) {
         $news_count = sanitize($_REQUEST['stories'], 3);
     }

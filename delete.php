@@ -26,7 +26,7 @@ $canIhaveAccess = $canIhaveAccess + checklevel('admin');
 if ($canIhaveAccess == 0) {
     //	$main_smarty->assign('tpl_center', '/templates/admin/admin_access_denied');
 //	$main_smarty->display($template_dir . '/admin/admin.tpl');
-    header("Location: " . getmyurl('login', $_SERVER['REQUEST_URI']));
+    header("Location: ".getmyurl('login', $_SERVER['REQUEST_URI']));
     die();
 }
 
@@ -81,7 +81,7 @@ if (isset($_REQUEST['link_id'])) {
     check_actions('admin_story_delete', $vars);
 
     /*********find out the page slug dynamically ***********/
-    $linkslugvalue =  $db->get_results("SELECT ".table_links.".link_category, ".table_categories.".category_safe_name FROM ".table_categories." LEFT JOIN ".table_links. " ON ".table_links.".link_category = ".table_categories.".category__auto_id WHERE ".table_links.".link_id = '".$link_id."' LIMIT 0,1");
+    $linkslugvalue =  $db->get_results("SELECT ".table_links.".link_category, ".table_categories.".category_safe_name FROM ".table_categories." LEFT JOIN ".table_links." ON ".table_links.".link_category = ".table_categories.".category__auto_id WHERE ".table_links.".link_id = '".$link_id."' LIMIT 0,1");
 
 
     $linkslug = '';
@@ -131,7 +131,7 @@ if (isset($_REQUEST['link_id'])) {
     $db->query("DELETE FROM ".table_tag_cache);
 
     # Redwine - Sidebar tag cache fix
-    $db->query($sql="INSERT INTO ".table_tag_cache." select tag_words, count(DISTINCT link_id) as count FROM ".table_tags.", ".table_links." WHERE tag_lang='en' and link_id = tag_link_id and (link_status='published' OR link_status='new') GROUP BY tag_words order by count desc");
+    $db->query($sql = "INSERT INTO ".table_tag_cache." select tag_words, count(DISTINCT link_id) as count FROM ".table_tags.", ".table_links." WHERE tag_lang='en' and link_id = tag_link_id and (link_status='published' OR link_status='new') GROUP BY tag_words order by count desc");
 
     if ($_SERVER['HTTP_REFERER'] && strpos($_SERVER['HTTP_REFERER'], $my_base_url.$my_pligg_base) === 0) {
         header('Location: '.$my_pligg_base.'/'.$redirectUrl);
@@ -147,26 +147,26 @@ if (isset($_REQUEST['comment_id'])) {
     if (!is_numeric($comment_id)) {
         die();
     }
-    $link_id = $db->get_var("SELECT comment_link_id FROM `" . table_comments . "` WHERE `comment_id` = $comment_id");
+    $link_id = $db->get_var("SELECT comment_link_id FROM `".table_comments."` WHERE `comment_id` = $comment_id");
 
     $vars = array('comment_id' => $comment_id);
     check_actions('comment_deleted', $vars);
 
-    $db->query('DELETE FROM `' . table_comments . '` WHERE `comment_id` = "'.$comment_id.'"');
-    $comments = $db->get_results($sql="SELECT comment_id FROM " . table_comments . " WHERE `comment_parent` = '$comment_id'");
+    $db->query('DELETE FROM `'.table_comments.'` WHERE `comment_id` = "'.$comment_id.'"');
+    $comments = $db->get_results($sql = "SELECT comment_id FROM ".table_comments." WHERE `comment_parent` = '$comment_id'");
     foreach ($comments as $comment) {
         $vars = array('comment_id' => $comment->comment_id);
         check_actions('comment_deleted', $vars);
     }
-    $db->query('DELETE FROM `' . table_comments . '` WHERE `comment_parent` = "'.$comment_id.'"');
+    $db->query('DELETE FROM `'.table_comments.'` WHERE `comment_parent` = "'.$comment_id.'"');
     $link = new Link;
-    $link->id=$link_id;
+    $link->id = $link_id;
     $link->read();
     $link->recalc_comments();
     $link->store();
-    $link='';
+    $link = '';
 
-    if ($_SERVER['HTTP_REFERER'] && strpos($_SERVER['HTTP_REFERER'], $my_base_url.$my_pligg_base)===0) {
+    if ($_SERVER['HTTP_REFERER'] && strpos($_SERVER['HTTP_REFERER'], $my_base_url.$my_pligg_base) === 0) {
         header('Location: '.$_SERVER['HTTP_REFERER']);
     } else {
         header('Location: '.$my_base_url.$my_pligg_base);

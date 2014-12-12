@@ -1,6 +1,6 @@
 <?php
 // the path to the module. the probably shouldn't be changed unless you rename the karma folder(s)
-define('karma_path', my_pligg_base . '/modules/karma/');
+define('karma_path', my_pligg_base.'/modules/karma/');
 
 // the path to the module. the probably shouldn't be changed unless you rename the module_store folder(s)
 if (!defined('lang_loc')) {
@@ -17,8 +17,8 @@ if (!defined('lang_loc')) {
     }
 }
 
-define('karma_lang_conf', lang_loc . '/modules/karma/lang.conf');
-define('karma_pligg_lang_conf', lang_loc . "/languages/lang_" . pligg_language . ".conf");
+define('karma_lang_conf', lang_loc.'/modules/karma/lang.conf');
+define('karma_pligg_lang_conf', lang_loc."/languages/lang_".pligg_language.".conf");
 
 define('karma_tpl_path', '../modules/karma/templates/');
 

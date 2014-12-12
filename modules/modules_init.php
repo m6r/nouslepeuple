@@ -11,8 +11,8 @@
     if (!defined('mnmmodules')) {
         die();
     }
-    $module_actions=array();
-    include_once(mnmmodules . 'modules_libs.php');
+    $module_actions = array();
+    include_once(mnmmodules.'modules_libs.php');
 
     // find out what page we are on
     $pos = strrpos($_SERVER["SCRIPT_NAME"], "/");
@@ -30,12 +30,12 @@
 
         // if this query is changed, be sure to also change it in admin_modules_center.tpl
         $db->cache_queries = false;
-        $modules = $db->get_results($sql='SELECT * from ' . table_modules . ' where enabled=1 order by weight ASC;');
+        $modules = $db->get_results($sql = 'SELECT * from '.table_modules.' where enabled=1 order by weight ASC;');
 
         if ($modules) {
             // for each module...
             foreach ($modules as $module) {
-                $file=mnmmodules . $module->folder . '/' . $module->folder . '_init.php';
+                $file = mnmmodules.$module->folder.'/'.$module->folder.'_init.php';
 
                 // if this module has an init file then include it
                 if (file_exists($file)) {

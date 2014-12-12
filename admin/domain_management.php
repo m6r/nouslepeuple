@@ -19,7 +19,7 @@ $canIhaveAccess = $canIhaveAccess + checklevel('moderator');
 $is_moderator = checklevel('moderator'); // Moderators have a value of '1' for the variable $is_moderator
 
 // read the mysql database to get the pligg version
-$sql = "SELECT data FROM " . table_misc_data . " WHERE name = 'pligg_version'";
+$sql = "SELECT data FROM ".table_misc_data." WHERE name = 'pligg_version'";
 $pligg_version = $db->get_var($sql);
 $main_smarty->assign('version_number', $pligg_version);
 
@@ -35,7 +35,7 @@ $whitelist = '../'.$FRIENDLY_DOMAINS;
 // breadcrumbs and page title
 $navwhere['text1'] = $main_smarty->get_config_vars('PLIGG_Visual_Ban_This_URL');
 $main_smarty->assign('navbar_where', $navwhere);
-$main_smarty->assign('posttitle', " / " . $main_smarty->get_config_vars('PLIGG_Visual_Ban_This_URL'));
+$main_smarty->assign('posttitle', " / ".$main_smarty->get_config_vars('PLIGG_Visual_Ban_This_URL'));
 
 // pagename
 define('pagename', 'domain_management');
@@ -55,9 +55,9 @@ if ($canIhaveAccess == 1) {
         $main_smarty->assign('errorText', "<b>Error:</b> You have <b>Enable spam checking</b> set to false. Please set it to true in the <a href='$my_base_url$my_pligg_base/admin/admin_config.php?page=AntiSpam' target='_blank'>admin panel</a>.");
         $main_smarty->assign('tpl_center', '/admin/domain_blacklist_add');
         if ($is_moderator == '1') {
-            $main_smarty->display($template_dir . '/admin/moderator.tpl');
+            $main_smarty->display($template_dir.'/admin/moderator.tpl');
         } else {
-            $main_smarty->display($template_dir . '/admin/admin.tpl');
+            $main_smarty->display($template_dir.'/admin/admin.tpl');
         }
     }
 
@@ -67,9 +67,9 @@ if ($canIhaveAccess == 1) {
             $main_smarty->assign('errorText', "No domain was specified");
             $main_smarty->assign('tpl_center', '/admin/domain_management');
             if ($is_moderator == '1') {
-                $main_smarty->display($template_dir . '/admin/moderator.tpl');
+                $main_smarty->display($template_dir.'/admin/moderator.tpl');
             } else {
-                $main_smarty->display($template_dir . '/admin/admin.tpl');
+                $main_smarty->display($template_dir.'/admin/admin.tpl');
             }
             exit;
         }
@@ -86,9 +86,9 @@ if ($canIhaveAccess == 1) {
             $main_smarty->assign('domain', $domain);
             $main_smarty->assign('tpl_center', '/admin/domain_management');
             if ($is_moderator == '1') {
-                $main_smarty->display($template_dir . '/admin/moderator.tpl');
+                $main_smarty->display($template_dir.'/admin/moderator.tpl');
             } else {
-                $main_smarty->display($template_dir . '/admin/admin.tpl');
+                $main_smarty->display($template_dir.'/admin/admin.tpl');
             }
         } else {
             $main_smarty->assign('errorText', "The file $blacklist is not writable");
@@ -106,9 +106,9 @@ if ($canIhaveAccess == 1) {
             $main_smarty->assign('domain', $domain);
             $main_smarty->assign('tpl_center', '/admin/domain_management');
             if ($is_moderator == '1') {
-                $main_smarty->display($template_dir . '/admin/moderator.tpl');
+                $main_smarty->display($template_dir.'/admin/moderator.tpl');
             } else {
-                $main_smarty->display($template_dir . '/admin/admin.tpl');
+                $main_smarty->display($template_dir.'/admin/admin.tpl');
             }
         } else {
             $main_smarty->assign('errorText', "The file $whitelist is not writable");
@@ -116,38 +116,38 @@ if ($canIhaveAccess == 1) {
 
         $main_smarty->assign('tpl_center', '/admin/domain_management');
         if ($is_moderator == '1') {
-            $main_smarty->display($template_dir . '/admin/moderator.tpl');
+            $main_smarty->display($template_dir.'/admin/moderator.tpl');
         } else {
-            $main_smarty->display($template_dir . '/admin/admin.tpl');
+            $main_smarty->display($template_dir.'/admin/admin.tpl');
         }
     } elseif (isset($_REQUEST['blacklist_add'])) {
         $main_smarty->assign('story_id', sanitize($_REQUEST['id'], 3));
         $main_smarty->assign('domain_to_add',  sanitize($_REQUEST['blacklist_add'], 3));
         $main_smarty->assign('tpl_center', '/admin/domain_blacklist_add');
         if ($is_moderator == '1') {
-            $main_smarty->display($template_dir . '/admin/moderator.tpl');
+            $main_smarty->display($template_dir.'/admin/moderator.tpl');
         } else {
-            $main_smarty->display($template_dir . '/admin/admin.tpl');
+            $main_smarty->display($template_dir.'/admin/admin.tpl');
         }
     } elseif (isset($_REQUEST['whitelist_add'])) {
         $main_smarty->assign('story_id', sanitize($_REQUEST['id'], 3));
         $main_smarty->assign('domain_to_add',  sanitize($_REQUEST['whitelist_add'], 3));
         $main_smarty->assign('tpl_center', '/admin/domain_whitelist_add');
         if ($is_moderator == '1') {
-            $main_smarty->display($template_dir . '/admin/moderator.tpl');
+            $main_smarty->display($template_dir.'/admin/moderator.tpl');
         } else {
-            $main_smarty->display($template_dir . '/admin/admin.tpl');
+            $main_smarty->display($template_dir.'/admin/admin.tpl');
         }
     } elseif (isset($_REQUEST['doblacklist'])) {
-        $domain = strtoupper(sanitize($_REQUEST['doblacklist'], 3)) . "\n";
+        $domain = strtoupper(sanitize($_REQUEST['doblacklist'], 3))."\n";
         if (is_writable($blacklist)) {
             if (!$handle = fopen($blacklist, 'a')) {
                 $main_smarty->assign('errorText', "Cannot open file ($blacklist)");
                 $main_smarty->assign('tpl_center', '/admin/domain_blacklist_add');
                 if ($is_moderator == '1') {
-                    $main_smarty->display($template_dir . '/admin/moderator.tpl');
+                    $main_smarty->display($template_dir.'/admin/moderator.tpl');
                 } else {
-                    $main_smarty->display($template_dir . '/admin/admin.tpl');
+                    $main_smarty->display($template_dir.'/admin/admin.tpl');
                 }
                 exit;
             }
@@ -155,9 +155,9 @@ if ($canIhaveAccess == 1) {
                 $main_smarty->assign('errorText', "Cannot write to file ($blacklist)");
                 $main_smarty->assign('tpl_center', '/admin/domain_blacklist_add');
                 if ($is_moderator == '1') {
-                    $main_smarty->display($template_dir . '/admin/moderator.tpl');
+                    $main_smarty->display($template_dir.'/admin/moderator.tpl');
                 } else {
-                    $main_smarty->display($template_dir . '/admin/admin.tpl');
+                    $main_smarty->display($template_dir.'/admin/admin.tpl');
                 }
                 exit;
             }
@@ -167,9 +167,9 @@ if ($canIhaveAccess == 1) {
             $main_smarty->assign('errorText', "The domain $domain has been added to the Blacklist file $blacklist <META http-equiv='refresh' content='1;URL=domain_management.php'> ");
             $main_smarty->assign('tpl_center', '/admin/domain_management');
             if ($is_moderator == '1') {
-                $main_smarty->display($template_dir . '/admin/moderator.tpl');
+                $main_smarty->display($template_dir.'/admin/moderator.tpl');
             } else {
-                $main_smarty->display($template_dir . '/admin/admin.tpl');
+                $main_smarty->display($template_dir.'/admin/admin.tpl');
             }
 
             fclose($handle);
@@ -177,21 +177,21 @@ if ($canIhaveAccess == 1) {
             $main_smarty->assign('errorText', "The file $blacklist is not writable");
             $main_smarty->assign('tpl_center', '/admin/domain_blacklist_add');
             if ($is_moderator == '1') {
-                $main_smarty->display($template_dir . '/admin/moderator.tpl');
+                $main_smarty->display($template_dir.'/admin/moderator.tpl');
             } else {
-                $main_smarty->display($template_dir . '/admin/admin.tpl');
+                $main_smarty->display($template_dir.'/admin/admin.tpl');
             }
         }
     } elseif (isset($_REQUEST['dowhitelist'])) {
-        $domain = strtoupper(sanitize($_REQUEST['dowhitelist'], 3)) . "\n";
+        $domain = strtoupper(sanitize($_REQUEST['dowhitelist'], 3))."\n";
         if (is_writable($whitelist)) {
             if (!$handle = fopen($whitelist, 'a')) {
                 $main_smarty->assign('errorText', "Cannot open file ($whitelist)");
                 $main_smarty->assign('tpl_center', '/admin/domain_whitelist_add');
                 if ($is_moderator == '1') {
-                    $main_smarty->display($template_dir . '/admin/moderator.tpl');
+                    $main_smarty->display($template_dir.'/admin/moderator.tpl');
                 } else {
-                    $main_smarty->display($template_dir . '/admin/admin.tpl');
+                    $main_smarty->display($template_dir.'/admin/admin.tpl');
                 }
                 exit;
             }
@@ -199,9 +199,9 @@ if ($canIhaveAccess == 1) {
                 $main_smarty->assign('errorText', "Cannot write to file ($whitelist)");
                 $main_smarty->assign('tpl_center', '/admin/domain_blacklist_add');
                 if ($is_moderator == '1') {
-                    $main_smarty->display($template_dir . '/admin/moderator.tpl');
+                    $main_smarty->display($template_dir.'/admin/moderator.tpl');
                 } else {
-                    $main_smarty->display($template_dir . '/admin/admin.tpl');
+                    $main_smarty->display($template_dir.'/admin/admin.tpl');
                 }
                 exit;
             }
@@ -212,9 +212,9 @@ if ($canIhaveAccess == 1) {
             $main_smarty->assign('errorText', "The domain $domain has been added to the Whitelist file $whitelist <META http-equiv='refresh' content='1;URL=domain_management.php'> ");
             $main_smarty->assign('tpl_center', '/admin/domain_management');
             if ($is_moderator == '1') {
-                $main_smarty->display($template_dir . '/admin/moderator.tpl');
+                $main_smarty->display($template_dir.'/admin/moderator.tpl');
             } else {
-                $main_smarty->display($template_dir . '/admin/admin.tpl');
+                $main_smarty->display($template_dir.'/admin/admin.tpl');
             }
 
             fclose($handle);
@@ -222,21 +222,21 @@ if ($canIhaveAccess == 1) {
             $main_smarty->assign('errorText', "The file $whitelist is not writable");
             $main_smarty->assign('tpl_center', '/admin/domain_whitelist_add');
             if ($is_moderator == '1') {
-                $main_smarty->display($template_dir . '/admin/moderator.tpl');
+                $main_smarty->display($template_dir.'/admin/moderator.tpl');
             } else {
-                $main_smarty->display($template_dir . '/admin/admin.tpl');
+                $main_smarty->display($template_dir.'/admin/admin.tpl');
             }
         }
     } else {
         // Default Manage Domains page
         $main_smarty->assign('tpl_center', '/admin/domain_management');
         if ($is_moderator == '1') {
-            $main_smarty->display($template_dir . '/admin/moderator.tpl');
+            $main_smarty->display($template_dir.'/admin/moderator.tpl');
         } else {
-            $main_smarty->display($template_dir . '/admin/admin.tpl');
+            $main_smarty->display($template_dir.'/admin/admin.tpl');
         }
     }
 } else {
     // You need to login as an admin
-    header("Location: " . getmyurl('admin_login', $_SERVER['REQUEST_URI']));
+    header("Location: ".getmyurl('admin_login', $_SERVER['REQUEST_URI']));
 }

@@ -16,11 +16,11 @@ if (!defined('lang_loc')) {
 }
 
 // the path to the module. the probably shouldn't be changed unless you rename the fb folder(s)
-define('send_announcement_lang_conf', lang_loc .'/modules/send_announcement/lang.conf');
-define('send_announcement_pligg_lang_conf', lang_loc . "/languages/lang_" . pligg_language . ".conf");
+define('send_announcement_lang_conf', lang_loc.'/modules/send_announcement/lang.conf');
+define('send_announcement_pligg_lang_conf', lang_loc."/languages/lang_".pligg_language.".conf");
 
 // the path to the module. the probably shouldn't be changed unless you rename the sidebar_stats folder(s)
-define('send_announcement_path', my_pligg_base . '/modules/send_announcement/');
+define('send_announcement_path', my_pligg_base.'/modules/send_announcement/');
 
 // the path to the module. the probably shouldn't be changed unless you rename the sidebar_stats folder(s)
 define('send_announcement_lang_conf', '/modules/send_announcement/lang.conf');

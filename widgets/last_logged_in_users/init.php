@@ -13,7 +13,7 @@ $widget['homepage_url'] = '';
 // Fetch Size
 $limit_size = get_misc_data('limit_size');
 
-if ($_REQUEST['widget']=='setting_limit') {
+if ($_REQUEST['widget'] == 'setting_limit') {
     if (isset($_REQUEST['limit_size'])) {
         $limit_size = sanitize($_REQUEST['limit_size'], 3);
         // Shorten size to 5 digits

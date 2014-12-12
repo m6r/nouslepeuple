@@ -24,7 +24,7 @@ function upload_showpage()
             misc_data_update('upload_thumb', sanitize($_REQUEST['upload_thumb'], 3));
 
             $sizes = unserialize(get_misc_data('upload_sizes'));
-            for ($i=0; $i<sizeof($sizes); $i++) {
+            for ($i = 0; $i<sizeof($sizes); $i++) {
                 if (@in_array($sizes[$i], $_POST['delsize'])) {
                     if ($_REQUEST['upload_defsize'] == $sizes[$i]) {
                         $_REQUEST['upload_defsize'] = 'orig';
@@ -38,18 +38,18 @@ function upload_showpage()
                 if (!@in_array($size, $sizes)) {
                     $sizes[] = $size;
 
-                    $files = $db->get_results($sql = "SELECT a.* FROM " . table_prefix . "files a
-								    LEFT JOIN " . table_prefix . "files b ON a.file_id=b.file_orig_id AND b.file_size='$size'
+                    $files = $db->get_results($sql = "SELECT a.* FROM ".table_prefix."files a
+								    LEFT JOIN ".table_prefix."files b ON a.file_id=b.file_orig_id AND b.file_size='$size'
 								    WHERE a.file_size='orig' AND ISNULL(b.file_id)");
                     if ($files) {
                         misc_data_update('upload_sizes', serialize($sizes));
                         misc_data_update('upload_thumb_format', $_REQUEST['upload_thumb_format']);
-                        misc_data_update('upload_quality', $_REQUEST['upload_quality']<=100 && $_REQUEST['upload_quality']>=1 ? $_REQUEST['upload_quality'] : 80);
+                        misc_data_update('upload_quality', $_REQUEST['upload_quality'] <= 100 && $_REQUEST['upload_quality'] >= 1 ? $_REQUEST['upload_quality'] : 80);
                         $settings = get_upload_settings();
 
                         foreach ($files as $file) {
                             generate_thumbs(
-                        strpos($file->file_name, 'http')===0 ? $file->file_name : mnmpath.sanitize($_REQUEST['upload_directory'], 3).'/'.$file->file_name,
+                        strpos($file->file_name, 'http') === 0 ? $file->file_name : mnmpath.sanitize($_REQUEST['upload_directory'], 3).'/'.$file->file_name,
                         $file->file_link_id,
                         $settings,
                         $file->file_id,
@@ -60,7 +60,7 @@ function upload_showpage()
             }
 
             $fields = unserialize(base64_decode(get_misc_data('upload_fields')));
-            for ($i=0; $i<sizeof($fields); $i++) {
+            for ($i = 0; $i<sizeof($fields); $i++) {
                 if (in_array($fields[$i], $_POST['delfield'])) {
                     array_splice($fields, $i--, 1);
                 }
@@ -104,7 +104,7 @@ function upload_showpage()
             misc_data_update('upload_t_pre_format', $_REQUEST['upload_thumb_pre_format']);
             misc_data_update('upload_t_post_format', $_REQUEST['upload_thumb_post_format']);
             misc_data_update('upload_allow_hide', sanitize($_REQUEST['upload_allow_hide'], 3));
-            misc_data_update('upload_quality', $_REQUEST['upload_quality']<=100 && $_REQUEST['upload_quality']>=1 ? $_REQUEST['upload_quality'] : 80);
+            misc_data_update('upload_quality', $_REQUEST['upload_quality'] <= 100 && $_REQUEST['upload_quality'] >= 1 ? $_REQUEST['upload_quality'] : 80);
             misc_data_update('upload_link', sanitize($_REQUEST['upload_link'], 3));
             misc_data_update('upload_directory', sanitize($_REQUEST['upload_directory'], 3));
             misc_data_update('upload_thdirectory', sanitize($_REQUEST['upload_thdirectory'], 3));
@@ -123,9 +123,9 @@ function upload_showpage()
             $navwhere['text1'] = $main_smarty->get_config_vars('PLIGG_Visual_Header_AdminPanel');
         $navwhere['link1'] = getmyurl('admin', '');
         $navwhere['text2'] = "Modify Upload";
-        $navwhere['link2'] = my_pligg_base . "/module.php?module=upload";
+        $navwhere['link2'] = my_pligg_base."/module.php?module=upload";
         $main_smarty->assign('navbar_where', $navwhere);
-        $main_smarty->assign('posttitle', " / " . $main_smarty->get_config_vars('PLIGG_Visual_Header_AdminPanel'));
+        $main_smarty->assign('posttitle', " / ".$main_smarty->get_config_vars('PLIGG_Visual_Header_AdminPanel'));
         // breadcrumbs
         define('modulename', 'upload');
         $main_smarty->assign('modulename', modulename);
@@ -134,10 +134,10 @@ function upload_showpage()
         $main_smarty->assign('pagename', pagename);
         $main_smarty->assign('settings', str_replace('"', '&#034;', get_upload_settings()));
         $main_smarty->assign('places', $upload_places);
-        $main_smarty->assign('tpl_center', upload_tpl_path . 'upload_main');
-        $main_smarty->display($template_dir . '/admin/admin.tpl');
+        $main_smarty->assign('tpl_center', upload_tpl_path.'upload_main');
+        $main_smarty->display($template_dir.'/admin/admin.tpl');
     } else {
-        header("Location: " . getmyurl('login', $_SERVER['REQUEST_URI']));
+        header("Location: ".getmyurl('login', $_SERVER['REQUEST_URI']));
     }
 }
 
@@ -145,15 +145,15 @@ function upload_edit_link()
 {
     global $db, $current_user;
 
-    $upload_dir = mnmpath . get_misc_data('upload_directory');
-    $thumb_dir  = mnmpath . get_misc_data('upload_thdirectory');
+    $upload_dir = mnmpath.get_misc_data('upload_directory');
+    $thumb_dir  = mnmpath.get_misc_data('upload_thdirectory');
 
     // Remove selected files
     if ($_POST['upload_delete']) {
         foreach ($_POST['upload_delete'] as $id) {
             if ($files = $db->get_results($sql = "SELECT * FROM ".table_prefix."files WHERE (file_id='$id' OR file_orig_id='$id') AND file_user_id='{$current_user->user_id}' AND file_comment_id=0")) {
                 foreach ($files as $row) {
-                    if ($row->file_size=='orig') {
+                    if ($row->file_size == 'orig') {
                         @unlink("$upload_dir/{$row->file_name}");
                     } else {
                         @unlink("$thumb_dir/{$row->file_name}");
@@ -190,14 +190,14 @@ function upload_save_files()
     global $db, $main_smarty, $dblang, $the_template, $linkres, $current_user;
 
     $settings = get_upload_settings();
-    $upload_dir = mnmpath . $settings['directory'];
+    $upload_dir = mnmpath.$settings['directory'];
     $last_id = $count = 0;
     $extensions = preg_split('/[ ,.]+/', $settings['extensions']);
 
     // Save additional fields
     $fields = array();
     foreach ($_POST as $k => $v) {
-        if (strpos($k, "field")===0) {
+        if (strpos($k, "field") === 0) {
             $fields[$k] = sanitize($v, 3);
         }
     }
@@ -253,7 +253,7 @@ function upload_save_files()
                 break;
             }
             $url = trim($url);
-            if (strlen($url)>10 && strpos($url, 'http')===0) {
+            if (strlen($url)>10 && strpos($url, 'http') === 0) {
                 $db->query("INSERT INTO ".table_prefix."files
 					SET file_size='orig',
 					    file_user_id={$current_user->user_id},
@@ -276,7 +276,7 @@ function upload_save_files()
     }
 }
 
-function generate_thumbs($fname, $link_id, $settings, $orig_id, $only_size='')
+function generate_thumbs($fname, $link_id, $settings, $orig_id, $only_size = '')
 {
     global $db, $current_user;
 
@@ -309,14 +309,14 @@ function generate_thumbs($fname, $link_id, $settings, $orig_id, $only_size='')
     if (!$settings['sizes']) {
         return;
     }
-    $thumb_dir = mnmpath . $settings['thdirectory'];
+    $thumb_dir = mnmpath.$settings['thdirectory'];
 
     // load image and get image size
     $width  = imagesx($img);
     $height = imagesy($img);
     $error  = '';
     foreach ($settings['sizes'] as $size) {
-        if (!strstr($size, 'x') || ($only_size && $only_size!=$size)) {
+        if (!strstr($size, 'x') || ($only_size && $only_size != $size)) {
             continue;
         }
         list($maxw, $maxh) = explode('x', $size);
@@ -402,7 +402,7 @@ function get_upload_settings()
         'fileplace' => get_misc_data('upload_fileplace'),
         'commentplace' => get_misc_data('upload_commentplace'),
         'commentfilelist' => get_misc_data('upload_cfilelist'),
-        'allow_comment' => get_misc_data('upload_allow_comment')
+        'allow_comment' => get_misc_data('upload_allow_comment'),
         );
 }
 
@@ -413,7 +413,7 @@ function upload_get_file_count($link_id)
 {
     global $db;
 
-    $sql = "SELECT COUNT(*) FROM " . table_prefix . "files where file_link_id='$link_id' AND file_size='orig'";
+    $sql = "SELECT COUNT(*) FROM ".table_prefix."files where file_link_id='$link_id' AND file_size='orig'";
     $row = $db->get_row($sql, ARRAY_N);
     return $row[0];
 }
@@ -442,17 +442,17 @@ function upload_track($vars)
     $content = $vars['smarty']->_vars['story_content'];
     $link_id = $vars['smarty']->_vars['link_id'];
     if (preg_match_all('/\{image(\d+)(\_(\d+x\d+))?\}/s', $content, $m)) {
-        for ($i=0; $i<sizeof($m[1]); $i++) {
+        for ($i = 0; $i<sizeof($m[1]); $i++) {
             $number = $m[1][$i];
             $size = $m[3][$i];
             if (!$size) {
-                $size='orig';
+                $size = 'orig';
             }
 
-            if ($file = $db->get_row($sql = "SELECT * FROM " . table_prefix . "files where file_link_id='$link_id' AND file_size='$size' AND file_number=$number AND file_comment_id=0")) {
-                if (strpos($file->file_name, 'http')===0) {
+            if ($file = $db->get_row($sql = "SELECT * FROM ".table_prefix."files where file_link_id='$link_id' AND file_size='$size' AND file_number=$number AND file_comment_id=0")) {
+                if (strpos($file->file_name, 'http') === 0) {
                     $image = "<img src='{$file->file_name}'/>";
-                } elseif ($file->file_size=='orig') {
+                } elseif ($file->file_size == 'orig') {
                     $image = "<img src='".my_pligg_base."{$upload_dir}/{$file->file_name}'/>";
                 } else {
                     $image = "<img src='".my_pligg_base."{$thumb_dir}/{$file->file_name}'/>";
@@ -464,18 +464,18 @@ function upload_track($vars)
         }
     }
 
-    $images = $db->get_results($sql = "SELECT * FROM " . table_prefix . "files where file_link_id='$link_id' AND file_comment_id=0");
+    $images = $db->get_results($sql = "SELECT * FROM ".table_prefix."files where file_link_id='$link_id' AND file_comment_id=0");
     if ($images) {
         foreach ($images as $file) {
-            if (strpos($file->file_name, 'http')===0) {
+            if (strpos($file->file_name, 'http') === 0) {
                 $image = "<img src='{$file->file_name}'/>";
-            } elseif ($file->file_size=='orig') {
+            } elseif ($file->file_size == 'orig') {
                 $image = "<img src='".my_pligg_base."{$upload_dir}/{$file->file_name}'/>";
             } else {
                 $image = "<img src='".my_pligg_base."{$thumb_dir}/{$file->file_name}'/>";
             }
 
-            if ($file->file_size=='orig') {
+            if ($file->file_size == 'orig') {
                 $vars['smarty']->_vars["image{$file->file_number}"] = $file->file_ispicture ? $image : '';
             } else {
                 $vars['smarty']->_vars["image{$file->file_number}_{$file->file_size}"] = $image;
@@ -495,17 +495,17 @@ function upload_comment_track($vars)
     $content = $vars['comment_text'];
     $comment_id = $vars['comment_id'];
     if (preg_match_all('/\{image(\d+)(\_(\d+x\d+))?\}/s', $content, $m)) {
-        for ($i=0; $i<sizeof($m[1]); $i++) {
+        for ($i = 0; $i<sizeof($m[1]); $i++) {
             $number = $m[1][$i];
             $size = $m[3][$i];
             if (!$size) {
-                $size='orig';
+                $size = 'orig';
             }
 
-            if ($file = $db->get_row($sql = "SELECT * FROM " . table_prefix . "files where file_comment_id='$comment_id' AND file_size='$size' AND file_number=$number")) {
-                if (strpos($file->file_name, 'http')===0) {
+            if ($file = $db->get_row($sql = "SELECT * FROM ".table_prefix."files where file_comment_id='$comment_id' AND file_size='$size' AND file_number=$number")) {
+                if (strpos($file->file_name, 'http') === 0) {
                     $image = "<img src='{$file->file_name}'/>";
-                } elseif ($file->file_size=='orig') {
+                } elseif ($file->file_size == 'orig') {
                     $image = "<img src='".my_pligg_base."{$upload_dir}/{$file->file_name}'/>";
                 } else {
                     $image = "<img src='".my_pligg_base."{$thumb_dir}/{$file->file_name}'/>";
@@ -517,18 +517,18 @@ function upload_comment_track($vars)
         }
     }
 
-    $images = $db->get_results($sql = "SELECT * FROM " . table_prefix . "files where file_comment_id='$comment_id'");
+    $images = $db->get_results($sql = "SELECT * FROM ".table_prefix."files where file_comment_id='$comment_id'");
     if ($images) {
         foreach ($images as $file) {
-            if (strpos($file->file_name, 'http')===0) {
+            if (strpos($file->file_name, 'http') === 0) {
                 $image = "<img src='{$file->file_name}'/>";
-            } elseif ($file->file_size=='orig') {
+            } elseif ($file->file_size == 'orig') {
                 $image = "<img src='".my_pligg_base."{$upload_dir}/{$file->file_name}'/>";
             } else {
                 $image = "<img src='".my_pligg_base."{$thumb_dir}/{$file->file_name}'/>";
             }
 
-            if ($file->file_size=='orig') {
+            if ($file->file_size == 'orig') {
                 $vars['smarty']->_vars["image{$file->file_number}"] = $file->file_ispicture ? $image : '';
             } else {
                 $vars['smarty']->_vars["image{$file->file_number}_{$file->file_size}"] = $image;
@@ -542,14 +542,14 @@ function upload_delete($vars)
 {
     global $db, $smarty, $dblang, $the_template, $linkres, $current_user;
 
-    $upload_dir = mnmpath . get_misc_data('upload_directory');
-    $thumb_dir  = mnmpath . get_misc_data('upload_thdirectory');
+    $upload_dir = mnmpath.get_misc_data('upload_directory');
+    $thumb_dir  = mnmpath.get_misc_data('upload_thdirectory');
 
     // Remove files
     if (is_numeric($vars['link_id'])) {
         if ($files = $db->get_results($sql = "SELECT * FROM ".table_prefix."files WHERE file_link_id='{$vars['link_id']}'")) {
             foreach ($files as $row) {
-                if ($row->file_size=='orig') {
+                if ($row->file_size == 'orig') {
                     @unlink("$upload_dir/{$row->file_name}");
                 } else {
                     @unlink("$thumb_dir/{$row->file_name}");
@@ -569,14 +569,14 @@ function upload_comment_delete($vars)
 {
     global $db, $smarty, $dblang, $the_template, $linkres, $current_user;
 
-    $upload_dir = mnmpath . get_misc_data('upload_directory');
-    $thumb_dir  = mnmpath . get_misc_data('upload_thdirectory');
+    $upload_dir = mnmpath.get_misc_data('upload_directory');
+    $thumb_dir  = mnmpath.get_misc_data('upload_thdirectory');
 
     // Remove files
     if (is_numeric($vars['comment_id'])) {
         if ($files = $db->get_results($sql = "SELECT * FROM ".table_prefix."files WHERE file_comment_id='{$vars['comment_id']}'")) {
             foreach ($files as $row) {
-                if ($row->file_size=='orig') {
+                if ($row->file_size == 'orig') {
                     @unlink("$upload_dir/{$row->file_name}");
                 } else {
                     @unlink("$thumb_dir/{$row->file_name}");
@@ -599,7 +599,7 @@ function upload_rss_item($vars)
     $upload_thumb_format = get_misc_data('upload_thumb_format');
 
     $sql = "SELECT *, IF(LEFT(file_name,4)='http',file_name,CONCAT('$upload_directory/',file_name)) AS link_name
-			FROM " . table_prefix . "files a
+			FROM ".table_prefix."files a
 			WHERE a.file_link_id='{$vars['item']->id}' AND a.file_size='orig' AND a.file_comment_id=0
 			ORDER BY file_number";
     $images = $db->get_results($sql, ARRAY_A);
@@ -622,7 +622,7 @@ function upload_comment_rss_item($vars)
     $upload_thumb_format = get_misc_data('upload_thumb_format');
 
     $sql = "SELECT *, IF(LEFT(file_name,4)='http',file_name,CONCAT('$upload_directory/',file_name)) AS link_name
-			FROM " . table_prefix . "files a
+			FROM ".table_prefix."files a
 			WHERE a.file_comment_id='{$vars['item']->id}' AND a.file_size='orig'
 			ORDER BY file_number";
     $images = $db->get_results($sql, ARRAY_A);

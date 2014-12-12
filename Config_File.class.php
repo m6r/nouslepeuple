@@ -1,6 +1,6 @@
 <?php
 
-require_once(TEMPLATE_LITE_DIR . "class.config.php");
+require_once(TEMPLATE_LITE_DIR."class.config.php");
 
 class Config_File extends config
 {

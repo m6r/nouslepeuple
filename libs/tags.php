@@ -22,20 +22,20 @@ function tags_insert_string($link, $lang, $string, $date = 0)
 
     $string = tags_normalize_string($string);
     if ($date == 0) {
-        $date=time();
+        $date = time();
     }
     $words = preg_split('/[,;]+/', $string);
     if ($words) {
-        $db->query("delete from " . table_tags . " where tag_link_id = $link");
+        $db->query("delete from ".table_tags." where tag_link_id = $link");
         foreach ($words as $word) {
-            $word=trim($word);
+            $word = trim($word);
             if (!$inserted[$word] && !empty($word)) {
-                $db->query("insert IGNORE into " . table_tags . " (tag_link_id, tag_lang, tag_words, tag_date) values ($link, '$lang', '$word', from_unixtime($date))");
+                $db->query("insert IGNORE into ".table_tags." (tag_link_id, tag_lang, tag_words, tag_date) values ($link, '$lang', '$word', from_unixtime($date))");
                 $inserted[$word] = true;
             }
         }
         $db->query("TRUNCATE TABLE ".table_tag_cache);
-        $db->query($sql="INSERT INTO ".table_tag_cache." select tag_words, count(DISTINCT link_id) as count FROM ".table_tags.", ".table_links." WHERE tag_lang='en' and link_id = tag_link_id and (link_status='published' OR link_status='new') GROUP BY tag_words order by count desc");
+        $db->query($sql = "INSERT INTO ".table_tag_cache." select tag_words, count(DISTINCT link_id) as count FROM ".table_tags.", ".table_links." WHERE tag_lang='en' and link_id = tag_link_id and (link_status='published' OR link_status='new') GROUP BY tag_words order by count desc");
 
         return true;
     }
@@ -80,12 +80,12 @@ class TagCloud
         // see if we clicked on a link to filter to a specific time range
         if (($from = check_integer('range')) >= 0 && $from < count($this->range_values) && $this->range_values[$from] > 0) {
             $from_time = time() - $this->range_values[$from];
-            $from_where = "FROM " . table_tags . ", " . table_links . " WHERE  tag_lang='$dblang' and tag_date > FROM_UNIXTIME($from_time) and link_id = tag_link_id and ";
+            $from_where = "FROM ".table_tags.", ".table_links." WHERE  tag_lang='$dblang' and tag_date > FROM_UNIXTIME($from_time) and link_id = tag_link_id and ";
             $time_query = "&amp;from=$from_time";
             $this->smarty_variable->assign('time_query', $time_query);
         } else {
-            $from_where = "FROM " . table_tags . ", " . table_links . " WHERE tag_lang='$dblang' and link_id = tag_link_id and ";
-            $cache_possible=1;
+            $from_where = "FROM ".table_tags.", ".table_links." WHERE tag_lang='$dblang' and link_id = tag_link_id and ";
+            $cache_possible = 1;
         }
 
         if ($this->filterTo == 'all') {
@@ -111,9 +111,9 @@ class TagCloud
             if ($child_array != '') {
                 // build the sql
                 foreach ($child_array as $child_cat_id) {
-                    $child_cat_sql .= ' OR `link_category` = ' . $child_cat_id . ' ';
+                    $child_cat_sql .= ' OR `link_category` = '.$child_cat_id.' ';
                     if (Multiple_Categories) {
-                        $child_cat_sql .= ' OR ac_cat_id = ' . $child_cat_id . ' ';
+                        $child_cat_sql .= ' OR ac_cat_id = '.$child_cat_id.' ';
                     }
                 }
             }
@@ -121,15 +121,15 @@ class TagCloud
             if (Multiple_Categories) {
                 $child_cat_sql .= " OR ac_cat_id = $catId ";
             }
-            $from_where .= " AND (link_category=$catId " . $child_cat_sql . ")";
+            $from_where .= " AND (link_category=$catId ".$child_cat_sql.")";
 
-            $cache_possible=0;
+            $cache_possible = 0;
         }
 
         //CDPDF
         if (isset($_REQUEST['category'])) {
-            $catId = $db->get_var("SELECT category_id from " . table_categories . " where category_safe_name = '".$db->escape($_REQUEST['category'])."';");
-            $category_name = $db->get_var("SELECT category_name from " . table_categories . " where category_safe_name = '".$db->escape($_REQUEST['category'])."';");
+            $catId = $db->get_var("SELECT category_id from ".table_categories." where category_safe_name = '".$db->escape($_REQUEST['category'])."';");
+            $category_name = $db->get_var("SELECT category_name from ".table_categories." where category_safe_name = '".$db->escape($_REQUEST['category'])."';");
 
             $this->smarty_variable->assign('category_name', $category_name);
 
@@ -144,9 +144,9 @@ class TagCloud
             if ($child_array != '') {
                 // build the sql
                         foreach ($child_array as $child_cat_id) {
-                            $child_cat_sql .= ' OR `link_category` = ' . $child_cat_id . ' ';
+                            $child_cat_sql .= ' OR `link_category` = '.$child_cat_id.' ';
                             if (Multiple_Categories) {
-                                $child_cat_sql .= ' OR ac_cat_id = ' . $child_cat_id . ' ';
+                                $child_cat_sql .= ' OR ac_cat_id = '.$child_cat_id.' ';
                             }
                         }
             }
@@ -154,12 +154,12 @@ class TagCloud
                 if (Multiple_Categories) {
                     $child_cat_sql .= " OR ac_cat_id = $catId ";
                 }
-                $cache_possible=0;
-                $from_where .= " AND (link_category=$catId " . $child_cat_sql . ")";
+                $cache_possible = 0;
+                $from_where .= " AND (link_category=$catId ".$child_cat_sql.")";
 
         // Search on additional categories
         if (Multiple_Categories) {
-            $from_where = str_replace("WHERE", " LEFT JOIN ".table_additional_categories. " ON ac_link_id=link_id WHERE", $from_where);
+            $from_where = str_replace("WHERE", " LEFT JOIN ".table_additional_categories." ON ac_link_id=link_id WHERE", $from_where);
         }
             }
         }
@@ -172,7 +172,7 @@ class TagCloud
         $coef = ($this->max_points - $this->min_points)/($max-1);
         CDPDF */
 
-    if ($cache_possible==2) {
+    if ($cache_possible == 2) {
         $sql = "select * FROM ".table_tag_cache." limit $this->word_limit";
         $res = $db->get_results($sql);
     } else {

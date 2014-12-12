@@ -1,7 +1,7 @@
 <?php
 
 // the path to the module. the probably shouldn't be changed unless you rename the admin_snippet folder(s)
-define('admin_snippet_path', my_pligg_base . '/modules/admin_snippet/');
+define('admin_snippet_path', my_pligg_base.'/modules/admin_snippet/');
 
 // the language path for the module
     if (!defined('lang_loc')) {
@@ -19,8 +19,8 @@ define('admin_snippet_path', my_pligg_base . '/modules/admin_snippet/');
         }
     }
 
-define('admin_snippet_lang_conf', lang_loc . '/modules/admin_snippet/lang.conf');
-define('admin_snippet_pligg_lang_conf', lang_loc . "/languages/lang_" . pligg_language . ".conf");
+define('admin_snippet_lang_conf', lang_loc.'/modules/admin_snippet/lang.conf');
+define('admin_snippet_pligg_lang_conf', lang_loc."/languages/lang_".pligg_language.".conf");
 
 // the path to the modules templates. the probably shouldn't be changed unless you rename the admin_snippet folder(s)
 define('admin_snippet_tpl_path', '../modules/admin_snippet/templates/');
@@ -112,7 +112,7 @@ array("tpl_header_admin_links","Admin panel navigation linksarray"),
 array("tpl_pligg_register_start","Before registration form"),
 array("tpl_pligg_register_end","After registration form"),
 array("tpl_pligg_topusers_start","Beginning of Top users"),
-array("tpl_pligg_topusers_end","End of Top users")
+array("tpl_pligg_topusers_end","End of Top users"),
 );
 
 // don't touch anything past this line.

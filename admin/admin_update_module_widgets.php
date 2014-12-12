@@ -15,7 +15,7 @@ $canIhaveAccess = 0;
 $canIhaveAccess = $canIhaveAccess + checklevel('admin');
 
 if ($canIhaveAccess == 0) {
-    header("Location: " . getmyurl('admin_login', $_SERVER['REQUEST_URI']));
+    header("Location: ".getmyurl('admin_login', $_SERVER['REQUEST_URI']));
     die();
 }
 
@@ -24,7 +24,7 @@ define('pagename', 'template_widgets');
 $main_smarty->assign('pagename', pagename);
 
 // read the mysql database to get the pligg version
-$sql = "SELECT data FROM " . table_misc_data . " WHERE name = 'pligg_version'";
+$sql = "SELECT data FROM ".table_misc_data." WHERE name = 'pligg_version'";
 $pligg_version = $db->get_var($sql);
 $main_smarty->assign('version_number', $pligg_version);
 
@@ -33,7 +33,7 @@ $navwhere['text1'] = $main_smarty->get_config_vars('PLIGG_Visual_Header_AdminPan
 $navwhere['link1'] = getmyurl('admin', '');
 $navwhere['text2'] = $main_smarty->get_config_vars('PLIGG_Visual_Header_AdminPanel_6');
 $main_smarty->assign('navbar_where', $navwhere);
-$main_smarty->assign('posttitle', " / " . $main_smarty->get_config_vars('PLIGG_Visual_Header_AdminPanel_6'));
+$main_smarty->assign('posttitle', " / ".$main_smarty->get_config_vars('PLIGG_Visual_Header_AdminPanel_6'));
 
 // sidebar
 $main_smarty = do_sidebar($main_smarty);
@@ -44,7 +44,7 @@ if ($canIhaveAccess == 1) {
     if ($action == "updateRecordsListings") {
         $listingCounter = 1;
         foreach ($updateRecordsArray as $recordIDValue) {
-            $query = "UPDATE " .table_modules. " SET weight = " . $listingCounter . " WHERE id = " . $recordIDValue;
+            $query = "UPDATE ".table_modules." SET weight = ".$listingCounter." WHERE id = ".$recordIDValue;
             mysql_query($query) or die('Error, insert query failed');
             $listingCounter = $listingCounter + 1;
         }

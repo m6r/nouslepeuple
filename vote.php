@@ -14,7 +14,7 @@ $post_id = sanitize($_POST['id'], 3);
 
 if (is_numeric($post_id) && $post_id > 0) {
     $link = new Link;
-    $link->id=$post_id;
+    $link->id = $post_id;
     $link->read_basic();
 
     if ($current_user->user_id == 0 && !anonymous_vote) {
@@ -26,7 +26,7 @@ if (is_numeric($post_id) && $post_id > 0) {
         error($main_smarty->get_config_vars('PLIGG_Visual_Vote_BadUser'));
     }
 
-    $md5=md5($post_user.$link->randkey);
+    $md5 = md5($post_user.$link->randkey);
     if ($md5 !== sanitize($_POST['md5'], 3)) {
         error($main_smarty->get_config_vars('PLIGG_Visual_Vote_BadKey'));
     }
@@ -60,9 +60,9 @@ if (is_numeric($post_id) && $post_id > 0) {
         $rating_width = $link_rating * 25;
         $vote_count = $link->countvotes();
 
-        echo $rating_width . "~" . $link_rating . "~" . $vote_count;
+        echo $rating_width."~".$link_rating."~".$vote_count;
     } else {
-        $count=$link->votes;
+        $count = $link->votes;
         echo "$count ~--~".$post_id;
     }
 

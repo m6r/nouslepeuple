@@ -20,7 +20,7 @@ $main_smarty->assign('posttitle', $main_smarty->get_config_vars('PLIGG_Visual_Br
 
 // figure out what "page" of the results we're on
 $page_size = $top_users_size;
-$offset=(get_current_page()-1)* $page_size;
+$offset = (get_current_page()-1)* $page_size;
 
 // put the table headers in an array for the top users tpl file
 $header_items = array($main_smarty->get_config_vars('PLIGG_Visual_TopUsers_TH_User'), $main_smarty->get_config_vars('PLIGG_Visual_TopUsers_TH_News'), $main_smarty->get_config_vars('PLIGG_Visual_TopUsers_TH_PublishedNews'), $main_smarty->get_config_vars('PLIGG_Visual_TopUsers_TH_Comments'), $main_smarty->get_config_vars('PLIGG_Visual_TopUsers_TH_TotalVotes'), $main_smarty->get_config_vars('PLIGG_Visual_TopUsers_TH_PublishedVotes'));
@@ -41,8 +41,8 @@ if ($sortby == 0) { // sort users alphabetically
 
 $whether_to_show_link = "AND link_status = 'published'";
 
-$link_author_from_where = ', ' . table_links . " WHERE link_author = user_id $whether_to_show_user";
-$vote_from_where = ', ' . table_votes . " WHERE vote_user_id = user_id $whether_to_show_user";
+$link_author_from_where = ', '.table_links." WHERE link_author = user_id $whether_to_show_user";
+$vote_from_where = ', '.table_votes." WHERE vote_user_id = user_id $whether_to_show_user";
 
 $from_where_clauses = array(
     // sort users alphabetically:
@@ -52,16 +52,16 @@ $from_where_clauses = array(
     // sort users by number of published links:
     2 => "$link_author_from_where $whether_to_show_link GROUP BY link_author",
     // sort users by number of comments:
-    3 => (', ' . table_comments . " WHERE comment_status = 'published' AND comment_user_id = user_id $whether_to_show_user GROUP BY comment_user_id"),
+    3 => (', '.table_comments." WHERE comment_status = 'published' AND comment_user_id = user_id $whether_to_show_user GROUP BY comment_user_id"),
     // sort users by number of total votes:
     4 => ("$vote_from_where GROUP BY vote_user_id"),
     // sort users by number of published votes:
-    5 => (', ' . table_links . "$vote_from_where AND link_id = vote_link_id $whether_to_show_link AND vote_date < link_published_date GROUP BY user_id")
+    5 => (', '.table_links."$vote_from_where AND link_id = vote_link_id $whether_to_show_link AND vote_date < link_published_date GROUP BY user_id"),
 );
 
-$from_where = ' FROM ' . table_users . $from_where_clauses[$sortby];
+$from_where = ' FROM '.table_users.$from_where_clauses[$sortby];
 
-$users = $db->get_results("SELECT user_karma, COUNT(*) FROM " . table_users . " WHERE user_karma > 0 $whether_to_show_user GROUP BY user_karma ORDER BY user_karma DESC", ARRAY_N);
+$users = $db->get_results("SELECT user_karma, COUNT(*) FROM ".table_users." WHERE user_karma > 0 $whether_to_show_user GROUP BY user_karma ORDER BY user_karma DESC", ARRAY_N);
 
 
 $ranklist = array();
@@ -82,7 +82,7 @@ $users_table = '';
 //echo "<pre>";
 if ($users) {
     foreach ($users as $dbuser) {
-        $user->id=$dbuser->user_id;
+        $user->id = $dbuser->user_id;
         $user->read();
         $user->all_stats();
         //echo getmyurl("user", $user->username);
@@ -109,7 +109,7 @@ if ($users) {
         $main_smarty->assign('user_rank', $ranklist[$user->karma]);
         $main_smarty->assign('user_avatar', get_avatar('small', "", $user->username, $user->email));
 
-        $users_table .= $main_smarty->fetch(The_Template . "/topusers_data.tpl");
+        $users_table .= $main_smarty->fetch(The_Template."/topusers_data.tpl");
     }
 }
 
@@ -127,12 +127,12 @@ $main_smarty->assign('total_row_for_topusers', $rows);
 
 
 //For Infinit scrolling and continue reading option
-if (Auto_scroll==2 || Auto_scroll==3) {
+if (Auto_scroll == 2 || Auto_scroll == 3) {
     $main_smarty->assign("scrollpageSize", $page_size);
 } else {
     $main_smarty->assign('topusers_pagination', do_pages($rows, $top_users_size, "topusers", true));
 }
 
 // show the template
-$main_smarty->assign('tpl_center', $the_template . '/topusers_center');
-$main_smarty->display($the_template . '/pligg.tpl');
+$main_smarty->assign('tpl_center', $the_template.'/topusers_center');
+$main_smarty->display($the_template.'/pligg.tpl');

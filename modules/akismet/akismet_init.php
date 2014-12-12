@@ -20,7 +20,7 @@ if (defined('mnminclude')) {
             module_add_action_tpl('tpl_sidebar_logged_in_just_below_profile', akismet_tpl_path . 'spam_link_in_menu.tpl');
         }
 */
-        module_add_action_tpl('tpl_header_admin_main_links', akismet_tpl_path . 'akismet_admin_main_link.tpl');
+        module_add_action_tpl('tpl_header_admin_main_links', akismet_tpl_path.'akismet_admin_main_link.tpl');
 
         module_add_action('do_submit3', 'akismet_check_submit', '');
         module_add_action('comment_save', 'akismet_save_comment', '');
@@ -36,6 +36,6 @@ if (defined('mnminclude')) {
             module_add_action('module_page', 'akismet_showpage', '');
         }
 
-        include_once(mnmmodules . 'akismet/akismet_main.php');
+        include_once(mnmmodules.'akismet/akismet_main.php');
     }
 }

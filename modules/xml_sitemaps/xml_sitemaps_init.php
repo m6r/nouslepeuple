@@ -26,9 +26,9 @@ if (defined('mnminclude')) {
     if (do_we_load_module()) {
         if ($moduleName == 'xml_sitemaps_show_sitemap') {
             module_add_action('module_page', 'xml_sitemaps_show_sitemap', '');
-            include_once(mnmmodules . 'xml_sitemaps/xml_sitemaps_main.php');
+            include_once(mnmmodules.'xml_sitemaps/xml_sitemaps_main.php');
         }
         module_add_action('do_submit3', 'xml_sitemaps_sites_ping', '');
-        include_once(mnmmodules . 'xml_sitemaps/xml_sitemaps_main.php');
+        include_once(mnmmodules.'xml_sitemaps/xml_sitemaps_main.php');
     }
 }

@@ -21,7 +21,7 @@ if (isset($_GET['user']) && sanitize($_GET['user'], 3) != '') {
     header("Location: $my_pligg_base/error_404.php");
     die;
 }
-$user=new User();
+$user = new User();
 $user->username = $login;
 if (!$user->read()) {
     //echo "error: user does not exist";
@@ -36,8 +36,8 @@ $rows = isset($_GET['rows']) && is_numeric($_GET['rows']) ? $_GET['rows'] : 40;
 $time = isset($_GET['time']) && is_numeric($_GET['time']) ? $_GET['time'] : 0;
 if ($time > 0) {
     // Prepare for times
-    $sql = "SELECT *, count(*) as votes FROM " . table_votes . ", " . table_links . "
-			LEFT JOIN " . table_users . " ON link_author=user_id
+    $sql = "SELECT *, count(*) as votes FROM ".table_votes.", ".table_links."
+			LEFT JOIN ".table_users." ON link_author=user_id
 			WHERE  ";
     if ($time > 0) {
         $from = time()-$time;
@@ -46,7 +46,7 @@ if ($time > 0) {
     $sql .= "vote_link_id=link_id  AND (link_status='published' OR link_status='new') GROUP BY vote_link_id  ORDER BY votes DESC LIMIT $rows";
 
     $last_modified = time();
-    $title = $main_smarty->get_config_vars("PLIGG_Visual_RSS_Recent") . ' ' . txt_time_diff($from);
+    $title = $main_smarty->get_config_vars("PLIGG_Visual_RSS_Recent").' '.txt_time_diff($from);
     $link_date = "";
 } else {
     // All the others
@@ -61,8 +61,8 @@ if ($time > 0) {
             $title = $main_smarty->get_config_vars("PLIGG_Visual_Published_News");
             $order_field = 'link_published_date';
             $link_date = 'published_date';
-            $from_where = "FROM " . table_links . "
-						LEFT JOIN " . table_users . " ON link_author=user_id
+            $from_where = "FROM ".table_links."
+						LEFT JOIN ".table_users." ON link_author=user_id
 						WHERE link_status='published' ";
             $from_where .= " AND link_author=$user->id ";
             break;
@@ -70,8 +70,8 @@ if ($time > 0) {
             $title = $main_smarty->get_config_vars("PLIGG_Visual_Pligg_Queued");
             $order_field = 'link_date';
             $link_date = "date";
-            $from_where = "FROM " . table_links . "
-						LEFT JOIN " . table_users . " ON link_author=user_id
+            $from_where = "FROM ".table_links."
+						LEFT JOIN ".table_users." ON link_author=user_id
 						WHERE link_status='new' ";
             $from_where .= " AND link_author=$user->id ";
             break;
@@ -79,8 +79,8 @@ if ($time > 0) {
             $title = $main_smarty->get_config_vars("PLIGG_Visual_RSS_All");
             $order_field = 'link_date';
             $link_date = "date";
-            $from_where = "FROM " . table_links . "
-						LEFT JOIN " . table_users . " ON link_author=user_id
+            $from_where = "FROM ".table_links."
+						LEFT JOIN ".table_users." ON link_author=user_id
 						WHERE (link_status='published' OR link_status='new') ";
             $from_where .= " AND link_author=$user->id ";
             break;
@@ -88,27 +88,27 @@ if ($time > 0) {
             $title = $main_smarty->get_config_vars("PLIGG_Visual_RSS_Voted");
             $order_field = 'link_date';
             $link_date = "date";
-            $from_where = "FROM " . table_links . "
-						LEFT JOIN " . table_votes . " ON vote_link_id=link_id
-						LEFT JOIN " . table_users . " ON link_author=user_id
+            $from_where = "FROM ".table_links."
+						LEFT JOIN ".table_votes." ON vote_link_id=link_id
+						LEFT JOIN ".table_users." ON link_author=user_id
 						WHERE vote_user_id=$user->id AND (link_status='published' OR link_status='new') ";
             break;
         case 'upvoted':
             $title = $main_smarty->get_config_vars("PLIGG_Visual_UpVoted");
             $order_field = 'link_date';
             $link_date = "date";
-            $from_where = "FROM " . table_links . "
-						LEFT JOIN " . table_votes . " ON vote_link_id=link_id
-						LEFT JOIN " . table_users . " ON link_author=user_id
+            $from_where = "FROM ".table_links."
+						LEFT JOIN ".table_votes." ON vote_link_id=link_id
+						LEFT JOIN ".table_users." ON link_author=user_id
 						WHERE vote_user_id=$user->id AND (link_status='published' OR link_status='new')  AND vote_value>0";
             break;
         case 'downvoted':
             $title = $main_smarty->get_config_vars("PLIGG_Visual_DownVoted");
             $order_field = 'link_date';
             $link_date = "date";
-            $from_where = "FROM " . table_links . "
-						LEFT JOIN " . table_votes . " ON vote_link_id=link_id
-						LEFT JOIN " . table_users . " ON link_author=user_id
+            $from_where = "FROM ".table_links."
+						LEFT JOIN ".table_votes." ON vote_link_id=link_id
+						LEFT JOIN ".table_users." ON link_author=user_id
 						WHERE vote_user_id=$user->id AND (link_status='published' OR link_status='new')  AND vote_value<0";
             break;
 
@@ -117,9 +117,9 @@ if ($time > 0) {
             $user->username = $login;
             $order_field = 'link_date';
             $link_date = "date";
-            $from_where = "FROM " . table_links . "
-						LEFT JOIN " . table_comments . " ON comment_link_id=link_id
-						LEFT JOIN " . table_users . " ON link_author=user_id
+            $from_where = "FROM ".table_links."
+						LEFT JOIN ".table_comments." ON comment_link_id=link_id
+						LEFT JOIN ".table_users." ON link_author=user_id
 						WHERE comment_status='published' AND comment_user_id=$user->id AND (link_status='published' OR link_status='new') ";
             break;
         case 'saved':
@@ -127,9 +127,9 @@ if ($time > 0) {
             $user->username = $login;
             $order_field = 'saved_id';
             $link_date = "date";
-            $from_where = "FROM " . table_links . "
-						LEFT JOIN " . table_saved_links . " ON saved_link_id=link_id
-						LEFT JOIN " . table_users . " ON link_author=user_id
+            $from_where = "FROM ".table_links."
+						LEFT JOIN ".table_saved_links." ON saved_link_id=link_id
+						LEFT JOIN ".table_users." ON link_author=user_id
 						WHERE saved_user_id=$user->id AND (link_status='published' OR link_status='new') ";
             break;
         default:
@@ -150,20 +150,20 @@ if ($time > 0) {
             if ($child_array != '') {
                 // build the sql
                 foreach ($child_array as $child_cat_id) {
-                    $child_cat_sql .= ' OR `link_category` = ' . $child_cat_id . ' ';
+                    $child_cat_sql .= ' OR `link_category` = '.$child_cat_id.' ';
                     if (Multiple_Categories) {
-                        $child_cat_sql .= ' OR ac_cat_id = ' . $child_cat_id . ' ';
+                        $child_cat_sql .= ' OR ac_cat_id = '.$child_cat_id.' ';
                     }
                 }
             }
         }
         if (Multiple_Categories) {
-            $from_where = str_replace("WHERE", " LEFT JOIN ".table_additional_categories. " ON ac_link_id=link_id WHERE", $from_where);
+            $from_where = str_replace("WHERE", " LEFT JOIN ".table_additional_categories." ON ac_link_id=link_id WHERE", $from_where);
             $child_cat_sql .= " OR ac_cat_id = $cat ";
         }
-        $from_where .= " AND (link_category=$cat " . $child_cat_sql . ")";
+        $from_where .= " AND (link_category=$cat ".$child_cat_sql.")";
 
-        $category_name = $db->get_var("SELECT category_name FROM " . table_categories . " WHERE category_id = $cat AND category_lang='$dblang'");
+        $category_name = $db->get_var("SELECT category_name FROM ".table_categories." WHERE category_id = $cat AND category_lang='$dblang'");
         $title .= " | ".$category_name;
     }
 
@@ -185,10 +185,10 @@ $link = new Link;
 $links = $db->get_results($sql);
 if ($links) {
     foreach ($links as $dblink) {
-        $link->id=$dblink->link_id;
+        $link->id = $dblink->link_id;
         $cached_links[$dblink->link_id] = $dblink;
         $link->read();
-        $category_name = $db->get_var("SELECT category_name FROM " . table_categories . " WHERE category_id = $link->category AND category_lang='$dblang'");
+        $category_name = $db->get_var("SELECT category_name FROM ".table_categories." WHERE category_id = $link->category AND category_lang='$dblang'");
 
         $link->content = str_replace("\n", "<br />", $link->content);
         $link->content = str_replace("’", "'", $link->content);
@@ -198,19 +198,19 @@ if ($links) {
         $link->content = str_replace("”", "\"", $link->content);
 
         echo "<item>\n";
-        echo "	<title><![CDATA[". $link->title ."]]></title>\n";
+        echo "	<title><![CDATA[".$link->title."]]></title>\n";
         echo "	<link>".getmyFullurl("storyURL", $link->category_safe_names($link->category), $link->title_url, $link->id)."</link>\n";
         $vars = array('link' => $link);
         check_actions('rss_add_data', $vars);
-        echo '	<source url="'.getmyFullurl("storyURL", $link->category_safe_names($link->category), $link->title_url, $link->id).'"><![CDATA['. $link->title .']]></source>';
-        echo "\n	<description><![CDATA[" . $link->content . " ]]></description>\n";
+        echo '	<source url="'.getmyFullurl("storyURL", $link->category_safe_names($link->category), $link->title_url, $link->id).'"><![CDATA['.$link->title.']]></source>';
+        echo "\n	<description><![CDATA[".$link->content." ]]></description>\n";
         if (!empty($link_date)) {
             echo "	<pubDate>".date("r", $link->$link_date-misc_timezone*3600)."</pubDate>\n";
         } else {
             echo "	<pubDate>".date("r", time()-misc_timezone*3600)."</pubDate>\n";
         }
-        echo "	<author>" . $dblink->user_login . "</author>\n";
-        echo "	<category>" . htmlspecialchars($category_name) . "</category>\n";
+        echo "	<author>".$dblink->user_login."</author>\n";
+        echo "	<category>".htmlspecialchars($category_name)."</category>\n";
         echo "	<votes>".$link->votes."</votes>\n";
         echo "	<guid>".getmyFullurl("storyURL", $link->category_safe_names($link->category), $link->title_url, $link->id)."</guid>\n";
         echo "</item>\n\n";
@@ -223,12 +223,12 @@ function do_rss_header($title)
 {
     global $last_modified, $dblang, $login, $main_smarty;
     header('Content-type: text/xml; charset=utf-8', true);
-    echo '<?phpxml version="1.0" encoding="utf-8"?'.'>' . "\n";
+    echo '<?phpxml version="1.0" encoding="utf-8"?'.'>'."\n";
     echo '<rss version="2.0" '."\n";
     echo 'xmlns:content="http://purl.org/rss/1.0/modules/content/"'."\n";
     echo 'xmlns:wfw="http://wellformedweb.org/CommentAPI/"'."\n";
     echo 'xmlns:dc="http://purl.org/dc/elements/1.1/"'."\n";
-    echo '>'. "\n";
+    echo '>'."\n";
     echo '<channel>'."\n";
     echo '<title>'.htmlspecialchars($main_smarty->get_config_vars("PLIGG_Visual_Name")).' / '.$login.' / '.$title.'</title>'."\n";
     echo '<link>'.my_base_url.my_pligg_base.'</link>'."\n";
@@ -244,7 +244,7 @@ function do_rss_footer()
 
 function onlyreadables($string)
 {
-    for ($i=0;$i<strlen($string);$i++) {
+    for ($i = 0;$i<strlen($string);$i++) {
         $chr = $string{$i};
         $ord = ord($chr);
         if ($ord<32 or $ord>126) {

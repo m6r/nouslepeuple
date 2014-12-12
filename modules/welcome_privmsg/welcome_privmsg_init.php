@@ -10,6 +10,6 @@ if (defined('mnminclude')) {
 
     if (do_we_load_module()) {
         module_add_action('register_success_pre_redirect', 'welcome_privmsg_send', '');
-        include_once(mnmmodules . 'welcome_privmsg/welcome_privmsg_main.php');
+        include_once(mnmmodules.'welcome_privmsg/welcome_privmsg_main.php');
     }
 }

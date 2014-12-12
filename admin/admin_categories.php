@@ -27,7 +27,7 @@ $canIhaveAccess = $canIhaveAccess + checklevel('admin');
 if ($canIhaveAccess == 0) {
     //	$main_smarty->assign('tpl_center', '/admin/access_denied');
 //	$main_smarty->display($template_dir . '/admin/admin.tpl');
-    header("Location: " . getmyurl('admin_login', $_SERVER['REQUEST_URI']));
+    header("Location: ".getmyurl('admin_login', $_SERVER['REQUEST_URI']));
     die();
 }
 
@@ -40,9 +40,9 @@ if (caching == 1) {
 $navwhere['text1'] = $main_smarty->get_config_vars('PLIGG_Visual_Header_AdminPanel');
 $navwhere['link1'] = getmyurl('admin', '');
 $navwhere['text2'] = $main_smarty->get_config_vars('PLIGG_Visual_Header_AdminPanel_2');
-$navwhere['link2'] = my_pligg_base . "/admin_categories.php";
+$navwhere['link2'] = my_pligg_base."/admin_categories.php";
 $main_smarty->assign('navbar_where', $navwhere);
-$main_smarty->assign('posttitle', " / " . $main_smarty->get_config_vars('PLIGG_Visual_Header_AdminPanel'));
+$main_smarty->assign('posttitle', " / ".$main_smarty->get_config_vars('PLIGG_Visual_Header_AdminPanel'));
 
 if ($canIhaveAccess == 1) {
     $CSRF = new csrf();
@@ -63,7 +63,7 @@ if ($canIhaveAccess == 1) {
     $main_smarty->assign('pagename', pagename);
 
     // read the mysql database to get the pligg version
-    $sql = "SELECT data FROM " . table_misc_data . " WHERE name = 'pligg_version'";
+    $sql = "SELECT data FROM ".table_misc_data." WHERE name = 'pligg_version'";
     $pligg_version = $db->get_var($sql);
     $main_smarty->assign('version_number', $pligg_version);
 
@@ -95,7 +95,7 @@ if ($canIhaveAccess == 1) {
                     $i++;
                     $row = $db->get_row("SELECT * FROM ".table_categories." WHERE category_safe_name='".mysql_real_escape_string(sanitize($_POST['safename'].$i, 4))."' AND category__auto_id!='{$_POST['auto_id']}'");
                 }
-                $_POST['safename'].=$i;
+                $_POST['safename'] .= $i;
             }
             if ($_POST['auto_id'] && is_numeric($_POST['auto_id'])) {
                 $id = sanitize($_POST['auto_id'], 3);
@@ -118,7 +118,7 @@ if ($canIhaveAccess == 1) {
                     die();
                 }
 
-                $db->query("UPDATE `" . table_categories . "` SET category_name='".mysql_real_escape_string(sanitize($_POST['name'], 4))."',
+                $db->query("UPDATE `".table_categories."` SET category_name='".mysql_real_escape_string(sanitize($_POST['name'], 4))."',
 								  category_safe_name='".mysql_real_escape_string(sanitize($_POST['safename'], 4))."',
 								  category_parent='".mysql_real_escape_string(sanitize($_POST['parent'], 4))."',
 								  category_desc='".mysql_real_escape_string(sanitize($_POST['description'], 4))."',
@@ -135,8 +135,8 @@ if ($canIhaveAccess == 1) {
                     $i++;
                     $row = $db->get_row("SELECT * FROM ".table_categories." WHERE category_safe_name='".mysql_real_escape_string(sanitize($_POST['safename'].$i, 4))."'");
                 }
-                $_POST['safename'].=$i;
-                $db->query("INSERT INTO `" . table_categories . "` SET category_name='".mysql_real_escape_string(sanitize($_POST['name'], 4))."',
+                $_POST['safename'] .= $i;
+                $db->query("INSERT INTO `".table_categories."` SET category_name='".mysql_real_escape_string(sanitize($_POST['name'], 4))."',
 									  category_safe_name='".mysql_real_escape_string(sanitize($_POST['safename'], 4))."',
 									  category_parent='".mysql_real_escape_string(sanitize($_POST['parent'], 4))."',
 									  category_desc='".mysql_real_escape_string(sanitize($_POST['description'], 4))."',
@@ -161,9 +161,9 @@ if ($canIhaveAccess == 1) {
     } elseif ($action == "add") {
         $CSRF->check_expired('category_manager');
         if ($CSRF->check_valid(sanitize($_POST['token'], 3), 'category_manager')) {
-            $sql = "insert into `" . table_categories . "` (`category_name`) VALUES ('new category');";
+            $sql = "insert into `".table_categories."` (`category_name`) VALUES ('new category');";
             $db->query($sql);
-            $last_IDsql = $db->get_var("SELECT category__auto_id from " . table_categories . " where category_name = 'new category';");
+            $last_IDsql = $db->get_var("SELECT category__auto_id from ".table_categories." where category_name = 'new category';");
 
             rebuild_the_tree();
             ordernew();
@@ -185,7 +185,7 @@ if ($canIhaveAccess == 1) {
             die();
         }
 
-        $sql = "update ".table_categories." set category_color = '" . $color . "' where category__auto_id=" . $id . ";";
+        $sql = "update ".table_categories." set category_color = '".$color."' where category__auto_id=".$id.";";
         echo $sql;
         $db->query($sql);
 
@@ -215,7 +215,7 @@ if ($canIhaveAccess == 1) {
             $db->query('UPDATE '.table_categories." SET category_parent='{$row->category_parent}' WHERE category_parent='$id'");
         }
 
-            $sql = "delete from ".table_categories." where category__auto_id=" . $id . ";";
+            $sql = "delete from ".table_categories." where category__auto_id=".$id.";";
             $db->query($sql);
             header("Location: admin_categories.php");
         } else {
@@ -243,7 +243,7 @@ if ($canIhaveAccess == 1) {
                 die();
             }
 
-            $sql = "update ".table_categories." set category_parent = " . $parent . " where category__auto_id=" . $id . ";";
+            $sql = "update ".table_categories." set category_parent = ".$parent." where category__auto_id=".$id.";";
             $db->query($sql);
             rebuild_the_tree();
             header("Location: admin_categories.php");
@@ -270,11 +270,11 @@ if ($canIhaveAccess == 1) {
         children_id_to_array($array, table_categories, $id);
         if (is_array($array)) {
             if (!in_array($move_id, $array)) {
-                $sql = "Select * from ".table_categories." where category__auto_id=" . $move_id . ";";
+                $sql = "Select * from ".table_categories." where category__auto_id=".$move_id.";";
                 $results = $db->get_row($sql);
                 $move_sort = $results->category_order;
 
-                $sql = "update ".table_categories." set category_parent = ".$results->category_parent.", category_order = " . ($move_sort - 1) . " where category__auto_id=" . $id . ";";
+                $sql = "update ".table_categories." set category_parent = ".$results->category_parent.", category_order = ".($move_sort - 1)." where category__auto_id=".$id.";";
                 $db->query($sql);
                 rebuild_the_tree();
                 header("Location: admin_categories.php");
@@ -283,11 +283,11 @@ if ($canIhaveAccess == 1) {
                 die('You cannot move a category into it\'s own subcategory. Click <a href = "admin_categories.php">here</a> to reload.');
             }
         } else {
-            $sql = "Select * from ".table_categories." where category__auto_id=" . $move_id . ";";
+            $sql = "Select * from ".table_categories." where category__auto_id=".$move_id.";";
             $results = $db->get_row($sql);
             $move_sort = $results->category_order;
 
-            $sql = "update ".table_categories." set category_parent = ".$results->category_parent.", category_order = " . ($move_sort - 1) . " where category__auto_id=" . $id . ";";
+            $sql = "update ".table_categories." set category_parent = ".$results->category_parent.", category_order = ".($move_sort - 1)." where category__auto_id=".$id.";";
             $db->query($sql);
             rebuild_the_tree();
             header("Location: admin_categories.php");
@@ -312,11 +312,11 @@ if ($canIhaveAccess == 1) {
         children_id_to_array($array, table_categories, $id);
         if (is_array($array)) {
             if (!in_array($move_id, $array)) {
-                $sql = "Select * from ".table_categories." where category__auto_id=" . $move_id . ";";
+                $sql = "Select * from ".table_categories." where category__auto_id=".$move_id.";";
                 $results = $db->get_row($sql);
                 $move_sort = $results->category_order;
 
-                $sql = "update ".table_categories." set category_parent = ".$results->category_parent.", category_order = " . ($move_sort + 1) . " where category__auto_id=" . $id . ";";
+                $sql = "update ".table_categories." set category_parent = ".$results->category_parent.", category_order = ".($move_sort + 1)." where category__auto_id=".$id.";";
                 $db->query($sql);
                 rebuild_the_tree();
                 header("Location: admin_categories.php");
@@ -325,11 +325,11 @@ if ($canIhaveAccess == 1) {
                 die('You cannot move a category into it\'s own subcategory. Click <a href = "admin_categories.php">here</a> to reload.');
             }
         } else {
-            $sql = "Select * from ".table_categories." where category__auto_id=" . $move_id . ";";
+            $sql = "Select * from ".table_categories." where category__auto_id=".$move_id.";";
             $results = $db->get_row($sql);
             $move_sort = $results->category_order;
 
-            $sql = "update ".table_categories." set category_parent = ".$results->category_parent.", category_order = " . ($move_sort + 1) . " where category__auto_id=" . $id . ";";
+            $sql = "update ".table_categories." set category_parent = ".$results->category_parent.", category_order = ".($move_sort + 1)." where category__auto_id=".$id.";";
             $db->query($sql);
             rebuild_the_tree();
             header("Location: admin_categories.php");
@@ -343,7 +343,7 @@ if ($canIhaveAccess == 1) {
         $main_smarty->assign('cat_count', count($array));
         $main_smarty->assign('cat_array', $array);
         $main_smarty->assign('tpl_center', '/admin/categories');
-        $main_smarty->display($template_dir . '/admin/admin.tpl');
+        $main_smarty->display($template_dir.'/admin/admin.tpl');
     }
 }
 
@@ -365,7 +365,7 @@ function Cat_Safe_Names()
     // category information
 
     global $db;
-    $db->query("UPDATE `" . table_categories . "` SET category_id = category__auto_id");
+    $db->query("UPDATE `".table_categories."` SET category_id = category__auto_id");
 /*	$cats = $db->get_col("Select category_name from " . table_categories . ";");
     if ($cats) {
         foreach($cats as $catname) {
@@ -398,12 +398,12 @@ function move_delete_stories($id)
 
     if ($_REQUEST['sub'] == 'delete') {
         if (Multiple_Categories) {
-            $sql = "SELECT link_id FROM " . table_links . "
-				LEFT JOIN " . table_additional_categories . " ON ac_link_id=link_id
+            $sql = "SELECT link_id FROM ".table_links."
+				LEFT JOIN ".table_additional_categories." ON ac_link_id=link_id
 				WHERE link_category=$id OR ac_cat_id=$id
 				GROUP BY link_id";
         } else {
-            $sql = "SELECT link_id FROM " . table_links . " WHERE link_category='$id'";
+            $sql = "SELECT link_id FROM ".table_links." WHERE link_category='$id'";
         }
         $links = $db->get_results($sql);
         foreach ($links as $link) {

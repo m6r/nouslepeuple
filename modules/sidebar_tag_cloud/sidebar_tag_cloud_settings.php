@@ -1,7 +1,7 @@
 <?php
 
 // the path to the module. the probably shouldn't be changed unless you rename the sidebar_stories folder(s)
-define('sidebar_tag_cloud_path', my_pligg_base . '/modules/sidebar_tag_cloud/');
+define('sidebar_tag_cloud_path', my_pligg_base.'/modules/sidebar_tag_cloud/');
 // the path to the module. the probably shouldn't be changed unless you rename the sidebar_stories folder(s)
 
 // the path to the modules templates. the probably shouldn't be changed unless you rename the sidebar_stories folder(s)

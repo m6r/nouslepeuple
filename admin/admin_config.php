@@ -22,24 +22,24 @@ $canIhaveAccess = $canIhaveAccess + checklevel('admin');
 if ($canIhaveAccess == 0) {
     //	$main_smarty->assign('tpl_center', '/admin/access_denied');
 //	$main_smarty->display($template_dir . '/admin/admin.tpl');
-    header("Location: " . getmyurl('admin_login', $_SERVER['REQUEST_URI']));
+    header("Location: ".getmyurl('admin_login', $_SERVER['REQUEST_URI']));
     die();
 }
 
 // breadcrumbs and page titles
 $navwhere['text1'] = $main_smarty->get_config_vars('PLIGG_Visual_Header_AdminPanel');
 $navwhere['link1'] = getmyurl('admin', '');
-$navwhere['text2'] = $main_smarty->get_config_vars('PLIGG_Visual_Header_AdminPanel_5') . $main_smarty->get_config_vars('PLIGG_Visual_Name');
-$navwhere['link2'] = my_pligg_base . "/admin/admin_config.php";
+$navwhere['text2'] = $main_smarty->get_config_vars('PLIGG_Visual_Header_AdminPanel_5').$main_smarty->get_config_vars('PLIGG_Visual_Name');
+$navwhere['link2'] = my_pligg_base."/admin/admin_config.php";
 $main_smarty->assign('navbar_where', $navwhere);
-$main_smarty->assign('posttitle', " / " . $main_smarty->get_config_vars('PLIGG_Visual_Header_AdminPanel'));
+$main_smarty->assign('posttitle', " / ".$main_smarty->get_config_vars('PLIGG_Visual_Header_AdminPanel'));
 
 // pagename
 define('pagename', 'admin_config');
 $main_smarty->assign('pagename', pagename);
 
 // read the mysql database to get the pligg version
-$sql = "SELECT data FROM " . table_misc_data . " WHERE name = 'pligg_version'";
+$sql = "SELECT data FROM ".table_misc_data." WHERE name = 'pligg_version'";
 $pligg_version = $db->get_var($sql);
 $main_smarty->assign('version_number', $pligg_version);
 
@@ -51,7 +51,7 @@ if (isset($_REQUEST['action'])) {
     // sidebar
     $main_smarty = do_sidebar($main_smarty);
 
-    $main_smarty->display($template_dir . '/admin/admin.tpl');
+    $main_smarty->display($template_dir.'/admin/admin.tpl');
 }
 
 function dowork()
@@ -83,7 +83,7 @@ function dowork()
             $config->read();
 
             // Check if template exists
-            if ($config->var_name=='$thetemp' && $config->var_value!=js_urldecode($_REQUEST['var_value'])) {
+            if ($config->var_name == '$thetemp' && $config->var_value != js_urldecode($_REQUEST['var_value'])) {
                 if (!file_exists('../templates/'.js_urldecode($_REQUEST['var_value']))) {
                     print "alert('".$main_smarty->get_config_vars('PLIGG_Visual_AdminPanel_NoTemplate')."')";
                     exit;

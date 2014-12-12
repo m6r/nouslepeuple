@@ -8,7 +8,7 @@ include_once '../settings.php';
 
 // Set $step
 if (isset($_REQUEST['step'])) {
-    $step=addslashes(strip_tags($_REQUEST['step']));
+    $step = addslashes(strip_tags($_REQUEST['step']));
 }
 
 //check for no steps, start on step1
@@ -21,7 +21,7 @@ if ($step == 0) {
     include('upgrade_language.php');
 }
 
-$include='header.php';
+$include = 'header.php';
 
 // Sanitize and set $language
 if ($_GET['language']) {
@@ -72,6 +72,6 @@ if ($language == '' && $_POST['submit'] == '') {
     $step = 1;
 }
 
-$include='footer.php'; if (file_exists($include)) {
+$include = 'footer.php'; if (file_exists($include)) {
      include_once($include);
  }

@@ -7,8 +7,8 @@ include('config.php');
 include(mnminclude.'html1.php');
 include_once(mnminclude.'smartyvariables.php');
 
-$type=sanitize($_REQUEST['type'], 2);
-$name=js_urldecode($_POST["name"]);
+$type = sanitize($_REQUEST['type'], 2);
+$name = js_urldecode($_POST["name"]);
 
 switch ($type) {
     case 'username':

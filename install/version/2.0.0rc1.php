@@ -5,7 +5,7 @@
 // error_reporting(E_ALL);
 
 // Check for the current version within each upgrade file
-$sql = "SELECT data FROM " . table_misc_data . " WHERE name = 'pligg_version'";
+$sql = "SELECT data FROM ".table_misc_data." WHERE name = 'pligg_version'";
 $pligg_version = $db->get_var($sql);
 
 // Check if you need to run the one time upgrade to Pligg 2.0.0rc1
@@ -13,9 +13,9 @@ if ($pligg_version == '1.2.2') {
     echo '<li>Performing one-time Pligg 2.0.0rc1 Upgrade<ul>';
 
     // Add option to search comment content
-    $result = $db->get_results("select * from `" . table_config . "` where `var_name` = 'Search_Comments';");
+    $result = $db->get_results("select * from `".table_config."` where `var_name` = 'Search_Comments';");
     if (count($result) == 0) {
-        $db->query("INSERT INTO `" . table_config . "` VALUES (NULL, 'Comments', 'Search_Comments', 'false', 'false', 'true / false', 'Search Comments', 'Use comment data when providing search results', 'define', NULL)");
+        $db->query("INSERT INTO `".table_config."` VALUES (NULL, 'Comments', 'Search_Comments', 'false', 'false', 'true / false', 'Search Comments', 'Use comment data when providing search results', 'define', NULL)");
     }
 
     // Renamed "Upcoming" and "Queued" to "New" in 2.0.0 Needs to be reflected in database.
@@ -65,39 +65,39 @@ if ($pligg_version == '1.2.2') {
 			WHERE var_name='$SPAM_LOG_BOOK';";
     $db->query($sql);
     // Add friendly domain list
-    $db->query("INSERT INTO `" . table_config . "`
+    $db->query("INSERT INTO `".table_config."`
 				VALUES (NULL, 'AntiSpam', '\$FRIENDLY_DOMAINS', 'logs/domain-whitelist.log', 'logs/domain-whitelist.log', 'Text file', 'Local Domain Whitelist File', 'File containing a list of domains that cannot be banned.', 'normal', '\"')");
     echo '<li>Changed log file locations</li>';
 
-    $sql = "ALTER TABLE `" . table_modules . "` ADD  `weight` INT NOT NULL";
+    $sql = "ALTER TABLE `".table_modules."` ADD  `weight` INT NOT NULL";
     $db->query($sql);
     echo '<li>Order modules via the Admin Panel</li>';
 
     // Change the template value to Bootstrap
-    $sql = "UPDATE `" . table_config . "`
+    $sql = "UPDATE `".table_config."`
 			SET `var_value` = 'bootstrap'
 			WHERE `var_name` = '$thetemp';";
     $db->query($sql);
     echo '<li>Changed template to Bootstrap</li>';
 
     // Change default captcha to SolveMedia
-    $sql = "UPDATE `" . table_misc_data . "`
+    $sql = "UPDATE `".table_misc_data."`
 			SET `data` = 'solvemedia'
 			WHERE `pligg_misc_data`.`name` = 'captcha_method';";
     $db->query($sql);
-    $sql = "INSERT INTO `" . table_misc_data . "` ( `name` , `data` )
+    $sql = "INSERT INTO `".table_misc_data."` ( `name` , `data` )
 			VALUES ('adcopy_lang', 'en');";
     $db->query($sql);
-    $sql = "INSERT INTO `" . table_misc_data . "` ( `name` , `data` )
+    $sql = "INSERT INTO `".table_misc_data."` ( `name` , `data` )
 			VALUES ('adcopy_theme', 'white');";
     $db->query($sql);
-    $sql = "INSERT INTO `" . table_misc_data . "` ( `name` , `data` )
+    $sql = "INSERT INTO `".table_misc_data."` ( `name` , `data` )
 			VALUES ('adcopy_pubkey', 'KLoj-jfX2UP0GEYOmYX.NOWL0ReUhErZ');";
     $db->query($sql);
-    $sql = "INSERT INTO `" . table_misc_data . "` ( `name` , `data` )
+    $sql = "INSERT INTO `".table_misc_data."` ( `name` , `data` )
 			VALUES ('adcopy_privkey', 'Dm.c-mjmNP7Fhz-hKOpNz8l.NAMGp0wO');";
     $db->query($sql);
-    $sql = "INSERT INTO `" . table_misc_data . "` ( `name` , `data` )
+    $sql = "INSERT INTO `".table_misc_data."` ( `name` , `data` )
 			VALUES ('adcopy_hashkey', 'nePptHN4rt.-UVLPFScpSuddqdtFdu2N');";
     $db->query($sql);
     echo '<li>Changed default CAPTCHA to Solve Media</li>';
@@ -231,13 +231,13 @@ if ($pligg_version == '1.2.2') {
     echo '<li>Changed God user level to Admin</li>';
 
     // Remove the Spell Checker from Admin Config
-    $sql = "DELETE FROM " . table_config . "
+    $sql = "DELETE FROM ".table_config."
 			WHERE var_name='Spell_Checker'";
     $db->query($sql);
     echo '<li>Removed Spell Checker</li>';
 
     // Add a new FAQ Page
-    $sql = "INSERT INTO `" . table_links . "`  (`link_id`, `link_author`, `link_status`, `link_randkey`, `link_votes`, `link_reports`, `link_comments`, `link_karma`, `link_modified`, `link_date`, `link_published_date`, `link_category`, `link_lang`, `link_url`, `link_url_title`, `link_title`, `link_title_url`, `link_content`, `link_summary`, `link_tags`, `link_field1`, `link_field2`, `link_field3`, `link_field4`, `link_field5`, `link_field6`, `link_field7`, `link_field8`, `link_field9`, `link_field10`, `link_field11`, `link_field12`, `link_field13`, `link_field14`, `link_field15`, `link_group_id`, `link_out`) VALUES (NULL, 1, 'page', 0, 0, 0, 0, '0.00', '2012-07-23 00:00:00', '2012-07-23 00:00:00', '0000-00-00 00:00:00', 0, 1, '', NULL, 'Frequently Asked Questions', 'faq', '<a name\"top\" style=\"text-decoration:none;color:#000;text-transform:uppercase;\"><h1>Frequently Asked Questions</h1></a>
+    $sql = "INSERT INTO `".table_links."`  (`link_id`, `link_author`, `link_status`, `link_randkey`, `link_votes`, `link_reports`, `link_comments`, `link_karma`, `link_modified`, `link_date`, `link_published_date`, `link_category`, `link_lang`, `link_url`, `link_url_title`, `link_title`, `link_title_url`, `link_content`, `link_summary`, `link_tags`, `link_field1`, `link_field2`, `link_field3`, `link_field4`, `link_field5`, `link_field6`, `link_field7`, `link_field8`, `link_field9`, `link_field10`, `link_field11`, `link_field12`, `link_field13`, `link_field14`, `link_field15`, `link_group_id`, `link_out`) VALUES (NULL, 1, 'page', 0, 0, 0, 0, '0.00', '2012-07-23 00:00:00', '2012-07-23 00:00:00', '0000-00-00 00:00:00', 0, 1, '', NULL, 'Frequently Asked Questions', 'faq', '<a name\"top\" style=\"text-decoration:none;color:#000;text-transform:uppercase;\"><h1>Frequently Asked Questions</h1></a>
 <p>Welcome to the Frequently Asked Questions (FAQ) page. This page explains many of the features that are offered by this site to our members.</p>
 <ol>
 	<li><a rel=\"nofollow\" href=\"#what_is\">What is {#PLIGG_Visual_Name#}?</a></li>
@@ -323,7 +323,7 @@ if ($pligg_version == '1.2.2') {
     echo '<li>Created FAQ Page</li>';
 
     // Update version number
-    $sql = "UPDATE `" . table_misc_data . "` SET `data` = '2.0.0rc1' WHERE `name` = 'pligg_version';";
+    $sql = "UPDATE `".table_misc_data."` SET `data` = '2.0.0rc1' WHERE `name` = 'pligg_version';";
     $db->query($sql);
     echo '<li>Updated version number to 2.0.0rc1</li>';
 

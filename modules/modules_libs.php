@@ -47,12 +47,12 @@ function module_add_action_tpl($location, $the_tpl, $weight = array('weight' => 
 function get_module_weight($the_tpl, $weight)
 {
     global $db;
-    if ($weight['weight']==0) {
-        $folder_array=explode("/", $the_tpl);
-        if ($folder_array[2]!="") {
-            $mysql="SELECT weight from " .table_modules . " where folder='".$folder_array[2]."' and enabled=1 ";
+    if ($weight['weight'] == 0) {
+        $folder_array = explode("/", $the_tpl);
+        if ($folder_array[2] != "") {
+            $mysql = "SELECT weight from ".table_modules." where folder='".$folder_array[2]."' and enabled=1 ";
             $mod_weight = $db->get_var($mysql);
-            $weight['weight']=$mod_weight;
+            $weight['weight'] = $mod_weight;
         }
     }
 
@@ -92,7 +92,7 @@ function check_for_js()
     if ($module_js) {
         uasort($module_js, 'actioncmp');
         foreach ($module_js as $k => $v) {
-            echo '<script src="' . $k . '" type="text/javascript"></script>';
+            echo '<script src="'.$k.'" type="text/javascript"></script>';
         }
     }
 }
@@ -103,7 +103,7 @@ function check_for_css()
     if ($module_css) {
         uasort($module_css, 'actioncmp');
         foreach ($module_css as $k => $v) {
-            echo '<link rel="stylesheet" type="text/css" href="' . $k . '" media="screen" />';
+            echo '<link rel="stylesheet" type="text/css" href="'.$k.'" media="screen" />';
         }
     }
 }
@@ -139,9 +139,9 @@ function check_actions_tpl($location, &$smarty)
         //array_multisort($weight, SORT_ASC,  $module_actions_tpl[$location]);
 
         // Override module templates
-        $path = 'templates/' . $thetemp . '/';
+        $path = 'templates/'.$thetemp.'/';
         foreach ($module_actions_tpl[$location] as $kk => $vv) {
-            $file = $path . str_replace(array('../', 'templates/'), '', $kk);
+            $file = $path.str_replace(array('../', 'templates/'), '', $kk);
             if (file_exists($file)) {
                 $smarty->display($file);
             } else {
@@ -153,8 +153,8 @@ function check_actions_tpl($location, &$smarty)
 
 function sort_cloumn($myArray)
 {
-    $sort_numcie=array();
-    foreach ($myArray as $c=>$key) {
+    $sort_numcie = array();
+    foreach ($myArray as $c => $key) {
         $sort_numcie[] = $key['weight'];
     }
 
@@ -170,7 +170,7 @@ function check_for_enabled_module($name, $version)
             return $version;
         }
     } else {
-        $sql = 'SELECT `id` FROM ' . table_modules . ' where `folder` = "' . $name . '" and `version` >= ' . $version . ' and `enabled` = 1;';
+        $sql = 'SELECT `id` FROM '.table_modules.' where `folder` = "'.$name.'" and `version` >= '.$version.' and `enabled` = 1;';
         //echo $sql;
         $theId = $db->get_var($sql);
         return $theId;
@@ -182,7 +182,7 @@ function check_module_requirements($requires)
     if (is_array($requires)) {
         foreach ($requires as $requirement) {
             if (!check_for_enabled_module($requirement[0], $requirement[1])) {
-                die('This module requires <a href="' . $requirement[2] . '">' . $requirement[0] . '</a> version ' . $requirement[1] . ' or greater');
+                die('This module requires <a href="'.$requirement[2].'">'.$requirement[0].'</a> version '.$requirement[1].' or greater');
             }
         }
     }
@@ -190,8 +190,8 @@ function check_module_requirements($requires)
 
 function include_module_settings($module)
 {
-    if (file_exists(mnmmodules . $module . '/' . $module . '_install.php')) {
-        include(mnmmodules . $module . '/' . $module . '_install.php');
+    if (file_exists(mnmmodules.$module.'/'.$module.'_install.php')) {
+        include(mnmmodules.$module.'/'.$module.'_install.php');
         return $module_info;
     } else {
         return false;
@@ -251,13 +251,13 @@ function module_db_add_field($field_table, $field_name, $field_type,  $field_len
 
     $fieldexists = checkforfield($field_name, $field_table);
     if (!$fieldexists) {
-        $sql = 'ALTER TABLE `' . $field_table . '` ADD `' . $field_name . '` ' . $field_type;
+        $sql = 'ALTER TABLE `'.$field_table.'` ADD `'.$field_name.'` '.$field_type;
         if ($field_length != '') {
-            $sql .= '(' . $field_length . ')';
+            $sql .= '('.$field_length.')';
         }
 
         if ($field_attributes != '') {
-            $sql .= ' ' . $field_attributes;
+            $sql .= ' '.$field_attributes;
         }
         if ($field_null == 0) {
             $sql .= ' not null';
@@ -266,7 +266,7 @@ function module_db_add_field($field_table, $field_name, $field_type,  $field_len
         }
 
         if ($field_default != '') {
-            $sql .= " default '" . $field_default . "'";
+            $sql .= " default '".$field_default."'";
         }
 
 

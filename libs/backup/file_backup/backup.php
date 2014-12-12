@@ -26,7 +26,7 @@ class FileBackup
            // avatars are backed up seperately
            if ($list['dir'] == 0 && $list['path'] != "./backup/" && $list['path'] != "./avatars/" && $list['path'] != "./avatars/user_uploaded/" && $list['name'] != "dbconnect.php") {
                //echo $list['path'] . $list['name'] . "<BR>";
-                $xlist[] = $list['path'] . $list['name'];
+                $xlist[] = $list['path'].$list['name'];
            }
         }
 
@@ -35,12 +35,12 @@ class FileBackup
 
         // code from http://www.phpit.net/article/creating-zip-tar-archives-dynamically-php/
         $zipname = 'Files'."_".date("Y-m-d_H-i-s").'_'.$rand.'.zip';
-        $zipfile = new Archive_Zip('./backup/' . $zipname);
+        $zipfile = new Archive_Zip('./backup/'.$zipname);
         //$list = array("../../");
 
         $zipfile->create($xlist);
 
-        echo 'Zip file created -- <a href = "' . './backup/' . $zipname . '">'.$zipname.'</a>';
+        echo 'Zip file created -- <a href = "'.'./backup/'.$zipname.'">'.$zipname.'</a>';
         $this->success = 1;
     }
 
@@ -61,7 +61,7 @@ class FileBackup
         foreach ($files as $list) {
             //print array
            if ($list['dir'] == 0) {
-               $xlist[] = $list['path'] . $list['name'];
+               $xlist[] = $list['path'].$list['name'];
            }
         }
 
@@ -71,10 +71,10 @@ class FileBackup
         //die("aaa");
         // code from http://www.phpit.net/article/creating-zip-tar-archives-dynamically-php/
         $zipname = 'Avatars'."_".date("Y-m-d_H-i-s").'_'.$rand.'.zip';
-        $zipfile = new Archive_Zip('./backup/' . $zipname);
-        $p_params= array('remove_path' =>$_SERVER['DOCUMENT_ROOT'].my_pligg_base);
+        $zipfile = new Archive_Zip('./backup/'.$zipname);
+        $p_params = array('remove_path' => $_SERVER['DOCUMENT_ROOT'].my_pligg_base);
         $zipfile->create($xlist, $p_params);
-        echo 'Zip file created -- <a href = "' . './backup/' . $zipname . '">'.$zipname.'</a>';
+        echo 'Zip file created -- <a href = "'.'./backup/'.$zipname.'">'.$zipname.'</a>';
         $this->success = 1;
     }
 
@@ -91,7 +91,7 @@ class FileBackup
     $maxlevel => "all" or a number; specifes the number of directories down that you want to search
     $level => integer; directory level that the function is currently searching
     */
-    function filelist($startdir="./", $searchSubdirs=1, $directoriesonly=0, $maxlevel="all", $level=1)
+    function filelist($startdir = "./", $searchSubdirs = 1, $directoriesonly = 0, $maxlevel = "all", $level = 1)
     {
         //list the directory/file names that you want to ignore
       // echo $startdir;
@@ -106,26 +106,26 @@ class FileBackup
            if ($dh = opendir($startdir)) {
                while (($file = readdir($dh)) !== false) {
                    if (!(array_search($file, $ignoredDirectory) > -1)) {
-                       if (filetype($startdir . $file) == "dir") {
+                       if (filetype($startdir.$file) == "dir") {
                            //build your directory array however you choose;
                            //add other file details that you want.
-                           $directorylist[$startdir . $file]['level'] = $level;
-                           $directorylist[$startdir . $file]['dir'] = 1;
-                           $directorylist[$startdir . $file]['name'] = $file;
-                           $directorylist[$startdir . $file]['path'] = $startdir;
+                           $directorylist[$startdir.$file]['level'] = $level;
+                           $directorylist[$startdir.$file]['dir'] = 1;
+                           $directorylist[$startdir.$file]['name'] = $file;
+                           $directorylist[$startdir.$file]['path'] = $startdir;
                            if ($searchSubdirs) {
                                if ((($maxlevel) == "all") or ($maxlevel > $level)) {
-                                   $this->filelist($startdir . $file . "/", $searchSubdirs, $directoriesonly, $maxlevel, $level + 1);
+                                   $this->filelist($startdir.$file."/", $searchSubdirs, $directoriesonly, $maxlevel, $level + 1);
                                }
                            }
                        } else {
                            if (!$directoriesonly) {
                                //if you want to include files; build your file array
                                //however you choose; add other file details that you want.
-                             $directorylist[$startdir . $file]['level'] = $level;
-                               $directorylist[$startdir . $file]['dir'] = 0;
-                               $directorylist[$startdir . $file]['name'] = $file;
-                               $directorylist[$startdir . $file]['path'] = $startdir;
+                             $directorylist[$startdir.$file]['level'] = $level;
+                               $directorylist[$startdir.$file]['dir'] = 0;
+                               $directorylist[$startdir.$file]['name'] = $file;
+                               $directorylist[$startdir.$file]['path'] = $startdir;
                            }
                        }
                    }
