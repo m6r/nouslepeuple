@@ -200,7 +200,7 @@ function pligg_createtables($conn)
       `user_biographie` TEXT NULL,
 	  PRIMARY KEY  (`user_id`),
 	  UNIQUE KEY `user_login` (`user_login`),
-	  KEY `user_email` (`user_email`),
+	  KEY `user_email` (`user_email`)
 	) ENGINE = MyISAM;";
 //	echo 'Creating table: \'users\'...<br />';
     mysql_query($sql, $conn);
