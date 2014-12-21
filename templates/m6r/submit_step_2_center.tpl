@@ -65,7 +65,6 @@
 				<label for="input01" class="control-label">{#PLIGG_Visual_Submit2_Description#}</label>
 				<div class="controls">
 					<textarea name="bodytext" tabindex="15" rows="6" class="form-control bodytext col-md-4" id="bodytext" maxlength="{$maxStoryLength}" WRAP="SOFT">{if $submit_url_description}{$submit_url_description}{/if}{$submit_content}</textarea>
-					<br />
 					<p class="help-inline">{#PLIGG_Visual_Submit2_DescInstruct#}</p>
 				</div>
 			</div>
@@ -227,9 +226,21 @@
 	</form>
 	{checkActionsTpl location="tpl_pligg_submit_step2_after_form"}
 </div>
+<script src="{$my_pligg_base}/templates/{$the_template}/js/textcounter.min.js"></script>
+<script>var maxStoryLength = {$maxStoryLength}</script>
 {literal}
 	<script type="text/javascript">
 		var dock0=new dockit("dockcontent", 0);
+	</script>
+	<script>
+		$('#bodytext').textcounter({
+			max: maxStoryLength,
+			countDown: true,
+			countSpaces: true,
+			countContainerElement: "p",
+			countContainerClass: "help-inline",
+			countDownText: "Caractères restants : "
+		});
 	</script>
 {/literal}
 <!--/submit_step_2_center.tpl -->

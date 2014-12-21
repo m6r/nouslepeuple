@@ -31,5 +31,19 @@
 	</fieldset>
 </div><!--/.form-horizontal -->
 </form>
+<script src="{$my_pligg_base}/templates/{$the_template}/js/textcounter.min.js"></script>
+<script>var maxCommentLength = {$maxCommentLength}</script>
+{literal}
+	<script>
+		$('#comment_content').textcounter({
+			max: maxCommentLength,
+			countDown: true,
+			countSpaces: true,
+			countContainerElement: "p",
+			countContainerClass: "help-inline",
+			countDownText: "Caractères restants : "
+		});
+	</script>
+{/literal}
 {checkActionsTpl location="tpl_pligg_story_comments_form_end"}
 <!--/comment_form.tpl -->

@@ -16,8 +16,7 @@
 	{/if}
 	
 	<script type="text/javascript" src="{$my_pligg_base}/templates/{$the_template}/js/modernizr.js"></script>	
-	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
-	
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
 	{checkForCss}
 	{checkForJs}
 	
