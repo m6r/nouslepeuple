@@ -602,8 +602,8 @@ function do_updownvoted($status = null)
         $order = "ASC";
     }
 
-    $rows = $db->get_var("SELECT count(*) FROM ".table_links.", ".table_votes." WHERE vote_user_id=$user->id AND vote_link_id=link_id AND vote_value ".$vote_stats." AND (link_status='published' OR link_status='new')");
-    $links = $db->get_results($sql = "SELECT DISTINCT * FROM ".table_links.", ".table_votes." WHERE vote_user_id=$user->id AND vote_link_id=link_id AND vote_value ".$vote_stats."  AND (link_status='published' OR link_status='new') ORDER BY link_votes ".$order." LIMIT $offset, $page_size");
+    $rows = $db->get_var("SELECT count(*) FROM ".table_links.", ".table_votes." WHERE vote_user_id=$user->id AND vote_link_id=link_id AND vote_value ".$vote_stats." AND (link_status='published' OR link_status='new') AND vote_type='links'");
+    $links = $db->get_results($sql = "SELECT DISTINCT * FROM ".table_links.", ".table_votes." WHERE vote_user_id=$user->id AND vote_link_id=link_id AND vote_value ".$vote_stats."  AND (link_status='published' OR link_status='new') AND vote_type='links' ORDER BY link_votes ".$order." LIMIT $offset, $page_size");
 
     if ($links) {
         foreach ($links as $dblink) {
