@@ -49,7 +49,7 @@ Récupérez le code source :
 
 * Ajoutez le dépôt distant comme ``remote`` :
   ```
-  $ cd pligg-cms
+  $ cd nouslepeuple
   $ git remote add m6r git://github.com/m6r/nouslepeuple.git
   ```
 
