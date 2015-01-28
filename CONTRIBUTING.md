@@ -40,17 +40,17 @@ Récupérez le code source :
 
 * Créez un compte [GitHub] et authentifiez vous;
 
-* Faites un Fork du [dépôt m6r/pligg-cms] : cliquez sur le bouton « Fork »;
+* Faites un Fork du [dépôt m6r/nouslepeuple] : cliquez sur le bouton « Fork »;
 
-* Après que le « hardcore » est terminé, clonez votre fork
-  localement (cela créera un dossier pligg-cms) :
+* Après que le clone est terminé, clonez votre fork
+  localement (cela créera un dossier nouslepeuple) :
 
-      $ git clone git@github.com:USERNAME/pligg-cms.git
+      $ git clone git@github.com:USERNAME/nouslepeuple.git
 
 * Ajoutez le dépôt distant comme ``remote`` :
   ```
   $ cd pligg-cms
-  $ git remote add m6r git://github.com/m6r/pligg-cms.git
+  $ git remote add m6r git://github.com/m6r/nouslepeuple.git
   ```
 
 2: Travaillez sur votre patch
@@ -114,7 +114,7 @@ suivantes.
 ### Mettez à jour votre patch avec rebase
 
 Avant de soumettre votre patch, mettez à jour votre branche (cela est
-nécessaire si vous avez mis du temp à terminer vos changements) :
+nécessaire si vous avez mis du temps à terminer vos changements) :
 
     $ git checkout master
     $ git fetch m6r
@@ -136,7 +136,7 @@ sur le dépôt distant :
 
 ### Faites une Pull Request
 
-Vous pouvez maintenant faire une pull request sur le dépôt ``m6r/pligg-cms``.
+Vous pouvez maintenant faire une pull request sur le dépôt ``m6r/nouslepeuple``.
 
 Dans la description de la Pull Request, donnez autant de détails que possible sur
 les changements (n'hésitez pas à donner des exemples de code pour illustrer vos
