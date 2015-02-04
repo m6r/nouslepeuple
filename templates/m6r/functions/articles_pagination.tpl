@@ -74,7 +74,7 @@
 			if(parseInt(total_row)>count)  
 			$(".stories:last").after("<div class='btn btn-default contine_read_story'>{/literal}{#PLIGG_Continue_Reading#}{literal}</div>"); 
 			
-			$(".contine_read_story").live("click", function(){
+			$(document).on("click", ".contine_read_story", function(){
 				if(parseInt(total_row) > count){
 					last_msg_funtion();
 				}else{	

@@ -53,7 +53,7 @@
 				if(parseInt(total_row_for_topusers)>count)  
 					$('#tablesorter-demo').after("<div class='btn btn-default contine_read_story'>{/literal}{#PLIGG_Continue_Reading#}{literal}</div>");
 				
-				$(".contine_read_story").live("click", function(){
+				$(document).on("click", ".contine_read_story", function(){
 					if(parseInt(total_row_for_topusers) > count){
 						pagination_for_top_users();
 					}else{	

@@ -5,7 +5,7 @@
 	var UserURLSave="{$user_url_saved}";
 	{literal}
 	$(function() {
-		$(".favorite").live("click", function(){
+		$(document).on("click", '.favorite', function(){
 			var oparation = $(this).attr("id");
 			var return_value="";
 			var link_id=$(this).attr("linkid");
