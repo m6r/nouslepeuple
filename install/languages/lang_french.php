@@ -16,10 +16,10 @@
 // intro / step 1
 	$lang['WelcomeToInstaller'] = 'Bienvenue à l\'installateur CMS Pligg!';
 	$lang['Introduction'] = 'présentation';
-	$lang['WelcomeToThe'] = 'Bienvenue à <a href="http://pligg.com" target="_blank">Pligg Content Management System</a>, le CMS qui alimente des milliers de sites communautaires. Si c\'est votre première fois d'installer Pligg, s\'il vous plaît lire toutes les instructions fournies avec soin afin que vous n \'t manquez aucune des orientations importantes. Au nom des développeurs Pligg, je tiens à vous et votre nouveau site souhaiter la meilleure des chances.';
+	$lang['WelcomeToThe'] = 'Bienvenue à <a href="http://pligg.com" target="_blank">Pligg Content Management System</a>, le CMS qui alimente des milliers de sites communautaires. Si c\'est votre première fois d\'installer Pligg, s\'il vous plaît lire toutes les instructions fournies avec soin afin que vous n \'t manquez aucune des orientations importantes. Au nom des développeurs Pligg, je tiens à vous et votre nouveau site souhaiter la meilleure des chances.';
 	$lang['Bugs'] = 'S\'il vous plaît de vous familiariser avec quelques-uns de la documentation fournie par la communauté Pligg à l\' <a href="http://pligg.com/support/">Pligg Support</a> site. Nous vous suggérons également de créer un compte afin que vous aurez accès à une assistance gratuite, des modules, des widgets, des modèles et d\'autres grandes ressources. Si vous constatez des bugs ou si vous voulez juste de proposer une nouvelle fonctionnalité, s\'il vous plaît envoyer vos commentaires sur notre propre très <a href="http://pligg.com/demo/">Pligg Demo website</a>.';
 	$lang['Installation'] = 'Installation (veuillez lire attentivement)';
-	$lang['OnceFamiliar'] = '<p>Si c\'est votre première fois d\'installer Pligg vous devez continuer sur cette page après avoir suivi attentivement les instructions ci-dessous. Si vous avez besoin d' <a href="./upgrade.php">mettre à jour votre site</a> à partir d\'une version précédente, s\'il vous plaît exécuter le script de mise à jour en cliquant sur ??le lien de mise à jour ci-dessus. ATTENTION: l\'exécution du processus d\'installation sur une base de données du site Pligg existant écrasera toutes les histoires et les paramètres, de sorte s\'il vous plaît assurez-vous que vous souhaitez effectuer une installation si vous choisissez de continuer ci-dessous.
+	$lang['OnceFamiliar'] = '<p>Si c\'est votre première fois d\'installer Pligg vous devez continuer sur cette page après avoir suivi attentivement les instructions ci-dessous. Si vous avez besoin d\' <a href="./upgrade.php">mettre à jour votre site</a> à partir d\'une version précédente, s\'il vous plaît exécuter le script de mise à jour en cliquant sur ??le lien de mise à jour ci-dessus. ATTENTION: l\'exécution du processus d\'installation sur une base de données du site Pligg existant écrasera toutes les histoires et les paramètres, de sorte s\'il vous plaît assurez-vous que vous souhaitez effectuer une installation si vous choisissez de continuer ci-dessous.
 	<ol>
 		<li>renommez settings.php.default to settings.php</li>
 		<li>renommez /languages/lang_english.conf.default to lang_english.conf</li>
@@ -98,7 +98,7 @@
 	$lang['UpgradeLanguage'] = 'Succès, Pligg mis à jour votre fichier de langue. Il comprend désormais les derniers éléments du langage.';
 	$lang['UpgradingTables'] = '<strong>Mise à niveau de base de données...</strong>';
 	$lang['LanguageUpdate'] = '<strong>Mise à jour du fichier de langue...</strong>';
-	$lang['IfNoError'] = 'S'il n'y avait pas d\'erreurs affichées, mise à niveau est terminée!';
+	$lang['IfNoError'] = 'S\'il n\'y avait pas d\'erreurs affichées, mise à niveau est terminée!';
 	$lang['PleaseFix'] = 'Veuillez corriger l\'erreur ci-dessus (s), améliorer arrêté!';
 	
 // Errors
