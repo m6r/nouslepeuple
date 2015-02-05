@@ -43,7 +43,6 @@ class UserAuth
 
     function SetIDCookie($what, $remember)
     {
-        $domain = preg_replace('/^www/', '', $_SERVER['HTTP_HOST']);
         if (!strstr($domain, '.') || strpos($domain, 'localhost:') === 0) {
             $domain = '';
         }
