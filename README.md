@@ -52,8 +52,8 @@ $ php -S 127.0.0.1:8000
 Un serveur PHP basique écoute maintenant sur [http://localhost:8000/](http://localhost:8000/).
 
 Rendez-vous sur [http://localhost:8000/install/](http://localhost:8000/install/) pour remplir les quelques
-étapes d'installation. C'est toujours l'installateur par défaut de Pligg
-mais modifier de telle sorte que la configuration du M6R s'installe automatiquement.
+étapes d'installation. Nous utilisons toujours l'installateur par défaut de Pligg.
+Il est modifié de telle sorte que la configuration du M6R s'installe automatiquement.
 Choisissez "Français" lors du choix de la langue, et entrez les identifiants de
 la base de données.
 
