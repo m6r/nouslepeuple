@@ -398,6 +398,10 @@ margin-right:-14px;
 .breadcrumb-right .nav > li > a {
 padding:7px 14px;
 }
+.breadcrumb-right li.active a {
+  color: #262626;
+  background-color: #dedede;
+}
 
 /****************** PAGINATION ******************/
 

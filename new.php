@@ -46,8 +46,15 @@ $search->pagesize = $page_size;
 $search->filterToStatus = "all";
 
 // this is for the tabs on the top that filter
-if (isset($_GET['part'])) {
-    $search->setmek = $db->escape($_GET['part']);
+$setmek = array();
+if (isset($_GET['part1'])) {
+    $setmek[0] = $db->escape($_GET['part1']);
+}
+if (isset($_GET['part2'])) {
+    $setmek[1] = $db->escape($_GET['part2']);
+}
+if (count($setmek)) {
+    $search->setmek = $setmek;
 }
 if (isset($_GET['order'])) {
     $search->ords = $db->escape($_GET['order']);
@@ -64,28 +71,41 @@ $search->doSearch();
 
 // setup the links
 if (isset($_GET['category'])) {
-    $main_smarty->assign('index_url_recent', getmyurl('newcategory', sanitize($_GET['category'], 2)));
-    $main_smarty->assign('index_url_today', getmyurl('new_sort', 'today', sanitize($_GET['category'], 2)));
-    $main_smarty->assign('index_url_yesterday', getmyurl('new_sort', 'yesterday', sanitize($_GET['category'], 2)));
-    $main_smarty->assign('index_url_week', getmyurl('new_sort', 'week', sanitize($_GET['category'], 2)));
-    $main_smarty->assign('index_url_month', getmyurl('new_sort', 'month', sanitize($_GET['category'], 2)));
-    $main_smarty->assign('index_url_year', getmyurl('new_sort', 'year', sanitize($_GET['category'], 2)));
-    $main_smarty->assign('index_url_alltime', getmyurl('new_sort', 'alltime', sanitize($_GET['category'], 2)));
-    $main_smarty->assign('index_url_upvoted', getmyurl('new_sort', 'upvoted', sanitize($_GET['category'], 2)));
-    $main_smarty->assign('index_url_downvoted', getmyurl('new_sort', 'downvoted', sanitize($_GET['category'], 2)));
-    $main_smarty->assign('index_url_commented', getmyurl('new_sort', 'commented', sanitize($_GET['category'], 2)));
+
+    $main_smarty->assign('index_url_alltime', getmyurl('new_sort_date', 'alltime', sanitize($_GET['part2'], 2), sanitize($_GET['category'], 2)));
+    $main_smarty->assign('index_url_hour', getmyurl('new_sort_date', 'hour', sanitize($_GET['part2'], 2), sanitize($_GET['category'], 2)));
+    $main_smarty->assign('index_url_day', getmyurl('new_sort_date', 'day', sanitize($_GET['part2'], 2), sanitize($_GET['category'], 2)));
+    $main_smarty->assign('index_url_week', getmyurl('new_sort_date', 'week', sanitize($_GET['part2'], 2), sanitize($_GET['category'], 2)));
+    $main_smarty->assign('index_url_month', getmyurl('new_sort_date', 'month', sanitize($_GET['part2'], 2), sanitize($_GET['category'], 2)));
+    $main_smarty->assign('index_url_year', getmyurl('new_sort_date', 'year', sanitize($_GET['part2'], 2), sanitize($_GET['category'], 2)));
+
+    $main_smarty->assign('index_url_upvoted', getmyurl('new_sort_filter', 'upvoted', sanitize($_GET['part1'], 2), sanitize($_GET['category'], 2)));
+    $main_smarty->assign('index_url_downvoted', getmyurl('new_sort_filter', 'downvoted', sanitize($_GET['part1'], 2), sanitize($_GET['category'], 2)));
+    $main_smarty->assign('index_url_upscored', getmyurl('new_sort_filter', 'upscored', sanitize($_GET['part1'], 2), sanitize($_GET['category'], 2)));
+    $main_smarty->assign('index_url_downscored', getmyurl('new_sort_filter', 'downscored', sanitize($_GET['part1'], 2), sanitize($_GET['category'], 2)));
+    $main_smarty->assign('index_url_recent', getmyurl('new_sort_filter', 'recent', sanitize($_GET['part1'], 2), sanitize($_GET['category'], 2)));
+    $main_smarty->assign('index_url_commented', getmyurl('new_sort_filter', 'commented', sanitize($_GET['part1'], 2), sanitize($_GET['category'], 2)));
+    $main_smarty->assign('index_url_debated', getmyurl('new_sort_filter', 'debated', sanitize($_GET['part1'], 2), sanitize($_GET['category'], 2)));
+
     $main_smarty->assign('cat_url', getmyurl("newcategory"));
+
 } else {
-    $main_smarty->assign('index_url_recent', getmyurl('new'));
-    $main_smarty->assign('index_url_today', getmyurl('new_sort', 'today'));
-    $main_smarty->assign('index_url_yesterday', getmyurl('new_sort', 'yesterday'));
-    $main_smarty->assign('index_url_week', getmyurl('new_sort', 'week'));
-    $main_smarty->assign('index_url_month', getmyurl('new_sort', 'month'));
-    $main_smarty->assign('index_url_year', getmyurl('new_sort', 'year'));
-    $main_smarty->assign('index_url_alltime', getmyurl('new_sort', 'alltime'));
-    $main_smarty->assign('index_url_upvoted', getmyurl('new_sort', 'upvoted'));
-    $main_smarty->assign('index_url_downvoted', getmyurl('new_sort', 'downvoted'));
-    $main_smarty->assign('index_url_commented', getmyurl('new_sort', 'commented'));
+
+    $main_smarty->assign('index_url_alltime', getmyurl('new_sort_date', 'alltime', sanitize($_GET['part2'], 2)));
+    $main_smarty->assign('index_url_hour', getmyurl('new_sort_date', 'hour', sanitize($_GET['part2'], 2)));
+    $main_smarty->assign('index_url_day', getmyurl('new_sort_date', 'day', sanitize($_GET['part2'], 2)));
+    $main_smarty->assign('index_url_week', getmyurl('new_sort_date', 'week', sanitize($_GET['part2'], 2)));
+    $main_smarty->assign('index_url_month', getmyurl('new_sort_date', 'month', sanitize($_GET['part2'], 2)));
+    $main_smarty->assign('index_url_year', getmyurl('new_sort_date', 'year', sanitize($_GET['part2'], 2)));
+
+    $main_smarty->assign('index_url_upvoted', getmyurl('new_sort_filter', 'upvoted', sanitize($_GET['part1'], 2)));
+    $main_smarty->assign('index_url_downvoted', getmyurl('new_sort_filter', 'downvoted', sanitize($_GET['part1'], 2)));
+    $main_smarty->assign('index_url_upscored', getmyurl('new_sort_filter', 'upscored', sanitize($_GET['part1'], 2)));
+    $main_smarty->assign('index_url_downscored', getmyurl('new_sort_filter', 'downscored', sanitize($_GET['part1'], 2)));
+    $main_smarty->assign('index_url_recent', getmyurl('new_sort_filter', 'recent', sanitize($_GET['part1'], 2)));
+    $main_smarty->assign('index_url_commented', getmyurl('new_sort_filter', 'commented', sanitize($_GET['part1'], 2)));
+    $main_smarty->assign('index_url_debated', getmyurl('new_sort_filter', 'debated', sanitize($_GET['part1'], 2)));
+
 }
 $linksum_count = $search->countsql;
 $linksum_sql = $search->sql;
@@ -124,9 +144,19 @@ $main_smarty->assign('pagename', pagename);
 
 // misc smarty
 if (isset($search->setmek)) {
-    $main_smarty->assign('setmeka', $search->setmek);
+    if (is_array($search->setmek))
+    {
+        $main_smarty->assign('setmeka', $search->setmek[0]);
+        $main_smarty->assign('setmekb', $search->setmek[1]);
+    }
+    else
+    {
+        $main_smarty->assign('setmeka', $search->setmek);
+        $main_smarty->assign('setmekb', '');
+    }
 } else {
     $main_smarty->assign('setmeka', '');
+    $main_smarty->assign('setmekb', '');
 }
 if (isset($search->ords)) {
     $main_smarty->assign('paorder', $search->ords);

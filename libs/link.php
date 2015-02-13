@@ -25,6 +25,7 @@ class Link
     var $category = 0;
     var $additional_cats = array();
     var $votes = 0;
+    var $likes = 0;
     var $comments = 0;
     var $reports = 0;
     var $title = '';
@@ -209,6 +210,7 @@ class Link
         $link_author = $this->author;
         $link_status = $this->status;
         $link_votes = $this->votes;
+        $link_likes = $this->likes;
         $link_comments = $this->comments;
         $link_reports = $this->reports;
         $link_karma = $this->karma;
@@ -221,12 +223,16 @@ class Link
         $link_published_date = $this->published_date;
         $link_group_id = $this->link_group_id;
 
+        $moyenne = ($link_likes + $link_reports) / 2;
+        $ecart = abs($link_likes - $link_reports);
+        $link_debate_score = $moyenne - $ecart;
+
         $vars = array('link' => $this);
         check_actions('link_store_basic_pre_sql', $vars);
 
 
         if ($this->id === 0) {
-            $sql = "INSERT IGNORE INTO ".table_links." (link_author, link_status, link_randkey, link_category, link_date, link_published_date, link_votes, link_karma, link_title, link_content ,link_group_id) VALUES ($link_author, '$link_status', $link_randkey, $link_category, FROM_UNIXTIME($link_date), FROM_UNIXTIME($link_published_date), $link_votes, $link_karma, '', '',$link_group_id)";
+            $sql = "INSERT IGNORE INTO ".table_links." (link_author, link_status, link_randkey, link_category, link_date, link_published_date, link_votes, link_debate_score, link_karma, link_title, link_content ,link_group_id) VALUES ($link_author, '$link_status', $link_randkey, $link_category, FROM_UNIXTIME($link_date), FROM_UNIXTIME($link_published_date), $link_votes, $link_debate_score, $link_karma, '', '',$link_group_id)";
 
             if ($this->debug == true) {
                 echo '<hr>store_basic:Insert:'.$sql.'<hr>';
@@ -234,7 +240,7 @@ class Link
             $db->query($sql);
             $this->id = $db->insert_id;
         } else {
-            $sql = "UPDATE ".table_links." set `link_reports`=$link_reports, `link_comments`=$link_comments, link_author=$link_author, link_status='$link_status', link_randkey=$link_randkey, link_category='$link_category', link_modified=NULL, link_date=FROM_UNIXTIME($link_date), link_published_date=FROM_UNIXTIME($link_published_date), link_votes=$link_votes, link_karma=$link_karma, link_group_id=$link_group_id WHERE link_id=$this->id";
+            $sql = "UPDATE ".table_links." set `link_reports`=$link_reports, `link_likes`=$link_reports, `link_comments`=$link_comments, `link_debate_score`=$link_debate_score, link_author=$link_author, link_status='$link_status', link_randkey=$link_randkey, link_category='$link_category', link_modified=NULL, link_date=FROM_UNIXTIME($link_date), link_published_date=FROM_UNIXTIME($link_published_date), link_votes=$link_votes, link_karma=$link_karma, link_group_id=$link_group_id WHERE link_id=$this->id";
             if ($this->debug == true) {
                 echo '<hr>store_basic:Update:'.$sql.'<hr>';
             }

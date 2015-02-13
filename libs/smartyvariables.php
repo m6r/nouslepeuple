@@ -192,31 +192,37 @@ check_actions('all_pages_top', $vars);
 // setup the sorting links on the index page in smarty
 $pligg_category = isset($_GET['category']) ? sanitize($_GET['category'], 3) : '';
 if ($pligg_category != '') {
-    $main_smarty->assign('index_url_recent', getmyurl('maincategory', $pligg_category));
-    $main_smarty->assign('index_url_today', getmyurl('index_sort', 'today', $pligg_category));
-    $main_smarty->assign('index_url_yesterday', getmyurl('index_sort', 'yesterday', $pligg_category));
-    $main_smarty->assign('index_url_week', getmyurl('index_sort', 'week', $pligg_category));
-    $main_smarty->assign('index_url_month', getmyurl('index_sort', 'month', $pligg_category));
-    $main_smarty->assign('index_url_year', getmyurl('index_sort', 'year', $pligg_category));
-    $main_smarty->assign('index_url_alltime', getmyurl('index_sort', 'alltime', $pligg_category));
+    $main_smarty->assign('index_url_alltime', getmyurl('maincategory'));
+    $main_smarty->assign('index_url_hour', getmyurl('new_sort_date', 'hour', sanitize($_GET['part2'], 2), $pligg_category));
+    $main_smarty->assign('index_url_day', getmyurl('new_sort_date', 'day', sanitize($_GET['part2'], 2), $pligg_category));
+    $main_smarty->assign('index_url_week', getmyurl('new_sort_date', 'week', sanitize($_GET['part2'], 2), $pligg_category));
+    $main_smarty->assign('index_url_month', getmyurl('new_sort_date', 'month', sanitize($_GET['part2'], 2), $pligg_category));
+    $main_smarty->assign('index_url_year', getmyurl('new_sort_date', 'year', sanitize($_GET['part2'], 2), $pligg_category));
 
-    $main_smarty->assign('index_url_upvoted', getmyurl('index_sort', 'upvoted', $pligg_category));
-    $main_smarty->assign('index_url_downvoted', getmyurl('index_sort', 'downvoted', $pligg_category));
-    $main_smarty->assign('index_url_commented', getmyurl('index_sort', 'commented', $pligg_category));
+    $main_smarty->assign('index_url_upvoted', getmyurl('new_sort_filter', 'upvoted', sanitize($_GET['part1'], 2), $pligg_category));
+    $main_smarty->assign('index_url_downvoted', getmyurl('new_sort_filter', 'downvoted', sanitize($_GET['part1'], 2), $pligg_category));
+    $main_smarty->assign('index_url_upscored', getmyurl('new_sort_filter', 'upscored', sanitize($_GET['part1'], 2), $pligg_category));
+    $main_smarty->assign('index_url_downscored', getmyurl('new_sort_filter', 'downscored', sanitize($_GET['part1'], 2), $pligg_category));
+    $main_smarty->assign('index_url_recent', getmyurl('new_sort_filter', 'recent', sanitize($_GET['part1'], 2), $pligg_category));
+    $main_smarty->assign('index_url_commented', getmyurl('new_sort_filter', 'commented', sanitize($_GET['part1'], 2), $pligg_category));
+    $main_smarty->assign('index_url_debated', getmyurl('new_sort_filter', 'debated', sanitize($_GET['part1'], 2), $pligg_category));
 
     $main_smarty->assign('cat_url', getmyurl("maincategory"));
 } else {
-    $main_smarty->assign('index_url_recent', getmyurl('index'));
-    $main_smarty->assign('index_url_today', getmyurl('index_sort', 'today'));
-    $main_smarty->assign('index_url_yesterday', getmyurl('index_sort', 'yesterday'));
-    $main_smarty->assign('index_url_week', getmyurl('index_sort', 'week'));
-    $main_smarty->assign('index_url_month', getmyurl('index_sort', 'month'));
-    $main_smarty->assign('index_url_year', getmyurl('index_sort', 'year'));
-    $main_smarty->assign('index_url_alltime', getmyurl('index_sort', 'alltime'));
+    $main_smarty->assign('index_url_alltime', getmyurl('index'));
+    $main_smarty->assign('index_url_hour', getmyurl('new_sort_date', 'hour', sanitize($_GET['part2'], 2)));
+    $main_smarty->assign('index_url_day', getmyurl('new_sort_date', 'day', sanitize($_GET['part2'], 2)));
+    $main_smarty->assign('index_url_week', getmyurl('new_sort_date', 'week', sanitize($_GET['part2'], 2)));
+    $main_smarty->assign('index_url_month', getmyurl('new_sort_date', 'month', sanitize($_GET['part2'], 2)));
+    $main_smarty->assign('index_url_year', getmyurl('new_sort_date', 'year', sanitize($_GET['part2'], 2)));
 
-    $main_smarty->assign('index_url_upvoted', getmyurl('index_sort', 'upvoted'));
-    $main_smarty->assign('index_url_downvoted', getmyurl('index_sort', 'downvoted'));
-    $main_smarty->assign('index_url_commented', getmyurl('index_sort', 'commented'));
+    $main_smarty->assign('index_url_upvoted', getmyurl('new_sort_filter', 'upvoted', sanitize($_GET['part1'], 2)));
+    $main_smarty->assign('index_url_downvoted', getmyurl('new_sort_filter', 'downvoted', sanitize($_GET['part1'], 2)));
+    $main_smarty->assign('index_url_upscored', getmyurl('new_sort_filter', 'upscored', sanitize($_GET['part1'], 2)));
+    $main_smarty->assign('index_url_downscored', getmyurl('new_sort_filter', 'downscored', sanitize($_GET['part1'], 2)));
+    $main_smarty->assign('index_url_recent', getmyurl('new_sort_filter', 'recent', sanitize($_GET['part1'], 2)));
+    $main_smarty->assign('index_url_commented', getmyurl('new_sort_filter', 'commented', sanitize($_GET['part1'], 2)));
+    $main_smarty->assign('index_url_debated', getmyurl('new_sort_filter', 'debated', sanitize($_GET['part1'], 2)));
 }
 //group sort smarty
 $main_smarty->assign('group_url_newest', getmyurl('group_sort', 'newest'));

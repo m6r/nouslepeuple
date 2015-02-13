@@ -11,13 +11,12 @@
 				<span class="icon-bar"></span>
 				<span class="icon-bar"></span>
 			</button>
-			<a class="navbar-brand" href="{$my_base_url}{$my_pligg_base}">{#PLIGG_Visual_Name#}</a>			
+			<a class="navbar-brand" href="{$URL_new}">{#PLIGG_Visual_Name#}</a>			
 		</div>
 		<nav role="navigation" class="collapse navbar-collapse bs-navbar-collapse">
 			<ul class="nav navbar-nav">
-				<li {if $pagename eq "published" || $pagename eq "index"}class="active"{/if}><a href="{$my_base_url}{$my_pligg_base}">{#PLIGG_Visual_Home#}</a></li>
 				{checkActionsTpl location="tpl_pligg_navbar_start"}
-				<li {if $pagename eq "new"}class="active"{/if}><a href="{$URL_new}">{#PLIGG_Visual_Pligg_Queued#}</a></li>
+				<li {if $pagename eq "new"}class="active"{/if}><a href="{$URL_new}">{#PLIGG_Visual_Pligg_Debates#}</a></li>
 				{checkActionsTpl location="tpl_pligg_submit_link_start"}
 				<li {if $pagename eq "submit"}class="active"{/if}><a href="{$URL_submit}">{#PLIGG_Visual_Submit_A_New_Story#}</a></li>
 				{checkActionsTpl location="tpl_pligg_submit_link_end"}
