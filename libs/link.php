@@ -711,7 +711,8 @@ class Link
         $smarty->assign('link_shakebox_index', $link_index);
         $smarty->assign('link_shakebox_votes', $this->votes);
         $smarty->assign('link_shakebox_showbury', $this->reports);
-
+        $smarty->assign('link_shakebox_totalfor', $this->count_all_votes(">0")); // RG_2
+        $smarty->assign('link_shakebox_totalagainst', $this->count_all_votes("<0")); // RG_2
 
         $this->get_current_user_votes($current_user->user_id);
         if (votes_per_ip > 0) {

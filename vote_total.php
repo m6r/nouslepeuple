@@ -120,8 +120,10 @@ if (is_numeric($post_id) && $post_id > 0) {
         $vote_count = $link->countvotes();
         echo $rating_width."~".$link_rating."~".$vote_count."~<li class='one-star-noh'>1</li><li class='two-stars-noh'>2</li><li class='three-stars-noh'>3</li><li class='four-stars-noh'>4</li><li class='five-stars-noh'>5</li>";
     } else {
+        $totalfor = $link->count_all_votes(">0"); // RG_2
+        $totalagainst = $link->count_all_votes("<0"); // RG_2
         $count = $link->votes;
-        echo "$count ~--~".$post_id;
+        echo "$count|$totalfor|$totalagainst ~--~".$post_id;
     }
     $link->evaluate_formulas();
 }

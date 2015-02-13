@@ -105,11 +105,26 @@
 				{checkActionsTpl location="tpl_pligg_story_title_end"}
 			</h2>
 			<span class="subtext">
-				{if $UseAvatars neq "0"}<span id="ls_avatar-{$link_shakebox_index}"><img src="{$Avatar_ImgSrcs}" width="16px" height="16px" alt="" title="{#PLIGG_Visual_Group_Avatar#}" /></span>{else}<i class="fa fa-user"></i>{/if}
-				<a href="{$submitter_profile_url}">{$link_submitter}{if $submitter_rank neq ''} (#{$submitter_rank}){/if}</a>
-				<i class="fa fa-clock-o"></i>
-				{#PLIGG_Visual_Comment_Ago#} {$link_submit_timeago}
-
+				<!-- RG_2 -->
+				<span class="subtext">
+					{if $UseAvatars neq "0"}<span id="ls_avatar-{$link_shakebox_index}"><img src="{$Avatar_ImgSrcs}" width="16px" height="16px" alt="" title="{#PLIGG_Visual_Group_Avatar#}" /></span>{else}<i class="fa fa-user"></i>{/if}
+					<a href="{$submitter_profile_url}">{$link_submitter}{if $submitter_rank neq ''} (#{$submitter_rank}){/if}</a>
+					<i class="fa fa-clock-o"></i>
+					{#PLIGG_Visual_Comment_Ago#}
+					{$link_submit_timeago}
+					&nbsp;
+					<span class="text-success">
+						<i class="fa fa-thumbs-up"></i>
+						<span id="totalfor-{$link_shakebox_index}">{$link_shakebox_totalfor}</span>
+						{#PLIGG_Visual_Vote_for#}
+					</span>
+					<span class="text-danger">
+						<i class="fa fa-thumbs-down"></i>
+						<span id="totalagainst-{$link_shakebox_index}">{$link_shakebox_totalagainst}</span>
+						{#PLIGG_Visual_Vote_against#}
+					</span>
+				</span>
+				<!-- /RG_2 -->
 				<i class="fa fa-folder"></i>
 				<a href="{$category_url}">{$link_category}</a>
 				{if $link_additional_cats}
