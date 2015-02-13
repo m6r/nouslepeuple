@@ -34,7 +34,7 @@ Avant toute chose, il vous faut renommer quelques fichiers :
 $ cd nouslepeuple/
 $ mv settings.php.default settings.php
 $ mv libs/dbconnect.php.default libs/dbconnect.php
-$ mv languages/lang_french.conf.default languages/lang_french.conf
+$ mv languages/lang_french_m6r.conf.default languages/lang_french.conf
 ```
 
 Si vous avez une version de PHP inférieure à 5.4, vous devez utiliser un
