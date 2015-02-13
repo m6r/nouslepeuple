@@ -3,7 +3,6 @@
 *************************************}
 <!-- story_center.tpl -->
 {checkActionsTpl location="tpl_pligg_content_start"}
-{$the_story}
 <ul class="nav nav-tabs" id="storytabs">
 	<li class="active"><a data-toggle="tab" href="#comments"><i class="fa fa-comments"></i> {#PLIGG_Visual_Story_Comments#}</a></li>
 	{if count($voter) neq 0}<li><a data-toggle="tab" href="#who_voted"><i class="fa fa-thumbs-up"></i> {#PLIGG_Visual_Story_Who_Upvoted#}</a></li>{/if}
@@ -11,6 +10,7 @@
 	{if count($related_story) neq 0}<li><a data-toggle="tab" href="#related"><i class="fa fa-tag"></i> {#PLIGG_Visual_Story_RelatedStory#}</a></li>{/if}
 	{checkActionsTpl location="tpl_pligg_story_tab_end"}
 </ul>
+{$the_story}
 <script language="javascript">
 var story_link="{$story_url}";
 {literal}
@@ -49,7 +49,6 @@ var story_link="{$story_url}";
 
 	<div class="tab-pane fade active in" id="comments" >
 		{checkActionsTpl location="tpl_pligg_story_comments_start"}
-		<h3>{#PLIGG_Visual_Story_Comments#}</h3>
 		<a name="comments" href="#comments"></a>
 		<ol class="media-list comment-list">
 			{checkActionsTpl location="tpl_pligg_story_comments_individual_start"}
