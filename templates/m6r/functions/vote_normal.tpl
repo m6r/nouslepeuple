@@ -16,10 +16,11 @@ function vote (user, id, htmlid, md5, value)
 
     var url = my_pligg_base + "/vote_total.php";
     var mycontent = "id=" + id + "&user=" + user + "&md5=" + md5 + "&value=" + value;
-	dynamic_class=".linkVote_"+id;
-    var link_title=$(dynamic_class).attr("title");
-	
-	
+	var dynamic_class=".linkVote_"+id;
+    var link_title = $(dynamic_class).attr("title");
+	var totalfor = $('#totalfor-'+htmlid); // RG_2
+	var totalagainst = $('#totalagainst-'+htmlid); // RG_2
+
     if (!anonymous_vote && user=="") {
         window.location= my_base_url + my_pligg_base + "/login.php?return="+location.href;
     } else {
@@ -63,7 +64,14 @@ function vote (user, id, htmlid, md5, value)
 
 			if (Voting_Method == 2){
 			} else {
-				$('#xnews-'+htmlid+' .votenumber').html(data.split('~')[0]);
+				//$('#xnews-'+htmlid+' .votenumber').html(data.split('~')[0]);
+				// RG_2 -----------------------------------------------------
+				var result = data.split('~')[0];
+				result = result.split('|');
+				totalfor.html(result[1]);
+				totalagainst.html(result[2]);
+				$('#xnews-'+htmlid+' .votenumber').html(result[0]);
+				// -----------------------------------------------------------
 			}
 		}
 	}, "text");
@@ -77,10 +85,11 @@ function unvote (user, id, htmlid, md5, value)
 
     var url = my_pligg_base + "/vote_total.php";
     var mycontent = "unvote=true&id=" + id + "&user=" + user + "&md5=" + md5 + "&value=" + value;
-	dynamic_class = ".linkVote_"+id;
+    var dynamic_class = ".linkVote_"+id;
     var link_title = $(dynamic_class).attr("title");
-	
-	
+    var totalfor = $('#totalfor-'+htmlid); // RG_2
+    var totalagainst = $('#totalagainst-'+htmlid); // RG_2
+
 	//user = 2;
 	//alert("from unvote"+user);
 	//alert(anonymous_vote);
@@ -113,7 +122,14 @@ function unvote (user, id, htmlid, md5, value)
 
 			if (Voting_Method == 2){
 			} else {
-				$('#xnews-'+htmlid+' .votenumber').html(data.split('~')[0]);
+				//$('#xnews-'+htmlid+' .votenumber').html(data.split('~')[0]);
+				// RG_2 -----------------------------------------------------
+				var result = data.split('~')[0];
+				result = result.split('|');
+				totalfor.html(result[1]);
+				totalagainst.html(result[2]);
+				$('#xnews-'+htmlid+' .votenumber').html(result[0]);
+				// -----------------------------------------------------------
 			}
 		}
 	}, "text");
