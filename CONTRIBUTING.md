@@ -146,10 +146,10 @@ propos).
 
 Selon les retours que vous aurez sur votre Pull Request, vous pourriez avoir
 besoin de retravailler votre patch. Avant de le re-soumettre, faites un rebase
-avec ``upstream/master`` ou ``upstream/2.0``, ne mergez pas; et forcez le push
+avec ``m6r/master``, ne mergez pas; et forcez le push
 vers origin :
 
-    $ git rebase -f upstream/master
+    $ git rebase -f m6r/master
     $ git push -f origin NOM_BRANCHE
 
 lorsque vous faites un ``push --force``, spécifiez toujours explicitement le
