@@ -39,7 +39,7 @@
     {if $pagename eq "new" && $get.category eq ''}<li class="active">{#PLIGG_Visual_Pligg_Queued#}{/if}
     {if $get.category}
         {if $pagename eq "published" || $pagename eq "index"}<li><a href="{$my_base_url}{$my_pligg_base}">{#PLIGG_Visual_Published_News#}</a></li>{/if}
-        {if $pagename eq "new"}<li><a href="{$URL_new}">{#PLIGG_Visual_Pligg_Queued#}</a></li>{/if}
+        {if $pagename eq "new"}<li><a href="{$URL_index}">{#PLIGG_Visual_Pligg_Queued#}</a></li>{/if}
     {/if}
     {if $pagename eq "noresults"}<li class="active">{$posttitle}
     {elseif isset($get.search)}<li class="active">{#PLIGG_Visual_Search_SearchResults#} &quot;{if $get.search}{$get.search}{else}{$get.date}{/if}&quot;{/if}
