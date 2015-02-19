@@ -721,11 +721,11 @@ function getmyurl($x, $var1 = "", $var2 = "", $var3 = "")
         } elseif ($x == "index_sort") {
             $ret = "/index.php?part=".$var1.($var2 ? "&amp;category=".$var2 : '');
         } elseif ($x == "new_sort") {
-            $ret = "/new.php?part=".$var1.($var2 ? "&amp;category=".$var2 : '');
+            $ret = "/index.php?part=".$var1.($var2 ? "&amp;category=".$var2 : '');
         } elseif ($x == "new_sort_date") {
-            $ret = "/new.php?part1=".$var1.($var2 ? "&amp;part2=".$var2 : '').($var3 ? "&amp;category=".$var3 : '');
+            $ret = "/index.php?part1=".$var1.($var2 ? "&amp;part2=".$var2 : '').($var3 ? "&amp;category=".$var3 : '');
         } elseif ($x == "new_sort_filter") {
-            $ret = "/new.php?part2=".$var1.($var2 ? "&amp;part1=".$var2 : '').($var3 ? "&amp;category=".$var3 : '');
+            $ret = "/index.php?part2=".$var1.($var2 ? "&amp;part1=".$var2 : '').($var3 ? "&amp;category=".$var3 : '');
         } elseif ($x == "userblank") {
             $ret = "/user.php?login=";
         } elseif ($x == "user2") {
