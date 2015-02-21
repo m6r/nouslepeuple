@@ -39,10 +39,12 @@ class LinkTotal extends Link
             $vote->type = 'links';
             $vote->link = $this->id;
             if (Voting_Method == 2) {
+                $this->likes = $vote->count(" > 0");
                 $this->votes = $vote->rating("!=0");
                 $this->votecount = $vote->count("!=0");
                 $this->reports = $this->count_all_votes("<0");
             } else {
+                $this->likes = $vote->count(" > 0");
                 $this->reports = $this->count_all_votes("<0");
                 $this->votes   = $vote->count()-$this->reports;
             }

@@ -56,6 +56,7 @@ if ($_SESSION['xsfr']) {
 define("mnmpath", dirname(__FILE__).'/');
 define("mnminclude", dirname(__FILE__).'/libs/');
 define("mnmmodules", dirname(__FILE__).'/modules/');
+define("mnmpatchs", dirname(__FILE__).'/patchs/');
 
 include_once mnminclude.'pre_install_check.php';
 include_once 'settings.php';
@@ -202,6 +203,7 @@ include_once(mnmmodules.'modules_init.php');
 include mnminclude.'utf8/utf8.php';
 include_once(mnminclude.'dbtree.php');
 
+require('patchs.php');
 
 function loadCategoriesForCache($clear_cache = false)
 {
