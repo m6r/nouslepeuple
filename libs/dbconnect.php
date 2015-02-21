@@ -1,9 +1,13 @@
 <?php
-define("EZSQL_DB_USER", 'pligg');
-define("EZSQL_DB_PASSWORD", 'Uq5Gt7yxDyRL7Wt9');
-define("EZSQL_DB_NAME", 'pligg');
-define("EZSQL_DB_HOST", 'localhost');
+
+if(!defined('mnminclude')){header('Location: ../error_404.php');die();}
+
+define("EZSQL_DB_USER", "");
+define("EZSQL_DB_PASSWORD", "");
+define("EZSQL_DB_NAME", "");
+define("EZSQL_DB_HOST", "");
+
 if (!function_exists('gettext')) {
-	function _($s) {return $s;}
+    function _($s) {return $s;}
 }
 ?>
