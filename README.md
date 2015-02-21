@@ -29,12 +29,11 @@ Cloner d'abord le dépot nous le peuple :
 $ git clone https://github.com/m6r/nouslepeuple
 ```
 
-Avant toute chose, il vous faut renommer quelques fichiers :
+Avant toute chose, il vous faut copier les fichiers de configuration par défault :
 ```
 $ cd nouslepeuple/
-$ mv settings.php.default settings.php
-$ mv libs/dbconnect.php.default libs/dbconnect.php
-$ mv languages/lang_french_m6r.conf.default languages/lang_french.conf
+$ cp settings.php.default settings.php
+$ cp libs/dbconnect.php.default libs/dbconnect.php
 ```
 
 Si vous avez une version de PHP inférieure à 5.4, vous devez utiliser un
