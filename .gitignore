@@ -6,6 +6,7 @@
 
 settings.php
 libs/dbconnect.php
+patchs/patchs.xml
 
 # Windows image file caches
 Thumbs.db
