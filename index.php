@@ -49,9 +49,13 @@ $search->filterToStatus = "all";
 $setmek = array();
 if (isset($_GET['part1'])) {
     $setmek[0] = $db->escape($_GET['part1']);
+} else {
+    $setmek[0] = 'day';
 }
 if (isset($_GET['part2'])) {
     $setmek[1] = $db->escape($_GET['part2']);
+} else {
+    $setmek[1] = 'upscored';
 }
 if (count($setmek)) {
     $search->setmek = $setmek;
