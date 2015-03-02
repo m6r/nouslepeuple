@@ -699,7 +699,7 @@ function getmyurl($x, $var1 = "", $var2 = "", $var3 = "")
         } elseif ($x == "maincategory") {
             $ret = "/index.php?category=".$var1;
         } elseif ($x == "newcategory") {
-            $ret = "/new.php?category=".$var1;
+            $ret = "/index.php?category=".$var1;
         } elseif ($x == "discardedcategory") {
             $ret = "/discarded.php?category=".$var1;
         } elseif ($x == "editlink") {
@@ -765,7 +765,7 @@ function getmyurl($x, $var1 = "", $var2 = "", $var3 = "")
         } elseif ($x == "root") {
             $ret = "/index.php";
         } elseif ($x == "new") {
-            $ret = "/new.php";
+            $ret = "/index.php";
         } elseif ($x == "discarded") {
             $ret = "/discarded.php";
         } elseif ($x == "topusers") {
@@ -1126,7 +1126,7 @@ function SetSmartyURLs($main_smarty)
     $main_smarty->assign('URL_story', getmyurl("story"));
     $main_smarty->assign('URL_storytitle', getmyurl("storytitle"));
     $main_smarty->assign('URL_topusers', getmyurl("topusers"));
-    if (isset($_GET['category']) && sanitize($_GET['category'], 1) != '' && strpos($_SERVER['PHP_SELF'], "new.php") === false  && strpos($_SERVER['PHP_SELF'], "story.php") === false) {
+    if (isset($_GET['category']) && sanitize($_GET['category'], 1) != '' && strpos($_SERVER['PHP_SELF'], "index.php") === false  && strpos($_SERVER['PHP_SELF'], "story.php") === false) {
         $main_smarty->assign('URL_new', getmyurl("newcategory").sanitize(sanitize($_GET['category'], 1), 2));
     } else {
         $main_smarty->assign('URL_new', getmyurl("new"));
