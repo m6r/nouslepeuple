@@ -44,7 +44,6 @@ $search->pagesize = $page_size;
 
 // on veut voir tous les posts
 $search->filterToStatus = "all";
-$search->sticky = true;
 
 // this is for the tabs on the top that filter
 $setmek = array();
@@ -57,6 +56,7 @@ if (isset($_GET['part2'])) {
     $setmek[1] = $db->escape($_GET['part2']);
 } else {
     $setmek[1] = 'upscored';
+    $search->sticky = true;
 }
 if (count($setmek)) {
     $search->setmek = $setmek;
