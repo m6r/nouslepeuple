@@ -44,6 +44,7 @@ $search->pagesize = $page_size;
 
 // on veut voir tous les posts
 $search->filterToStatus = "all";
+$search->sticky = true;
 
 // this is for the tabs on the top that filter
 $setmek = array();
