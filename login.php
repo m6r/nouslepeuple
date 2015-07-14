@@ -69,23 +69,24 @@ if ((isset($_POST["processlogin"]) && is_numeric($_POST["processlogin"])) || (is
 
         if (!$errorMsg) {
             if ($current_user->Authenticate($username, $password, $persistent) == false) {
-                {
                 $db->query("UPDATE ".table_login_attempts." SET login_username='$dbusername', login_count=login_count+1, login_time=NOW() WHERE login_id=".$login_id);
 
-            $user = $db->get_row("SELECT * FROM ".table_users." WHERE user_login = '$username' or user_email= '$username'");
-            if (pligg_validate() && $user->user_lastlogin == "0000-00-00 00:00:00") {
-                $errorMsg = $main_smarty->get_config_vars('PLIGG_Visual_Resend_Email').
-                    "<form method='post'>
-						<div class='input-append notvalidated'>
-							<input type='text' class='col-md-2' name='email'>
-							<input type='submit' class='btn btn-default' value='Send'>
-							<input type='hidden' name='processlogin' value='5'/>
-						</div>
-					</form>";
-            } else {
-                $errorMsg = $main_smarty->get_config_vars('PLIGG_Visual_Login_Error');
-            }
-            }
+                $user = $db->get_row("SELECT * FROM ".table_users." WHERE user_login = '$username' or user_email= '$username'");
+
+                if (pligg_validate() && $user->user_lastlogin == "0000-00-00 00:00:00") {
+                    $errorMsg = $main_smarty->get_config_vars('PLIGG_Visual_Resend_Email').
+                        "<form method='post'>
+    						<div class='input-append notvalidated'>
+    							<input type='text' class='col-md-2' name='email'>
+    							<input type='submit' class='btn btn-default' value='Send'>
+    							<input type='hidden' name='processlogin' value='5'/>
+    						</div>
+    					</form>";
+                } elseif (!$user->user_phone_confirmed && new \DateTime($user->user_date) > new \DateTime('2015-07-14 00:01')) {
+                    $errorMsg = $main_smarty->get_config_vars('Pligg_Visual_Login_Phone_Not_Confirmed');
+                } else {
+                    $errorMsg = $main_smarty->get_config_vars('PLIGG_Visual_Login_Error');
+                }
             } else {
                 $sql = "DELETE FROM ".table_login_attempts." WHERE login_ip='$lastip' ";
                 $db->query($sql);

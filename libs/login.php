@@ -88,7 +88,8 @@ class UserAuth
         } else {
             $saltedpass = $already_salted_pass;
         }
-        if ($user->user_id > 0 && $user->user_pass === $saltedpass && $user->user_lastlogin != "0000-00-00 00:00:00"  && $user->user_enabled) {
+        if ($user->user_id > 0 && $user->user_pass === $saltedpass && $user->user_lastlogin != "0000-00-00 00:00:00"  && $user->user_enabled
+            && ($user->user_phone_confirmed || new \DateTime($user->user_date) < new \DateTime('2015-07-14 00:01'))) {
             $this->user_login = $user->user_login;
             $this->user_id = $user->user_id;
 
