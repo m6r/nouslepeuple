@@ -32,16 +32,8 @@
 		</form>
 	</div>
 	<div class="col-md-4 login-middle">
-		<form action="{$URL_login}" id="thisform2" method="post">
-			<h2>{#PLIGG_Visual_Login_ForgottenPassword#}</h2>
-			<p>{#PLIGG_Visual_Login_EmailChangePass#}</p>
-			<strong>{#PLIGG_Visual_Register_Email#}:</strong><br />
-			<input type="text" name="email" class="form-control" size="25" tabindex="5" id="forgot-email" value="" />
-			<br />
-			<input type="submit" value="Submit" class="btn btn-primary" tabindex="6" />
-			<input type="hidden" name="processlogin" value="3"/>
-			<input type="hidden" name="return" value="{$get.return}"/>
-		</form>
+		<h2>{#PLIGG_Visual_Login_ForgottenPassword#}</h2>
+		<p>{#PLIGG_Visual_Login_EmailChangePass#}</p>
 	</div>
 	<div class="col-md-4 login-right">
 		<h2>{#PLIGG_Visual_Login_NewUsers#}</h2>
