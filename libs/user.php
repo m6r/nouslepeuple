@@ -92,7 +92,7 @@ class User
             $saltedpass = generateHash($this->pass);
 
             if (pligg_validate()) {
-                if ($db->query("INSERT IGNORE INTO ".table_users." (user_login, user_email, user_pass, user_date, user_ip, user_categories, user_numero_tel, user_nom, user_prenom, user_genre, user_date_naissance, user_code_postal, user_ville, user_pays, user_signature, user_biographie) VALUES ('"
+                if ($db->query("INSERT IGNORE INTO ".table_users." (user_login, user_email, user_pass, user_date, user_ip, user_categories, user_phone, user_last_name, user_first_name, user_gender, user_birth_date, user_postcode, user_city, user_country, user_signature, user_biography) VALUES ('"
                                         .$db->escape($this->username)
                                         ."', '".$db->escape($this->email)
                                         ."', '".$saltedpass
@@ -151,7 +151,7 @@ class User
                     return false;
                 }
             } else {
-                if ($db->query("INSERT IGNORE INTO ".table_users." (user_login, user_email, user_pass, user_date, user_ip, user_lastlogin,user_categories, user_numero_tel, user_nom, user_prenom, user_genre, user_date_naissance, user_code_postal, user_ville, user_pays, user_signature, user_biographie) "
+                if ($db->query("INSERT IGNORE INTO ".table_users." (user_login, user_email, user_pass, user_date, user_ip, user_lastlogin,user_categories, user_phone, user_last_name, user_first_name, user_gender, user_birth_date, user_postcode, user_city, user_country, user_signature, user_biography) "
                                         ." VALUES ('".$db->escape($this->username)
                                         ."', '".$db->escape($this->email)
                                         ."', '".$saltedpass
@@ -206,7 +206,7 @@ class User
         $user_skype = $db->escape($this->skype);
         $user_pinterest = $db->escape(htmlentities($this->pinterest));
         $user_avatar_source = $db->escape($this->avatar_source);
-        $user_biographie = $db->escape(sanitize($this->biographie, 3));
+        $user_biography = $db->escape($this->biographie, 3);
 
         if (strlen($user_pass) < 128 + SALT_LENGTH) {
             $saltedpass = generateHash($user_pass);
@@ -225,7 +225,7 @@ class User
                     $sql .= ", ".$varname." = '".$varvalue."' ";
                 }
             }
-            $sql .= " , user_login='$user_login', user_occupation='$user_occupation', user_language='$user_language', user_location='$user_location', public_email='$user_public_email', user_level='$user_level', user_karma=$user_karma, user_date=FROM_UNIXTIME($user_date), user_pass='$saltedpass', user_email='$user_email', user_names='$user_names', user_url='$user_url', user_facebook='$user_facebook', user_twitter='$user_twitter', user_linkedin='$user_linkedin', user_googleplus='$user_googleplus', user_skype='$user_skype', user_pinterest='$user_pinterest', user_biographie='$user_biographie' WHERE user_id=$this->id";
+            $sql .= " , user_login='$user_login', user_occupation='$user_occupation', user_language='$user_language', user_location='$user_location', public_email='$user_public_email', user_level='$user_level', user_karma=$user_karma, user_date=FROM_UNIXTIME($user_date), user_pass='$saltedpass', user_email='$user_email', user_names='$user_names', user_url='$user_url', user_facebook='$user_facebook', user_twitter='$user_twitter', user_linkedin='$user_linkedin', user_googleplus='$user_googleplus', user_skype='$user_skype', user_pinterest='$user_pinterest', user_biography='$user_biography' WHERE user_id=$this->id";
             //die($sql);
             $db->query($sql);
             //lets remove the old cached data
@@ -288,7 +288,7 @@ class User
             $this->email = $user->user_email;
             $this->avatar_source = $user->user_avatar_source;
             $this->karma = $user->user_karma;
-            $this->biographie = $user->user_biographie;
+            $this->biographie = $user->user_biography;
             // if short, then stop here
             if ($data == 'short') {
                 return true;
@@ -311,17 +311,17 @@ class User
             $this->skype = $user->user_skype;
             $this->pinterest = $user->user_pinterest;
             //Nouveaux champs
-            $this->numero_tel = $user->user_numero_tel;
-            $this->nom = $user->user_nom;
-            $this->prenom = $user->user_prenom;
+            $this->numero_tel = $user->user_phone;
+            $this->nom = $user->user_last_name;
+            $this->prenom = $user->user_first_name;
             $this->genre = $user->genre;
             $date = $user->user_date;
             $this->date_naissance = unixtimestamp($date);
-            $this->code_postal = $user->user_code_postal;
-            $this->ville = $user->user_ville;
-            $this->pays = $user->user_pays;
+            $this->code_postal = $user->user_postcode;
+            $this->ville = $user->user_city;
+            $this->pays = $user->user_country;
             $this->signature = $user->user_signature;
-            $this->biographie = $user->user_biographie;
+            $this->biographie = $user->user_biography;
 
             $this->read = true;
 

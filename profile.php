@@ -453,8 +453,7 @@ function save_profile()
             }
         }
 
-        $user->biographie = sanitize($_POST['newbiographie'], 3);
-
+        $user->biographie = htmlspecialchars($_POST['newbiographie']);
         $user->store();
         $user->read();
         if ($saved['pass'] == 1 || $saved['username'] == 1) {
